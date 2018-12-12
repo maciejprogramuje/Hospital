@@ -1,7 +1,7 @@
 public with sharing class Hosp_SearchDoctorController {
     public Doctor__c doctor { get; set; }
     public String docId { get; set; }
-    private String sortOrder = 'Name, FirstName__c';
+    private String sortOrder = 'FirstName__c';
     private String sortAscDesc = 'ASC';
 
     public ApexPages.StandardSetController ssController { get{
@@ -90,23 +90,8 @@ public with sharing class Hosp_SearchDoctorController {
         doctor.Email__c = '';
         doctor.Country__c = null;
 
-        //doctors = null;
+        ssController = null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void sortByCountry() {
         sortBy('Country__c');
@@ -117,11 +102,22 @@ public with sharing class Hosp_SearchDoctorController {
     }
 
     public void sortByName() {
-        sortBy('Name, FirstName__c');
+        sortBy('FirstName__c');
     }
 
     private void sortBy(String sortBy) {
+        flipSortAscDesc();
         sortOrder = sortBy;
         search();
+    }
+
+    private void flipSortAscDesc() {
+        if (sortAscDesc.equals('ASC')) {
+            sortAscDesc = 'DESC';
+            //sortOrderSign = sortUp;
+        } else {
+            sortAscDesc = 'ASC';
+            //sortOrderSign = sortDown;
+        }
     }
 }
