@@ -21,7 +21,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     private void getContracts() {
-        String doctorContractsQuery = 'SELECT Id, Name, StartDate__c, EndDate__c, Doctor__r.Name, Doctor__r.FirstName__c, Doctor__r.Id, Hospital__r.Name FROM Contract__c WHERE Doctor__c = \'' + doctorId +'\'';
-        contracts = Database.query(doctorContractsQuery);
+        contracts = [SELECT Id, Name, StartDate__c, EndDate__c, Doctor__r.Name, Doctor__r.FirstName__c, Doctor__r.FirstLastName__c, Doctor__r.Id, Hospital__r.Name FROM Contract__c WHERE Doctor__c = :doctorId];
     }
 }

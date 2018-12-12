@@ -11,7 +11,6 @@
                 document.execCommand("copy");
                 document.body.removeChild(aux);
             }
-
         </script>
 
         <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="2">
@@ -66,7 +65,7 @@
                 </apex:column>
 
                 <apex:column headerValue="{! $Label.Name }"
-                             value="{! contr.Doctor__r.FirstName__c } {! contr.Doctor__r.Name }"/>
+                             value="{! contr.Doctor__r.FirstLastName__c }"/>
                 <apex:column headerValue="{! $Label.Hospital }" value="{! contr.Hospital__r.Name }"/>
                 <apex:column headerValue="{! $Label.Start_Date_Label }" value="{! contr.StartDate__c}"/>
                 <apex:column headerValue="{! $Label.End_Date_Label }" value="{! contr.EndDate__c}"/>

@@ -20,7 +20,7 @@
                 <apex:pageBlockTable value="{! doctors }" var="doc" columns="4" columnsWidth="10%,40%,40%,10%">
 
                     <apex:column headerValue="{! $Label.Actions }">
-                        <apex:commandLink action="{!URLFOR($Action.Doctor__c.Edit, doc.id)}"
+                        <apex:commandLink action="{!URLFOR($Action.Doctor__c.Edit, doc.id)}" target="_blank"
                                           style="text-decoration:none">
                             <apex:commandButton value="{! $Label.Edit }"/>
                         </apex:commandLink>
