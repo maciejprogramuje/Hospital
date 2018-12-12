@@ -16,7 +16,7 @@
                 <apex:commandButton action="{!clear}" value="{! $Label.Clear }"/>
             </center>
 
-            <apex:pageBlockSection id="doctors_list" title="{! $Label.Results }" columns="1">
+            <apex:pageBlockSection title="{! $Label.Results }" columns="1" id="doctors_list">
                 <apex:pageBlockTable value="{! doctors }" var="doc" columns="4" columnsWidth="10%,40%,40%,10%">
 
                     <apex:column headerValue="{! $Label.Actions }">
@@ -30,21 +30,36 @@
                         </apex:commandLink>
                     </apex:column>
 
-                    <apex:column value="{! doc.FirstLastName__c }"/>
-                    <apex:column value="{! doc.Email__c}"/>
-                    <apex:column value="{! doc.Country__c}"/>
+                    <apex:column value="{! doc.FirstName__c } {! doc.Name }">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{! sortByName }"
+                                              reRender="doctors_list">{! $Label.Name }</apex:commandLink>
+                        </apex:facet>
+                    </apex:column>
 
+                    <apex:column value="{! doc.Email__c}">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{! sortByEmail }"
+                                              reRender="doctors_list">{! $Label.Email }</apex:commandLink>
+                        </apex:facet>
+                    </apex:column>
+
+                    <apex:column value="{! doc.Country__c}">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{! sortByCountry }"
+                                              reRender="doctors_list">{! $Label.Country_Column }</apex:commandLink>
+                        </apex:facet>
+                    </apex:column>
                 </apex:pageBlockTable>
 
+                <apex:panelGrid columns="4">
+                    <apex:commandLink action="{!first}">First</apex:commandlink>
+                    <apex:commandLink action="{!previous}" rendered="{!hasPrevious}">Previous</apex:commandlink>
+                    <apex:commandLink action="{!next}" rendered="{!hasNext}">Next</apex:commandlink>
+                    <apex:commandLink action="{!last}">Last</apex:commandlink>
+                </apex:panelGrid>
+
             </apex:pageBlockSection>
-
-            <apex:panelGrid columns="4">
-                <apex:commandLink action="{!first}">First</apex:commandlink>
-                <apex:commandLink action="{!previous}" rendered="{!hasPrevious}">Previous</apex:commandlink>
-                <apex:commandLink action="{!next}" rendered="{!hasNext}">Next</apex:commandlink>
-                <apex:commandLink action="{!last}">Last</apex:commandlink>
-            </apex:panelGrid>
-
         </apex:pageBlock>
 
     </apex:form>
