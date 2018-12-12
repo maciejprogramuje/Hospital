@@ -7,11 +7,10 @@ public class Hosp_DoctorEditControllerExtension {
 
     public PageReference save() {
         Doctor__c doctor = (Doctor__c) standardController.getRecord();
-        String firstName = doctor.FirstName__c;
 
         String doctorQuery = 'SELECT Id, Name FROM Doctor__c WHERE Name = \'' + doctor.Name + '\'';
-        if(String.isNotBlank(firstName)) {
-            doctorQuery += ' AND FirstName__c = \'' + firstName + '\'' ;
+        if(String.isNotBlank(doctor.FirstName__c)) {
+            doctorQuery += ' AND FirstName__c = \'' + doctor.FirstName__c + '\'' ;
         }
 
         List<Doctor__c> doctors = Database.query(doctorQuery);

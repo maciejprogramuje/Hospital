@@ -1,0 +1,23 @@
+<apex:page id="Hosp_HospitalEdit" standardController="Hospital__c" extensions="Hosp_HospitalEditControllerExtension">
+    <apex:form >
+        <apex:messages />
+        <apex:pageBlock title="{! $Label.Edit_Hospital }" mode="edit">
+
+            <apex:pageBlockSection title="{! $Label.Basic_Info }" columns="1">
+                <apex:inputField value="{! Hospital__c.Name }" required="true" />
+                <apex:inputField value="{! Hospital__c.WWW__c }" required="true" />
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="{! $Label.Address }" columns="1">
+                <apex:inputField value="{! Hospital__c.City__c }" />
+                <apex:inputField value="{! Hospital__c.Country__c }" />
+            </apex:pageBlockSection>
+
+            <center>
+                <apex:commandButton action="{!save}" value="{! $Label.Save }"/>
+                <apex:commandButton action="{!cancel}" value="{! $Label.Cancel }"/>
+            </center>
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
