@@ -1,25 +1,35 @@
 public with sharing class Hosp_SearchDoctorController {
     public Doctor__c doctor { get; set; }
-    public List<Doctor__c> doctors { get; set; }
     public String docId { get; set; }
+    public Integer noOfRecords { get; set; }
+    public Integer size { get; set; }
+
     private String sortOrder = 'Name, FirstName__c';
     private String sortAscDesc = 'ASC';
-    public static final String sortUp = '▲';
-    public static final String sortDown = '▼';
-    public String sortOrderSignName { get; set; }
-    public String sortOrderSignEmail { get; set; }
-    public String sortOrderSignCountry { get; set; }
-    public String sortOrderSign { get; set; }
 
     public Hosp_SearchDoctorController() {
         doctor = new Doctor__c(Name = '');
-
-        sortOrderSign = sortDown;
-        sortOrderSignName = sortOrderSign;
+        size = 5;
     }
 
-    public void search() {
-        String queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\'';
+    public ApexPages.StandardSetController standardSetController {
+        get {
+            if (standardSetController == null) {
+                standardSetController = new ApexPages.StandardSetController(populateDoctors());
+                standardSetController.setPageSize(size);
+                noOfRecords = standardSetController.getResultSize();
+            }
+            return standardSetController;
+        }
+        set;
+    }
+
+    public List<Doctor__c> getDoctors() {
+        return (List<Doctor__c>) standardSetController.getRecords();
+    }
+
+    public List<Doctor__c> populateDoctors() {
+        String queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c, FirstLastName__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\'';
         if (String.isNotBlank(doctor.FirstName__c)) {
             queryDoctor += ' AND FirstName__c LIKE \'' + doctor.FirstName__c + '%\'';
         }
@@ -30,55 +40,56 @@ public with sharing class Hosp_SearchDoctorController {
             queryDoctor += ' AND Country__c LIKE \'' + doctor.Country__c + '%\'';
         }
         queryDoctor = queryDoctor + ' ORDER BY ' + sortOrder + ' ' + sortAscDesc;
-        doctors = Database.query(queryDoctor);
+        return Database.query(queryDoctor);
+    }
+
+    public void search() {
+
     }
 
     public void clear() {
-        doctor.FirstName__c = '';
-        doctor.Name = '';
-        doctor.Email__c = '';
-        doctor.Country__c = null;
-
-        doctors = null;
+        //doctors = null;
     }
 
-    public void sortByCountry() {
-        sortBy('Country__c');
-        clearOrderSigns();
-        sortOrderSignCountry = sortOrderSign;
-    }
-
-    public void sortByEmail() {
-        sortBy('Email__c');
-        clearOrderSigns();
-        sortOrderSignEmail = sortOrderSign;
-    }
-
-    public void sortByName() {
-        sortBy('Name, FirstName__c');
-        clearOrderSigns();
-        sortOrderSignName = sortOrderSign;
-    }
-
-    private void sortBy(String sortBy) {
-        flipSortAscDesc();
-        sortOrder = sortBy;
-        search();
-    }
-
-    private void flipSortAscDesc() {
-        if (sortAscDesc.equals('ASC')) {
-            sortAscDesc = 'DESC';
-            sortOrderSign = sortUp;
-        } else {
-            sortAscDesc = 'ASC';
-            sortOrderSign = sortDown;
+    public Boolean hasNext {
+        get {
+            return standardSetController.getHasNext();
         }
+        set;
     }
 
-    private void clearOrderSigns() {
-        sortOrderSignName = '';
-        sortOrderSignEmail = '';
-        sortOrderSignCountry = '';
+    public Boolean hasPrevious {
+        get {
+            return standardSetController.getHasPrevious();
+        }
+        set;
     }
+
+    public Integer pageNumber {
+        get {
+            return standardSetController.getPageNumber();
+        }
+        set;
+    }
+
+    public void first() {
+        standardSetController.first();
+    }
+
+    public void last() {
+        standardSetController.last();
+    }
+
+    public void previous() {
+        standardSetController.previous();
+    }
+
+    public void next() {
+        standardSetController.next();
+    }
+
+    public void cancel() {
+        standardSetController.cancel();
+    }
+
 }
