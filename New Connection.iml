@@ -44,11 +44,11 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_ContractsViewController" />
+                            <option name="name" value="Hosp_SearchDoctorController" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_SearchDoctorController" />
+                            <option name="name" value="Hosp_DoctorViewControllerExtension" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
@@ -82,10 +82,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_SearchDoctor" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_ContractsView" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>

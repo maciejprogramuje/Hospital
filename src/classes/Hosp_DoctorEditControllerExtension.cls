@@ -29,7 +29,6 @@ public class Hosp_DoctorEditControllerExtension {
             update doctor;
         }
 
-        //System.debug(this.doctor.Id+', '+this.doctor.Name+' '+this.doctor.FirstName__c);
         return new ApexPages.StandardController(doctor).view();
     }
 }
