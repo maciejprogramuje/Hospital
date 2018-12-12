@@ -19,20 +19,15 @@ public with sharing class Hosp_SearchDoctorController {
     }
 
     public void search() {
-        String firstName = doctor.FirstName__c;
-        String lastName = doctor.Name;
-        String email = doctor.Email__c;
-        String country = doctor.Country__c;
-
-        String queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c FROM Doctor__c WHERE Name = \'' + lastName + '\'';
-        if (String.isNotBlank(firstName)) {
-            queryDoctor += ' AND FirstName__c = \'' + firstName + '\'';
+        String queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\'';
+        if (String.isNotBlank(doctor.FirstName__c)) {
+            queryDoctor += ' AND FirstName__c LIKE \'' + doctor.FirstName__c + '%\'';
         }
-        if (String.isNotBlank(email)) {
-            queryDoctor += ' AND Email__c = \'' + email + '\'';
+        if (String.isNotBlank(doctor.Email__c)) {
+            queryDoctor += ' AND Email__c LIKE \'' + doctor.Email__c + '%\'';
         }
-        if (String.isNotBlank(country)) {
-            queryDoctor += ' AND Country__c = \'' + country + '\'';
+        if (String.isNotBlank(doctor.Country__c)) {
+            queryDoctor += ' AND Country__c LIKE \'' + doctor.Country__c + '%\'';
         }
         queryDoctor = queryDoctor + ' ORDER BY ' + sortOrder + ' ' + sortAscDesc;
         doctors = Database.query(queryDoctor);
