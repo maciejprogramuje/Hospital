@@ -1,0 +1,60 @@
+<apex:page id="Hosp_SearchDoctor" controller="Hosp_SearchDoctorController" tabStyle="Doctor__c">
+    <apex:form>
+        <apex:messages/>
+
+        <apex:pageBlock title="{! $Label.Search_for_Doctor }" mode="edit">
+
+            <apex:pageBlockSection title="{! $Label.Search_Form }" columns="2">
+                <apex:inputField value="{! doctor.FirstName__c }" required="false"/>
+                <apex:inputField value="{! doctor.Email__c }"/>
+                <apex:inputField value="{! doctor.Name }" required="true"/>
+                <apex:inputField value="{! doctor.Country__c }"/>
+            </apex:pageBlockSection>
+
+            <center>
+                <apex:commandButton action="{!search}" value="{! $Label.Search }"/>
+                <apex:commandButton action="{!clear}" value="{! $Label.Clear }"/>
+            </center>
+
+            <apex:pageBlockSection title="{! $Label.Results }" columns="1" id="doctors_list">
+                <apex:pageBlockTable value="{! doctors }" var="doc" columns="4" columnsWidth="10%,40%,40%,10%">
+
+                    <apex:column headerValue="{! $Label.Actions }">
+                        <apex:commandLink action="{!URLFOR($Action.Doctor__c.Edit, doc.id)}"
+                                          style="text-decoration:none">
+                            <apex:commandButton value="{! $Label.Edit }"/>
+                        </apex:commandLink>
+
+                        <apex:commandLink action="/{! doc.id}" target="_blank" style="text-decoration:none">
+                            <apex:commandButton value="{! $Label.View_Action }"/>
+                        </apex:commandLink>
+
+                    </apex:column>
+
+                    <apex:column value="{! doc.FirstName__c } {! doc.Name }">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{! sortByName }"
+                                              reRender="doctors_list">{! $Label.Name } {! sortOrderSignName }</apex:commandLink>
+                        </apex:facet>
+                    </apex:column>
+
+                    <apex:column value="{! doc.Email__c}">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{! sortByEmail }"
+                                              reRender="doctors_list">{! $Label.Email } {! sortOrderSignEmail }</apex:commandLink>
+                        </apex:facet>
+                    </apex:column>
+
+                    <apex:column value="{! doc.Country__c}">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{! sortByCountry }"
+                                              reRender="doctors_list">{! $Label.Country_Column } {! sortOrderSignCountry }</apex:commandLink>
+                        </apex:facet>
+                    </apex:column>
+
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

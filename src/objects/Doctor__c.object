@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>Hosp_DoctorEdit</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>Hosp_DoctorView</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>City__c</fullName>
+        <externalId>false</externalId>
+        <label>City</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <externalId>false</externalId>
+        <label>Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Country</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FirstName__c</fullName>
+        <externalId>false</externalId>
+        <label>First Name</label>
+        <length>50</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Phone</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Street__c</fullName>
+        <externalId>false</externalId>
+        <label>Street</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Doctor</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Last Name</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Doctors</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields xsi:nil="true"/>
+        <customTabListAdditionalFields>FirstName__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>City__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Country__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Phone__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields xsi:nil="true"/>
+        <lookupDialogsAdditionalFields>FirstName__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>City__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Country__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Phone__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields xsi:nil="true"/>
+        <lookupPhoneDialogsAdditionalFields>FirstName__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>City__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Country__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Phone__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields xsi:nil="true"/>
+        <searchFilterFields>FirstName__c</searchFilterFields>
+        <searchFilterFields>City__c</searchFilterFields>
+        <searchFilterFields>Country__c</searchFilterFields>
+        <searchFilterFields>Email__c</searchFilterFields>
+        <searchResultsAdditionalFields>FirstName__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Country__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Phone__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>NetherlandsEmailDomain</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+NOT(ISBLANK(Email__c)),
+ISPICKVAL(Country__c, &quot;NL&quot;),
+RIGHT(Email__c, 3) &lt;&gt; &quot;.nl&quot;
+)</errorConditionFormula>
+        <errorDisplayField>Email__c</errorDisplayField>
+        <errorMessage>Email must ends with .nl domain</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>PolandPhonePrefix</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+NOT(ISBLANK(Phone__c)),
+ISPICKVAL(Country__c, &quot;PL&quot;),
+LEFT(Phone__c, 3) &lt;&gt; &quot;+48&quot;
+)</errorConditionFormula>
+        <errorDisplayField>Phone__c</errorDisplayField>
+        <errorMessage>Phone number must starts from +48 prefix</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

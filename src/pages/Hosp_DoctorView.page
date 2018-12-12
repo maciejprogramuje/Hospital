@@ -1,0 +1,61 @@
+<apex:page id="Hosp_DoctorView" standardController="Doctor__c">
+    <apex:pageBlock title="{! $Label.Doctor }" mode="edit">
+        <apex:messages/>
+
+        <script language="JavaScript">
+            function copyToClipboard(elementId) {
+                var aux = document.createElement("input");
+                aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+                document.body.appendChild(aux);
+                aux.select();
+                document.execCommand("copy");
+                document.body.removeChild(aux);
+            }
+        </script>
+
+        <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="2">
+            <apex:outputField value="{! Doctor__c.FirstName__c }"/>
+            <apex:outputField value="{! Doctor__c.Email__c }"/>
+            <apex:outputField value="{! Doctor__c.Name }"/>
+
+
+                <apex:pageBlockSectionItem>
+                    <apex:outputText value="{! $ObjectType.Doctor__c.fields.Phone__c.Label }"/>
+                    <apex:form>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputField id="copytext" value="{! Doctor__c.Phone__c }"/>
+
+                        <apex:commandButton onClick="copyToClipboard('{! $Component.copytext}');" reRender="copytext"
+                                            value="{! $Label.Copy_Label }"/>
+
+                    </apex:pageBlockSectionItem>
+                    </apex:form>
+                </apex:pageBlockSectionItem>
+
+        </apex:pageBlockSection>
+
+
+        <apex:pageBlockSection title="{! $Label.Address }" columns="2">
+            <apex:outputField value="{! Doctor__c.City__c }"/>
+            <apex:outputField value="{! Doctor__c.Country__c }"/>
+            <apex:outputField value="{! Doctor__c.Street__c }"/>
+        </apex:pageBlockSection>
+
+        <center>
+            <apex:form>
+                <apex:commandButton action="{!edit}" value="{! $Label.Edit }"/>
+                <apex:commandButton action="{!delete}" value="{! $Label.Delete }"
+                                    onclick="if(!confirm('{! $Label.Are_you_sure }')){return false};"/>
+            </apex:form>
+        </center>
+
+        <apex:pageBlockSection title="{! $Label.Tracking_history }" columns="1">
+            <apex:relatedList list="Histories"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="{! $Label.Contracts }" columns="1">
+            <apex:relatedList list="Contracts__r"/>
+        </apex:pageBlockSection>
+
+    </apex:pageBlock>
+</apex:page>
