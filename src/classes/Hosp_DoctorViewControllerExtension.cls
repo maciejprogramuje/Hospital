@@ -24,10 +24,8 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         contracts = [SELECT Id, Name, StartDate__c, EndDate__c, Doctor__r.Name, Doctor__r.FirstName__c, Doctor__r.FirstLastName__c, Doctor__r.Id, Hospital__r.Name FROM Contract__c WHERE Doctor__c = :doctorId];
     }
 
-
-
     public PageReference expToPdf() {
-        PageReference pageReference = Page.Hosp_SearchDoctorsPdfExport;
+        PageReference pageReference = Page.Hosp_DoctorViewPdfExport;
         pageReference.setRedirect(false);
         return pageReference;
     }

@@ -44,19 +44,9 @@
                 <apex:commandButton action="{!edit}" value="{! $Label.Edit }"/>
                 <apex:commandButton action="{!delete}" value="{! $Label.Delete }"
                                     onclick="if(!confirm('{! $Label.Are_you_sure }')){return false};"/>
-
-
-
-
-
-
-                <apex:commandButton action="{!expToPdf}" value="{! $Label.Export_To_PDF }"/>
-
-
-
-
-
-
+                <apex:commandLink action="{!expToPdf}" target="_blank">
+                    <apex:commandButton value="{! $Label.Export_To_PDF }"/>
+                </apex:commandLink>
             </apex:form>
         </center>
 
