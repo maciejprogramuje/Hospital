@@ -2,7 +2,8 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I&callback=initMap"
             type="text/javascript"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I"></script>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I"></script>
 
     <apex:pageBlock title="{! $Label.Hospital }" mode="edit">
         <apex:messages/>
@@ -39,27 +40,24 @@
     </apex:pageBlock>
 
 
-
     <script type="text/javascript">
-   $(document).ready(function() {
-
-           var myOptions = {
+    $(document).ready(function() {
+        var myOptions = {
                zoom: 15,
                mapTypeId: google.maps.MapTypeId.ROADMAP,
                mapTypeControl: false
            }
 
-           var map;
-           var marker;
+        var map;
+        var marker;
 
-           var geocoder = new google.maps.Geocoder();
-           var address = "{!Hospital__c.Street__c}, {!Hospital__c.PostalCode__c}, {!Hospital__c.City__c}
-        , {!Hospital__c.Country__c}";
-           var infowindow = new google.maps.InfoWindow({
-               content: "<b>{!Hospital__c.Name}</b><br>" + address + " "
-           });
+        var geocoder = new google.maps.Geocoder();
+        var address = "{!Hospital__c.Street__c}, {!Hospital__c.PostalCode__c}, {!Hospital__c.City__c}, {!Hospital__c.Country__c}";
+        var infowindow = new google.maps.InfoWindow({
+            content: "<b>{!Hospital__c.Name}</b><br>" + address + " "
+        });
 
-           geocoder.geocode( { address: address}, function(results, status) {
+        geocoder.geocode( { address: address}, function(results, status) {
                if (status == google.maps.GeocoderStatus.OK && results.length) {
                    if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
 
@@ -106,6 +104,7 @@
 
        });
 
+
     </script>
 
     <style>
@@ -117,8 +116,6 @@
        //min-width:300px;
            background:transparent;
        }
-
     </style>
-
 
 </apex:page>

@@ -1,6 +1,7 @@
 public with sharing class Hosp_SearchDoctorController {
     public Doctor__c doctor { get; set; }
     public String docId { get; set; }
+    public List<Doctor__c> doctorsToExport { get; set; }
 
     private String sortOrder = 'FirstName__c';
     private String sortAscDesc = 'ASC';
@@ -11,13 +12,6 @@ public with sharing class Hosp_SearchDoctorController {
     public String sortOrderSignCountry { get; set; }
     public String sortOrderSign { get; set; }
 
-    public Hosp_SearchDoctorController() {
-        doctor = new Doctor__c(Name = '');
-
-        sortOrderSign = sortDown;
-        sortOrderSignName = sortOrderSign;
-    }
-
     public ApexPages.StandardSetController ssController { get{
         if(ssController == null) {
             ssController = new ApexPages.StandardSetController(Database.query(queryString()));
@@ -25,6 +19,14 @@ public with sharing class Hosp_SearchDoctorController {
         }
         return ssController;
     } set; }
+
+    public Hosp_SearchDoctorController() {
+        doctor = new Doctor__c(Name = '');
+        doctorsToExport = new List<Doctor__c>();
+
+        sortOrderSign = sortDown;
+        sortOrderSignName = sortOrderSign;
+    }
 
     public List<Doctor__c> getDoctors() {
         return ssController.getRecords();
@@ -45,6 +47,9 @@ public with sharing class Hosp_SearchDoctorController {
             }
             queryDoctor = queryDoctor + ' ORDER BY ' + sortOrder + ' ' + sortAscDesc;
         }
+
+        doctorsToExport = Database.query(queryDoctor);
+
         return queryDoctor;
     }
 
