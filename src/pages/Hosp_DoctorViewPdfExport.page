@@ -1,15 +1,25 @@
 <apex:page id="Hosp_DoctorViewPdfExport" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" showHeader="false" renderAs="pdf">
     <apex:pageBlock title="{! $Label.Doctor }" >
 
-        <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="2">
-            <apex:outputField value="{! Doctor__c.FirstName__c }"/>
-            <apex:outputField value="{! Doctor__c.Email__c }"/>
+        <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="1">
+
+            <apex:pageBlockSectionItem labelStyle="width:40%" dataStyle="width:60%">
+                <apex:outputLabel >{! $ObjectType.Doctor__c.fields.FirstName__c.Label }</apex:outputLabel>
+                <apex:outputField value="{! Doctor__c.FirstName__c }"/>
+            </apex:pageBlockSectionItem>
+
             <apex:outputField value="{! Doctor__c.Name }"/>
+            <apex:outputField value="{! Doctor__c.Email__c }"/>
             <apex:outputText value="{! Doctor__c.Phone__c }"/>
         </apex:pageBlockSection>
 
-        <apex:pageBlockSection title="{! $Label.Address }" columns="2">
-            <apex:outputField value="{! Doctor__c.City__c }"/>
+        <apex:pageBlockSection title="{! $Label.Address }" columns="1">
+
+            <apex:pageBlockSectionItem labelStyle="width:150px%" dataStyle="width:200px">
+                <apex:outputLabel >{! $ObjectType.Doctor__c.fields.City__c.Label }</apex:outputLabel>
+                <apex:outputField value="{! Doctor__c.City__c }"/>
+            </apex:pageBlockSectionItem>
+
             <apex:outputField value="{! Doctor__c.Country__c }"/>
             <apex:outputField value="{! Doctor__c.Street__c }"/>
         </apex:pageBlockSection>
@@ -19,7 +29,7 @@
         </apex:pageBlockSection>
 
         <apex:pageBlockSection title="{! $Label.Contracts }" id="contracts_list" columns="1">
-            <apex:pageBlockTable value="{! contracts }" var="contr" columns="4" columnsWidth="30%,30%,20%, 20%">
+            <apex:pageBlockTable value="{! contracts }" var="contr" columns="4" columnsWidth="30%,30%,20%,20%">
                 <apex:column headerValue="{! $Label.Name }" value="{! contr.Doctor__r.FirstLastName__c }"/>
                 <apex:column headerValue="{! $Label.Hospital }" value="{! contr.Hospital__r.Name }"/>
                 <apex:column headerValue="{! $Label.Start_Date_Label }" value="{! contr.StartDate__c}"/>

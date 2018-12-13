@@ -140,6 +140,10 @@
                           <MetadataEntry>
                             <option name="name" value="ThirdTrigger" />
                           </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Contract" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="ApexTrigger" />
