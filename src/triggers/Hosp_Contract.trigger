@@ -1,7 +1,5 @@
-trigger Hosp_Contract on Contract__c (before insert) {
-    if(Trigger.isInsert) {
-        Boolean isConflict = false;
-
+trigger Hosp_Contract on Contract__c (before insert, before update) {
+    if(Trigger.isInsert || Trigger.isUpdate) {
         Contract__c contractToCheck = Trigger.new[0];
 
         List<Contract__c> contracts = [SELECT Id, Doctor__c, Hospital__c, StartDate__c, EndDate__c
@@ -12,7 +10,7 @@ trigger Hosp_Contract on Contract__c (before insert) {
         for(Contract__c contract : contracts) {
             if((contractToCheck.StartDate__c >= contract.StartDate__c && contractToCheck.StartDate__c <= contract.EndDate__c)
                     || (contractToCheck.EndDate__c>= contract.StartDate__c && contractToCheck.EndDate__c <= contract.EndDate__c)) {
-                contract.addError('NIE mogę dodać kontraktu! - addError');
+                contract.addError('NIE mogę dodać kontraktu! - addError', false);
             }
         }
     }
