@@ -1,5 +1,5 @@
 <apex:page id="Hosp_SearchDoctorsXlsExport" controller="Hosp_SearchDoctorController"
-           action="{! expToXls }" readOnly="true" contentType="application/vnd.ms-excel#Hosp_Doctor_List_XLS.xls" showHeader="false" standardStylesheets="false">
+           readOnly="true" contentType="application/vnd.ms-excel#Hosp_Doctor_List_XLS.xls" showHeader="false" standardStylesheets="false">
 
     <apex:pageBlock>
         <apex:dataTable value="{! doctors }" var="doc">

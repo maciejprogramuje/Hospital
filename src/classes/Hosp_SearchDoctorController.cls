@@ -144,11 +144,15 @@ public with sharing class Hosp_SearchDoctorController {
     }
 
     public PageReference expToCsv() {
-        return Page.Hosp_SearchDoctorsCsvExport;
+        PageReference pageReference = Page.Hosp_SearchDoctorsCsvExport;
+        pageReference.setRedirect(false);
+        return pageReference;
     }
 
     public PageReference expToXls() {
-        return Page.Hosp_SearchDoctorsXlsExport;
+        PageReference pageReference = Page.Hosp_SearchDoctorsXlsExport;
+        pageReference.setRedirect(false);
+        return pageReference;
     }
 
 }

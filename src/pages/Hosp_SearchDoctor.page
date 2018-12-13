@@ -14,11 +14,8 @@
             <center>
                 <apex:commandButton action="{!search}" value="{! $Label.Search }"/>
                 <apex:commandButton action="{!clear}" value="{! $Label.Clear }"/>
-
-
-
-                <apex:commandButton action="{!expToCsv}" value="Export to CSV"/>
-                <apex:commandButton action="{!expToXls}" value="Export to XLS"/>
+                <apex:commandButton action="{!expToCsv}" value="{! $Label.Export_to_CSV}"/>
+                <apex:commandButton action="{!expToXls}" value="{! $Label.Export_to_XLS}"/>
             </center>
 
             <apex:pageBlockSection title="{! $Label.Results }" columns="1" id="doctors_list">
