@@ -32,7 +32,7 @@
                         </apex:commandLink>
                     </apex:column>
 
-                    <apex:column value="{! doc.FirstName__c } {! doc.Name }">
+                    <apex:column value="{! doc.FirstLastName__c }">
                         <apex:facet name="header">
                             <apex:commandLink action="{! sortByName }"
                                               reRender="doctors_list">{! $Label.Name } {! sortOrderSignName }</apex:commandLink>
@@ -55,10 +55,10 @@
                 </apex:pageBlockTable>
 
                 <apex:panelGrid columns="4">
-                    <apex:commandLink action="{!first}">First</apex:commandlink>
-                    <apex:commandLink action="{!previous}" rendered="{!hasPrevious}">Previous</apex:commandlink>
-                    <apex:commandLink action="{!next}" rendered="{!hasNext}">Next</apex:commandlink>
-                    <apex:commandLink action="{!last}">Last</apex:commandlink>
+                    <apex:commandLink action="{!first}">{! $Label.First }</apex:commandlink>
+                    <apex:commandLink action="{!previous}" rendered="{!hasPrevious}">{! $Label.Previous }</apex:commandlink>
+                    <apex:commandLink action="{!next}" rendered="{!hasNext}">{! $Label.Next }</apex:commandlink>
+                    <apex:commandLink action="{!last}">{! $Label.Last }</apex:commandlink>
                 </apex:panelGrid>
 
             </apex:pageBlockSection>

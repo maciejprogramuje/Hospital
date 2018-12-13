@@ -3,11 +3,9 @@
 
     <apex:pageBlock>
         <apex:dataTable value="{! doctorsToExport }" var="doc">
-
-            <apex:column value="{! doc.FirstName__c } {! doc.Name }"/>
+            <apex:column value="{! doc.FirstLastName__c }"/>
             <apex:column value="{! doc.Email__c}"/>
             <apex:column value="{! doc.Country__c}"/>
-
         </apex:dataTable>
     </apex:pageBlock>
 </apex:page>

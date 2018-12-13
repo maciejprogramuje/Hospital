@@ -2,8 +2,9 @@ public with sharing class Hosp_SearchDoctorController {
     public Doctor__c doctor { get; set; }
     public String docId { get; set; }
     public List<Doctor__c> doctorsToExport { get; set; }
+    private Integer paginationSize = 5;
 
-    private String sortOrder = 'FirstName__c';
+    private String sortOrder = 'Name';
     private String sortAscDesc = 'ASC';
     public static final String sortUp = '▲';
     public static final String sortDown = '▼';
@@ -15,7 +16,7 @@ public with sharing class Hosp_SearchDoctorController {
     public ApexPages.StandardSetController ssController { get{
         if(ssController == null) {
             ssController = new ApexPages.StandardSetController(Database.query(queryString()));
-            ssController.setPageSize(5);
+            ssController.setPageSize(paginationSize);
         }
         return ssController;
     } set; }
@@ -35,7 +36,7 @@ public with sharing class Hosp_SearchDoctorController {
     public String queryString() {
         String queryDoctor = 'SELECT Id, Name FROM Doctor__c WHERE Name =\'XXXXXXX\'';
         if(String.isNotBlank(doctor.Name)) {
-            queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\'';
+            queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c, FirstLastName__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\'';
             if (String.isNotBlank(doctor.FirstName__c)) {
                 queryDoctor += ' AND FirstName__c LIKE \'' + doctor.FirstName__c + '%\'';
             }
@@ -121,7 +122,7 @@ public with sharing class Hosp_SearchDoctorController {
     }
 
     public void sortByName() {
-        sortBy('Name, FirstName__c');
+        sortBy('Name');
         clearOrderSigns();
         sortOrderSignName = sortOrderSign;
     }
