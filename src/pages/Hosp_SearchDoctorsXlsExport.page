@@ -1,0 +1,14 @@
+<apex:page id="Hosp_SearchDoctorsXlsExport" controller="Hosp_SearchDoctorController"
+           action="{! expToXls }" readOnly="true" contentType="application/vnd.ms-excel#Hosp_Doctor_List_XLS.xls" showHeader="false" standardStylesheets="false">
+
+    <apex:pageBlock>
+        <apex:dataTable value="{! doctors }" var="doc">
+
+            <apex:column value="{! doc.FirstName__c } {! doc.Name }"/>
+            <apex:column value="{! doc.Email__c}"/>
+            <apex:column value="{! doc.Country__c}"/>
+
+        </apex:dataTable>
+    </apex:pageBlock>
+</apex:page>
+

@@ -1,0 +1,10 @@
+<apex:page id="Hosp_SearchDoctorsCsvExport" controller="Hosp_SearchDoctorController"
+           action="{! expToCsv }" cache="true" contentType="text/csv#Hosp_Doctor_List_CSV.csv" language="en-US">
+
+    <apex:repeat value="{! doctors }" var="doc">
+        "{! doc.FirstName__c } {! doc.Name }",
+        "{! doc.Email__c}",
+        "{! doc.Country__c}"
+    </apex:repeat>
+
+</apex:page>

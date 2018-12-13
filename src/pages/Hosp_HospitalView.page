@@ -1,4 +1,9 @@
 <apex:page id="Hosp_HospitalView" standardController="Hospital__c">
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I&callback=initMap"
+            type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I"></script>
+
     <apex:pageBlock title="{! $Label.Hospital }" mode="edit">
         <apex:messages/>
 
@@ -9,6 +14,8 @@
 
 
         <apex:pageBlockSection title="{! $Label.Address }" columns="2">
+            <apex:outputField value="{! Hospital__c.Street__c }"/>
+            <apex:outputField value="{! Hospital__c.PostalCode__c }"/>
             <apex:outputField value="{! Hospital__c.City__c }"/>
             <apex:outputField value="{! Hospital__c.Country__c }"/>
         </apex:pageBlockSection>
@@ -23,19 +30,15 @@
 
         <apex:pageBlockSection title="{! $Label.Contracts }" columns="1">
             <apex:relatedList list="Contracts__r"/>
-
-
         </apex:pageBlockSection>
 
 
         <div id="map"></div>
+
+        <!--AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I-->
     </apex:pageBlock>
 
-    <script type="text/javascript">
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I&callback=initMap"
-       type="text/javascript"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I"></script>
 
     <script type="text/javascript">
    $(document).ready(function() {
@@ -50,7 +53,8 @@
            var marker;
 
            var geocoder = new google.maps.Geocoder();
-           var address = "{!Hospital__c.Street__c}, {!Hospital__c.PostalCode__c}, {!Hospital__c.City__c}, {!Hospital__c.Country__c}";
+           var address = "{!Hospital__c.Street__c}, {!Hospital__c.PostalCode__c}, {!Hospital__c.City__c}
+        , {!Hospital__c.Country__c}";
            var infowindow = new google.maps.InfoWindow({
                content: "<b>{!Hospital__c.Name}</b><br>" + address + " "
            });
@@ -101,7 +105,8 @@
            }
 
        });
-   </script>
+
+    </script>
 
     <style>
        #map {
@@ -112,8 +117,8 @@
        //min-width:300px;
            background:transparent;
        }
-   </style>
 
+    </style>
 
 
 </apex:page>

@@ -120,4 +120,18 @@ public with sharing class Hosp_SearchDoctorController {
             //sortOrderSign = sortDown;
         }
     }
+
+
+
+
+
+
+    public PageReference expToCsv() {
+        return Page.Hosp_SearchDoctorsCsvExport;
+    }
+
+    public PageReference expToXls() {
+        return Page.Hosp_SearchDoctorsXlsExport;
+    }
+
 }
