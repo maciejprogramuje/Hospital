@@ -1,4 +1,18 @@
 public class Hosp_Utils {
+
+    public static User__c getCurrentUser() {
+        return getUser(UserInfo.getUserId());
+    }
+
+    public static User__c getUser(String userId) {
+        List<User__c> userItem = [SELECT Id, Email__c, Country__c FROM User__c WHERE Id = :userId];
+        if(userItem.isEmpty()) {
+            return null;
+        } else {
+            return userItem[0];
+        }
+    }
+
     public static void sendEmailToDoctor(List<Doctor__c> doctors) {
         List<String> emails = new List<String>();
         for(Doctor__c doctor : doctors) {
@@ -19,4 +33,5 @@ public class Hosp_Utils {
             });
         }
     }
+
 }

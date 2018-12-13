@@ -34,6 +34,7 @@ public with sharing class Hosp_SearchDoctorController {
     }
 
     public String queryString() {
+        //TODO - wyrzucić
         String queryDoctor = 'SELECT Id, Name FROM Doctor__c WHERE Name =\'XXXXXXX\'';
         if(String.isNotBlank(doctor.Name)) {
             queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c, FirstLastName__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\'';

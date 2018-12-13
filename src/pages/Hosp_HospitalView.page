@@ -5,6 +5,17 @@
     <script type="text/javascript"
             src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I"></script>
 
+    <style>
+       #map {
+           font-family: Arial;
+           font-size:12px;
+           line-height:normal !important;
+           height:250px;
+       //min-width:300px;
+           background:transparent;
+       }
+    </style>
+
     <apex:pageBlock title="{! $Label.Hospital }" mode="edit">
         <apex:messages/>
 
@@ -107,15 +118,6 @@
 
     </script>
 
-    <style>
-       #map {
-           font-family: Arial;
-           font-size:12px;
-           line-height:normal !important;
-           height:250px;
-       //min-width:300px;
-           background:transparent;
-       }
-    </style>
+
 
 </apex:page>
