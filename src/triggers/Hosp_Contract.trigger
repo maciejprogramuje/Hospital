@@ -10,7 +10,7 @@ trigger Hosp_Contract on Contract__c (before insert, before update) {
         for(Contract__c contract : contracts) {
             if((contractToCheck.StartDate__c >= contract.StartDate__c && contractToCheck.StartDate__c <= contract.EndDate__c)
                     || (contractToCheck.EndDate__c>= contract.StartDate__c && contractToCheck.EndDate__c <= contract.EndDate__c)) {
-                contract.addError('NIE mogę dodać kontraktu! - addError', false);
+                contractToCheck.addError(Label.Contract_at_the_same_time, false);
             }
         }
     }
