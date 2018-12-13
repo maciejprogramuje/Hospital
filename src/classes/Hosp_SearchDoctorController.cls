@@ -1,8 +1,22 @@
 public with sharing class Hosp_SearchDoctorController {
     public Doctor__c doctor { get; set; }
     public String docId { get; set; }
+
     private String sortOrder = 'FirstName__c';
     private String sortAscDesc = 'ASC';
+    public static final String sortUp = '▲';
+    public static final String sortDown = '▼';
+    public String sortOrderSignName { get; set; }
+    public String sortOrderSignEmail { get; set; }
+    public String sortOrderSignCountry { get; set; }
+    public String sortOrderSign { get; set; }
+
+    public Hosp_SearchDoctorController() {
+        doctor = new Doctor__c(Name = '');
+
+        sortOrderSign = sortDown;
+        sortOrderSignName = sortOrderSign;
+    }
 
     public ApexPages.StandardSetController ssController { get{
         if(ssController == null) {
@@ -14,10 +28,6 @@ public with sharing class Hosp_SearchDoctorController {
 
     public List<Doctor__c> getDoctors() {
         return ssController.getRecords();
-    }
-
-    public Hosp_SearchDoctorController() {
-        doctor = new Doctor__c(Name = '');
     }
 
     public String queryString() {
@@ -95,14 +105,20 @@ public with sharing class Hosp_SearchDoctorController {
 
     public void sortByCountry() {
         sortBy('Country__c');
+        clearOrderSigns();
+        sortOrderSignCountry = sortOrderSign;
     }
 
     public void sortByEmail() {
         sortBy('Email__c');
+        clearOrderSigns();
+        sortOrderSignEmail = sortOrderSign;
     }
 
     public void sortByName() {
-        sortBy('FirstName__c');
+        sortBy('Name, FirstName__c');
+        clearOrderSigns();
+        sortOrderSignName = sortOrderSign;
     }
 
     private void sortBy(String sortBy) {
@@ -114,17 +130,18 @@ public with sharing class Hosp_SearchDoctorController {
     private void flipSortAscDesc() {
         if (sortAscDesc.equals('ASC')) {
             sortAscDesc = 'DESC';
-            //sortOrderSign = sortUp;
+            sortOrderSign = sortUp;
         } else {
             sortAscDesc = 'ASC';
-            //sortOrderSign = sortDown;
+            sortOrderSign = sortDown;
         }
     }
 
-
-
-
-
+    private void clearOrderSigns() {
+        sortOrderSignName = '';
+        sortOrderSignEmail = '';
+        sortOrderSignCountry = '';
+    }
 
     public PageReference expToCsv() {
         return Page.Hosp_SearchDoctorsCsvExport;
