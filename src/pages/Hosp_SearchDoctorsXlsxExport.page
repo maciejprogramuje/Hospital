@@ -1,0 +1,11 @@
+<apex:page id="Hosp_SearchDoctorsXlsxExport" controller="Hosp_SearchDoctorController"
+           readOnly="true" contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet#Hosp_Doctor_List_XLSX.xlsx" showHeader="false" standardStylesheets="false">
+
+    <apex:pageBlock>
+        <apex:dataTable value="{! doctorsToExport }" var="doc">
+            <apex:column value="{! doc.FirstLastName__c }"/>
+            <apex:column value="{! doc.Email__c}"/>
+            <apex:column value="{! doc.Country__c}"/>
+        </apex:dataTable>
+    </apex:pageBlock>
+</apex:page>

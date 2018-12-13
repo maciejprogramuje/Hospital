@@ -104,6 +104,14 @@
                             <option name="name" value="Hosp_SearchDoctorsXlsExport" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorViewPdfExport" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_SearchDoctorsXlsxExport" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="ApexPage" />

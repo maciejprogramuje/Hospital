@@ -34,7 +34,7 @@ public with sharing class Hosp_SearchDoctorController {
     }
 
     public String queryString() {
-        //TODO - wyrzucić
+        //TODO - wyrzucić do buildera
         String queryDoctor = 'SELECT Id, Name FROM Doctor__c WHERE Name =\'XXXXXXX\'';
         if(String.isNotBlank(doctor.Name)) {
             queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c, FirstLastName__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\'';
@@ -162,4 +162,9 @@ public with sharing class Hosp_SearchDoctorController {
         return pageReference;
     }
 
+    public PageReference expToXlsx() {
+        PageReference pageReference = Page.Hosp_SearchDoctorsXlsxExport;
+        pageReference.setRedirect(false);
+        return pageReference;
+    }
 }

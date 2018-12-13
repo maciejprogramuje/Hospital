@@ -1,0 +1,13 @@
+<apex:page id="Hosp_DoctorViewPdfExport" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" showHeader="false" renderAs="pdf">
+    <apex:pageBlock title="Export Results" >
+
+        <apex:outputField value="{! Doctor__c.FirstName__c }"/>
+        <apex:outputField value="{! Doctor__c.Email__c }"/>
+        <apex:outputField value="{! Doctor__c.Name }"/>
+
+        <!--<apex:pageBlockTable value="{! contracts }" var="con">
+            <apex:column value="{! con.ID }"/>
+            <apex:column value="{! con.Name }"/>
+        </apex:pageBlockTable>-->
+    </apex:pageBlock>
+</apex:page>

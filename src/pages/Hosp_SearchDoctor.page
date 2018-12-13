@@ -16,6 +16,7 @@
                 <apex:commandButton action="{!clear}" value="{! $Label.Clear }"/>
                 <apex:commandButton action="{!expToCsv}" value="{! $Label.Export_to_CSV}"/>
                 <apex:commandButton action="{!expToXls}" value="{! $Label.Export_to_XLS}"/>
+                <apex:commandButton action="{!expToXlsx}" value="{! $Label.Export_to_XLSX}"/>
             </center>
 
             <apex:pageBlockSection title="{! $Label.Results }" columns="1" id="doctors_list">
