@@ -15,7 +15,7 @@ public with sharing class Hosp_SearchDoctorController {
 
     public ApexPages.StandardSetController ssController { get{
         if(ssController == null) {
-            ssController = new ApexPages.StandardSetController(Database.query(queryString()));
+            ssController = new ApexPages.StandardSetController(fillDoctorsLists());
             ssController.setPageSize(paginationSize);
         }
         return ssController;
@@ -33,28 +33,11 @@ public with sharing class Hosp_SearchDoctorController {
         return ssController.getRecords();
     }
 
-    public String queryString() {
-        //TODO - wyrzucić do buildera
-        String queryDoctor = 'SELECT Id, Name FROM Doctor__c WHERE Name =\'XXXXXXX\'';
-        if(String.isNotBlank(doctor.Name)) {
-            queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c, FirstLastName__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\'';
-            if (String.isNotBlank(doctor.FirstName__c)) {
-                queryDoctor += ' AND FirstName__c LIKE \'' + doctor.FirstName__c + '%\'';
-            }
-            if (String.isNotBlank(doctor.Email__c)) {
-                queryDoctor += ' AND Email__c LIKE \'' + doctor.Email__c + '%\'';
-            }
-            if (String.isNotBlank(doctor.Country__c)) {
-                queryDoctor += ' AND Country__c LIKE \'' + doctor.Country__c + '%\'';
-            }
-            queryDoctor = queryDoctor + ' ORDER BY ' + sortOrder + ' ' + sortAscDesc;
-        }
-
+    public List<Doctor__c> fillDoctorsLists() {
+        String queryDoctor = Hosp_Utils.doctorQueryBuilder(doctor, sortOrder, sortAscDesc);
         doctorsToExport = Database.query(queryDoctor);
-
-        return queryDoctor;
+        return Database.query(queryDoctor);
     }
-
 
     public void search() {
         ssController = null;

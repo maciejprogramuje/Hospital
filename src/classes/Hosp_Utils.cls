@@ -34,4 +34,23 @@ public class Hosp_Utils {
         }
     }
 
+    public static String doctorQueryBuilder(Doctor__c doctor, String sortOrder, String sortAscDesc) {
+        String queryDoctor = 'SELECT Id FROM Doctor__c LIMIT 0';
+        if(String.isNotBlank(doctor.Name)) {
+            queryDoctor = 'SELECT Id, Name, FirstName__c, Email__c, Country__c, FirstLastName__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\''
+                    + addToWhereIfNotBlank(doctor.FirstName__c) + addToWhereIfNotBlank(doctor.Email__c) + addToWhereIfNotBlank(doctor.Country__c)
+                    + ' ORDER BY ' + sortOrder + ' ' + sortAscDesc;
+        }
+
+        return queryDoctor;
+    }
+
+    private static String addToWhereIfNotBlank(String checkedField) {
+        if (String.isNotBlank(checkedField)) {
+            return ' AND FirstName__c LIKE \'' + checkedField + '%\'';
+        } else {
+            return '';
+        }
+    }
+
 }
