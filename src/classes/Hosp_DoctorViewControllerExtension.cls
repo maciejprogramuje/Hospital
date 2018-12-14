@@ -14,7 +14,11 @@ public with sharing class Hosp_DoctorViewControllerExtension {
             delete contract;
         } else if (contract.StartDate__c < Date.today() && contract.EndDate__c > Date.today()) {
             contract.EndDate__c = Date.today();
-            update contract;
+            try {
+                update contract;
+            } catch (Exception e) {
+                contract.addError(Label.Contract_at_the_same_time, false);
+            }
         }
 
         getContracts();
