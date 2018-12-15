@@ -1,4 +1,23 @@
 <apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+
+    <style>
+            label, input { display:block; }
+            input.text { margin-bottom:12px; width:95%; padding: .4em; }
+            fieldset { padding:0; border:0; margin-top:25px; }
+            h1 { font-size: 1.2em; margin: .6em 0; }
+            div#users-contain { width: 350px; margin: 20px 0; }
+            div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+            div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+            .ui-dialog .ui-state-error { padding: .3em; }
+            .validateTips { border: 1px solid transparent; padding: 0.3em; }
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <apex:pageBlock title="{! $Label.Doctor }" mode="edit">
         <apex:messages/>
 
@@ -11,6 +30,7 @@
                 document.execCommand("copy");
                 document.body.removeChild(aux);
             }
+
         </script>
 
         <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="2">
@@ -39,16 +59,32 @@
             <apex:outputField value="{! Doctor__c.Street__c }"/>
         </apex:pageBlockSection>
 
-        <center>
+        <div align="center">
             <apex:form>
-                <apex:commandButton action="{!edit}" value="{! $Label.Edit }"/>
-                <apex:commandButton action="{!delete}" value="{! $Label.Delete }"
-                                    onclick="if(!confirm('{! $Label.Are_you_sure }')){return false};"/>
-                <apex:commandLink action="{!expToPdf}" target="_blank">
+                <apex:commandButton action="{! edit }" value="{! $Label.Edit }" />
+
+                <apex:commandButton id="opener"
+                                    onclick="showHireDialog('{! firstLastName }'); return false;"
+                                    value="{! $Label.Hire }"
+                                    reRender="none"/>
+
+                <!--onclick="jQuery('#myModal').dialog('open'); return false;"-->
+
+                <apex:commandButton action="{! delete }" value="{! $Label.Delete }"
+                                    onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"/>
+                <apex:commandLink action="{! expToPdf }" target="_blank" style="text-decoration: none">
                     <apex:commandButton value="{! $Label.Export_To_PDF }"/>
                 </apex:commandLink>
+
+
+
+                <apex:actionFunction name="getFirstLastName" action="{! hire }" onComplete="showHireDialog({! firstLastName })">
+                </apex:actionFunction>
+
+
+
             </apex:form>
-        </center>
+        </div>
 
         <apex:pageBlockSection title="{! $Label.Tracking_history }" columns="1">
             <apex:relatedList list="Histories"/>
@@ -77,4 +113,55 @@
         </apex:pageBlockSection>
 
     </apex:pageBlock>
+
+    <div id="myModal"></div>
+
+    <script>
+        function showHireDialog(name) {
+            $("#myModal").dialog({
+                resizable: true,
+                autoOpen: false,
+                height:150,
+                width: 400,
+                modal: true,
+                title: "Hire " + name,
+                buttons: {
+                    "Save": function() {
+                            // Call here your actionFunction
+                    },
+                    Cancel: function() {
+                        $(this).dialog( "close" );
+                    }
+                }
+            });
+            $("#myModal").html(buildDialogContent());
+            $("#myModal").dialog("open");
+        }
+
+        function buildDialogContent() {
+            return '<p>test</p>';
+        }
+
+        /*$(document).ready(function(){
+            $(function("#hireDialog") {
+                $("#myModal").dialog({
+                    resizable: true,
+                    autoOpen: false,
+                    height:150,
+                    width: 400,
+                    modal: true,
+                    title: "Hire " + doctorFirstLastName,
+                    buttons: {
+                        "Save": function() {
+                            // Call here your actionFunction
+                        },
+                        Cancel: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                });
+            });
+        });*/
+    </script>
+
 </apex:page>

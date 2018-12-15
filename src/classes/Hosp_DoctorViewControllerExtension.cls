@@ -2,6 +2,10 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public List<Contract__c> contracts { get; set; }
     public String contractId { get; set; }
     public String doctorId { get; set; }
+    public String firstLastName { get {
+        Doctor__c doctor = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :doctorId];
+        return doctor.FirstLastName__c;
+    } set; }
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
         doctorId = standardController.getRecord().Id;
@@ -32,5 +36,9 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         PageReference pageReference = Page.Hosp_DoctorViewPdfExport;
         pageReference.setRedirect(false);
         return pageReference;
+    }
+
+    public void hire() {
+
     }
 }

@@ -1,3 +1,32 @@
+<apex:page id="Hosp_DoctorViewPdfExport" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" contentType="application/x-pdf#doctor.pdf">
+    <head>
+        <link class="user" href="/sCSS/44.0/sprites/1539205178000/Theme3/default/gc/zen-componentsCompatible.css" rel="stylesheet" type="text/css" />
+        <link class="user" href="/sCSS/44.0/sprites/1539205178000/Theme3/default/gc/elements.css" rel="stylesheet" type="text/css" />
+        <link class="user" href="/sCSS/44.0/sprites/1539205178000/Theme3/default/gc/common.css" rel="stylesheet" type="text/css" />
+        <link class="user" href="/sCSS/44.0/sprites/1544133140000/Theme3/gc/dStandard.css" rel="stylesheet" type="text/css" />
+        <link class="user" href="/sCSS/44.0/sprites/1544133140000/Theme3/00D1t000000smfa/0051t000001bOdR/gc/dCustom0.css" rel="stylesheet" type="text/css" />
+        <link class="user" href="/sCSS/44.0/sprites/1539205178000/Theme3/default/gc/extended.css" rel="stylesheet" type="text/css" />
+        <link class="user" href="/sCSS/44.0/sprites/1539205178000/Theme3/default/gc/setup.css" rel="stylesheet" type="text/css" />
+        <style>
+            * {
+                font-family: Arial, 'Arial Unicode MS', Helvetica, sans-serif;
+            }
+        </style>
+
+    </head>
+    <apex:include pageName="Hosp_DoctorViewInPdf"/>
+</apex:page>
+
+
+
+
+
+
+
+
+
+
+<!--
 <apex:page id="Hosp_DoctorViewPdfExport" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" showHeader="false" renderAs="pdf">
     <apex:pageBlock title="{! $Label.Doctor }" >
 
@@ -41,3 +70,4 @@
         </apex:pageBlockSection>
     </apex:pageBlock>
 </apex:page>
+-->
