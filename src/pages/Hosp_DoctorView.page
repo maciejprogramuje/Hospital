@@ -68,10 +68,9 @@
                                     value="{! $Label.Hire }"
                                     reRender="none"/>
 
-                <!--onclick="jQuery('#myModal').dialog('open'); return false;"-->
-
                 <apex:commandButton action="{! delete }" value="{! $Label.Delete }"
                                     onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"/>
+
                 <apex:commandLink action="{! expToPdf }" target="_blank" style="text-decoration: none">
                     <apex:commandButton value="{! $Label.Export_To_PDF }"/>
                 </apex:commandLink>
@@ -97,8 +96,7 @@
                     <apex:form>
                         <apex:commandLink action="{! dismiss }" reRender="contracts_list" style="text-decoration:none">
                             <apex:param name="contractId" value="{! contr.Id }" assignTo="{! contractId }"/>
-                            <apex:commandButton value="{! $Label.Dismiss }"
-                                                rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
+                            <apex:commandButton value="{! $Label.Dismiss }" rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
                         </apex:commandLink>
                     </apex:form>
                 </apex:column>
@@ -121,7 +119,7 @@
             $("#myModal").dialog({
                 resizable: true,
                 autoOpen: false,
-                height:150,
+                height:500,
                 width: 400,
                 modal: true,
                 title: "Hire " + name,
@@ -139,29 +137,24 @@
         }
 
         function buildDialogContent() {
-            return '<p>test</p>';
-        }
+            var hireModalPage = '<p>Search form</p>'
+                + ' <form>'
+                + ' <label for="name" style="float: left">Name</label>'
+                + ' <input type="text" name="name" id="name" value="" >'
+                + ' <label for="country">Country</label> '
+                + ' <input type="text" name="country" id="country" value="" >'
+                + ' <label for="www">WWW</label>'
+                + ' <input type="text" name="www" id="www" value="" >'
+                + ' <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">'
+                + ' <button type="submit">Search</button>'
+                + ' <button type="button">Clear</button>'
+                + ''
+                + ''
+                + ''
+                + '</form>';
 
-        /*$(document).ready(function(){
-            $(function("#hireDialog") {
-                $("#myModal").dialog({
-                    resizable: true,
-                    autoOpen: false,
-                    height:150,
-                    width: 400,
-                    modal: true,
-                    title: "Hire " + doctorFirstLastName,
-                    buttons: {
-                        "Save": function() {
-                            // Call here your actionFunction
-                        },
-                        Cancel: function() {
-                            $( this ).dialog( "close" );
-                        }
-                    }
-                });
-            });
-        });*/
+            return hireModalPage;
+        }
     </script>
 
 </apex:page>
