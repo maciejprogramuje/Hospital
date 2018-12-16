@@ -27,14 +27,21 @@
         </apex:pageBlockSection>
 
 
-        <apex:pageBlockSection title="{! $Label.Address }" columns="2" collapsible="true" id="sectionAddress">
-            <apex:outputField value="{! Hospital__c.Street__c }"/>
-            <apex:outputField value="{! Hospital__c.PostalCode__c }"/>
-            <apex:outputField value="{! Hospital__c.City__c }"/>
-            <apex:outputField value="{! Hospital__c.Country__c }"/>
+        <apex:pageBlockSection title="{! $Label.Address }" columns="1" collapsible="true" id="sectionAddress">
+            <apex:pageBlockSection columns="2">
+                <apex:outputField value="{! Hospital__c.Street__c }" style="float: left"/>
+                <apex:outputField value="{! Hospital__c.PostalCode__c }" style="clear: both"/>
+                <apex:outputField value="{! Hospital__c.City__c }" style="float: left"/>
+                <apex:outputField value="{! Hospital__c.Country__c }" style="clear: both"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1">
+                <div id="map"/>
+            </apex:pageBlockSection>
 
-            <div id="map"/>
         </apex:pageBlockSection>
+
+
+
 
         <center>
             <apex:form>
