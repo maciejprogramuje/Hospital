@@ -18,7 +18,7 @@
        }
     </style>
 
-    <apex:pageBlock title="{! $Label.Hospital }" mode="detail">
+    <apex:pageBlock title="{! $Label.Hospital }" mode="detail" id="block1">
         <apex:messages/>
 
         <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="2" collapsible="false">
@@ -27,7 +27,7 @@
         </apex:pageBlockSection>
 
 
-        <apex:pageBlockSection title="{! $Label.Address }" columns="2" collapsible="true">
+        <apex:pageBlockSection title="{! $Label.Address }" columns="2" collapsible="true" id="sectionAddress">
             <apex:outputField value="{! Hospital__c.Street__c }"/>
             <apex:outputField value="{! Hospital__c.PostalCode__c }"/>
             <apex:outputField value="{! Hospital__c.City__c }"/>
@@ -48,11 +48,17 @@
             <apex:relatedList list="Contracts__r"/>
         </apex:pageBlockSection>
 
+        <apex:pageBlockSection title="{! $Label.Hierarchy_of_Hospitals }" columns="1" collapsible="false">
+            <c:Hosp_HospitalHierarchyComponent currentHospitalId="Hospital__c.Id"/>
+        </apex:pageBlockSection>
+
         <!--AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I-->
     </apex:pageBlock>
 
 
     <script type="text/javascript">
+    twistSection(document.getElementById('{!$Component.block1.sectionAddress}').getElementsByTagName('img')[0])
+
     $(document).ready(function() {
         var myOptions = {
                zoom: 15,

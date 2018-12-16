@@ -13,17 +13,17 @@ public with sharing class Hosp_SearchDoctorController {
     public String sortOrderSignCountry { get; set; }
     public String sortOrderSign { get; set; }
 
-    public ApexPages.StandardSetController ssController {
+    public ApexPages.StandardSetController stdSetController {
         get {
-            if (ssController == null) {
+            if (stdSetController == null) {
                 if (String.isNotBlank(doctor.Name)) {
-                    ssController = new ApexPages.StandardSetController(fillDoctorsLists());
-                    ssController.setPageSize(paginationSize);
+                    stdSetController = new ApexPages.StandardSetController(fillDoctorsLists());
+                    stdSetController.setPageSize(paginationSize);
                 } else {
-                    ssController = new ApexPages.StandardSetController(new List<Doctor__c>());
+                    stdSetController = new ApexPages.StandardSetController(new List<Doctor__c>());
                 }
             }
-            return ssController;
+            return stdSetController;
         }
         set;
     }
@@ -37,7 +37,7 @@ public with sharing class Hosp_SearchDoctorController {
     }
 
     public List<Doctor__c> getDoctors() {
-        return ssController.getRecords();
+        return stdSetController.getRecords();
     }
 
     public List<Doctor__c> fillDoctorsLists() {
@@ -47,57 +47,53 @@ public with sharing class Hosp_SearchDoctorController {
     }
 
     public void search() {
-        ssController = null;
+        stdSetController = null;
     }
 
     public Boolean hasNext {
         get {
-            return ssController.getHasNext();
+            return stdSetController.getHasNext();
         }
         set;
     }
 
     public Boolean hasPrevious {
         get {
-            return ssController.getHasPrevious();
+            return stdSetController.getHasPrevious();
         }
         set;
     }
 
     public Integer pageNumber {
         get {
-            return ssController.getPageNumber();
+            return stdSetController.getPageNumber();
         }
         set;
     }
 
     public void first() {
-        ssController.first();
+        stdSetController.first();
     }
 
     public void last() {
-        ssController.last();
+        stdSetController.last();
     }
 
     public void previous() {
-        ssController.previous();
+        stdSetController.previous();
     }
 
     public void next() {
-        ssController.next();
+        stdSetController.next();
     }
 
     public void cancel() {
-        ssController.cancel();
+        stdSetController.cancel();
     }
 
     public void clear() {
-        doctor.FirstName__c = '';
-        doctor.Name = '';
-        doctor.Email__c = '';
-        doctor.Country__c = null;
-
-        ssController = null;
+        doctor = new Doctor__c(Name = '');
+        stdSetController = null;
     }
 
     public void sortByCountry() {
