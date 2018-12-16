@@ -13,13 +13,20 @@ public with sharing class Hosp_SearchDoctorController {
     public String sortOrderSignCountry { get; set; }
     public String sortOrderSign { get; set; }
 
-    public ApexPages.StandardSetController ssController { get{
-        if(ssController == null) {
-            ssController = new ApexPages.StandardSetController(fillDoctorsLists());
-            ssController.setPageSize(paginationSize);
+    public ApexPages.StandardSetController ssController {
+        get {
+            if (ssController == null) {
+                if (String.isNotBlank(doctor.Name)) {
+                    ssController = new ApexPages.StandardSetController(fillDoctorsLists());
+                    ssController.setPageSize(paginationSize);
+                } else {
+                    ssController = new ApexPages.StandardSetController(new List<Doctor__c>());
+                }
+            }
+            return ssController;
         }
-        return ssController;
-    } set; }
+        set;
+    }
 
     public Hosp_SearchDoctorController() {
         doctor = new Doctor__c(Name = '');

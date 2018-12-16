@@ -141,19 +141,21 @@
                 + ' <form>'
                 + ' <label for="name" style="float: left">Name</label>'
                 + ' <input type="text" name="name" id="name" value="" >'
-                + ' <label for="country">Country</label> '
+                + ' <label for="country" style="float: left">Country</label> '
                 + ' <input type="text" name="country" id="country" value="" >'
-                + ' <label for="www">WWW</label>'
+                + ' <label for="www" style="float: left">WWW</label>'
                 + ' <input type="text" name="www" id="www" value="" >'
                 + ' <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">'
-                + ' <button type="submit">Search</button>'
+                + ' <button type="button" onclick="showResultHospitalsList(); return false;">Search</button>'
                 + ' <button type="button">Clear</button>'
-                + ''
-                + ''
                 + ''
                 + '</form>';
 
             return hireModalPage;
+        }
+
+        function showResultHospitalsList() {
+
         }
     </script>
 
