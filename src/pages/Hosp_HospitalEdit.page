@@ -16,8 +16,8 @@
             </apex:pageBlockSection>
 
             <center>
-                <apex:commandButton action="{!save}" value="{! $Label.Save }"/>
-                <apex:commandButton action="{!cancel}" value="{! $Label.Cancel }"/>
+                <apex:commandButton action="{! save }" value="{! $Label.Save }"/>
+                <apex:commandButton action="{! cancel }" value="{! $Label.Cancel }"/>
             </center>
 
         </apex:pageBlock>

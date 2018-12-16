@@ -12,11 +12,11 @@
             </apex:pageBlockSection>
 
             <center>
-                <apex:commandButton action="{!search}" value="{! $Label.Search }"/>
-                <apex:commandButton action="{!clear}" value="{! $Label.Clear }"/>
+                <apex:commandButton action="{! search }" value="{! $Label.Search }"/>
+                <apex:commandButton action="{! clear }" value="{! $Label.Clear }"/>
                 <apex:commandButton action="{! expToCsv }" value="{! $Label.Export_to_CSV }"/>
-                <apex:commandButton action="{!expToXls}" value="{! $Label.Export_to_XLS}"/>
-                <apex:commandButton action="{!expToXlsx}" value="{! $Label.Export_to_XLSX}"/>
+                <apex:commandButton action="{! expToXls }" value="{! $Label.Export_to_XLS}"/>
+                <apex:commandButton action="{! expToXlsx }" value="{! $Label.Export_to_XLSX}"/>
             </center>
 
             <apex:pageBlockSection title="{! $Label.Results }" columns="1" id="doctors_list">
@@ -28,7 +28,7 @@
                             <apex:commandButton value="{! $Label.Edit }"/>
                         </apex:commandLink>
 
-                        <apex:commandLink action="/{! doc.id}" target="_blank" style="text-decoration:none">
+                        <apex:commandLink action="/{! doc.id }" target="_blank" style="text-decoration:none">
                             <apex:commandButton value="{! $Label.View_Action }"/>
                         </apex:commandLink>
                     </apex:column>
@@ -56,10 +56,10 @@
                 </apex:pageBlockTable>
 
                 <apex:panelGrid columns="4">
-                    <apex:commandLink action="{!first}">{! $Label.First }</apex:commandlink>
-                    <apex:commandLink action="{!previous}" rendered="{!hasPrevious}">{! $Label.Previous }</apex:commandlink>
-                    <apex:commandLink action="{!next}" rendered="{!hasNext}">{! $Label.Next }</apex:commandlink>
-                    <apex:commandLink action="{!last}">{! $Label.Last }</apex:commandlink>
+                    <apex:commandLink action="{! first }">{! $Label.First }</apex:commandlink>
+                    <apex:commandLink action="{! previous} " rendered="{! hasPrevious }">{! $Label.Previous }</apex:commandlink>
+                    <apex:commandLink action="{! next }" rendered="{! hasNext }">{! $Label.Next }</apex:commandlink>
+                    <apex:commandLink action="{! last }">{! $Label.Last }</apex:commandlink>
                 </apex:panelGrid>
 
             </apex:pageBlockSection>

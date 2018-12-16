@@ -1,5 +1,5 @@
-<apex:page id="Hosp_SearchDoctorsCsvExport" controller="Hosp_SearchDoctorController" cache="true" language="en-US" contentType="application/octet-stream#Hosp_Doctor_List_CSV.csv">"{! $Label.Name}","{! $Label.Email}","{! $Label.Country_Column}"
+<apex:page id="Hosp_SearchDoctorsCsvExport" controller="Hosp_SearchDoctorController" cache="true" language="en-US" contentType="application/octet-stream#Hosp_Doctor_List_CSV.csv">"{! $ObjectType.Doctor__c.fields.Name.label }","{! $ObjectType.Doctor__c.fields.Email.label }","{! $ObjectType.Doctor__c.fields.Country_Column.label }"
 <apex:repeat value="{! doctorsToExport }" var="doc">
-"{! doc.FirstLastName__c }","{! doc.Email__c}","{! doc.Country__c}"
+"{! doc.FirstLastName__c }","{! doc.Email__c }","{! doc.Country__c }"
 </apex:repeat>
 </apex:page>
