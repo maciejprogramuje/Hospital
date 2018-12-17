@@ -18,11 +18,18 @@ public with sharing class Hosp_ContractHandler {
                         || (contractToCheck.EndDate__c >= contract.StartDate__c && contractToCheck.EndDate__c <= contract.EndDate__c)
                         || (contractToCheck.StartDate__c < contract.StartDate__c && contractToCheck.EndDate__c > contract.EndDate__c)) {
 
-                    String lineMessage = ' ' + contract.StartDate__c.format() + ' - ' + contract.EndDate__c.format() + ', ';
+                    List<Date> conflictDates = new List<Date>{contract.StartDate__c, contract.EndDate__c};
+                    conflictDates.sort();
+                    List<String> conflictStrings = new List<String>();
+                    for(Date d : conflictDates) {
+                        conflictStrings.add(d.format());
+                    }
+
+                    String lineMessage = String.format(', from {0} to {1}', conflictStrings);
 
                     message += lineMessage;
 
-                    contractToCheck.addError(Label.Contract_at_the_same_time + message, false);
+                    contractToCheck.addError(String.format('{0}{1}', new List<String>{Label.Contract_at_the_same_time, message}), false);
                 }
             }
         }
