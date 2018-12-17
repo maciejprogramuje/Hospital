@@ -12,7 +12,7 @@
 
             <center>
                 <apex:commandButton value="{! $Label.Search }" action="{! searchHospitals }" reRender="resultsDiv"/>
-                <apex:commandButton value="{! $Label.Clear }" action="{! clearSearchForm }" reRender="searchForm, resultsDiv, contractDetailsDiv" immediate="false"/>
+                <apex:commandButton value="{! $Label.Clear }" action="{! clearSearchForm }" reRender="searchForm, resultsDiv, contractDetailsDiv" immediate="true"/>
             </center>
 
             <apex:outputPanel id="resultsDiv">
@@ -43,7 +43,11 @@
 
                     <apex:pageBlock mode="maindetail">
                         <apex:pageBlockButtons location="top">
-                            <apex:commandButton value="Hire" action="{! hireDoctor }"/>
+
+
+                            <apex:commandButton value="Hire" action="{! hireDoctor }" onClick="hideModal()" reRender="contracts_list"/>
+
+
                             <apex:commandButton value="Cancel" action="{! cancel }" immediate="false" onClick="hideModal()" reRender="searchForm, resultsDiv, contractDetailsDiv"/>
                         </apex:pageBlockButtons>
                     </apex:pageBlock>

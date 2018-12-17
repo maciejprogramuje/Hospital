@@ -28,7 +28,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         getContracts();
     }
 
-    private void getContracts() {
+    public void getContracts() {
         contracts = [SELECT Id, Name, StartDate__c, EndDate__c, Doctor__r.Name, Doctor__r.FirstName__c, Doctor__r.FirstLastName__c, Doctor__r.Id, Hospital__r.Name FROM Contract__c WHERE Doctor__c = :doctorIdCurrent];
     }
 

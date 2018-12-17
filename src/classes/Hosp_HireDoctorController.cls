@@ -13,10 +13,30 @@ public with sharing class Hosp_HireDoctorController {
     }
 
     public void searchHospitals() {
-        String query = 'SELECT Id, Name, Country__c, City__c, WWW__c FROM Hospital__c WHERE Name LIKE \'' + hospital.Name + '%\'';
-        //String query = 'SELECT Id, Name, Country__c, City__c, WWW__c FROM Hospital__c WHERE Name LIKE \'' + hospital.Name + '%\' OR Country__c LIKE \'' + hospital.Country__c + '%\' OR WWW__c LIKE ' + hospital.WWW__c + '%\'';
+        String query = '';
 
-        hospitals = Database.query(query);
+        if(String.isNotBlank(hospital.Name)) {
+            query += 'SELECT Id, Name, Country__c, City__c, WWW__c FROM Hospital__c WHERE Name LIKE \'' + hospital.Name + '%\'';
+            if(String.isNotBlank(hospital.WWW__c)) {
+                query += ' AND WWW__c LIKE \'' + hospital.WWW__c + '%\'';
+            }
+            if(String.isNotBlank(hospital.Country__c)) {
+                query += ' AND Country__c = \'' + hospital.Country__c + '\'';
+            }
+        } else if(String.isNotBlank(hospital.WWW__c)) {
+            query += 'SELECT Id, Name, Country__c, City__c, WWW__c FROM Hospital__c WHERE WWW__c LIKE \'' + hospital.WWW__c + '%\'';
+            if(String.isNotBlank(hospital.Country__c)) {
+                query += ' AND Country__c = \'' + hospital.Country__c + '\'';
+            }
+        } else if(String.isNotBlank(hospital.Country__c)) {
+            query += 'SELECT Id, Name, Country__c, City__c, WWW__c FROM Hospital__c WHERE Country__c = \'' + hospital.Country__c + '\'';
+        }
+
+        if(String.isNotBlank(query)) {
+            hospitals = Database.query(query);
+        } else {
+            setHospitalsEmpty();
+        }
 
         setWrappersEmpty();
 
