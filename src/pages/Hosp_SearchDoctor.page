@@ -57,7 +57,7 @@
 
                 <apex:panelGrid columns="4">
                     <apex:commandLink action="{! first }">{! $Label.First }</apex:commandlink>
-                    <apex:commandLink action="{! previous} " rendered="{! hasPrevious }">{! $Label.Previous }</apex:commandlink>
+                    <apex:commandLink action="{! previous } " rendered="{! hasPrevious }">{! $Label.Previous }</apex:commandlink>
                     <apex:commandLink action="{! next }" rendered="{! hasNext }">{! $Label.Next }</apex:commandlink>
                     <apex:commandLink action="{! last }">{! $Label.Last }</apex:commandlink>
                 </apex:panelGrid>

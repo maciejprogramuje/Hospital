@@ -1,4 +1,4 @@
-<apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension">
+<apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" >
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 
@@ -12,7 +12,7 @@
             div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
             .ui-dialog .ui-state-error { padding: .3em; }
             .validateTips { border: 1px solid transparent; padding: 0.3em; }
-
+            .datePicker { z-index: 200 }
     </style>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -75,12 +75,8 @@
                     <apex:commandButton value="{! $Label.Export_To_PDF }"/>
                 </apex:commandLink>
 
-
-
                 <apex:actionFunction name="getFirstLastName" action="{! hire }" onComplete="showHireDialog({! firstLastName })">
                 </apex:actionFunction>
-
-
 
             </apex:form>
         </div>
@@ -112,50 +108,21 @@
 
     </apex:pageBlock>
 
-    <div id="myModal"></div>
+    <div id="myModal" style="display: none">
+        <c:Hosp_HireDoctorComponent doctorId="{! Doctor__c.Id }"/>
+    </div>
 
     <script>
         function showHireDialog(name) {
             $("#myModal").dialog({
                 resizable: true,
                 autoOpen: false,
-                height:500,
-                width: 400,
+                height:600,
+                width: 600,
                 modal: true,
-                title: "Hire " + name,
-                buttons: {
-                    "Save": function() {
-                            // Call here your actionFunction
-                    },
-                    Cancel: function() {
-                        $(this).dialog( "close" );
-                    }
-                }
+                title: "Hire " + name
             });
-            $("#myModal").html(buildDialogContent());
             $("#myModal").dialog("open");
-        }
-
-        function buildDialogContent() {
-            var hireModalPage = '<p>Search form</p>'
-                + ' <form>'
-                + ' <label for="name" style="float: left">Name</label>'
-                + ' <input type="text" name="name" id="name" value="" >'
-                + ' <label for="country" style="float: left">Country</label> '
-                + ' <input type="text" name="country" id="country" value="" >'
-                + ' <label for="www" style="float: left">WWW</label>'
-                + ' <input type="text" name="www" id="www" value="" >'
-                + ' <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">'
-                + ' <button type="button" onclick="showResultHospitalsList(); return false;">Search</button>'
-                + ' <button type="button">Clear</button>'
-                + ''
-                + '</form>';
-
-            return hireModalPage;
-        }
-
-        function showResultHospitalsList() {
-
         }
     </script>
 

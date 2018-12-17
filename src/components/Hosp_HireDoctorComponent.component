@@ -1,0 +1,64 @@
+<apex:component id="Hosp_HireDoctorComponent" controller="Hosp_HireDoctorController" allowDML="true">
+
+    <apex:attribute name="doctorId" description="This is the Doctor Id" type="String" required="true" assignTo="{! currentDoctorId }"/>
+
+    <apex:pageBlock mode="edit">
+        <apex:form>
+            <apex:pageBlockSection id="searchForm" title="Search Form" columns="2">
+                <apex:inputField value="{! hospital.Name }"/>
+                <apex:inputField value="{! hospital.Country__c }"/>
+                <apex:inputField value="{! hospital.WWW__c }"/>
+            </apex:pageBlockSection>
+
+            <center>
+                <apex:commandButton value="{! $Label.Search }" action="{! searchHospitals }" reRender="resultsDiv"/>
+                <apex:commandButton value="{! $Label.Clear }" action="{! clearSearchForm }" reRender="searchForm, resultsDiv, contractDetailsDiv" immediate="false"/>
+            </center>
+
+            <apex:outputPanel id="resultsDiv">
+                <apex:pageBlockSection id="results" title="Results" columns="1" rendered="{! hospitals.size > 0 }">
+                    <apex:pageBlockTable value="{! wrappers }" var="hosp" columns="4" columnsWidth="10%,30%,30%,30%">
+                        <apex:column headerValue="{! $Label.Actions }">
+                            <apex:commandButton value="Select" reRender="contractDetailsDiv, results" action="{! changeSelect}" rendered="{! !hosp.isSelected }">
+                                <apex:param name="hospitalId" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>
+                            </apex:commandButton>
+                        </apex:column>
+
+                        <apex:column value="{! hosp.hospitalName }"/>
+                        <apex:column value="{! hosp.hospitalCountry }"/>
+                        <apex:column value="{! hosp.hospitalCity }"/>
+
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="contractDetailsDiv">
+                <apex:pageBlockSection id="contractDetails" title="Contract Details" columns="2" rendered="{! selectedHospitalId != null }">
+                    <apex:outputField value="{! doctor.FirstLastName__c }"/>
+                    <apex:outputField value="{! selectedHospital.Name }"/>
+
+                    <apex:inputField value="{! contract.StartDate__c }"/>
+                    <apex:inputField value="{! contract.EndDate__c }"/>
+
+
+                    <apex:pageBlock mode="maindetail">
+                        <apex:pageBlockButtons location="top">
+                            <apex:commandButton value="Hire" action="{! hireDoctor }"/>
+                            <apex:commandButton value="Cancel" action="{! cancel }" immediate="false" onClick="hideModal()" reRender="searchForm, resultsDiv, contractDetailsDiv"/>
+                        </apex:pageBlockButtons>
+                    </apex:pageBlock>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+        </apex:form>
+    </apex:pageBlock>
+
+    <script>
+        function hideModal() {
+            $('#myModal').dialog('close');
+        }
+
+    </script>
+
+</apex:component>
