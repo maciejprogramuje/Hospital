@@ -5,6 +5,7 @@ public class Hosp_DoctorEditControllerExtension {
         this.standardController = standardController;
     }
 
+
     public PageReference save() {
         Doctor__c doctor = (Doctor__c) standardController.getRecord();
 

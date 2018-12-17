@@ -40,9 +40,13 @@ public with sharing class Hosp_HireDoctorController {
         return [SELECT Id, Name FROM Hospital__c WHERE Id = :selectedHospitalId];
     }
 
-    public void hireDoctor() {
+    public PageReference hireDoctor() {
         Contract__c contractToInsert = new Contract__c(Doctor__c = currentDoctorId, Hospital__c = selectedHospitalId, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
         insert contractToInsert;
+
+        PageReference acctPage = new PageReference('/' + currentDoctorId);
+        acctPage.setRedirect(true);
+        return acctPage;
     }
 
     public void cancel() {

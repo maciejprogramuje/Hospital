@@ -56,15 +56,19 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_ContractHolder" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Hosp_HospitalHierarchyController" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_HireDoctorController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_ContractHandler" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorProfileImageController" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
@@ -138,6 +142,10 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_DoctorViewInPdf" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorProfileImage" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>

@@ -4,6 +4,8 @@
 
     <apex:pageBlock mode="edit">
         <apex:form>
+            <apex:messages />
+
             <apex:pageBlockSection id="searchForm" title="Search Form" columns="2">
                 <apex:inputField value="{! hospital.Name }"/>
                 <apex:inputField value="{! hospital.Country__c }"/>
@@ -43,11 +45,7 @@
 
                     <apex:pageBlock mode="maindetail">
                         <apex:pageBlockButtons location="top">
-
-
-                            <apex:commandButton value="Hire" action="{! hireDoctor }" onClick="hideModal()" reRender="contracts_list"/>
-
-
+                            <apex:commandButton value="Hire" action="{! hireDoctor }"  onClick="hideModal()" reRender="contracts_list"/>
                             <apex:commandButton value="Cancel" action="{! cancel }" immediate="false" onClick="hideModal()" reRender="searchForm, resultsDiv, contractDetailsDiv"/>
                         </apex:pageBlockButtons>
                     </apex:pageBlock>
@@ -61,6 +59,8 @@
     <script>
         function hideModal() {
             $('#myModal').dialog('close');
+
+            /*opener.location.reload();*/
         }
 
     </script>

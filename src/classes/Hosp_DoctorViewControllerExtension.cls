@@ -6,6 +6,8 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         Doctor__c doctor = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :doctorIdCurrent];
         return doctor.FirstLastName__c;
     } set; }
+    public String recordId;
+    public String pageReferenceUrl;
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
         doctorIdCurrent = standardController.getRecord().Id;
@@ -18,11 +20,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
             delete contract;
         } else if (contract.StartDate__c < Date.today() && contract.EndDate__c > Date.today()) {
             contract.EndDate__c = Date.today();
-            try {
-                update contract;
-            } catch (Exception e) {
-                contract.addError(Label.Contract_at_the_same_time, false);
-            }
+            update contract;
         }
 
         getContracts();
@@ -40,5 +38,23 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
     public void hire() {
 
+    }
+
+    public PageReference changeRecordPicture() {
+        PageReference cropImagePage = Page.Hosp_DoctorProfileImage;
+        //cropImagePage.getParameters().put('recordId', doctorId);
+        cropImagePage.getParameters().put('recordId', doctorIdCurrent);
+        cropImagePage.getParameters().put('pageReferenceURL', ApexPages.currentPage().getUrl());
+        cropImagePage.setRedirect(true);
+
+        return cropImagePage;
+    }
+
+    private PageReference prepareRecordPageReference() {
+        PageReference recordPageReference = new PageReference(pageReferenceUrl);
+        recordPageReference.getParameters().put('id', recordId);
+        recordPageReference.setRedirect(false);
+
+        return recordPageReference;
     }
 }

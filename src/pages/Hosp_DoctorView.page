@@ -1,4 +1,4 @@
-<apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" >
+<apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 
@@ -13,6 +13,16 @@
             .ui-dialog .ui-state-error { padding: .3em; }
             .validateTips { border: 1px solid transparent; padding: 0.3em; }
             .datePicker { z-index: 200 }
+
+
+            .column {
+                float: left;
+                width: 25%;
+            }
+            .content {
+                width: 75%;
+            }
+
     </style>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -33,31 +43,42 @@
 
         </script>
 
-        <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="2">
-            <apex:outputField value="{! Doctor__c.FirstName__c }"/>
-            <apex:outputField value="{! Doctor__c.Email__c }"/>
-            <apex:outputField value="{! Doctor__c.Name }"/>
-
-            <apex:pageBlockSectionItem>
-                <apex:outputText value="{! $ObjectType.Doctor__c.fields.Phone__c.Label }"/>
+        <div>
+            <div class="column">
                 <apex:form>
-                    <apex:pageBlockSectionItem>
-                        <apex:outputField id="copytext" value="{! Doctor__c.Phone__c }"/>
-
-                        <apex:commandButton onClick="copyToClipboard('{! $Component.copytext}');" reRender="copytext"
-                                            value="{! $Label.Copy_Label }"/>
-
-                    </apex:pageBlockSectionItem>
+                    <apex:commandButton value="Upload" action="{!changeRecordPicture}"/>
                 </apex:form>
-            </apex:pageBlockSectionItem>
+            </div>
+            <div class="column content">
+                <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="2">
+                    <apex:outputField value="{! Doctor__c.FirstName__c }"/>
+                    <apex:outputField value="{! Doctor__c.Email__c }"/>
+                    <apex:outputField value="{! Doctor__c.Name }"/>
 
-        </apex:pageBlockSection>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputText value="{! $ObjectType.Doctor__c.fields.Phone__c.Label }"/>
+                        <apex:form>
+                            <apex:pageBlockSectionItem>
+                                <apex:outputField id="copytext" value="{! Doctor__c.Phone__c }"/>
 
-        <apex:pageBlockSection title="{! $Label.Address }" columns="2">
-            <apex:outputField value="{! Doctor__c.City__c }"/>
-            <apex:outputField value="{! Doctor__c.Country__c }"/>
-            <apex:outputField value="{! Doctor__c.Street__c }"/>
-        </apex:pageBlockSection>
+                                <apex:commandButton onClick="copyToClipboard('{! $Component.copytext}');" reRender="copytext"
+                                                    value="{! $Label.Copy_Label }"/>
+
+                            </apex:pageBlockSectionItem>
+                        </apex:form>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection title="{! $Label.Address }" columns="2">
+                    <apex:outputField value="{! Doctor__c.City__c }"/>
+                    <apex:outputField value="{! Doctor__c.Country__c }"/>
+                    <apex:outputField value="{! Doctor__c.Street__c }"/>
+                </apex:pageBlockSection>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+
+
 
         <div align="center">
             <apex:form>
