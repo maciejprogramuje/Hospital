@@ -141,10 +141,6 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_DoctorViewInPdf" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Hosp_DoctorProfileImage" />
                             <option name="selected" value="true" />
                           </MetadataEntry>

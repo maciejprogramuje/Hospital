@@ -6,7 +6,7 @@
         <apex:form>
             <apex:messages />
 
-            <apex:pageBlockSection id="searchForm" title="Search Form" columns="2">
+            <apex:pageBlockSection id="searchForm" title="{! $Label.Hospital_Search_Form }" columns="2">
                 <apex:inputField value="{! hospital.Name }"/>
                 <apex:inputField value="{! hospital.Country__c }"/>
                 <apex:inputField value="{! hospital.WWW__c }"/>
@@ -18,7 +18,7 @@
             </center>
 
             <apex:outputPanel id="resultsDiv">
-                <apex:pageBlockSection id="results" title="Results" columns="1" rendered="{! hospitals.size > 0 }">
+                <apex:pageBlockSection id="results" title="{! $Label.Hospital_Results }" columns="1" rendered="{! hospitals.size > 0 }">
                     <apex:pageBlockTable value="{! wrappers }" var="hosp" columns="4" columnsWidth="10%,30%,30%,30%">
                         <apex:column headerValue="{! $Label.Actions }">
                             <apex:commandButton value="Select" reRender="contractDetailsDiv, results" action="{! changeSelect}" rendered="{! !hosp.isSelected }">
@@ -35,7 +35,7 @@
             </apex:outputPanel>
 
             <apex:outputPanel id="contractDetailsDiv">
-                <apex:pageBlockSection id="contractDetails" title="Contract Details" columns="2" rendered="{! selectedHospitalId != null }">
+                <apex:pageBlockSection id="contractDetails" title="{! $Label.Contract_Details }" columns="2" rendered="{! selectedHospitalId != null }">
                     <apex:outputField value="{! doctor.FirstLastName__c }"/>
                     <apex:outputField value="{! selectedHospital.Name }"/>
 
@@ -59,8 +59,6 @@
     <script>
         function hideModal() {
             $('#myModal').dialog('close');
-
-            /*opener.location.reload();*/
         }
 
     </script>

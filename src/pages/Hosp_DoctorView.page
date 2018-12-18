@@ -14,7 +14,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <apex:pageBlock title="{! $Label.Doctor }" mode="edit">
+    <apex:pageBlock id='wholeDoctorView' title="{! $Label.Doctor }" mode="edit">
         <apex:messages/>
 
         <script language="JavaScript">
@@ -45,16 +45,14 @@
         </script>
 
         <div>
-
             <div class="column">
                 <apex:image width="200" value="{! URLFOR($Action.Attachment.Download, avatarSrc.Id)}" id="doctorCustomAvatar" rendered="{! hasAvatar }"/>
                 <apex:image width="200" value="{! $Resource.man}" id="doctorDefaultAvatar" rendered="{! NOT(hasAvatar) }"/>
 
                 <apex:form>
-                    <apex:commandButton value="Upload" action="{! changeRecordPicture }" rendered="{! renderingService != 'PDF' }"/>
+                    <apex:commandButton value="{! $Label.Upload}" action="{! changeRecordPicture }" rendered="{! renderingService != 'PDF' }"/>
+                    <apex:commandButton value="{! $Label.Delete}" action="{! changeRecordPictureToDefault }" rendered="{! renderingService != 'PDF' }" reRender="wholeDoctorView"/>
                 </apex:form>
-
-
             </div>
 
             <div class="column content">
@@ -102,10 +100,10 @@
                                     onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"/>
 
                 <apex:commandLink action="{! expToPdf }" target="_blank" style="text-decoration: none">
-                    <apex:commandButton value="{! $Label.Export_To_PDF }"/>
+                    <apex:commandButton value="{! $Label.Export_To_PDF }"/>`
                 </apex:commandLink>
 
-                <apex:actionFunction name="getFirstLastName" action="{! hire }" onComplete="showHireDialog({! firstLastName })">
+                <apex:actionFunction name="getFirstLastName" onComplete="showHireDialog({! firstLastName })">
                 </apex:actionFunction>
 
             </apex:form>

@@ -17,6 +17,12 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         doctorIdCurrent = standardController.getRecord().Id;
         getContracts();
         hasAvatar = false;
+
+        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :doctorIdCurrent AND name = :Label.Hosp_DefaultPicture];
+        if (savedPicture.size() > 0) {
+            hasAvatar = true;
+            avatarSrc = savedPicture[0];
+        }
     }
 
     public void dismiss() {
@@ -42,18 +48,22 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         return pageReference;
     }
 
-    public void hire() {
-
-    }
-
     public PageReference changeRecordPicture() {
         PageReference cropImagePage = Page.Hosp_DoctorProfileImage;
-        //cropImagePage.getParameters().put('recordId', doctorId);
         cropImagePage.getParameters().put('recordId', doctorIdCurrent);
         cropImagePage.getParameters().put('pageReferenceURL', ApexPages.currentPage().getUrl());
         cropImagePage.setRedirect(true);
 
         return cropImagePage;
+    }
+
+    public void changeRecordPictureToDefault() {
+        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :doctorIdCurrent AND name = :Label.Hosp_DefaultPicture];
+        if (savedPicture.size() > 0) {
+            delete savedPicture;
+        }
+
+        hasAvatar = false;
     }
 
     private PageReference prepareRecordPageReference() {
