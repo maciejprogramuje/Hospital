@@ -18,14 +18,7 @@ public with sharing class Hosp_ContractHandler {
                         || (contractToCheck.EndDate__c >= contract.StartDate__c && contractToCheck.EndDate__c <= contract.EndDate__c)
                         || (contractToCheck.StartDate__c < contract.StartDate__c && contractToCheck.EndDate__c > contract.EndDate__c)) {
 
-                    List<Date> conflictDates = new List<Date>{contract.StartDate__c, contract.EndDate__c};
-                    conflictDates.sort();
-                    List<String> conflictStrings = new List<String>();
-                    for(Date d : conflictDates) {
-                        conflictStrings.add(d.format());
-                    }
-
-                    String lineMessage = String.format(', from {0} to {1}', conflictStrings);
+                    String lineMessage = String.format('<br/>from {0} to {1}', new List<String>{contract.StartDate__c.format(), contract.EndDate__c.format()});
 
                     message += lineMessage;
 

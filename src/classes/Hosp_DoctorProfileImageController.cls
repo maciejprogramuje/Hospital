@@ -1,7 +1,4 @@
 public class Hosp_DoctorProfileImageController {
-
-
-    /**********Profile Pic***************/
     Public Transient blob propFileBody { get; set; }
     Public Transient string propFileName { get; set; }
     Public Transient string propContentType { get; set; }
@@ -77,18 +74,23 @@ public class Hosp_DoctorProfileImageController {
             propContentType = propContentType.removeStart('data:');
             inputdataUrl = datalist[1].trim();
         }
+
         propFileBody = EncodingUtil.base64Decode(inputdataUrl);
+
         List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :recordId AND name = :Label.Hosp_DefaultPicture];
         if (savedPicture.size() > 0) {
             delete savedPicture;
         }
+
         Attachment currentPicture = new Attachment(parentId = recordId, name = Label.Hosp_DefaultPicture, body = propFileBody);
         insert currentPicture;
+
         doneuploadingCroping = true;
-        System.debug('redirect ready');
+
         PageReference recordPageReference = Page.Hosp_DoctorView;
         recordPageReference.getParameters().put('id', recordId);
         recordPageReference.setRedirect(true);
+
         return recordPageReference;
     }
 
@@ -100,8 +102,11 @@ public class Hosp_DoctorProfileImageController {
         if (savedPicture.size() > 0) {
             delete savedPicture;
         }
+
         Attachment currentPicture = new Attachment(parentId = recordId, name = Label.Hosp_DefaultPicture, body = propFileBody);
+
         insert currentPicture;
+
         doneuploadingCroping = true;
     }
 }
