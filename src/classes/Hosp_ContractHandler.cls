@@ -11,6 +11,7 @@ public with sharing class Hosp_ContractHandler {
                     WHERE Doctor__c = :contractToCheck.Doctor__c
                     AND Hospital__c = :contractToCheck.Hospital__c
                     AND StartDate__c >= :contractToCheck.StartDate__c
+                    ORDER BY StartDate__c
             ];
 
             for (Contract__c contract : contracts) {
