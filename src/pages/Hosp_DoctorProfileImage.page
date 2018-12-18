@@ -34,7 +34,7 @@
             <!--Start ChangeProfile_picture-->
             <div class="ChangeProfile_picture" style="display: block; margin: 0 auto;width: 250px;">
                 <center>
-                    <div style="font-size: x-large;">Upload Picture</div>
+                    <div style="font-size: x-large;">Upload Picture (only .JPG and .PNG format allowed and file size must be less than 2MB)</div>
                     <br/>
                     <div id="ErrorDiv"></div>
                 </center>

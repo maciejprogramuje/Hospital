@@ -5,7 +5,8 @@
     <head>
         <style>
             .datePicker { z-index: 200 }
-            .column { float: left; width: 25%; }
+            .column { float: left;
+                width: 25%; }
             .content { width: 75%; }
         </style>
     </head>
@@ -45,13 +46,15 @@
         </script>
 
         <div>
-            <div class="column">
-                <apex:image width="200" value="{! URLFOR($Action.Attachment.Download, avatarSrc.Id)}" id="doctorCustomAvatar" rendered="{! hasAvatar }"/>
-                <apex:image width="200" value="{! $Resource.man}" id="doctorDefaultAvatar" rendered="{! NOT(hasAvatar) }"/>
+            <div class="column" style="text-align: center">
+                <apex:image width="200" height="200" value="{! URLFOR($Action.Attachment.Download, avatarSrc.Id)}" id="doctorCustomAvatar" rendered="{! hasAvatar }"/>
+                <apex:image width="200" height="200" value="{! $Resource.man}" id="doctorDefaultAvatar" rendered="{! NOT(hasAvatar) }"/>
 
-                <apex:form>
-                    <apex:commandButton value="{! $Label.Upload}" action="{! changeRecordPicture }" rendered="{! renderingService != 'PDF' }"/>
-                    <apex:commandButton value="{! $Label.Delete}" action="{! changeRecordPictureToDefault }" rendered="{! renderingService != 'PDF' }" reRender="wholeDoctorView"/>
+                <apex:form style="margin-top:10px">
+                    <center>
+                        <apex:commandButton value="{! $Label.Upload}" action="{! changeRecordPicture }" rendered="{! renderingService != 'PDF' }"/>
+                        <apex:commandButton value="{! $Label.Delete}" action="{! changeRecordPictureToDefault }" rendered="{! renderingService != 'PDF' }" reRender="wholeDoctorView"/>
+                    </center>
                 </apex:form>
             </div>
 
