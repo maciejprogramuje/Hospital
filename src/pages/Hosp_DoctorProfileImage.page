@@ -1,8 +1,8 @@
-<apex:page id="pg" controller="Hosp_DoctorProfileImageController" showHeader="true">
+<apex:page id="pg" controller="Hosp_DoctorProfileImageController" showHeader="true" tabStyle="Doctor__c">
 
-    <apex:messages >
-
-    </apex:messages>
+    <apex:outputPanel id="messages">
+        <apex:pageMessages showDetail="false"/>
+    </apex:outputPanel>
 
     <head>
         <meta http-equiv='cache-control' content='no-cache'/>
@@ -29,6 +29,7 @@
                 display: inline-block;
             }
 
+
     </style>
     <!--<apex:inputHidden id="DocId" value="{!DocID}"/>-->
     <apex:outputPanel rendered="{!NOT(doneuploading)}">
@@ -39,41 +40,32 @@
             <!--Start ChangeProfile_picture-->
             <div class="ChangeProfile_picture" style="display: block; margin: 0 auto; ">
                 <center>
-                    <div style="font-size: x-large;">Upload Picture (only .JPG and .PNG format allowed and file size must be less than 2MB)</div>
+                    <div style="font-size: x-large;">Upload Picture (only .JPG and .PNG format allowed and file size
+                        must be less than 2MB)
+                    </div>
                     <br/>
                     <div id="ErrorDiv"></div>
                 </center>
                 <!--Start formbox-->
-                <div class="formbox" style="width:100% !important; margin-left:auto; margin-right:auto; ">
-                    <form>
-                        <table class="table" border="0" cellpadding="5" cellspacing="0">
-                            <tr>
-                            <tr>
-                                <td>
-                                    <center>
-                                        <label>
-                                            <apex:inputFile style="padding: 4.5px 10px;width: 95.5%;" id="fileid"
-                                                            fileSize="{!fsize}" accept="image/*" size="40"
-                                                            title="Browse" value="{!propFileBody}"
-                                                            fileName="{!propFileName}"
-                                                            contentType="{!propContentType}"/>
-                                        </label>
-                                        <div class="paginationstyle" style="display:inline;">
-                                            <a href="javascript: void(0);" class="btn" style="text-decoration:none; padding:5px"
-                                                onclick="validateProfilePicture(); return false;"
-                                                title="Submit">Submit</a>
-                                        </div>
-                                    </center>
-                                </td>
-                            </tr>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
+
+
+                <apex:inputFile style="padding: 4.5px 10px;width: 95.5%;" id="fileid"
+                                fileSize="{!fsize}" accept="image/*" size="40"
+                                title="Browse" value="{!propFileBody}"
+                                fileName="{!propFileName}"
+                                contentType="{!propContentType}"/>
+
+                <apex:commandLink onClick="validateProfilePicture(); return false;" style="text-decoration: none">
+                    <apex:commandButton value="Submit"/>
+                </apex:commandLink>
+
+
                 <!--End formbox-->
             </div>
         </apex:form>
     </apex:outputPanel>
+
+
     <apex:outputPanel rendered="{!doneuploading}">
         <style>
             .imageBox
@@ -129,6 +121,7 @@
             {
             margin-right: 10px;
             }
+
 
         </style>
         <apex:form id="frm2">
@@ -316,6 +309,7 @@
              return obj;
          };
 
+
         </script>
         <script type="text/javascript">
          var imageData;
@@ -380,6 +374,7 @@
              }
          }
          loadImagesection();
+
 
         </script>
     </apex:outputPanel>
