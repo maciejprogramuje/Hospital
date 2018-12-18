@@ -3,25 +3,29 @@
     <apex:attribute name="doctorId" description="This is the Doctor Id" type="String" required="true" assignTo="{! currentDoctorId }"/>
 
     <apex:pageBlock mode="edit">
-        <apex:form>
-            <apex:messages />
+        <!--<apex:messages />-->
 
+
+
+        <apex:form>
             <apex:pageBlockSection id="searchForm" title="{! $Label.Hospital_Search_Form }" columns="2">
                 <apex:inputField value="{! hospital.Name }"/>
                 <apex:inputField value="{! hospital.Country__c }"/>
                 <apex:inputField value="{! hospital.WWW__c }"/>
             </apex:pageBlockSection>
 
-            <center>
-                <apex:commandButton value="{! $Label.Search }" action="{! searchHospitals }" reRender="resultsDiv"/>
-                <apex:commandButton value="{! $Label.Clear }" action="{! clearSearchForm }" reRender="searchForm, resultsDiv, contractDetailsDiv" immediate="true"/>
-            </center>
+            <apex:pageBlock mode="maindetail">
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton value="{! $Label.Search }" action="{! searchHospitals }" reRender="resultsDiv"/>
+                    <apex:commandButton value="{! $Label.Clear }" action="{! clearSearchForm }" reRender="searchForm, resultsDiv, contractDetailsDiv" immediate="true"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
 
             <apex:outputPanel id="resultsDiv">
                 <apex:pageBlockSection id="results" title="{! $Label.Hospital_Results }" columns="1" rendered="{! hospitals.size > 0 }">
                     <apex:pageBlockTable value="{! wrappers }" var="hosp" columns="4" columnsWidth="10%,30%,30%,30%">
                         <apex:column headerValue="{! $Label.Actions }">
-                            <apex:commandButton value="Select" reRender="contractDetailsDiv, results" action="{! changeSelect}" rendered="{! !hosp.isSelected }">
+                            <apex:commandButton value="{! $Label.Select }" reRender="contractDetailsDiv, results" action="{! changeSelect}" rendered="{! !hosp.isSelected }" immediate="true">
                                 <apex:param name="hospitalId" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>
                             </apex:commandButton>
                         </apex:column>
@@ -35,22 +39,29 @@
             </apex:outputPanel>
 
             <apex:outputPanel id="contractDetailsDiv">
-                <apex:pageBlockSection id="contractDetails" title="{! $Label.Contract_Details }" columns="2" rendered="{! selectedHospitalId != null }">
-                    <apex:outputField value="{! doctor.FirstLastName__c }"/>
-                    <apex:outputField value="{! selectedHospital.Name }"/>
+                <apex:pageBlockSection id="contractDetails" title="{! $Label.Contract_Details }" columns="1" rendered="{! selectedHospitalId != null }">
 
-                    <apex:inputField value="{! contract.StartDate__c }"/>
-                    <apex:inputField value="{! contract.EndDate__c }"/>
+                    <apex:pageBlockSection columns="2">
+                        <apex:outputField value="{! doctor.FirstLastName__c }"/>
+                        <apex:outputField value="{! selectedHospital.Name }"/>
 
+                        <apex:inputField value="{! contract.StartDate__c }"/>
+                        <apex:inputField value="{! contract.EndDate__c }"/>
+                    </apex:pageBlockSection>
 
                     <apex:pageBlock mode="maindetail">
                         <apex:pageBlockButtons location="top">
-                            <apex:commandButton value="Hire" action="{! hireDoctor }"  onClick="hideModal()" reRender="contracts_list"/>
-                            <apex:commandButton value="Cancel" action="{! cancel }" immediate="false" onClick="hideModal()" reRender="searchForm, resultsDiv, contractDetailsDiv"/>
+                            <!--onClick="hideModal()"-->
+                            <apex:commandButton value="{! $Label.Hire }" action="{! hireDoctor }" reRender="contracts_list, messages"/>
+                            <apex:commandButton value="{! $Label.Cancel }" action="{! cancel }" immediate="true" onClick="hideModal()" reRender="searchForm, resultsDiv, contractDetailsDiv"/>
                         </apex:pageBlockButtons>
                     </apex:pageBlock>
-
                 </apex:pageBlockSection>
+
+            </apex:outputPanel>
+
+            <apex:outputPanel id="messages">
+                <apex:pageMessages showDetail="false"/>
             </apex:outputPanel>
 
         </apex:form>
@@ -58,8 +69,13 @@
 
     <script>
         function hideModal() {
-            $('#myModal').dialog('close');
+            if(isSuccessInput) {
+                $('#myModal').dialog('close');
+            }
+
         }
+
+
 
     </script>
 

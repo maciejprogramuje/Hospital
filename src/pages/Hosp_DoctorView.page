@@ -1,4 +1,4 @@
-<apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" renderAs="{! renderingService }">
+<apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" renderAs="{! renderingService }" >
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 
@@ -10,7 +10,6 @@
             .content { width: 75%; }
         </style>
     </head>
-
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -71,7 +70,7 @@
                                 <apex:outputField id="copytext" value="{! Doctor__c.Phone__c }"/>
 
                                 <apex:commandButton rendered="{! renderingService != 'PDF' }"
-                                                    onClick="copyToClipboard('{! $Component.copytext}');" reRender="copytext"
+                                                    onClick="copyToClipboard('{! $Component.copytext }');" reRender="copytext"
                                                     value="{! $Label.Copy_Label }"/>
 
                             </apex:pageBlockSectionItem>
@@ -148,7 +147,7 @@
             $("#myModal").dialog({
                 resizable: true,
                 autoOpen: false,
-                height:600,
+                height:700,
                 width: 600,
                 modal: true,
                 title: "Hire " + name

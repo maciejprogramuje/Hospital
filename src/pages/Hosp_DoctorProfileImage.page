@@ -1,4 +1,4 @@
-<apex:page id="pg" controller="Hosp_DoctorProfileImageController" showHeader="false">
+<apex:page id="pg" controller="Hosp_DoctorProfileImageController" showHeader="true">
     <head>
         <meta http-equiv='cache-control' content='no-cache'/>
         <meta http-equiv='expires' content='0'/>
@@ -32,14 +32,14 @@
                 <apex:param value="false" name="uploadDoc" assignTo="{!uploadCroping}"/>
             </apex:actionFunction>
             <!--Start ChangeProfile_picture-->
-            <div class="ChangeProfile_picture" style="display: block; margin: 0 auto;width: 250px;">
+            <div class="ChangeProfile_picture" style="display: block; margin: 0 auto; ">
                 <center>
                     <div style="font-size: x-large;">Upload Picture (only .JPG and .PNG format allowed and file size must be less than 2MB)</div>
                     <br/>
                     <div id="ErrorDiv"></div>
                 </center>
                 <!--Start formbox-->
-                <div class="formbox" style="width:100% !important; margin-left:40%important">
+                <div class="formbox" style="width:100% !important; ">
                     <form>
                         <table class="table" border="0" cellpadding="5" cellspacing="0">
                             <tr>
@@ -53,8 +53,8 @@
                                                             fileName="{!propFileName}"
                                                             contentType="{!propContentType}"/>
                                         </label>
-                                        <div class="paginationstyle" style="display:inline"><a
-                                                href="javascript: void(0);" class="btn_active"
+                                        <div class="paginationstyle" style="display:inline;">
+                                            <a href="javascript: void(0);" class="btn" style="text-decoration:none; padding:5px"
                                                 onclick="validateProfilePicture(); return false;"
                                                 title="Submit">Submit</a>
                                         </div>

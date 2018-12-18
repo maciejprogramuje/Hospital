@@ -23,6 +23,8 @@ public with sharing class Hosp_ContractHandler {
 
                     message += lineMessage;
 
+                    //ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.Error, message);
+
                     contractToCheck.addError(String.format('{0}{1}', new List<String>{Label.Contract_at_the_same_time, message}), false);
                 }
             }
