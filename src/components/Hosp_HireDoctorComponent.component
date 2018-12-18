@@ -52,7 +52,7 @@
                     <apex:pageBlock mode="maindetail">
                         <apex:pageBlockButtons location="top">
                             <!--onClick="hideModal()"-->
-                            <apex:commandButton value="{! $Label.Hire }" action="{! hireDoctor }" reRender="contracts_list, messages"/>
+                            <apex:commandButton value="{! $Label.Hire }" action="{! hireDoctor }" onClick="if({! isSuccessInput}) hideModal() else return false }" reRender="contracts_list, messages"/>
                             <apex:commandButton value="{! $Label.Cancel }" action="{! cancel }" immediate="true" onClick="hideModal()" reRender="searchForm, resultsDiv, contractDetailsDiv"/>
                         </apex:pageBlockButtons>
                     </apex:pageBlock>
@@ -69,13 +69,8 @@
 
     <script>
         function hideModal() {
-            if(isSuccessInput) {
-                $('#myModal').dialog('close');
-            }
-
+            $('#myModal').dialog('close');
         }
-
-
 
     </script>
 
