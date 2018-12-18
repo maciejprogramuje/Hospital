@@ -19,16 +19,7 @@ public with sharing class Hosp_ContractHandler {
                         || (contractToCheck.EndDate__c >= contract.StartDate__c && contractToCheck.EndDate__c <= contract.EndDate__c)
                         || (contractToCheck.StartDate__c < contract.StartDate__c && contractToCheck.EndDate__c > contract.EndDate__c)) {
 
-                    List<String> messageComponents = new List<String>{
-                            Label.Contract_at_the_same_time,
-                            Label.From_Label,
-                            contract.StartDate__c.format(),
-                            contract.EndDate__c.format(),
-                            Label.To_Label};
-
-                    String messageComponentsFormated = String.format('{0} {1} {2} {3} {4}', messageComponents);
-
-                    contractToCheck.addError(messageComponentsFormated, true);
+                    contractToCheck.addError(String.format(Label.Contract_at_the_same_time, new List<String>{contract.StartDate__c.format(), contract.EndDate__c.format()}), false);
                 }
             }
         }

@@ -1,4 +1,9 @@
 <apex:page id="pg" controller="Hosp_DoctorProfileImageController" showHeader="true">
+
+    <apex:messages >
+
+    </apex:messages>
+
     <head>
         <meta http-equiv='cache-control' content='no-cache'/>
         <meta http-equiv='expires' content='0'/>
@@ -39,7 +44,7 @@
                     <div id="ErrorDiv"></div>
                 </center>
                 <!--Start formbox-->
-                <div class="formbox" style="width:100% !important; ">
+                <div class="formbox" style="width:100% !important; margin-left:auto; margin-right:auto; ">
                     <form>
                         <table class="table" border="0" cellpadding="5" cellspacing="0">
                             <tr>

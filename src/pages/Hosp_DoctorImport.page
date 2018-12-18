@@ -21,7 +21,13 @@
                 <apex:column headerValue="{! $Label.To_import }">
                     <apex:inputCheckbox >
                         <!--<apex:param name="hospitalId" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>-->
-                        <apex:param name="{! doc.Id }" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>
+
+
+
+                        <!--<apex:param name="{! doc.Id }" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>-->
+
+
+
                     </apex:inputCheckbox>
 
                 </apex:column>

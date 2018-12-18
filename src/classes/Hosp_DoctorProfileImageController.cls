@@ -46,10 +46,12 @@ public class Hosp_DoctorProfileImageController {
 
             // checking file size should be less then 5 MB
             if (fsize > 2097152) {
-                ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Unable to upload ' + propFileName + ' because it exceeds the maximum file size (5MB).');
+                List<String> messageComponents = new List<String>{};
+
+                ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, String.format(Label.Image_too_large, new List<String>{propFileName}));
                 ApexPages.addMessage(msg);
             } else if ((propContentType != 'image/png') && (propContentType != 'image/jpeg')) {
-                ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Error: File Type Not Correct.');
+                ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.Image_invalid_type);
                 ApexPages.addMessage(msg);
             } else {
                 String strtemp = EncodingUtil.base64Encode(propFileBody);

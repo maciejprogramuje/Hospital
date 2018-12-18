@@ -17,11 +17,6 @@
     <apex:pageBlock id='wholeDoctorView' title="{! $Label.Doctor }" mode="edit">
         <apex:messages/>
 
-        <script language="JavaScript">
-
-
-        </script>
-
         <div>
             <div class="column" style="text-align: center">
                 <apex:image width="200" height="200" value="{! URLFOR($Action.Attachment.Download, avatarSrc.Id)}" id="doctorCustomAvatar" rendered="{! hasAvatar }"/>
