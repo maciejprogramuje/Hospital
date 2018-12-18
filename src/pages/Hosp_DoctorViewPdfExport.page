@@ -14,5 +14,5 @@
         </style>
 
     </head>
-    <apex:include pageName="Hosp_DoctorViewInPdf"/>
+    <apex:include pageName="Hosp_DoctorView"/>
 </apex:page>

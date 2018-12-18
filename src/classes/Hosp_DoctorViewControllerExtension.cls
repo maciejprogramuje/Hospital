@@ -6,12 +6,17 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         Doctor__c doctor = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :doctorIdCurrent];
         return doctor.FirstLastName__c;
     } set; }
+    public String renderingService { get; private set; }
+
     public String recordId;
     public String pageReferenceUrl;
+    public Boolean hasAvatar { get; set; }
+    public Attachment avatarSrc { get; set; }
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
         doctorIdCurrent = standardController.getRecord().Id;
         getContracts();
+        hasAvatar = false;
     }
 
     public void dismiss() {
@@ -31,6 +36,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public PageReference expToPdf() {
+        renderingService = 'PDF';
         PageReference pageReference = Page.Hosp_DoctorViewPdfExport;
         pageReference.setRedirect(false);
         return pageReference;
@@ -56,5 +62,9 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         recordPageReference.setRedirect(false);
 
         return recordPageReference;
+    }
+
+    public void getAvatarSrc() {
+        avatarSrc = [SELECT Id, Name FROM Attachment WHERE ParentId = :recordId];
     }
 }

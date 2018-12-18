@@ -1,33 +1,26 @@
-public with sharing class Hosp_DoctorProfileImageController {
-/**********Profile Pic***************/
-    public Doctor__c doctor{get;set;}
-    Public Transient blob propFileBody{get; set;}
+public class Hosp_DoctorProfileImageController {
+
+
+    /**********Profile Pic***************/
+    Public Transient blob propFileBody{get;set;}
     Public Transient string propFileName{get;set;}
     Public Transient string propContentType{get;set;}
     Public Integer fsize{get;set;}
     public boolean doneuploading{get; set;}
     public boolean doneuploadingCroping{get; set;}
     public boolean uploadCroping{get; set;}
-    Public Transient string upldocUrl{get;set;}
-    Public Transient String inputdataUrl{get;set;}
-    Public String DocID{get;set;}
-    public String recordId;
-    public String pageReferenceUrl;
+    public Transient string upldocUrl{get;set;}
+    public Transient String inputdataUrl{get;set;}
+    public String DocID{get;set;}
+    //public String recordId {get;set;}
 
-
-    public Hosp_DoctorProfileImageController() {
-        recordId = ApexPages.currentPage().getParameters().get('recordId');
-        pageReferenceUrl = ApexPages.currentPage().getParameters().get('pageReferenceURL');
-        setupPictureVariables();
-    }
-
-    public void setupPictureVariables()
+    public Hosp_DoctorProfileImageController()
     {
         try
         {
             upldocUrl='';
             inputdataUrl='';
-            uploadCroping=true;
+            uploadCroping=false;
             doneuploading=false;
             doneuploadingCroping=false;
         }
@@ -46,7 +39,7 @@ public with sharing class Hosp_DoctorProfileImageController {
             if(!uploadCroping)
                 return EditProfilePic();
             else
-                    return prepareNewRecordAttachment();
+                    return uploadCrop();
         }
         catch(Exception ex)
         {
@@ -91,24 +84,12 @@ public with sharing class Hosp_DoctorProfileImageController {
         return null;
     }
 
-    private PageReference prepareNewRecordAttachment() {
-        List<attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :recordId AND name = :Label.Hosp_DefaultPicture];
-
-        if (savedPicture.size() > 0) {
-            delete savedPicture;
-        }
-
-        Attachment currentPicture = new Attachment(parentId = recordId, name = Label.Hosp_DefaultPicture, body = propFileBody);
-        insert currentPicture;
-        doneuploadingCroping = true;
-    }
-
-    /*public Pagereference uploadCrop()
+    public Pagereference uploadCrop()
     {
-        try
+        /*try
         {
             doneuploadingCroping=false;
-            if(!string.isblank(inputdataUrl))
+            if(! String.isblank(inputdataUrl))
             {
                 List<String> datalist = inputdataUrl.split(',');
                 if(datalist.size()>0)
@@ -137,7 +118,26 @@ public with sharing class Hosp_DoctorProfileImageController {
         {
             ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR,ex.getStackTraceString()+' Message: '+ex.getMessage());
             ApexPages.addMessage(msg);
-        }
+        }*/
+
+        prepareNewRecordAttachment();
+
         return null;
-    }*/
+    }
+
+    private void prepareNewRecordAttachment() {
+        PageReference cropImagePage = Page.Hosp_DoctorProfileImage;
+
+        String recordId = cropImagePage.getParameters().get('recordId');
+
+        System.debug('recordId='+recordId);
+
+        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :recordId AND name = :Label.Hosp_DefaultPicture];
+        if (savedPicture.size() > 0) {
+            delete savedPicture;
+        }
+        Attachment currentPicture = new Attachment(parentId = recordId, name = Label.Hosp_DefaultPicture, body = propFileBody);
+        insert currentPicture;
+        doneuploadingCroping = true;
+    }
 }

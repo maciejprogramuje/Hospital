@@ -1,29 +1,15 @@
-<apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension">
+<apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" renderAs="{! renderingService }">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 
-    <style>
-            label, input { display:block; }
-            input.text { margin-bottom:12px; width:95%; padding: .4em; }
-            fieldset { padding:0; border:0; margin-top:25px; }
-            h1 { font-size: 1.2em; margin: .6em 0; }
-            div#users-contain { width: 350px; margin: 20px 0; }
-            div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-            div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-            .ui-dialog .ui-state-error { padding: .3em; }
-            .validateTips { border: 1px solid transparent; padding: 0.3em; }
+    <head>
+        <style>
             .datePicker { z-index: 200 }
+            .column { float: left; width: 25%; }
+            .content { width: 75%; }
+        </style>
+    </head>
 
-
-            .column {
-                float: left;
-                width: 25%;
-            }
-            .content {
-                width: 75%;
-            }
-
-    </style>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -41,14 +27,36 @@
                 document.body.removeChild(aux);
             }
 
+            var w;
+            function ChangeProfile_picture()
+            {
+                var windowWidth = document.documentElement.clientWidth;
+                var windowHeight = document.documentElement.clientHeight;
+                w = window.open('/apex/Hosp_DoctorProfileImage','ProfilePicture','channelmode=0,directories=0,fullscreen=0,height=190,width=453,left='+(windowWidth/2-453/2)+',top='+(windowHeight/2-190/2)+',location=0,menubar=0,resizable=0,scrollbars=0,status=0,titlebar=0,toolbar=0');
+            }
+
+            function updateURL(DocId)
+            {
+                var imgTag =  document.getElementById('imgval');
+                imgTag.src = "/servlet/servlet.FileDownload?file="+DocId;
+                w.close();
+            }
+
         </script>
 
         <div>
+
             <div class="column">
+                <apex:image width="200" value="{! URLFOR($Action.Attachment.Download, avatarSrc.Id)}" id="doctorCustomAvatar" rendered="{! hasAvatar }"/>
+                <apex:image width="200" value="{! $Resource.man}" id="doctorDefaultAvatar" rendered="{! NOT(hasAvatar) }"/>
+
                 <apex:form>
-                    <apex:commandButton value="Upload" action="{!changeRecordPicture}"/>
+                    <apex:commandButton value="Upload" action="{! changeRecordPicture }" rendered="{! renderingService != 'PDF' }"/>
                 </apex:form>
+
+
             </div>
+
             <div class="column content">
                 <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="2">
                     <apex:outputField value="{! Doctor__c.FirstName__c }"/>
@@ -61,7 +69,8 @@
                             <apex:pageBlockSectionItem>
                                 <apex:outputField id="copytext" value="{! Doctor__c.Phone__c }"/>
 
-                                <apex:commandButton onClick="copyToClipboard('{! $Component.copytext}');" reRender="copytext"
+                                <apex:commandButton rendered="{! renderingService != 'PDF' }"
+                                                    onClick="copyToClipboard('{! $Component.copytext}');" reRender="copytext"
                                                     value="{! $Label.Copy_Label }"/>
 
                             </apex:pageBlockSectionItem>
@@ -81,7 +90,7 @@
 
 
         <div align="center">
-            <apex:form>
+            <apex:form rendered="{! renderingService != 'PDF' }">
                 <apex:commandButton action="{! edit }" value="{! $Label.Edit }" />
 
                 <apex:commandButton id="opener"
@@ -110,7 +119,7 @@
             <apex:pageBlockTable value="{! contracts }" var="contr" columns="5" columnsWidth="10%,30%,30%,15%, 15%">
 
                 <apex:column headerValue="{! $Label.Actions }">
-                    <apex:form>
+                    <apex:form rendered="{! renderingService != 'PDF' }">
                         <apex:commandLink action="{! dismiss }" reRender="contracts_list" style="text-decoration:none">
                             <apex:param name="contractId" value="{! contr.Id }" assignTo="{! contractId }"/>
                             <apex:commandButton value="{! $Label.Dismiss }" rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
