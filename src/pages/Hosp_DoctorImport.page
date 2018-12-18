@@ -1,0 +1,45 @@
+<apex:page id="Hosp_DoctorImport" controller="Hosp_DoctorImportController" >
+
+    <apex:form>
+        <apex:messages />
+        <apex:pageBlock title="{! $Label.Doctors_import }" mode="edit">
+
+            <apex:pageBlockSection columns="2">
+                <apex:inputFile value="{! csvFileBody }" filename="{! csvAsString }"/>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Process" action="{! importCSVFile }" />
+            </apex:pageBlockButtons>
+
+        </apex:pageBlock>
+
+        <apex:pageBlock id="doctorsTable" >
+            <apex:pageBlockTable value="{! doctors }" var="doc" rendered="{! doctors.size > 0 }">
+
+
+                <apex:column headerValue="{! $Label.To_import }">
+                    <apex:inputCheckbox >
+                        <!--<apex:param name="hospitalId" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>-->
+                        <apex:param name="{! doc.Id }" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>
+                    </apex:inputCheckbox>
+
+                </apex:column>
+
+                <apex:column value="{! doc.Name }" />
+                <apex:column value="{! doc.FirstName__c }" />
+                <apex:column value="{! doc.City__c }" />
+                <apex:column value="{! doc.Country__c }" />
+                <apex:column headerValue="{! $Label.Status }">
+                    <!--<apex:outputLabel id="{! doc.Id }" value="aa"/>-->
+                </apex:column>
+            </apex:pageBlockTable>
+
+            <apex:pageBlockButtons location="bottom" rendered="{! doctors.size > 0 }">
+                <apex:commandButton action="{! importDoctors }" value="{! $Label.Import }"/>
+                <apex:commandButton action="{! clear }" value="{! $Label.Clear }"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

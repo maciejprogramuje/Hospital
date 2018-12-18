@@ -1,6 +1,6 @@
 public with sharing class Hosp_DoctorSearchController {
-    public Doctor__c doctor { get; set; }
-    public String docId { get; set; }
+    public Doctor__c currentDoctor { get; set; }
+    public String currentDoctorId { get; set; }
     public List<Doctor__c> doctorsToExport { get; set; }
     private Integer paginationSize = 5;
 
@@ -16,7 +16,7 @@ public with sharing class Hosp_DoctorSearchController {
     public ApexPages.StandardSetController stdSetController {
         get {
             if (stdSetController == null) {
-                if (String.isNotBlank(doctor.Name)) {
+                if (String.isNotBlank(currentDoctor.Name)) {
                     stdSetController = new ApexPages.StandardSetController(fillDoctorsLists());
                     stdSetController.setPageSize(paginationSize);
                 } else {
@@ -29,19 +29,19 @@ public with sharing class Hosp_DoctorSearchController {
     }
 
     public Hosp_DoctorSearchController() {
-        doctor = new Doctor__c(Name = '');
+        currentDoctor = new Doctor__c(Name = '');
         doctorsToExport = new List<Doctor__c>();
 
         sortOrderSign = sortDown;
         sortOrderSignName = sortOrderSign;
     }
 
-    public List<Doctor__c> getDoctors() {
+    public List<Doctor__c> getCurrentDoctors() {
         return stdSetController.getRecords();
     }
 
     public List<Doctor__c> fillDoctorsLists() {
-        String queryDoctor = Hosp_Utils.doctorQueryBuilder(doctor, sortOrder, sortAscDesc);
+        String queryDoctor = Hosp_Utils.doctorQueryBuilder(currentDoctor, sortOrder, sortAscDesc);
         doctorsToExport = Database.query(queryDoctor);
         return Database.query(queryDoctor);
     }
@@ -92,7 +92,7 @@ public with sharing class Hosp_DoctorSearchController {
     }
 
     public void clear() {
-        doctor = new Doctor__c(Name = '');
+        currentDoctor = new Doctor__c(Name = '');
         stdSetController = null;
     }
 

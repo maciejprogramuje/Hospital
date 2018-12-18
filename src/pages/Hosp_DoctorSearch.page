@@ -5,10 +5,10 @@
             <apex:pageBlock title="{! $Label.Search_for_Doctor }" mode="edit">
 
                 <apex:pageBlockSection title="{! $Label.Search_Form }" columns="2">
-                    <apex:inputField value="{! doctor.FirstName__c }" required="false"/>
-                    <apex:inputField value="{! doctor.Email__c }"/>
-                    <apex:inputField value="{! doctor.Name }" required="true"/>
-                    <apex:inputField value="{! doctor.Country__c }"/>
+                    <apex:inputField value="{! currentDoctor.FirstName__c }" required="false"/>
+                    <apex:inputField value="{! currentDoctor.Email__c }"/>
+                    <apex:inputField value="{! currentDoctor.Name }" required="true"/>
+                    <apex:inputField value="{! currentDoctor.Country__c }"/>
                 </apex:pageBlockSection>
 
                 <center>
@@ -20,7 +20,7 @@
                 </center>
 
                 <apex:pageBlockSection title="{! $Label.Results }" columns="1" id="doctors_list">
-                    <apex:pageBlockTable value="{! doctors }" var="doc" columns="4" columnsWidth="10%,40%,40%,10%">
+                    <apex:pageBlockTable value="{! currentDoctors }" var="doc" columns="4" columnsWidth="10%,40%,40%,10%">
 
                         <apex:column headerValue="{! $Label.Actions }">
                             <apex:commandLink action="{!URLFOR($Action.Doctor__c.Edit, doc.id)}" target="_blank"

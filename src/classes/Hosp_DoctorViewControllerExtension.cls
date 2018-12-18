@@ -6,7 +6,9 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         Doctor__c doctor = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :doctorIdCurrent];
         return doctor.FirstLastName__c;
     } set; }
+
     public String renderingService { get; private set; }
+    public Boolean printToPDF { get; set; }
 
     public String recordId;
     public String pageReferenceUrl;
@@ -38,11 +40,23 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void getContracts() {
-        contracts = [SELECT Id, Name, StartDate__c, EndDate__c, Doctor__r.Name, Doctor__r.FirstName__c, Doctor__r.FirstLastName__c, Doctor__r.Id, Hospital__r.Name FROM Contract__c WHERE Doctor__c = :doctorIdCurrent];
+        contracts = [SELECT Id,
+                Name,
+                StartDate__c,
+                EndDate__c,
+                Doctor__r.Name,
+                Doctor__r.FirstName__c,
+                Doctor__r.FirstLastName__c,
+                Doctor__r.Id,
+                Hospital__r.Name
+            FROM Contract__c
+            WHERE Doctor__c = :doctorIdCurrent
+            ORDER BY StartDate__c];
     }
 
     public PageReference expToPdf() {
         renderingService = 'PDF';
+
         PageReference pageReference = Page.Hosp_DoctorViewPdfExport;
         pageReference.setRedirect(false);
         return pageReference;

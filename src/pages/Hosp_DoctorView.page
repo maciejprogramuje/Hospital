@@ -18,29 +18,7 @@
         <apex:messages/>
 
         <script language="JavaScript">
-            function copyToClipboard(elementId) {
-                var aux = document.createElement("input");
-                aux.setAttribute("value", document.getElementById(elementId).innerHTML);
-                document.body.appendChild(aux);
-                aux.select();
-                document.execCommand("copy");
-                document.body.removeChild(aux);
-            }
 
-            var w;
-            function ChangeProfile_picture()
-            {
-                var windowWidth = document.documentElement.clientWidth;
-                var windowHeight = document.documentElement.clientHeight;
-                w = window.open('/apex/Hosp_DoctorProfileImage','ProfilePicture','channelmode=0,directories=0,fullscreen=0,height=190,width=453,left='+(windowWidth/2-453/2)+',top='+(windowHeight/2-190/2)+',location=0,menubar=0,resizable=0,scrollbars=0,status=0,titlebar=0,toolbar=0');
-            }
-
-            function updateURL(DocId)
-            {
-                var imgTag =  document.getElementById('imgval');
-                imgTag.src = "/servlet/servlet.FileDownload?file="+DocId;
-                w.close();
-            }
 
         </script>
 
@@ -51,8 +29,8 @@
 
                 <apex:form style="margin-top:10px">
                     <center>
-                        <apex:commandButton value="{! $Label.Upload}" action="{! changeRecordPicture }" rendered="{! renderingService != 'PDF' }"/>
-                        <apex:commandButton value="{! $Label.Delete}" action="{! changeRecordPictureToDefault }" rendered="{! renderingService != 'PDF' }" reRender="wholeDoctorView"/>
+                        <apex:commandButton value="{! $Label.Upload}" action="{! changeRecordPicture }" rendered="{! !printToPDF }"/>
+                        <apex:commandButton value="{! $Label.Delete}" action="{! changeRecordPictureToDefault }" rendered="{! !printToPDF }" reRender="wholeDoctorView"/>
                     </center>
                 </apex:form>
             </div>
@@ -69,7 +47,7 @@
                             <apex:pageBlockSectionItem>
                                 <apex:outputField id="copytext" value="{! Doctor__c.Phone__c }"/>
 
-                                <apex:commandButton rendered="{! renderingService != 'PDF' }"
+                                <apex:commandButton rendered="{! !printToPDF }"
                                                     onClick="copyToClipboard('{! $Component.copytext }');" reRender="copytext"
                                                     value="{! $Label.Copy_Label }"/>
 
@@ -90,7 +68,7 @@
 
 
         <div align="center">
-            <apex:form rendered="{! renderingService != 'PDF' }">
+            <apex:form rendered="{! !printToPDF }">
                 <apex:commandButton action="{! edit }" value="{! $Label.Edit }" />
 
                 <apex:commandButton id="opener"
@@ -119,9 +97,9 @@
             <apex:pageBlockTable value="{! contracts }" var="contr" columns="5" columnsWidth="10%,30%,30%,15%, 15%">
 
                 <apex:column headerValue="{! $Label.Actions }">
-                    <apex:form rendered="{! renderingService != 'PDF' }">
+                    <apex:form rendered="{! !printToPDF }">
                         <apex:commandLink action="{! dismiss }" reRender="contracts_list" style="text-decoration:none">
-                            <apex:param name="contractId" value="{! contr.Id }" assignTo="{! contractId }"/>
+                            <apex:param name="contractId" value="{! contr.Id }" assignTo="{! contractIdCurrent }"/>
                             <apex:commandButton value="{! $Label.Dismiss }" rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
                         </apex:commandLink>
                     </apex:form>
@@ -143,6 +121,30 @@
     </div>
 
     <script>
+        function copyToClipboard(elementId) {
+                var aux = document.createElement("input");
+                aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+                document.body.appendChild(aux);
+                aux.select();
+                document.execCommand("copy");
+                document.body.removeChild(aux);
+            }
+
+            var w;
+            function ChangeProfile_picture()
+            {
+                var windowWidth = document.documentElement.clientWidth;
+                var windowHeight = document.documentElement.clientHeight;
+                w = window.open('/apex/Hosp_DoctorProfileImage','ProfilePicture','channelmode=0,directories=0,fullscreen=0,height=190,width=453,left='+(windowWidth/2-453/2)+',top='+(windowHeight/2-190/2)+',location=0,menubar=0,resizable=0,scrollbars=0,status=0,titlebar=0,toolbar=0');
+            }
+
+            function updateURL(DocId)
+            {
+                var imgTag =  document.getElementById('imgval');
+                imgTag.src = "/servlet/servlet.FileDownload?file="+DocId;
+                w.close();
+            }
+
         function showHireDialog(name) {
             $("#myModal").dialog({
                 resizable: true,

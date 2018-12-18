@@ -40,9 +40,6 @@ public with sharing class Hosp_DoctorHireController {
         return [SELECT Id, Name FROM Hospital__c WHERE Id = :selectedHospitalId];
     }
 
-
-
-
     public PageReference hireDoctor() {
         Contract__c contractToInsert = new Contract__c(Doctor__c = currentDoctorId, Hospital__c = selectedHospitalId, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
 
@@ -53,14 +50,11 @@ public with sharing class Hosp_DoctorHireController {
             acctPage.setRedirect(true);
             return acctPage;
         } catch (DmlException ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getDmlMessage(0)));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getDmlMessage(1)));
 
             return null;
         }
     }
-
-
-
 
     public void cancel() {
         setFieldsEmpty();
