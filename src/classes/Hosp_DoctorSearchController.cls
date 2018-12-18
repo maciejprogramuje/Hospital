@@ -1,4 +1,4 @@
-public with sharing class Hosp_SearchDoctorController {
+public with sharing class Hosp_DoctorSearchController {
     public Doctor__c doctor { get; set; }
     public String docId { get; set; }
     public List<Doctor__c> doctorsToExport { get; set; }
@@ -28,7 +28,7 @@ public with sharing class Hosp_SearchDoctorController {
         set;
     }
 
-    public Hosp_SearchDoctorController() {
+    public Hosp_DoctorSearchController() {
         doctor = new Doctor__c(Name = '');
         doctorsToExport = new List<Doctor__c>();
 
@@ -137,19 +137,19 @@ public with sharing class Hosp_SearchDoctorController {
     }
 
     public PageReference expToCsv() {
-        PageReference pageReference = Page.Hosp_SearchDoctorsCsvExport;
+        PageReference pageReference = Page.Hosp_DoctorsSearchCsvExport;
         pageReference.setRedirect(false);
         return pageReference;
     }
 
     public PageReference expToXls() {
-        PageReference pageReference = Page.Hosp_SearchDoctorsXlsExport;
+        PageReference pageReference = Page.Hosp_DoctorsSearchXlsExport;
         pageReference.setRedirect(false);
         return pageReference;
     }
 
     public PageReference expToXlsx() {
-        PageReference pageReference = Page.Hosp_SearchDoctorsXlsxExport;
+        PageReference pageReference = Page.Hosp_DoctorsSearchXlsxExport;
         pageReference.setRedirect(false);
         return pageReference;
     }

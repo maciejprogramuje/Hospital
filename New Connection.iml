@@ -44,10 +44,6 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_SearchDoctorController" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Hosp_DoctorViewControllerExtension" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
@@ -60,15 +56,19 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_HireDoctorController" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Hosp_ContractHandler" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_DoctorProfileImageController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorSearchController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorHireController" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
@@ -84,7 +84,7 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_HireDoctorComponent" />
+                            <option name="name" value="Hosp_DoctorHireComponent" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
@@ -113,10 +113,6 @@
                             <option name="name" value="viewPageTest" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_SearchDoctor" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Hosp_HospitalView" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
@@ -125,23 +121,27 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_SearchDoctorsCsvExport" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_SearchDoctorsXlsExport" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Hosp_DoctorViewPdfExport" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_SearchDoctorsXlsxExport" />
+                            <option name="name" value="Hosp_DoctorProfileImage" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_DoctorProfileImage" />
+                            <option name="name" value="Hosp_DoctorSearch" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorsSearchCsvExport" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorsSearchXlsExport" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorsSearchXlsxExport" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>

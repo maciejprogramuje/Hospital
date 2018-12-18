@@ -1,4 +1,4 @@
-<apex:page id="Hosp_SearchDoctorsXlsExport" controller="Hosp_SearchDoctorController"
+<apex:page id="Hosp_DoctorsSearchXlsExport" controller="Hosp_DoctorSearchController"
            readOnly="true" contentType="application/vnd.ms-excel#Hosp_Doctor_List_XLS.xls" showHeader="false" standardStylesheets="false">
 
     <apex:pageBlock>
@@ -9,4 +9,5 @@
         </apex:dataTable>
     </apex:pageBlock>
 </apex:page>
+
 

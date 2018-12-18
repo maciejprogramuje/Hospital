@@ -1,17 +1,15 @@
-public with sharing class Hosp_HireDoctorController {
+public with sharing class Hosp_DoctorHireController {
     public Hospital__c hospital { get; set; }
     public List<Hospital__c> hospitals { get; set; }
     public String currentDoctorId { get; set; }
     public String selectedHospitalId { get; set; }
     public Contract__c contract { get; set; }
     public List<Wrapper> wrappers { get; set; }
-    public Boolean isSuccessInput { get; set; }
 
-    public Hosp_HireDoctorController() {
+    public Hosp_DoctorHireController() {
         setHospitalEmpty();
         contract = new Contract__c();
         setHospitalsEmpty();
-        isSuccessInput = true;
     }
 
     public void searchHospitals() {
@@ -48,25 +46,17 @@ public with sharing class Hosp_HireDoctorController {
     public PageReference hireDoctor() {
         Contract__c contractToInsert = new Contract__c(Doctor__c = currentDoctorId, Hospital__c = selectedHospitalId, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
 
-
-
         try {
             insert contractToInsert;
-//            clearFieldsAndResultList();
 
-            //ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.CONFIRM, ex.getDmlMessage(0)));
-            isSuccessInput = true;
+            PageReference acctPage = new PageReference('/' + currentDoctorId);
+            acctPage.setRedirect(true);
+            return acctPage;
         } catch (DmlException ex) {
-            //System.debug(Label.Medic_SystemDebugMessage + ex.getMessage());
-
-            isSuccessInput = false;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getDmlMessage(0)));
-        }
 
-//        PageReference acctPage = new PageReference('/' + currentDoctorId);
-//        acctPage.setRedirect(true);
-//        return acctPage;
-        return null;
+            return null;
+        }
     }
 
 
