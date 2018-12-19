@@ -96,7 +96,7 @@
 
                 <apex:column headerValue="{! $Label.Actions }">
                     <apex:form rendered="{! !printToPDF }">
-                        <apex:commandLink action="{! dismiss }" reRender="contracts_list" style="text-decoration:none">
+                        <apex:commandLink action="{! dismiss }" reRender="contracts_list_main_block, " style="text-decoration:none">
                             <apex:param name="contractId" value="{! contr.Id }" assignTo="{! contractIdCurrent }"/>
                             <apex:commandButton value="{! $Label.Dismiss }" rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
                         </apex:commandLink>
@@ -173,7 +173,7 @@
                 <apex:outputPanel id="messages">
                     <apex:pageMessages id="messageTxt"/>
                     <script>
-                        var messageID = '{!$Component.messageTxt}';
+                        var messageID = '{! $Component.messageTxt }';
                     </script>
                 </apex:outputPanel>
 
@@ -219,12 +219,8 @@
         }
 
         function checkHideModal() {
-            console.log('test');
-
             let noErrors = document.getElementById(messageID).textContent;
 
-            console.log('noErrors = '+noErrors);
-            console.log('test->'+ document.getElementById(messageID).textContent);
             if (noErrors.indexOf('success') != -1) {
                 hideModal();
             }

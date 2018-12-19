@@ -15,17 +15,12 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public Boolean hasAvatar { get; set; }
     public Attachment avatarSrc { get; set; }
 
-    //
     public Hospital__c hospital { get; set; }
     public List<Hospital__c> hospitals { get; set; }
-    public String currentDoctorId { get; set; }
     public String selectedHospitalId { get; set; }
     public Contract__c contract { get; set; }
     public List<Wrapper> wrappers { get; set; }
     public Boolean isImportSuccess { get; set; }
-    //
-
-
 
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
@@ -38,20 +33,19 @@ public with sharing class Hosp_DoctorViewControllerExtension {
             hasAvatar = true;
             avatarSrc = savedPicture[0];
         }
-        currentDoctorId = doctorIdCurrent;
-        //
+
         setHospitalEmpty();
         contract = new Contract__c();
         setHospitalsEmpty();
-        //
     }
 
     public void dismiss() {
         Contract__c contract = [SELECT Id, StartDate__c, EndDate__c FROM Contract__c WHERE Id = :contractIdCurrent];
         if (contract.StartDate__c > Date.today()) {
             delete contract;
-        } else if (contract.StartDate__c < Date.today() && contract.EndDate__c > Date.today()) {
+        } else if (contract.StartDate__c <= Date.today() && contract.EndDate__c >= Date.today()) {
             contract.EndDate__c = Date.today();
+            contract.isFinished__c = true;
             update contract;
         }
 
@@ -135,7 +129,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public Doctor__c getDoctor() {
-        return [SELECT Id, Name, FirstLastName__c FROM Doctor__c WHERE Id = :currentDoctorId];
+        return [SELECT Id, Name, FirstLastName__c FROM Doctor__c WHERE Id = :doctorIdCurrent];
     }
 
     public Hospital__c getSelectedHospital() {
@@ -143,7 +137,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void hireDoctor() {
-        Contract__c contractToInsert = new Contract__c(Doctor__c = currentDoctorId, Hospital__c = selectedHospitalId, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
+        Contract__c contractToInsert = new Contract__c(Doctor__c = doctorIdCurrent, Hospital__c = selectedHospitalId, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
 
         try {
             insert contractToInsert;
@@ -204,7 +198,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
     private void setFieldsEmpty() {
         selectedHospitalId = '';
-        currentDoctorId = '';
+        doctorIdCurrent = '';
 
         setWrappersEmpty();
         setHospitalEmpty();

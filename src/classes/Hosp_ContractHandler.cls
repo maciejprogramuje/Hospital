@@ -1,7 +1,5 @@
 public with sharing class Hosp_ContractHandler {
     public static void checkConflicts(List<Contract__c> contractsToCheck) {
-        Boolean isConflict = false;
-        String message = '';
         List<Contract__c> contracts;
 
         for (Contract__c contractToCheck : contractsToCheck) {
@@ -9,8 +7,10 @@ public with sharing class Hosp_ContractHandler {
                     SELECT Id, Doctor__c, Hospital__c, StartDate__c, EndDate__c
                     FROM Contract__c
                     WHERE Doctor__c = :contractToCheck.Doctor__c
+                    AND Id <> :contractToCheck.Id
                     AND Hospital__c = :contractToCheck.Hospital__c
                     AND StartDate__c >= :contractToCheck.StartDate__c
+                    AND IsFinished__c = false
                     ORDER BY StartDate__c
             ];
 
