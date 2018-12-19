@@ -19,6 +19,7 @@
 * where the sObject and query must be changed
 */
 public with sharing class Hosp_HospitalHierarchyController {
+
     //Declare variables
     public String currentId;
     public List<ObjectStructureMap> asm ;

@@ -156,7 +156,7 @@ public with sharing class Hosp_DoctorSearchController {
     }
 
     public String expToJson() {
-        String doctorsInJson = Hosp_Utils.getDoctorsInJson(doctorsToExport);
+        String doctorsInJson = Hosp_DoctorJsonHandler.getDoctorsInJson(doctorsToExport);
 
         System.debug(doctorsInJson);
 

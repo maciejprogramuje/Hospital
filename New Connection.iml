@@ -80,7 +80,11 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_DoctorsSearchJsonExport" />
+                            <option name="name" value="Hosp_DoctorJsonHandler" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorsPublicSiteControllerExt" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
@@ -158,6 +162,10 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_DoctorImport" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorsPublicSite" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>

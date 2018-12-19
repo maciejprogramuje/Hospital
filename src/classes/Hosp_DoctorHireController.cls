@@ -50,6 +50,10 @@ public with sharing class Hosp_DoctorHireController {
             acctPage.setRedirect(true);
             return acctPage;
         } catch (DmlException ex) {
+
+
+            
+
             ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getDmlMessage(1)));
 
             return null;
