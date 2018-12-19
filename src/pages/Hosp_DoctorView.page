@@ -113,6 +113,9 @@
 
     <div id="myModal" style="display: none">
         <c:Hosp_HireDoctorComponent doctorId="{! Doctor__c.Id }"/>
+
+
+
     </div>
 
     <script>
