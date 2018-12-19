@@ -105,8 +105,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         avatarSrc = [SELECT Id, Name FROM Attachment WHERE ParentId = :recordId];
     }
 
-
-
     //
     public void searchHospitals() {
         String query = Hosp_Utils.generateHireDoctorHospitalsQuery(hospital);
@@ -125,6 +123,8 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void clearSearchForm() {
+        ApexPages.getMessages().clear();
+
         setFieldsEmpty();
     }
 
@@ -144,13 +144,15 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
             getContracts();
 
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.CONFIRM, 'success'));
+            setFieldsEmpty();
         } catch (DmlException ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getDmlMessage(0)));
         }
     }
 
     public void cancel() {
+        ApexPages.getMessages().clear();
+
         setFieldsEmpty();
     }
 
@@ -196,9 +198,8 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         contract = new Contract__c();
     }
 
-    private void setFieldsEmpty() {
+    public void setFieldsEmpty() {
         selectedHospitalId = '';
-        doctorIdCurrent = '';
 
         setWrappersEmpty();
         setHospitalEmpty();

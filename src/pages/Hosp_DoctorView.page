@@ -15,11 +15,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <apex:pageBlock id='wholeDoctorView' title="{! $Label.Doctor }" mode="edit">
-
-        <!--<apex:outputPanel id="messages">
-            <apex:pageMessages showDetail="false"/>
-        </apex:outputPanel>-->
-
         <div>
             <div class="column" style="text-align: center">
                 <apex:image width="200" height="200" value="{! URLFOR($Action.Attachment.Download, avatarSrc.Id)}" id="doctorCustomAvatar" rendered="{! hasAvatar }"/>
@@ -71,8 +66,7 @@
 
                 <apex:commandButton id="opener"
                                     onclick="showHireDialog('{! firstLastName }'); return false;"
-                                    value="{! $Label.Hire }"
-                                    reRender="none"/>
+                                    value="{! $Label.Hire }"/>
 
                 <apex:commandButton action="{! delete }" value="{! $Label.Delete }"
                                     onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"/>
@@ -118,17 +112,18 @@
         <!--<c:Hosp_HireDoctorComponent doctorId="{! Doctor__c.Id }"/>-->
 
         <apex:pageBlock mode="edit" id="pb">
+
             <apex:form id="pbForm">
                 <apex:pageBlockSection id="searchForm" title="{! $Label.Hospital_Search_Form }" columns="2">
-                    <apex:inputField value="{! hospital.Name }"/>
+                    <apex:inputField value="{! hospital.Name }" required="true"/>
                     <apex:inputField value="{! hospital.Country__c }"/>
                     <apex:inputField value="{! hospital.WWW__c }"/>
                 </apex:pageBlockSection>
 
                 <apex:pageBlock mode="maindetail">
                     <apex:pageBlockButtons location="top">
-                        <apex:commandButton value="{! $Label.Search }" action="{! searchHospitals }" reRender="resultsDiv"/>
-                        <apex:commandButton value="{! $Label.Clear }" action="{! clearSearchForm }" reRender="searchForm, resultsDiv, contractDetailsDiv" immediate="true"/>
+                        <apex:commandButton value="{! $Label.Search }" action="{! searchHospitals }" reRender="resultsDiv, messages"/>
+                        <apex:commandButton value="{! $Label.Clear }" action="{! clearSearchForm }" reRender="pb" immediate="true"/>
                     </apex:pageBlockButtons>
                 </apex:pageBlock>
 
@@ -162,8 +157,8 @@
 
                         <apex:pageBlock mode="maindetail">
                             <apex:pageBlockButtons location="top">
-                                <apex:commandButton value="{! $Label.Hire }" action="{! hireDoctor }" reRender="contracts_list_main_block, messages" onComplete="checkHideModal()"/>
-                                <apex:commandButton value="{! $Label.Cancel }" action="{! cancel }" immediate="true" onClick="hideModal()" reRender="searchForm, resultsDiv, contractDetailsDiv, messages"/>
+                                <apex:commandButton value="{! $Label.Hire }" action="{! hireDoctor }" reRender="pb, messages, contracts_list_main_block" onComplete="checkHideModal()"/>
+                                <apex:commandButton value="{! $Label.Cancel }" action="{! cancel }" immediate="true" onClick="hideModal()" reRender="messages"/>
                             </apex:pageBlockButtons>
                         </apex:pageBlock>
                     </apex:pageBlockSection>
@@ -177,10 +172,11 @@
                     </script>
                 </apex:outputPanel>
 
+                <apex:actionFunction name="clearFieldsAndResultList" action="{! setFieldsEmpty }" reRender="pb, messages" immediate="true">
+                </apex:actionFunction>
+
             </apex:form>
         </apex:pageBlock>
-
-
     </div>
 
     <script>
@@ -213,21 +209,27 @@
                 height:700,
                 width: 600,
                 modal: true,
-                title: "Hire " + name
+                title: "Hire " + name,
+                close: function() {
+                    hideModal();
+                }
             });
             $("#myModal").dialog("open");
         }
 
         function checkHideModal() {
-            let noErrors = document.getElementById(messageID).textContent;
+            let errors = document.getElementById(messageID).textContent;
 
-            if (noErrors.indexOf('success') != -1) {
+            if (errors.indexOf('error') < 0) {
                 hideModal();
             }
         }
 
         function hideModal() {
+            clearFieldsAndResultList();
             $('#myModal').dialog('close');
+
+            return false;
         }
     </script>
 

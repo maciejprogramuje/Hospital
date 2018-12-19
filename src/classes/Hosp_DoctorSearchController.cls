@@ -93,6 +93,7 @@ public with sharing class Hosp_DoctorSearchController {
 
     public void clear() {
         currentDoctor = new Doctor__c(Name = '');
+        doctorsToExport = new List<Doctor__c>();
         stdSetController = null;
     }
 
