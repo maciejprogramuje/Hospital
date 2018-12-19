@@ -141,10 +141,10 @@
                     <div class="thumbBox"></div>
                     <div class="spinner" style="display: none">Loading...</div>
                 </div>
-                <div class="action">
-                    <a href="javascript:void(0);" id="btnCrop" class="btn_active" style="float: right;">Crop</a>
-                    <a href="javascript:void(0);" id="btnZoomIn" class="btn_active" style="float: right;">Zoom IN</a>
-                    <a href="javascript:void(0);" id="btnZoomOut" class="btn_active" style="float: right;">Zoom Out</a>
+                <div class="action" style="text-align: center;">
+                    <a href="javascript:void(0);" id="btnZoomIn" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Zoom_IN }</a>
+                    <a href="javascript:void(0);" id="btnZoomOut" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Zoom_Out }</a>
+                    <a href="javascript:void(0);" id="btnCrop" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Crop }</a>
                 </div>
                 <div class="cropped">
                 </div>
