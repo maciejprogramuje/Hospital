@@ -49,26 +49,21 @@
                 </center>
                 <!--Start formbox-->
 
-                <apex:pageBlock title="{! $Label.Upload_picture_title }" mode="edit"/>
+                <apex:pageBlock id="uploadPictureBlock" title="{! $Label.Upload_picture_title }" mode="edit">
+                    <apex:inputFile style="padding: 4.5px 10px ;width: 98.5%; background-color: #F8F8F8; " id="fileid"
+                                    fileSize="{!fsize}" accept="image/*" size="40"
+                                    title="Browse" value="{!propFileBody}"
+                                    fileName="{!propFileName}"
+                                    contentType="{!propContentType}"/>
 
-
-                <apex:inputFile style="padding: 4.5px 10px ;width: 98.5%; background-color: #F8F8F8; " id="fileid"
-                                fileSize="{!fsize}" accept="image/*" size="40"
-                                title="Browse" value="{!propFileBody}"
-                                fileName="{!propFileName}"
-                                contentType="{!propContentType}"/>
-
-
-                <apex:pageBlock>
                     <apex:pageBlockButtons location="bottom">
                         <apex:commandLink onClick="validateProfilePicture(); return false;" style="text-decoration: none">
                             <apex:commandButton value="Submit"/>
                         </apex:commandLink>
                     </apex:pageBlockButtons>
+
+
                 </apex:pageBlock>
-
-
-
 
                 <!--End formbox-->
             </div>
@@ -325,7 +320,7 @@
          var imageData;
 
          function validateProfilePicture(){
-             var inpt_file = document.getElementById('pg:frm1:fileid');
+             var inpt_file = document.getElementById('pg:frm1:uploadPictureBlock:fileid');
              if(inpt_file.value == '' || inpt_file.fileName == '' || inpt_file.contentType == ''){
                  document.getElementById('ErrorDiv').innerHTML = '<b>Error:</b> Please specify a file to upload, or use the "Browse" button to locate it in your local file system.';
              }
