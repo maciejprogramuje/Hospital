@@ -1,4 +1,4 @@
-<apex:page id="pg" controller="Hosp_DoctorProfileImageController" showHeader="true" tabStyle="Doctor__c">
+<apex:page id="pg"  controller="Hosp_DoctorProfileImageController" showHeader="true" tabStyle="Doctor__c">
 
     <apex:outputPanel id="messages">
         <apex:pageMessages showDetail="false"/>
@@ -37,8 +37,8 @@
     <!--<apex:inputHidden id="DocId" value="{!DocID}"/>-->
     <apex:outputPanel rendered="{!NOT(doneuploading)}">
         <apex:form id="frm1">
-            <apex:actionFunction name="EditProfilePicture" id="editpic" action="{!uploadPicture}">
-                <apex:param value="false" name="uploadDoc" assignTo="{!uploadCroping}"/>
+            <apex:actionFunction name="EditProfilePicture" id="editpic" action="{! uploadPicture }">
+                <apex:param value="false" name="uploadDoc" assignTo="{! uploadCroping }"/>
             </apex:actionFunction>
             <!--Start ChangeProfile_picture-->
             <div class="ChangeProfile_picture" style="display: block; margin: 0 auto; ">
@@ -49,7 +49,7 @@
                 </center>
                 <!--Start formbox-->
 
-                <apex:pageBlock id="uploadPictureBlock" title="{! $Label.Upload_picture_title }" mode="edit">
+                <apex:pageBlock id="uploadPictureBlock" title="{! $Label.Upload_picture_title } {! firstLastName }" mode="edit">
                     <apex:inputFile style="padding: 4.5px 10px ;width: 98.5%; background-color: #F8F8F8; " id="fileid"
                                     fileSize="{!fsize}" accept="image/*" size="40"
                                     title="Browse" value="{!propFileBody}"

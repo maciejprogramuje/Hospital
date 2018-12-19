@@ -10,9 +10,13 @@ public class Hosp_DoctorProfileImageController {
     public Transient String inputdataUrl { get; set; }
     public String DocID { get; set; }
     public String recordId { get; set; }
+    public String firstLastName { get; set; }
 
     public Hosp_DoctorProfileImageController() {
         recordId = ApexPages.currentPage().getParameters().get('recordId');
+
+        Doctor__c d = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :recordId];
+        firstLastName = d.FirstLastName__c;
         try {
             upldocUrl = '';
             inputdataUrl = '';
@@ -28,7 +32,7 @@ public class Hosp_DoctorProfileImageController {
     public Pagereference uploadPicture() {
         try {
             Transient User UserContactId;
-            if (!uploadCroping) {
+            if (! uploadCroping ) {
                 return EditProfilePic();
             } else {
                 return uploadCrop();
