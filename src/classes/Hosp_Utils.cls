@@ -1,4 +1,31 @@
 public class Hosp_Utils {
+    public static String getDoctorsInJson(List<Doctor__c> doctorsToExport) {
+        JSONGenerator generator = JSON.createGenerator(true);
+
+        generator.writeStartArray();
+
+        for(Doctor__c doc : doctorsToExport) {
+            generator.writeStartObject();
+
+            generator.writeStringField(Schema.Doctor__c.fields.FirstLastName__c.getDescribe().getLabel(), notBlankField(doc.FirstLastName__c));
+            generator.writeStringField(Schema.Doctor__c.fields.Email__c.getDescribe().getLabel(), notBlankField(doc.Email__c));
+            generator.writeStringField(Schema.Doctor__c.fields.Country__c.getDescribe().getLabel(), notBlankField(doc.Country__c));
+
+            generator.writeEndObject();
+        }
+
+        generator.writeEndArray();
+
+        return generator.getAsString();
+    }
+
+    private static String notBlankField(String field) {
+        if(String.isNotBlank(field)) {
+            return field;
+        } else {
+            return '';
+        }
+    }
 
     public static User__c getCurrentUser() {
         return getUser(UserInfo.getUserId());
@@ -35,7 +62,7 @@ public class Hosp_Utils {
     }
 
     public static String doctorQueryBuilder(Doctor__c doctor, String sortOrder, String sortAscDesc) {
-        return 'SELECT Id, Name, FirstName__c, Email__c, Country__c, FirstLastName__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\''
+        return 'SELECT Id, Name, FirstName__c, Email__c, City__c, Country__c, FirstLastName__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\''
                 + addToWhereIfNotBlank('FirstName__c', doctor.FirstName__c)
                 + addToWhereIfNotBlank('Email__c', doctor.Email__c)
                 + addToWhereIfNotBlank('Country__c', doctor.Country__c)
@@ -66,5 +93,4 @@ public class Hosp_Utils {
 
         return query;
     }
-
 }

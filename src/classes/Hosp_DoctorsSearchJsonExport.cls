@@ -1,0 +1,8 @@
+public with sharing class Hosp_DoctorsSearchJsonExport <apex:page id="Hosp_DoctorsSearchCsvExport" controller="Hosp_DoctorSearchController" cache="true" language="en-US" contentType="application/octet-stream#Hosp_Doctor_List_CSV.csv">"{! $ObjectType.Doctor__c.fields.Name.label }","{! $ObjectType.Doctor__c.fields.Email__c.label }","{! $ObjectType.Doctor__c.fields.Country__c.label }"
+<apex:repeat value="{! doctorsToExport }" var="doc">
+"{! doc.FirstLastName__c }","{! doc.Email__c }","{! doc.Country__c }"
+</apex:repeat>
+        </apex:page>
+
+
+        }

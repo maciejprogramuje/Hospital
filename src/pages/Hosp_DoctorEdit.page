@@ -1,6 +1,5 @@
 <apex:page id="Hosp_DoctorEdit" standardController="Doctor__c" extensions="Hosp_DoctorEditControllerExtension">
-    <apex:form >
-        <apex:messages />
+    <apex:form>
         <apex:pageBlock title="{! $Label.Edit_Doctor }" mode="edit">
 
         <apex:pageBlockSection title="{! $Label.Basic_Info }" columns="1">
@@ -21,6 +20,6 @@
             <apex:commandButton action="{! cancel }" value="{! $Label.Cancel }"/>
         </center>
 
-    </apex:pageBlock>
+        </apex:pageBlock>
     </apex:form>
 </apex:page>

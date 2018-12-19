@@ -16,7 +16,8 @@ public class Hosp_DoctorProfileImageController {
         recordId = ApexPages.currentPage().getParameters().get('recordId');
 
         Doctor__c d = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :recordId];
-        firstLastName = d.FirstLastName__c;
+        firstLastName = String.format(Label.Upload_picture_title, new List<String>{d.FirstLastName__c});
+
         try {
             upldocUrl = '';
             inputdataUrl = '';
@@ -24,7 +25,7 @@ public class Hosp_DoctorProfileImageController {
             doneuploading = false;
             doneuploadingCroping = false;
         } catch (Exception ex) {
-            ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, ex.getStackTraceString() + ' Message: SaveProfile() ' + ex.getMessage());
+            ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, ex.getStackTraceString());
             ApexPages.addMessage(msg);
         }
     }
@@ -38,7 +39,7 @@ public class Hosp_DoctorProfileImageController {
                 return uploadCrop();
             }
         } catch (Exception ex) {
-            ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, ex.getStackTraceString() + ' Message: SaveProfile() ' + ex.getMessage());
+            ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, ex.getStackTraceString());
             ApexPages.addMessage(msg);
         }
         return null;
@@ -46,7 +47,7 @@ public class Hosp_DoctorProfileImageController {
 
     public Pagereference EditProfilePic() {
         try {
-            system.debug('@@@@# propFileBody' + propFileBody + '' + propFileName + '' + propContentType + 'fsize' + fsize + 'propFileName' + propFileName);
+            //System.debug('@@@@# propFileBody' + propFileBody + '' + propFileName + '' + propContentType + 'fsize' + fsize + 'propFileName' + propFileName);
 
             // checking file size should be less then 5 MB
             if (fsize > 2097152) {

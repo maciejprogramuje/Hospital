@@ -1,4 +1,4 @@
-<apex:page id="Hosp_HospitalView" standardController="Hospital__c">
+<apex:page id="Hosp_HospitalView" standardController="Hospital__c" extensions="Hosp_HospitalViewControllerExtension">
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I&callback=initMap"
             type="text/javascript"></script>
@@ -18,45 +18,114 @@
        }
     </style>
 
-    <apex:pageBlock title="{! $Label.Hospital }" mode="detail" id="block1">
-        <apex:messages/>
+    <apex:pageBlock title="{! $Label.Hospital }"
+                    mode="detail"
+                    id="block1">
 
-        <apex:pageBlockSection title="{! $Label.Basic_Info}" columns="2" collapsible="false">
+        <apex:outputPanel >
+            <apex:pageMessages/>
+        </apex:outputPanel>
+
+        <apex:pageBlockSection title="{! $Label.Basic_Info}"
+                               columns="2"
+                               collapsible="false">
+
             <apex:outputField value="{! Hospital__c.Name }"/>
+
             <apex:outputField value="{! Hospital__c.WWW__c }"/>
+
         </apex:pageBlockSection>
 
 
-        <apex:pageBlockSection title="{! $Label.Address }" columns="1" collapsible="true" id="sectionAddress">
+        <apex:pageBlockSection title="{! $Label.Address }"
+                               columns="1"
+                               collapsible="true"
+                               id="sectionAddress">
+
             <apex:pageBlockSection columns="2">
-                <apex:outputField value="{! Hospital__c.Street__c }" style="float: left"/>
-                <apex:outputField value="{! Hospital__c.PostalCode__c }" style="clear: both"/>
-                <apex:outputField value="{! Hospital__c.City__c }" style="float: left"/>
-                <apex:outputField value="{! Hospital__c.Country__c }" style="clear: both"/>
+
+                <apex:outputField value="{! Hospital__c.Street__c }"
+                                  style="float: left"/>
+
+                <apex:outputField value="{! Hospital__c.PostalCode__c }"
+                                  style="clear: both"/>
+
+                <apex:outputField value="{! Hospital__c.City__c }"
+                                  style="float: left"/>
+
+                <apex:outputField value="{! Hospital__c.Country__c }"
+                                  style="clear: both"/>
+
             </apex:pageBlockSection>
+
             <apex:pageBlockSection columns="1">
                 <div id="map"/>
             </apex:pageBlockSection>
 
         </apex:pageBlockSection>
 
-
-
-
         <center>
             <apex:form>
-                <apex:commandButton action="{! edit }" value="{! $Label.Edit }"/>
-                <apex:commandButton action="{! delete }" value="{! $Label.Delete }"
+
+                <apex:commandButton action="{! edit }"
+                                    value="{! $Label.Edit }"/>
+
+                <apex:commandButton action="{! delete }"
+                                    value="{! $Label.Delete }"
                                     onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"/>
+
             </apex:form>
         </center>
 
-        <apex:pageBlockSection title="{! $Label.Contracts }" columns="1" collapsible="false">
-            <apex:relatedList list="Contracts__r"/>
+        <apex:pageBlockSection title="{! $Label.Contracts }"
+                               id="contracts_list_main_block"
+                               columns="1"
+                               collapsible="false">
+
+            <!--<apex:relatedList list="Contracts__r"/>-->
+
+                <apex:pageBlockTable value="{! contracts }"
+                                     var="contr"
+                                     columns="5"
+                                     columnsWidth="10%,30%,30%,15%, 15%">
+
+                    <apex:column headerValue="{! $Label.Actions }">
+                        <apex:form>
+                            <apex:commandLink action="{! dismiss }"
+                                              reRender="contracts_list_main_block"
+                                              style="text-decoration:none">
+
+                                <apex:param name="contractId"
+                                            value="{! contr.Id }"
+                                            assignTo="{! contractIdCurrent }"/>
+
+                                <apex:commandButton value="{! $Label.Dismiss }"
+                                                    rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
+                            </apex:commandLink>
+                        </apex:form>
+                    </apex:column>
+
+                    <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
+                                 value="{! contr.Doctor__r.FirstLastName__c }"/>
+
+                    <apex:column headerValue="{! $ObjectType.Hospital__c.fields.Name.label }"
+                                 value="{! contr.Hospital__r.Name }"/>
+
+                    <apex:column headerValue="{! $ObjectType.Contract__c.fields.StartDate__c.label }"
+                                 value="{! contr.StartDate__c}"/>
+
+                    <apex:column headerValue="{! $ObjectType.Contract__c.fields.EndDate__c.label }"
+                                 value="{! contr.EndDate__c}"/>
+
+                </apex:pageBlockTable>
+
         </apex:pageBlockSection>
 
-        <apex:pageBlockSection title="{! $Label.Hierarchy_of_Hospitals }" columns="1" collapsible="false">
+        <apex:pageBlockSection title="{! $Label.Hierarchy_of_Hospitals }"
+                               columns="1" collapsible="false">
+
             <c:Hosp_HospitalHierarchyComponent currentHospitalId="Hospital__c.Id"/>
+
         </apex:pageBlockSection>
 
         <!--AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I-->

@@ -154,4 +154,12 @@ public with sharing class Hosp_DoctorSearchController {
         pageReference.setRedirect(false);
         return pageReference;
     }
+
+    public String expToJson() {
+        String doctorsInJson = Hosp_Utils.getDoctorsInJson(doctorsToExport);
+
+        System.debug(doctorsInJson);
+
+        return doctorsInJson;
+    }
 }

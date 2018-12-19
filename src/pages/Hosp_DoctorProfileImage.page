@@ -49,15 +49,22 @@
                 </center>
                 <!--Start formbox-->
 
-                <apex:pageBlock id="uploadPictureBlock" title="{! $Label.Upload_picture_title } {! firstLastName }" mode="edit">
-                    <apex:inputFile style="padding: 4.5px 10px ;width: 98.5%; background-color: #F8F8F8; " id="fileid"
-                                    fileSize="{!fsize}" accept="image/*" size="40"
-                                    title="Browse" value="{!propFileBody}"
-                                    fileName="{!propFileName}"
-                                    contentType="{!propContentType}"/>
+                <apex:pageBlock id="uploadPictureBlock"
+                                title="{! firstLastName }"
+                                mode="edit">
+                    <apex:inputFile style="padding: 4.5px 10px ;width: 98.5%; background-color: #F8F8F8; "
+                                    id="fileid"
+                                    fileSize="{! fsize }"
+                                    accept="image/*"
+                                    size="40"
+                                    title="Browse"
+                                    value="{! propFileBody }"
+                                    fileName="{! propFileName }"
+                                    contentType="{! propContentType }"/>
 
                     <apex:pageBlockButtons location="bottom">
-                        <apex:commandLink onClick="validateProfilePicture(); return false;" style="text-decoration: none">
+                        <apex:commandLink onClick="validateProfilePicture(); return false;"
+                                          style="text-decoration: none">
                             <apex:commandButton value="Submit"/>
                         </apex:commandLink>
                     </apex:pageBlockButtons>
@@ -71,7 +78,7 @@
     </apex:outputPanel>
 
 
-    <apex:outputPanel rendered="{!doneuploading}">
+    <apex:outputPanel rendered="{! doneuploading }">
         <style>
             .imageBox
             {
@@ -130,18 +137,26 @@
 
         </style>
         <apex:form id="frm2">
-            <apex:actionFunction name="UploadCropPicture" id="croppic" action="{!uploadPicture}" reRender="outputcrop"
+            <apex:actionFunction name="UploadCropPicture"
+                                 id="croppic"
+                                 action="{! uploadPicture }"
+                                 reRender="outputcrop"
                                  oncomplete="oncompCropping();">
-                <apex:param value="" name="dataurl" assignTo="{!inputdataUrl}"/>
-                <apex:param value="true" name="uploadcroping" assignTo="{!uploadCroping}"/>
+                <apex:param value=""
+                            name="dataurl"
+                            assignTo="{! inputdataUrl }"/>
+                <apex:param value="true"
+                            name="uploadcroping"
+                            assignTo="{! uploadCroping }"/>
             </apex:actionFunction>
             <!---------------------------->
             <div class="container">
                 <div class="imageBox">
                     <div class="thumbBox"></div>
-                    <div class="spinner" style="display: none">Loading...</div>
+                    <div class="spinner" style="display: none">...</div>
                 </div>
-                <div class="action" style="text-align: center;">
+                <div class="action"
+                     style="text-align: center;">
                     <a href="javascript:void(0);" id="btnZoomIn" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Zoom_IN }</a>
                     <a href="javascript:void(0);" id="btnZoomOut" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Zoom_Out }</a>
                     <a href="javascript:void(0);" id="btnCrop" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Crop }</a>
@@ -322,18 +337,16 @@
          function validateProfilePicture(){
              var inpt_file = document.getElementById('pg:frm1:uploadPictureBlock:fileid');
              if(inpt_file.value == '' || inpt_file.fileName == '' || inpt_file.contentType == ''){
-                 document.getElementById('ErrorDiv').innerHTML = '<b>Error:</b> Please specify a file to upload, or use the "Browse" button to locate it in your local file system.';
-             }
-             else{
-             document.getElementById('ErrorDiv').innerHTML = '';
-             window.resizeTo(550, 550);
-             EditProfilePicture(false);
+                 //document.getElementById('ErrorDiv').innerHTML = '<b>Error:</b> no file to upload';
+             } else {
+                 //document.getElementById('ErrorDiv').innerHTML = '';
+                 window.resizeTo(550, 550);
+                 EditProfilePicture(false);
              }
          }
 
          function loadcropper() {
-             var options =
-             {
+             var options = {
                  imageBox: '.imageBox',
                  thumbBox: '.thumbBox',
                  spinner: '.spinner',
@@ -357,29 +370,25 @@
              });
          }
 
-         function onclickData()
-         {
+         function onclickData() {
              imageData = $('.image-editor').cropit('export');
          }
-         function loadImagesection(){
+
+         function loadImagesection() {
              var doneuploading = {!doneuploading};
-             if(doneuploading)
-             {
+             if(doneuploading){
                  loadcropper();
              }
          }
 
-         function oncompCropping()
-         {
+         function oncompCropping() {
              var doneuploadingtemp = {!doneuploadingCroping};
-             if(doneuploadingtemp)
-             {
+             if(doneuploadingtemp) {
                  var DocId = "{!DocID}";
                  window.opener.updateURL(DocId);
              }
          }
          loadImagesection();
-
 
         </script>
     </apex:outputPanel>
