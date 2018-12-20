@@ -1,51 +1,147 @@
-<apex:page id="Hosp_DoctorImport" controller="Hosp_DoctorImportController" >
+<apex:page id="Hosp_DoctorImport" controller="Hosp_DoctorImportController">
 
-    <apex:form >
-        <apex:messages />
-        <apex:pageBlock title="{! $Label.Doctors_import }" mode="edit">
+    <apex:form id="firstForm">
+
+        <apex:outputPanel id="messages">
+
+            <apex:pageMessages showDetail="false"/>
+
+        </apex:outputPanel>
+
+
+        <apex:pageBlock title="{! $Label.Doctors_import }"
+                        mode="edit">
 
             <apex:pageBlockSection columns="2">
-                <apex:inputFile value="{! csvFileBody }" filename="{! csvAsString }"/>
+
+                <apex:actionRegion id="actionBrowse"
+                                   renderRegionOnly="false">
+
+                    <apex:inputFile value="{! csvFileBody }"
+                                    filename="{! csvAsString }"
+                                    fileSize="{! fileSize }"
+                                    contentType="{! contentType }"/>
+
+                </apex:actionRegion>
+
             </apex:pageBlockSection>
 
-            <apex:pageBlockButtons location="bottom">
-                <apex:commandButton value="Process" action="{! importCSVFile }" />
-            </apex:pageBlockButtons>
 
-        </apex:pageBlock>
+            <apex:outputPanel>
 
-        <apex:pageBlock id="doctorsTable" >
-            <apex:pageBlockTable value="{! doctors }" var="doc" rendered="{! doctors.size > 0 }">
+                <div style="text-align: center;">
 
+                    <apex:commandButton value="{! $Label.Process }"
+                                        action="{! importCSVFile }"/>
 
-                <apex:column headerValue="{! $Label.To_import }">
-                    <apex:inputCheckbox >
-                        <!--<apex:param name="hospitalId" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>-->
+                </div>
 
-                        
+            </apex:outputPanel>
 
-                        <!--<apex:param name="{! doc.Id }" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>-->
-
-
-
-                    </apex:inputCheckbox>
-
-                </apex:column>
-
-                <apex:column value="{! doc.Name }" />
-                <apex:column value="{! doc.FirstName__c }" />
-                <apex:column value="{! doc.City__c }" />
-                <apex:column value="{! doc.Country__c }" />
-                <apex:column headerValue="{! $Label.Status }">
-                    <!--<apex:outputLabel id="{! doc.Id }" value="aa"/>-->
-                </apex:column>
-            </apex:pageBlockTable>
-
-            <apex:pageBlockButtons location="bottom" rendered="{! doctors.size > 0 }">
-                <apex:commandButton action="{! importDoctors }" value="{! $Label.Import }"/>
-                <apex:commandButton action="{! clear }" value="{! $Label.Clear }"/>
-            </apex:pageBlockButtons>
         </apex:pageBlock>
 
     </apex:form>
+
+
+    <apex:form id="apexForm">
+
+        <apex:pageBlock id="doctorsTable" rendered="{! doneUploading }">
+
+            <apex:outputPanel rendered="{! doctors.size > 0 }">
+
+                <apex:actionRegion id="actionSelect"
+                                   renderRegionOnly="false">
+
+                    <apex:commandButton value="{! $Label.SelectAll }"
+                                        action="{! selectCheckBox }"
+                                        reRender="apexForm"/>
+
+                    <apex:commandButton value="{! $Label.ClearAll }"
+                                        action="{! clearAllCheckBox }"
+                                        reRender="apexForm"/>
+
+                </apex:actionRegion>
+
+                <apex:commandButton value="{! $Label.Deselect }"
+                                    action="{! deselectCheckBox }"/>
+
+            </apex:outputPanel>
+
+
+            <apex:pageBlockTable id="doctorColumn"
+                                 value="{! doctorWrappers }" var="oneDoctor"
+                                 rendered="{! doctors.size > 0 }">
+
+                <apex:column headerValue="{! $Label.Start_Import }">
+
+                    <apex:inputCheckbox id="checkBox" value="{! oneDoctor.doctorIsSelectedWrapper }"/>
+
+                </apex:column>
+
+                <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Name.label }"
+                             value="{! oneDoctor.doctorNameWrapper }"/>
+
+                <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstName__c.Label }"
+                             value="{! oneDoctor.doctorFirstNameWrapper }"/>
+
+                <apex:column headerValue="{! $ObjectType.Doctor__c.fields.City__c.Label }"
+                             value="{! oneDoctor.doctorCityWrapper }"/>
+
+                <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Country__c.Label }"
+                             value="{!oneDoctor.doctorCountryWrapper}"/>
+
+
+                <apex:column headerValue="{! $Label.Status }">
+
+                    <apex:actionRegion id="actionSuccess"
+                                       renderRegionOnly="false">
+
+                        <apex:commandLink value="{! $Label.Success }"
+                                          action="{! URLFOR($Action.Doctor__c.View, oneDoctor.doctorIdWrapper) }"
+                                          rendered="{! oneDoctor.doctorInformationAfterImport > 0 }"
+                                          target="_blank"
+                                          immediate="true">
+
+                            <apex:param name="doctorId"
+                                        value="{! oneDoctor.doctorIdWrapper }"
+                                        assignTo="{! currentDoctorId }"/>
+
+                        </apex:commandLink>
+
+
+                        <apex:commandLink value="{! $Label.Failed }"
+                                          rendered="{! oneDoctor.doctorInformationAfterImport < 0 }"
+                                          reRender="actionSection"
+                                          style="text-decoration: none;"/>
+
+                    </apex:actionRegion>
+
+                </apex:column>
+
+            </apex:pageBlockTable>
+
+
+            <apex:outputPanel rendered="{! doctorWrappers.size > 0 }">
+
+                <div style="text-align: center;">
+
+                    <apex:commandButton action="{! importDoctors }"
+                                        value="{! $Label.Import }"
+                                        reRender="apexForm"/>
+
+                    <apex:commandButton action="{! clear }"
+                                        value="{! $Label.Clear }"
+                                        reRender="apexForm"/>
+
+                    <apex:actionRegion id="actionImport"
+                                       renderRegionOnly="false"/>
+
+                </div>
+
+            </apex:outputPanel>
+
+        </apex:pageBlock>
+
+    </apex:form>
+
 </apex:page>

@@ -1,5 +1,18 @@
 public class Hosp_Utils {
 
+    public static String blobToString(Blob input, String inCharset){
+        String hex = EncodingUtil.convertToHex(input);
+        System.assertEquals(0, hex.length() & 1);
+        final Integer bytesCount = hex.length() >> 1;
+        String[] bytes = new String[bytesCount];
+
+        for(Integer i = 0; i < bytesCount; ++i) {
+            bytes[i] =  hex.mid(i << 1, 2);
+        }
+
+        return EncodingUtil.urlDecode('%' + String.join(bytes, '%'), inCharset);
+    }
+
     public static User__c getCurrentUser() {
         return getUser(UserInfo.getUserId());
     }

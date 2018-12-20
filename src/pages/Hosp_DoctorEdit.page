@@ -1,23 +1,51 @@
 <apex:page id="Hosp_DoctorEdit" standardController="Doctor__c" extensions="Hosp_DoctorEditControllerExtension">
-    <apex:form >
-        <apex:pageBlock title="{! $Label.Edit_Doctor }" mode="edit">
 
-        <apex:pageBlockSection title="{! $Label.Basic_Info }" columns="1">
-            <apex:inputField value="{! Doctor__c.FirstName__c }" required="true" />
-            <apex:inputField value="{! Doctor__c.Name }" required="true" />
+    <apex:outputField>
+
+        <apex:pageMessages />
+
+    </apex:outputField>
+
+
+    <apex:form>
+
+        <apex:pageBlock title="{! $Label.Edit_Doctor }"
+                        mode="edit">
+
+        <apex:pageBlockSection title="{! $Label.Basic_Info }"
+                               columns="1">
+
+            <apex:inputField value="{! Doctor__c.FirstName__c }"
+                             required="true" />
+
+            <apex:inputField value="{! Doctor__c.Name }"
+                             required="true" />
+
             <apex:inputField value="{! Doctor__c.Email__c }" />
+
             <apex:inputField value="{! Doctor__c.Phone__c }" />
+
         </apex:pageBlockSection>
 
-        <apex:pageBlockSection title="{! $Label.Address }" columns="1">
+        <apex:pageBlockSection title="{! $Label.Address }"
+                               columns="1">
+
             <apex:inputField value="{! Doctor__c.City__c }" />
+
             <apex:inputField value="{! Doctor__c.Country__c }" />
+
             <apex:inputField value="{! Doctor__c.Street__c }" />
+
         </apex:pageBlockSection>
 
         <center>
-            <apex:commandButton action="{! save }" value="{! $Label.Save }"/>
-            <apex:commandButton action="{! cancel }" value="{! $Label.Cancel }"/>
+
+            <apex:commandButton action="{! save }"
+                                value="{! $Label.Save }"/>
+
+            <apex:commandButton action="{! cancel }"
+                                value="{! $Label.Cancel }"/>
+
         </center>
 
         </apex:pageBlock>

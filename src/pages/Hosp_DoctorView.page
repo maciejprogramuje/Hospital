@@ -239,7 +239,7 @@
                             <apex:pageBlockButtons location="top">
                                 <apex:commandButton value="{! $Label.Hire }"
                                                     action="{! hireDoctor }"
-                                                    reRender="pb, messages, contracts_list_main_block"
+                                                    reRender="messages, contracts_list_main_block"
                                                     onComplete="checkHideModal()"/>
                                 <apex:commandButton value="{! $Label.Cancel }"
                                                     action="{! cancel }"
@@ -310,7 +310,7 @@
         function checkHideModal() {
             let errors = document.getElementById(messageID).textContent;
 
-            if (errors.indexOf('error') < 0) {
+            if (!(errors.indexOf('Error') != -1)) {
                 hideModal();
             }
         }

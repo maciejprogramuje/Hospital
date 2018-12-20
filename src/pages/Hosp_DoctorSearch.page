@@ -22,7 +22,8 @@
                 <center>
 
                     <apex:commandButton action="{! search }"
-                                        value="{! $Label.Search }" />
+                                        value="{! $Label.Search }"
+                                        reRender="doctors_list, navigation_pg, search_form_pbs"/>
 
                     <apex:commandButton action="{! clear }"
                                         value="{! $Label.Clear }"
