@@ -2,6 +2,7 @@ public with sharing class Hosp_DoctorSearchController {
     public Doctor__c currentDoctor { get; set; }
     public String currentDoctorId { get; set; }
     public List<Doctor__c> doctorsToExport { get; set; }
+    public String doctorsInJson { get; set; }
     private Integer paginationSize = 5;
 
     private String sortOrder = 'Name';
@@ -155,11 +156,13 @@ public with sharing class Hosp_DoctorSearchController {
         return pageReference;
     }
 
-    public String expToJson() {
-        String doctorsInJson = Hosp_DoctorJsonHandler.getDoctorsInJson(doctorsToExport);
+    public PageReference expToJson() {
+        PageReference pageReference = Page.Hosp_DoctorSearchJsonExport;
+        pageReference.setRedirect(false);
+        return pageReference;
+    }
 
-        System.debug(doctorsInJson);
-
-        return doctorsInJson;
+    public void generateDoctorsInJson() {
+        doctorsInJson = Hosp_DoctorJsonHandler.getDoctorsInJson(doctorsToExport);
     }
 }

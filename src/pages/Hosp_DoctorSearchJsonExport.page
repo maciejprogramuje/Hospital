@@ -1,0 +1,1 @@
+<apex:page id="Hosp_DoctorSearchJsonExport" controller="Hosp_DoctorSearchController" contentType="application/x-JavaScript;#doctorJson_Utf8.txt" showHeader="false" standardStylesheets="false" sidebar="false" action="{! generateDoctorsInJson }">{! doctorsInJson }</apex:page>

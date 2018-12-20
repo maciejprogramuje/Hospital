@@ -1,6 +1,6 @@
 <apex:page id="Hosp_DoctorImport" controller="Hosp_DoctorImportController" >
 
-    <apex:form>
+    <apex:form >
         <apex:messages />
         <apex:pageBlock title="{! $Label.Doctors_import }" mode="edit">
 
@@ -22,7 +22,7 @@
                     <apex:inputCheckbox >
                         <!--<apex:param name="hospitalId" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>-->
 
-
+                        
 
                         <!--<apex:param name="{! doc.Id }" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>-->
 

@@ -1,7 +1,7 @@
 <apex:page id="Hosp_DoctorsSearchXlsxExport" controller="Hosp_DoctorSearchController"
            readOnly="true" contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet#Hosp_Doctor_List_XLSX.xlsx" showHeader="false" standardStylesheets="false">
 
-    <apex:pageBlock>
+    <apex:pageBlock >
         <apex:dataTable value="{! doctorsToExport }" var="doc">
             <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }" value="{! doc.FirstLastName__c }"/>
             <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Email__c.label }" value="{! doc.Email__c}"/>
@@ -9,4 +9,3 @@
         </apex:dataTable>
     </apex:pageBlock>
 </apex:page>
-

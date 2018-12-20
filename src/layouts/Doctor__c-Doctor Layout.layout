@@ -23,6 +23,10 @@
                 <behavior>Edit</behavior>
                 <field>Email__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>FirstLastName__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
@@ -87,9 +91,12 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Hospital__c.NAME</fields>
+        <fields>Hospital__c.City__c</fields>
+        <fields>Hospital__c.Country__c</fields>
         <fields>StartDate__c</fields>
         <fields>EndDate__c</fields>
+        <fields>NAME</fields>
         <relatedList>Contract__c.Doctor__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

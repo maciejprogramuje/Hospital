@@ -63,6 +63,15 @@
             <valueSetName>Country</valueSetName>
         </valueSet>
     </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
     <label>User</label>
     <nameField>
         <displayFormat>A-{0000}</displayFormat>

@@ -67,8 +67,8 @@
     <fields>
         <fullName>EndDate__c</fullName>
         <externalId>false</externalId>
-        <label>EndDate</label>
-        <required>false</required>
+        <label>End Date</label>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -88,10 +88,18 @@
     <fields>
         <fullName>StartDate__c</fullName>
         <externalId>false</externalId>
-        <label>StartDate</label>
-        <required>false</required>
+        <label>Start Date</label>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>isFinished__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>isFinished</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <label>Contract</label>
     <listViews>

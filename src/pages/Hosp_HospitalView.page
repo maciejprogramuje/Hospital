@@ -23,7 +23,7 @@
                     id="block1">
 
         <apex:outputPanel >
-            <apex:pageMessages/>
+            <apex:pageMessages />
         </apex:outputPanel>
 
         <apex:pageBlockSection title="{! $Label.Basic_Info}"
@@ -65,7 +65,7 @@
         </apex:pageBlockSection>
 
         <center>
-            <apex:form>
+            <apex:form >
 
                 <apex:commandButton action="{! edit }"
                                     value="{! $Label.Edit }"/>
@@ -90,7 +90,7 @@
                                      columnsWidth="10%,30%,30%,15%, 15%">
 
                     <apex:column headerValue="{! $Label.Actions }">
-                        <apex:form>
+                        <apex:form >
                             <apex:commandLink action="{! dismiss }"
                                               reRender="contracts_list_main_block"
                                               style="text-decoration:none">

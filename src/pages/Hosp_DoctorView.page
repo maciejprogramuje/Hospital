@@ -14,16 +14,14 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <apex:pageBlock id='wholeDoctorView' title="{! $Label.Doctor }" mode="edit">
+    <apex:pageBlock id="wholeDoctorView" title="{! $Label.Doctor }" mode="edit">
         <div>
             <div class="column" style="text-align: center">
-
                 <apex:image width="200"
                             height="200"
                             value="{! URLFOR($Action.Attachment.Download, avatarSrc.Id)}"
                             id="doctorCustomAvatar"
                             rendered="{! hasAvatar }"/>
-
                 <apex:image width="200"
                             height="200"
                             value="{! $Resource.man}"
@@ -35,7 +33,6 @@
                         <apex:commandButton value="{! $Label.Upload}"
                                             action="{! changeRecordPicture }"
                                             rendered="{! !printToPDF }"/>
-
                         <apex:commandButton value="{! $Label.Delete}"
                                             action="{! changeRecordPictureToDefault }"
                                             rendered="{! !printToPDF }"
@@ -47,21 +44,14 @@
             <div class="column content">
                 <apex:pageBlockSection title="{! $Label.Basic_Info}"
                                        columns="2">
-
                     <apex:outputField value="{! Doctor__c.FirstName__c }"/>
-
                     <apex:outputField value="{! Doctor__c.Email__c }"/>
-
                     <apex:outputField value="{! Doctor__c.Name }"/>
 
-                    <apex:pageBlockSectionItem>
-
+                    <apex:pageBlockSectionItem >
                         <apex:outputText value="{! $ObjectType.Doctor__c.fields.Phone__c.Label }"/>
-
-                        <apex:form>
-
-                            <apex:pageBlockSectionItem>
-
+                        <apex:form >
+                            <apex:pageBlockSectionItem >
                                 <apex:outputField id="copytext"
                                                   value="{! Doctor__c.Phone__c }"/>
 
@@ -70,32 +60,24 @@
                                                     value="{! $Label.Copy_Label }"/>
 
                             </apex:pageBlockSectionItem>
-
                         </apex:form>
-
                     </apex:pageBlockSectionItem>
-
                 </apex:pageBlockSection>
 
                 <apex:pageBlockSection title="{! $Label.Address }"
                                        columns="2">
-
                     <apex:outputField value="{! Doctor__c.City__c }"/>
-
                     <apex:outputField value="{! Doctor__c.Country__c }"/>
-
                     <apex:outputField value="{! Doctor__c.Street__c }"/>
-
                 </apex:pageBlockSection>
-
             </div>
             <div style="clear: both"></div>
         </div>
 
+
+
         <div align="center">
-
             <apex:form rendered="{! !printToPDF }">
-
                 <apex:commandButton action="{! edit }"
                                     value="{! $Label.Edit }" />
 
@@ -117,44 +99,33 @@
                 </apex:actionFunction>
 
             </apex:form>
-
         </div>
 
         <apex:pageBlockSection title="{! $Label.Tracking_history }"
                                columns="1">
-
             <apex:relatedList list="Histories"/>
-
         </apex:pageBlockSection>
 
         <apex:pageBlockSection title="{! $Label.Contracts }"
                                id="contracts_list_main_block"
                                columns="1">
-
             <apex:pageBlockTable value="{! contracts }"
                                  var="contr"
                                  columns="5"
                                  columnsWidth="10%,30%,30%,15%, 15%">
 
                 <apex:column headerValue="{! $Label.Actions }">
-
                     <apex:form rendered="{! !printToPDF }">
-
                         <apex:commandLink action="{! dismiss }"
                                           reRender="contracts_list_main_block"
                                           style="text-decoration:none">
-
                             <apex:param name="contractId"
                                         value="{! contr.Id }"
                                         assignTo="{! contractIdCurrent }"/>
-
                             <apex:commandButton value="{! $Label.Dismiss }"
                                                 rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
-
                         </apex:commandLink>
-
                     </apex:form>
-
                 </apex:column>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
@@ -173,10 +144,6 @@
         </apex:pageBlockSection>
 
     </apex:pageBlock>
-
-
-
-    <!-- ======================= MODAL =================== -->
 
     <div id="myModal" style="display: none">
         <!--<c:Hosp_HireDoctorComponent doctorId="{! Doctor__c.Id }"/>-->
@@ -249,7 +216,7 @@
                             <apex:column value="{! hosp.hospitalCity }"/>
 
                         </apex:pageBlockTable>
-
+                        
                     </apex:pageBlockSection>
 
                 </apex:outputPanel>

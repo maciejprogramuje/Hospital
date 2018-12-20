@@ -1,5 +1,5 @@
 <apex:page id="Hosp_DoctorSearch" controller="Hosp_DoctorSearchController" tabStyle="Doctor__c">
-        <apex:form>
+        <apex:form >
 
             <apex:pageBlock title="{! $Label.Search_for_Doctor }" mode="edit">
 

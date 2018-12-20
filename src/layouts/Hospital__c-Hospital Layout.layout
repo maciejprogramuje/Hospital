@@ -23,6 +23,18 @@
                 <behavior>Edit</behavior>
                 <field>WWW__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>PostalCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Street__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Master_Unit__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -79,9 +91,11 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Doctor__c.FirstName__c</fields>
+        <fields>Doctor__c.NAME</fields>
         <fields>StartDate__c</fields>
         <fields>EndDate__c</fields>
+        <fields>NAME</fields>
         <relatedList>Contract__c.Hospital__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

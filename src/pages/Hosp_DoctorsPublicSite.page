@@ -2,7 +2,7 @@
 
     <apex:pageBlock title="{! $Label.Random_doctors }">
 
-        <apex:outputPanel>
+        <apex:outputPanel >
 
             <apex:pageBlockTable value="{! randomDoctors }" var="doctor">
 

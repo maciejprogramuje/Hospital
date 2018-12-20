@@ -3,7 +3,7 @@
     <apex:attribute name="doctorId" description="This is the Doctor Id" type="String" required="true" assignTo="{! currentDoctorId }"/>
 
     <apex:pageBlock mode="edit">
-        <apex:form>
+        <apex:form >
             <apex:pageBlockSection id="searchForm" title="{! $Label.Hospital_Search_Form }" columns="2">
                 <apex:inputField value="{! hospital.Name }"/>
                 <apex:inputField value="{! hospital.Country__c }"/>

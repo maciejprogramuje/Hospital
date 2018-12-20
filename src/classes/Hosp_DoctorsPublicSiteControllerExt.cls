@@ -2,7 +2,7 @@ public with sharing class Hosp_DoctorsPublicSiteControllerExt {
     public List<Doctor__c> randomDoctors { get; set; }
     Integer numberOfRandomDoctors;
 
-
+    
     public Hosp_DoctorsPublicSiteControllerExt(ApexPages.StandardController controller) {
         numberOfRandomDoctors = 10;
         randomDoctors = generateRandomDoctors();
