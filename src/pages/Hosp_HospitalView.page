@@ -22,9 +22,12 @@
                     mode="detail"
                     id="block1">
 
-        <apex:outputPanel >
+        <apex:outputPanel>
+
             <apex:pageMessages />
+
         </apex:outputPanel>
+
 
         <apex:pageBlockSection title="{! $Label.Basic_Info}"
                                columns="2"
@@ -58,13 +61,18 @@
 
             </apex:pageBlockSection>
 
+
             <apex:pageBlockSection columns="1">
-                <div id="map"/>
+
+                <div id="map"></div>
+
             </apex:pageBlockSection>
 
         </apex:pageBlockSection>
 
+
         <center>
+
             <apex:form >
 
                 <apex:commandButton action="{! edit }"
@@ -75,7 +83,9 @@
                                     onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"/>
 
             </apex:form>
+
         </center>
+
 
         <apex:pageBlockSection title="{! $Label.Contracts }"
                                id="contracts_list_main_block"
@@ -90,9 +100,12 @@
                                      columnsWidth="10%,30%,30%,15%, 15%">
 
                     <apex:column headerValue="{! $Label.Actions }">
+
                         <apex:form >
+
                             <apex:commandLink action="{! dismiss }"
                                               reRender="contracts_list_main_block"
+                                              status="statusComp"
                                               style="text-decoration:none">
 
                                 <apex:param name="contractId"
@@ -101,15 +114,15 @@
 
                                 <apex:commandButton value="{! $Label.Dismiss }"
                                                     rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
+
                             </apex:commandLink>
+
                         </apex:form>
+
                     </apex:column>
 
                     <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
                                  value="{! contr.Doctor__r.FirstLastName__c }"/>
-
-                    <apex:column headerValue="{! $ObjectType.Hospital__c.fields.Name.label }"
-                                 value="{! contr.Hospital__r.Name }"/>
 
                     <apex:column headerValue="{! $ObjectType.Contract__c.fields.StartDate__c.label }"
                                  value="{! contr.StartDate__c}"/>
@@ -131,6 +144,7 @@
         <!--AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I-->
     </apex:pageBlock>
 
+    <c:Hosp_StatusComponent/>
 
     <script type="text/javascript">
     twistSection(document.getElementById('{!$Component.block1.sectionAddress}').getElementsByTagName('img')[0])

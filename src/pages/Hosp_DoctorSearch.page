@@ -1,129 +1,151 @@
 <apex:page id="Hosp_DoctorSearch" controller="Hosp_DoctorSearchController" tabStyle="Doctor__c">
-        <apex:form >
+    <apex:form>
 
-            <apex:pageBlock title="{! $Label.Search_for_Doctor }" mode="edit">
+        <apex:pageBlock title="{! $Label.Search_for_Doctor }" mode="edit">
 
-                <apex:pageBlockSection id="search_form_pbs"
-                                       title="{! $Label.Search_Form }"
-                                       columns="2">
+            <apex:pageBlockSection id="search_form_pbs"
+                                   title="{! $Label.Search_Form }"
+                                   columns="2">
 
-                    <apex:inputField value="{! currentDoctor.FirstName__c }"
-                                     required="false"/>
+                <apex:inputField value="{! currentDoctor.FirstName__c }"
+                                 required="false"/>
 
-                    <apex:inputField value="{! currentDoctor.Email__c }"/>
+                <apex:inputField value="{! currentDoctor.Email__c }"/>
 
-                    <apex:inputField value="{! currentDoctor.Name }"
-                                     required="true"/>
+                <apex:inputField value="{! currentDoctor.Name }"
+                                 required="true"/>
 
-                    <apex:inputField value="{! currentDoctor.Country__c }"/>
+                <apex:inputField value="{! currentDoctor.Country__c }"/>
 
-                </apex:pageBlockSection>
+            </apex:pageBlockSection>
 
-                <center>
+            <center>
 
-                    <apex:commandButton action="{! search }"
-                                        value="{! $Label.Search }"
-                                        reRender="doctors_list, navigation_pg, search_form_pbs"/>
+                <apex:commandButton action="{! search }"
+                                    value="{! $Label.Search }"
+                                    reRender="doctors_list, navigation_pg, search_form_pbs"
+                                    status="statusComp"/>
 
-                    <apex:commandButton action="{! clear }"
-                                        value="{! $Label.Clear }"
-                                        reRender="doctors_list, navigation_pg, search_form_pbs"/>
+                <apex:commandButton action="{! clear }"
+                                    value="{! $Label.Clear }"
+                                    reRender="doctors_list, navigation_pg, search_form_pbs"
+                                    status="statusComp"/>
 
-                    <apex:commandButton action="{! expToCsv }"
-                                        value="{! $Label.Export_to_CSV }"/>
+                <apex:commandButton action="{! expToCsv }"
+                                    value="{! $Label.Export_to_CSV }"/>
 
-                    <apex:commandButton action="{! expToXls }"
-                                        value="{! $Label.Export_to_XLS}"/>
+                <apex:commandButton action="{! expToXls }"
+                                    value="{! $Label.Export_to_XLS}"/>
 
-                    <apex:commandButton action="{! expToXlsx }"
-                                        value="{! $Label.Export_to_XLSX}"/>
+                <apex:commandButton action="{! expToXlsx }"
+                                    value="{! $Label.Export_to_XLSX}"/>
 
-                    <apex:commandButton action="{! expToJson }"
-                                        value="{! $Label.Export_to_JSON}"/>
+                <apex:commandButton action="{! expToJson }"
+                                    value="{! $Label.Export_to_JSON}"/>
 
-                </center>
+            </center>
 
-                <apex:pageBlockSection id="doctors_list"
-                                       title="{! $Label.Results }"
-                                       columns="1" >
+            <apex:pageBlockSection id="doctors_list"
+                                   title="{! $Label.Results }"
+                                   columns="1">
 
-                    <apex:pageBlockTable value="{! currentDoctors }"
-                                         var="doc"
-                                         columns="4"
-                                         columnsWidth="10%,40%,40%,10%">
+                <apex:pageBlockTable value="{! currentDoctors }"
+                                     var="doc"
+                                     columns="4"
+                                     columnsWidth="10%,40%,40%,10%">
 
-                        <apex:column headerValue="{! $Label.Actions }">
+                    <apex:column headerValue="{! $Label.Actions }">
 
-                            <apex:commandLink action="{!URLFOR($Action.Doctor__c.Edit, doc.id)}"
-                                              target="_blank"
-                                              style="text-decoration:none">
+                        <apex:commandLink action="{! URLFOR($Action.Doctor__c.Edit, doc.id) }"
+                                          target="_blank"
+                                          style="text-decoration:none">
 
-                                <apex:commandButton value="{! $Label.Edit }"/>
+                            <apex:commandButton value="{! $Label.Edit }"/>
 
+                        </apex:commandLink>
+
+                        <apex:commandLink action="/{! doc.id }"
+                                          target="_blank"
+                                          style="text-decoration:none">
+
+                            <apex:commandButton value="{! $Label.View_Action }"/>
+
+                        </apex:commandLink>
+
+                    </apex:column>
+
+                    <apex:column value="{! doc.FirstLastName__c }">
+
+                        <apex:facet name="header">
+
+                            <apex:commandLink action="{! sortByName }"
+                                              reRender="doctors_list"
+                                              status="statusComp">{! $ObjectType.Doctor__c.fields.FirstLastName__c.label } {! sortOrderSignName }
                             </apex:commandLink>
 
-                            <apex:commandLink action="/{! doc.id }"
-                                              target="_blank"
-                                              style="text-decoration:none">
 
-                                <apex:commandButton value="{! $Label.View_Action }"/>
+                        </apex:facet>
 
+                    </apex:column>
+
+                    <apex:column value="{! doc.Email__c}">
+
+                        <apex:facet name="header">
+
+                            <apex:commandLink action="{! sortByEmail }"
+                                              reRender="doctors_list"
+                                              status="statusComp">{! $ObjectType.Doctor__c.fields.Email__c.label } {! sortOrderSignEmail }
                             </apex:commandLink>
 
-                        </apex:column>
+                        </apex:facet>
 
-                        <apex:column value="{! doc.FirstLastName__c }">
+                    </apex:column>
 
-                            <apex:facet name="header">
+                    <apex:column value="{! doc.Country__c}">
 
-                                <apex:commandLink action="{! sortByName }"
-                                                  reRender="doctors_list">{! $ObjectType.Doctor__c.fields.FirstLastName__c.label } {! sortOrderSignName }</apex:commandLink>
+                        <apex:facet name="header">
 
-                            </apex:facet>
+                            <apex:commandLink action="{! sortByCountry }"
+                                              reRender="doctors_list"
+                                              status="statusComp">{! $ObjectType.Doctor__c.fields.Country__c.label } {! sortOrderSignCountry }
+                            </apex:commandLink>
 
-                        </apex:column>
+                        </apex:facet>
 
-                        <apex:column value="{! doc.Email__c}">
+                    </apex:column>
 
-                            <apex:facet name="header">
+                </apex:pageBlockTable>
 
-                                <apex:commandLink action="{! sortByEmail }"
-                                                  reRender="doctors_list">{! $ObjectType.Doctor__c.fields.Email__c.label } {! sortOrderSignEmail }</apex:commandLink>
+                <apex:panelGrid id="navigation_pg"
+                                columns="4"
+                                rendered="{! doctorsToExport.size > 0}">
 
-                            </apex:facet>
+                    <apex:commandLink action="{! first }"
+                                      reRender="doctors_list"
+                                      status="statusComp">{! $Label.First }</apex:commandlink>
 
-                        </apex:column>
+                    <apex:commandLink action="{! previous }"
+                                      rendered="{! hasPrevious }"
+                                      reRender="doctors_list"
+                                      status="statusComp">{! $Label.Previous }</apex:commandlink>
 
-                        <apex:column value="{! doc.Country__c}">
+                    <apex:commandLink action="{! next }"
+                                      rendered="{! hasNext }"
+                                      reRender="doctors_list"
+                                      status="statusComp">{! $Label.Next }</apex:commandlink>
 
-                            <apex:facet name="header">
+                    <apex:commandLink action="{! last }"
+                                      reRender="doctors_list"
+                                      status="statusComp">{! $Label.Last }</apex:commandlink>
 
-                                <apex:commandLink action="{! sortByCountry }"
-                                                  reRender="doctors_list">{! $ObjectType.Doctor__c.fields.Country__c.label } {! sortOrderSignCountry }</apex:commandLink>
+                </apex:panelGrid>
 
-                            </apex:facet>
+            </apex:pageBlockSection>
 
-                        </apex:column>
+        </apex:pageBlock>
 
-                    </apex:pageBlockTable>
+    </apex:form>
 
-                    <apex:panelGrid id="navigation_pg"
-                                    columns="4"
-                                    rendered="{! doctorsToExport.size > 0}">
+    <c:Hosp_StatusComponent/>
 
-                        <apex:commandLink action="{! first }">{! $Label.First }</apex:commandlink>
-
-                        <apex:commandLink action="{! previous }"
-                                          rendered="{! hasPrevious }">{! $Label.Previous }</apex:commandlink>
-
-                        <apex:commandLink action="{! next }"
-                                          rendered="{! hasNext }">{! $Label.Next }</apex:commandlink>
-
-                        <apex:commandLink action="{! last }">{! $Label.Last }</apex:commandlink>
-                    </apex:panelGrid>
-
-                </apex:pageBlockSection>
-            </apex:pageBlock>
-
-        </apex:form>
-    </apex:page>
+</apex:page>

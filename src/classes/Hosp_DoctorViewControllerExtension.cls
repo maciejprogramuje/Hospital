@@ -150,12 +150,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         }
     }
 
-    public void cancel() {
-        ApexPages.getMessages().clear();
-
-        setFieldsEmpty();
-    }
-
     public Class Wrapper {
         public String hospitalId { get; set; }
         public String hospitalName { get; set; }

@@ -49,21 +49,20 @@
 
             <apex:outputPanel rendered="{! doctors.size > 0 }">
 
-                <apex:actionRegion id="actionSelect"
-                                   renderRegionOnly="false">
+                <apex:commandButton value="{! $Label.SelectAll }"
+                                    action="{! selectCheckBox }"
+                                    reRender="apexForm"
+                                    status="statusComp"/>
 
-                    <apex:commandButton value="{! $Label.SelectAll }"
-                                        action="{! selectCheckBox }"
-                                        reRender="apexForm"/>
-
-                    <apex:commandButton value="{! $Label.ClearAll }"
-                                        action="{! clearAllCheckBox }"
-                                        reRender="apexForm"/>
-
-                </apex:actionRegion>
+                <apex:commandButton value="{! $Label.ClearAll }"
+                                    action="{! clearAllCheckBox }"
+                                    reRender="apexForm"
+                                    status="statusComp"/>
 
                 <apex:commandButton value="{! $Label.Deselect }"
-                                    action="{! deselectCheckBox }"/>
+                                    action="{! deselectCheckBox }"
+                                    reRender="apexForm"
+                                    status="statusComp"/>
 
             </apex:outputPanel>
 
@@ -90,31 +89,26 @@
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Country__c.Label }"
                              value="{!oneDoctor.doctorCountryWrapper}"/>
 
-
                 <apex:column headerValue="{! $Label.Status }">
 
-                    <apex:actionRegion id="actionSuccess"
-                                       renderRegionOnly="false">
+                    <apex:commandLink value="{! $Label.Success }"
+                                      action="{! URLFOR($Action.Doctor__c.View, oneDoctor.doctorIdWrapper) }"
+                                      rendered="{! oneDoctor.doctorInformationAfterImport > 0 }"
+                                      target="_blank"
+                                      immediate="true">
 
-                        <apex:commandLink value="{! $Label.Success }"
-                                          action="{! URLFOR($Action.Doctor__c.View, oneDoctor.doctorIdWrapper) }"
-                                          rendered="{! oneDoctor.doctorInformationAfterImport > 0 }"
-                                          target="_blank"
-                                          immediate="true">
+                        <apex:param name="doctorId"
+                                    value="{! oneDoctor.doctorIdWrapper }"
+                                    assignTo="{! currentDoctorId }"/>
 
-                            <apex:param name="doctorId"
-                                        value="{! oneDoctor.doctorIdWrapper }"
-                                        assignTo="{! currentDoctorId }"/>
-
-                        </apex:commandLink>
+                    </apex:commandLink>
 
 
-                        <apex:commandLink value="{! $Label.Failed }"
-                                          rendered="{! oneDoctor.doctorInformationAfterImport < 0 }"
-                                          reRender="actionSection"
-                                          style="text-decoration: none;"/>
-
-                    </apex:actionRegion>
+                    <apex:commandLink value="{! $Label.Failed }"
+                                      rendered="{! oneDoctor.doctorInformationAfterImport < 0 }"
+                                      reRender="actionSection"
+                                      status="statusComp"
+                                      style="text-decoration: none;"/>
 
                 </apex:column>
 
@@ -127,11 +121,13 @@
 
                     <apex:commandButton action="{! importDoctors }"
                                         value="{! $Label.Import }"
-                                        reRender="apexForm"/>
+                                        reRender="apexForm"
+                                        status="statusComp"/>
 
                     <apex:commandButton action="{! clear }"
                                         value="{! $Label.Clear }"
-                                        reRender="apexForm"/>
+                                        reRender="apexForm"
+                                        status="statusComp"/>
 
                     <apex:actionRegion id="actionImport"
                                        renderRegionOnly="false"/>
@@ -143,5 +139,7 @@
         </apex:pageBlock>
 
     </apex:form>
+
+    <c:Hosp_StatusComponent/>
 
 </apex:page>

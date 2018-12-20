@@ -134,6 +134,8 @@ public with sharing class Hosp_DoctorImportController {
         doctorsAfterImportSuccess = new List<DoctorWrapper>();
         doctorsAfterImportFailed = new List<DoctorWrapper>();
 
+        resetDoctorWrapersStatus();
+
         doctorsToImport();
 
         for (Doctor__c oneDoctor : doctorsToImport) {
@@ -155,6 +157,12 @@ public with sharing class Hosp_DoctorImportController {
 
         doctorWrappers.clear();
         doctorWrappers.addAll(temporaryDoctorWrappers);
+    }
+
+    private void resetDoctorWrapersStatus() {
+        for(DoctorWrapper doctorWrapper : doctorWrappers) {
+            doctorWrapper.doctorInformationAfterImport = 0;
+        }
     }
 
     public void deleteDoctors() {

@@ -1,16 +1,25 @@
 <apex:page id="pg"  controller="Hosp_DoctorProfileImageController" showHeader="true" tabStyle="Doctor__c">
 
     <apex:outputPanel id="messages">
+
         <apex:pageMessages showDetail="false"/>
+
     </apex:outputPanel>
 
+
     <head>
+
         <meta http-equiv='cache-control' content='no-cache'/>
+
         <meta http-equiv='expires' content='0'/>
+
         <meta http-equiv='pragma' content='no-cache'/>
+
     </head>
 
+
     <body>
+
     <style>
            .btn_active{
                 height: 25px;
@@ -28,30 +37,42 @@
                 text-decoration: none !important;
                 display: inline-block;
             }
+
             .ChangeProfile_picture .bPageBlock.brandSecondaryBrd.bEditBlock.secondaryPalette {
                 margin-bottom: 0 !important;
             }
 
-
     </style>
-    <!--<apex:inputHidden id="DocId" value="{!DocID}"/>-->
-    <apex:outputPanel rendered="{!NOT(doneuploading)}">
+
+
+    <apex:outputPanel rendered="{! NOT(doneuploading) }">
+
         <apex:form id="frm1">
+
             <apex:actionFunction name="EditProfilePicture" id="editpic" action="{! uploadPicture }">
+
                 <apex:param value="false" name="uploadDoc" assignTo="{! uploadCroping }"/>
+
             </apex:actionFunction>
+
             <!--Start ChangeProfile_picture-->
             <div class="ChangeProfile_picture" style="display: block; margin: 0 auto; ">
+
                 <center>
+
                     <div style="font-size: x-large;"></div>
+
                     <br/>
+
                     <div id="ErrorDiv"></div>
+
                 </center>
                 <!--Start formbox-->
 
                 <apex:pageBlock id="uploadPictureBlock"
                                 title="{! firstLastName }"
                                 mode="edit">
+
                     <apex:inputFile style="padding: 4.5px 10px ;width: 98.5%; background-color: #F8F8F8; "
                                     id="fileid"
                                     fileSize="{! fsize }"
@@ -62,19 +83,33 @@
                                     fileName="{! propFileName }"
                                     contentType="{! propContentType }"/>
 
+
                     <apex:pageBlockButtons location="bottom">
+
                         <apex:commandLink onClick="validateProfilePicture(); return false;"
                                           style="text-decoration: none">
-                            <apex:commandButton value="Submit"/>
-                        </apex:commandLink>
-                    </apex:pageBlockButtons>
 
+                            <apex:commandButton value="{! $Label.Submit }" />
+
+                        </apex:commandLink>
+
+
+                        <apex:commandLink action="{! URLFOR($Action.Doctor__c.View, recordId) }"
+                                          style="text-decoration: none">
+
+                            <apex:commandButton value="{! $Label.Cancel }" />
+
+                        </apex:commandLink>
+
+                    </apex:pageBlockButtons>
 
                 </apex:pageBlock>
 
                 <!--End formbox-->
             </div>
+
         </apex:form>
+
     </apex:outputPanel>
 
 
@@ -134,40 +169,59 @@
             margin-right: 10px;
             }
 
-
         </style>
+
         <apex:form id="frm2">
+
             <apex:actionFunction name="UploadCropPicture"
                                  id="croppic"
                                  action="{! uploadPicture }"
                                  reRender="outputcrop"
+                                 status="statusComp"
                                  oncomplete="oncompCropping();">
+
                 <apex:param value=""
                             name="dataurl"
                             assignTo="{! inputdataUrl }"/>
+
                 <apex:param value="true"
                             name="uploadcroping"
                             assignTo="{! uploadCroping }"/>
+
             </apex:actionFunction>
             <!---------------------------->
             <div class="container">
+
                 <div class="imageBox">
+
                     <div class="thumbBox"></div>
+
                     <div class="spinner" style="display: none">...</div>
+
                 </div>
+
                 <div class="action"
                      style="text-align: center;">
+
                     <a href="javascript:void(0);" id="btnZoomIn" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Zoom_IN }</a>
                     <a href="javascript:void(0);" id="btnZoomOut" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Zoom_Out }</a>
                     <a href="javascript:void(0);" id="btnCrop" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Crop }</a>
+
                 </div>
+
                 <div class="cropped">
                 </div>
+
             </div>
+
         </apex:form>
+
     </apex:outputPanel>
+
     </body>
+
     <apex:outputPanel id="outputcrop">
+
         <script type="text/javascript">
          'use strict';
          var cropbox = function(options){
@@ -329,15 +383,19 @@
              return obj;
          };
 
-
         </script>
+
         <script type="text/javascript">
          var imageData;
 
          function validateProfilePicture(){
              var inpt_file = document.getElementById('pg:frm1:uploadPictureBlock:fileid');
              if(inpt_file.value == '' || inpt_file.fileName == '' || inpt_file.contentType == ''){
-                 //document.getElementById('ErrorDiv').innerHTML = '<b>Error:</b> no file to upload';
+
+
+                 document.getElementById('ErrorDiv').innerHTML = '<b>Error:</b> no file to upload';
+
+
              } else {
                  //document.getElementById('ErrorDiv').innerHTML = '';
                  window.resizeTo(550, 550);
@@ -391,5 +449,9 @@
          loadImagesection();
 
         </script>
+
     </apex:outputPanel>
+
+    <c:Hosp_StatusComponent/>
+
 </apex:page>

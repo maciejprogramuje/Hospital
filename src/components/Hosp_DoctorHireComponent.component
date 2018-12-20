@@ -4,63 +4,134 @@
 
     <apex:pageBlock mode="edit">
         <apex:form >
-            <apex:pageBlockSection id="searchForm" title="{! $Label.Hospital_Search_Form }" columns="2">
+            <apex:pageBlockSection id="searchForm"
+                                   title="{! $Label.Hospital_Search_Form }"
+                                   columns="2">
+
                 <apex:inputField value="{! hospital.Name }"/>
+
                 <apex:inputField value="{! hospital.Country__c }"/>
+
                 <apex:inputField value="{! hospital.WWW__c }"/>
+
             </apex:pageBlockSection>
 
+
             <apex:pageBlock mode="maindetail">
+
                 <apex:pageBlockButtons location="top">
-                    <apex:commandButton value="{! $Label.Search }" action="{! searchHospitals }" reRender="resultsDiv"/>
-                    <apex:commandButton value="{! $Label.Clear }" action="{! clearSearchForm }" reRender="searchForm, resultsDiv, contractDetailsDiv" immediate="true"/>
+
+                    <apex:commandButton value="{! $Label.Search }"
+                                        action="{! searchHospitals }"
+                                        reRender="resultsDiv"
+                                        status="statusComp"/>
+
+                    <apex:commandButton value="{! $Label.Clear }"
+                                        action="{! clearSearchForm }"
+                                        reRender="searchForm, resultsDiv, contractDetailsDiv"
+                                        status="statusComp"
+                                        immediate="true"/>
+
                 </apex:pageBlockButtons>
+
             </apex:pageBlock>
 
+
             <apex:outputPanel id="resultsDiv">
-                <apex:pageBlockSection id="results" title="{! $Label.Hospital_Results }" columns="1" rendered="{! hospitals.size > 0 }">
-                    <apex:pageBlockTable value="{! wrappers }" var="hosp" columns="4" columnsWidth="10%,30%,30%,30%">
+
+                <apex:pageBlockSection id="results"
+                                       title="{! $Label.Hospital_Results }"
+                                       columns="1"
+                                       rendered="{! hospitals.size > 0 }">
+
+                    <apex:pageBlockTable value="{! wrappers }"
+                                         var="hosp"
+                                         columns="4"
+                                         columnsWidth="10%,30%,30%,30%">
+
                         <apex:column headerValue="{! $Label.Actions }">
-                            <apex:commandButton value="{! $Label.Select }" reRender="contractDetailsDiv, results" action="{! changeSelect}" rendered="{! !hosp.isSelected }" immediate="true">
-                                <apex:param name="hospitalId" value="{! hosp.hospitalId }" assignTo="{! selectedHospitalId }"/>
+
+                            <apex:commandButton value="{! $Label.Select }"
+                                                reRender="contractDetailsDiv, results"
+                                                status="statusComp"
+                                                action="{! changeSelect}"
+                                                rendered="{! !hosp.isSelected }"
+                                                immediate="true">
+
+                                <apex:param name="hospitalId"
+                                            value="{! hosp.hospitalId }"
+                                            assignTo="{! selectedHospitalId }"/>
+
                             </apex:commandButton>
+
                         </apex:column>
 
                         <apex:column value="{! hosp.hospitalName }"/>
+
                         <apex:column value="{! hosp.hospitalCountry }"/>
+
                         <apex:column value="{! hosp.hospitalCity }"/>
 
                     </apex:pageBlockTable>
+
                 </apex:pageBlockSection>
+
             </apex:outputPanel>
 
+
             <apex:outputPanel id="contractDetailsDiv">
-                <apex:pageBlockSection id="contractDetails" title="{! $Label.Contract_Details }" columns="1" rendered="{! selectedHospitalId != null }">
+                <apex:pageBlockSection id="contractDetails"
+                                       title="{! $Label.Contract_Details }"
+                                       columns="1"
+                                       rendered="{! selectedHospitalId != null }">
 
                     <apex:pageBlockSection columns="2">
+
                         <apex:outputField value="{! doctor.FirstLastName__c }"/>
+
                         <apex:outputField value="{! selectedHospital.Name }"/>
 
                         <apex:inputField value="{! contract.StartDate__c }"/>
+
                         <apex:inputField value="{! contract.EndDate__c }"/>
+
                     </apex:pageBlockSection>
 
                     <apex:pageBlock mode="maindetail">
+
                         <apex:pageBlockButtons location="top">
-                            <apex:commandButton value="{! $Label.Hire }" action="{! hireDoctor }" reRender="contracts_list, messages"/>
-                            <apex:commandButton value="{! $Label.Cancel }" action="{! cancel }" immediate="true" onClick="hideModal()" reRender="searchForm, resultsDiv, contractDetailsDiv"/>
+
+                            <apex:commandButton value="{! $Label.Hire }"
+                                                action="{! hireDoctor }"
+                                                reRender="contracts_list, messages"
+                                                status="statusComp"/>
+
+                            <apex:commandButton value="{! $Label.Cancel }"
+                                                action="{! cancel }"
+                                                immediate="true"
+                                                onClick="hideModal()"
+                                                reRender="searchForm, resultsDiv, contractDetailsDiv"
+                                                status="statusComp"/>
+
                         </apex:pageBlockButtons>
+
                     </apex:pageBlock>
+
                 </apex:pageBlockSection>
 
             </apex:outputPanel>
 
             <apex:outputPanel id="messages">
+
                 <apex:pageMessages showDetail="false"/>
+
             </apex:outputPanel>
 
         </apex:form>
+
     </apex:pageBlock>
+
+    <c:Hosp_StatusComponent/>
 
     <script>
         function hideModal() {
