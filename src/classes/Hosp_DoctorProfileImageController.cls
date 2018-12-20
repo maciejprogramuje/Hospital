@@ -3,10 +3,10 @@ public class Hosp_DoctorProfileImageController {
     Public Transient string propFileName { get; set; }
     Public Transient string propContentType { get; set; }
     Public Integer fsize { get; set; }
-    public boolean doneuploading { get; set; }
-    public boolean doneuploadingCroping { get; set; }
-    public boolean uploadCroping { get; set; }
-    public Transient string upldocUrl { get; set; }
+    public Boolean doneuploading { get; set; }
+    public Boolean doneuploadingCroping { get; set; }
+    public Boolean uploadCroping { get; set; }
+    public Transient String upldocUrl { get; set; }
     public Transient String inputdataUrl { get; set; }
     public String DocID { get; set; }
     public String recordId { get; set; }

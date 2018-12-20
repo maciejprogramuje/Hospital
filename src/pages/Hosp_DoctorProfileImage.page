@@ -383,23 +383,16 @@
              return obj;
          };
 
-        </script>
-
-        <script type="text/javascript">
          var imageData;
 
-         function validateProfilePicture(){
+         function validateProfilePicture() {
              var inpt_file = document.getElementById('pg:frm1:uploadPictureBlock:fileid');
-             if(inpt_file.value == '' || inpt_file.fileName == '' || inpt_file.contentType == ''){
-
-
-                 document.getElementById('ErrorDiv').innerHTML = '<b>Error:</b> no file to upload';
-
-
+             if (inpt_file.value == null || inpt_file.fileName == '' || inpt_file.contentType == '') {
+                checkIdEmptyPicture();
              } else {
-                 //document.getElementById('ErrorDiv').innerHTML = '';
-                 window.resizeTo(550, 550);
-                 EditProfilePicture(false);
+                document.getElementById('ErrorDiv').innerHTML = '';
+                window.resizeTo(550, 550);
+                EditProfilePicture(false);
              }
          }
 
@@ -448,7 +441,7 @@
          }
          loadImagesection();
 
-        </script>
+         </script>
 
     </apex:outputPanel>
 
