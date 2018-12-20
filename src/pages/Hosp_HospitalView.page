@@ -25,7 +25,6 @@
         <apex:outputPanel>
 
             <apex:pageMessages />
-
         </apex:outputPanel>
 
 
@@ -36,7 +35,6 @@
             <apex:outputField value="{! Hospital__c.Name }"/>
 
             <apex:outputField value="{! Hospital__c.WWW__c }"/>
-
         </apex:pageBlockSection>
 
 
@@ -58,16 +56,13 @@
 
                 <apex:outputField value="{! Hospital__c.Country__c }"
                                   style="clear: both"/>
-
             </apex:pageBlockSection>
 
 
             <apex:pageBlockSection columns="1">
 
                 <div id="map"></div>
-
             </apex:pageBlockSection>
-
         </apex:pageBlockSection>
 
 
@@ -81,9 +76,7 @@
                 <apex:commandButton action="{! delete }"
                                     value="{! $Label.Delete }"
                                     onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"/>
-
             </apex:form>
-
         </center>
 
 
@@ -114,11 +107,8 @@
 
                                 <apex:commandButton value="{! $Label.Dismiss }"
                                                     rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
-
                             </apex:commandLink>
-
                         </apex:form>
-
                     </apex:column>
 
                     <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
@@ -129,25 +119,22 @@
 
                     <apex:column headerValue="{! $ObjectType.Contract__c.fields.EndDate__c.label }"
                                  value="{! contr.EndDate__c}"/>
-
                 </apex:pageBlockTable>
-
         </apex:pageBlockSection>
 
         <apex:pageBlockSection title="{! $Label.Hierarchy_of_Hospitals }"
                                columns="1" collapsible="false">
 
             <c:Hosp_HospitalHierarchyComponent currentHospitalId="Hospital__c.Id"/>
-
         </apex:pageBlockSection>
 
         <!--AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I-->
     </apex:pageBlock>
 
-    <c:Hosp_StatusComponent/>
+    <c:Hosp_StatusComponent />
 
     <script type="text/javascript">
-    twistSection(document.getElementById('{!$Component.block1.sectionAddress}').getElementsByTagName('img')[0])
+    twistSection(document.getElementById('{! $Component.block1.sectionAddress }').getElementsByTagName('img')[0])
 
     $(document).ready(function() {
         var myOptions = {
@@ -160,9 +147,9 @@
         var marker;
 
         var geocoder = new google.maps.Geocoder();
-        var address = "{!Hospital__c.Street__c}, {!Hospital__c.PostalCode__c}, {!Hospital__c.City__c}, {!Hospital__c.Country__c}";
+        var address = "{! Hospital__c.Street__c }, {! Hospital__c.PostalCode__c }, {! Hospital__c.City__c }, {! Hospital__c.Country__c }";
         var infowindow = new google.maps.InfoWindow({
-            content: "<b>{!Hospital__c.Name}</b><br>" + address + " "
+            content: "<b>{! Hospital__c.Name }</b><br>" + address + " "
         });
 
         geocoder.geocode( { address: address}, function(results, status) {
@@ -179,7 +166,7 @@
                        marker = new google.maps.Marker({
                            position: results[0].geometry.location,
                            map: map,
-                           title: "{!Hospital__c.Name}"
+                           title: "{! Hospital__c.Name }"
                        });
 
                        //add listeners

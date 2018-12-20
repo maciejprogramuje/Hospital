@@ -3,9 +3,7 @@
     <apex:form id="firstForm">
 
         <apex:outputPanel id="messages">
-
             <apex:pageMessages showDetail="false"/>
-
         </apex:outputPanel>
 
 
@@ -23,7 +21,6 @@
                                     contentType="{! contentType }"/>
 
                 </apex:actionRegion>
-
             </apex:pageBlockSection>
 
 
@@ -35,11 +32,8 @@
                                         action="{! importCSVFile }"/>
 
                 </div>
-
             </apex:outputPanel>
-
         </apex:pageBlock>
-
     </apex:form>
 
 
@@ -63,7 +57,6 @@
                                     action="{! deselectCheckBox }"
                                     reRender="apexForm"
                                     status="statusComp"/>
-
             </apex:outputPanel>
 
 
@@ -74,7 +67,6 @@
                 <apex:column headerValue="{! $Label.Start_Import }">
 
                     <apex:inputCheckbox id="checkBox" value="{! oneDoctor.doctorIsSelectedWrapper }"/>
-
                 </apex:column>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Name.label }"
@@ -109,9 +101,7 @@
                                       reRender="actionSection"
                                       status="statusComp"
                                       style="text-decoration: none;"/>
-
                 </apex:column>
-
             </apex:pageBlockTable>
 
 
@@ -131,13 +121,9 @@
 
                     <apex:actionRegion id="actionImport"
                                        renderRegionOnly="false"/>
-
                 </div>
-
             </apex:outputPanel>
-
         </apex:pageBlock>
-
     </apex:form>
 
     <c:Hosp_StatusComponent/>

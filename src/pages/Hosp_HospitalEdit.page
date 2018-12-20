@@ -1,29 +1,44 @@
 <apex:page id="Hosp_HospitalEdit" standardController="Hospital__c" extensions="Hosp_HospitalEditControllerExtension">
     <apex:form >
-        <apex:messages />
+
+        <apex:outputPanel>
+
+            <apex:pageMessages />
+        </apex:outputPanel>
+
         <apex:pageBlock title="{! $Label.Edit_Hospital }" mode="edit">
 
             <apex:pageBlockSection title="{! $Label.Basic_Info }" columns="1">
+
                 <apex:inputField value="{! Hospital__c.Name }" required="true" />
+
                 <apex:inputField value="{! Hospital__c.WWW__c }" required="true" />
+
                 <apex:selectList value="{! Hospital__c.Master_Unit__c }" size="1">
+
                     <apex:selectOptions value="{! masterUnits }"/>
                 </apex:selectList>
-
             </apex:pageBlockSection>
 
+
             <apex:pageBlockSection title="{! $Label.Address }" columns="1">
+
                 <apex:inputField value="{! Hospital__c.Street__c }" required="true"/>
+
                 <apex:inputField value="{! Hospital__c.PostalCode__c }" required="true"/>
+
                 <apex:inputField value="{! Hospital__c.City__c }" required="true"/>
+
                 <apex:inputField value="{! Hospital__c.Country__c }" required="true"/>
             </apex:pageBlockSection>
 
+
             <center>
+
                 <apex:commandButton action="{! save }" value="{! $Label.Save }"/>
+
                 <apex:commandButton action="{! cancel }" value="{! $Label.Cancel }"/>
             </center>
-
         </apex:pageBlock>
     </apex:form>
 </apex:page>

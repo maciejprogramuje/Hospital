@@ -25,6 +25,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
     public void dismiss() {
         Contract__c contract = [SELECT Id, StartDate__c, EndDate__c FROM Contract__c WHERE Id = :contractIdCurrent];
+
         if (contract.StartDate__c > Date.today()) {
             delete contract;
         } else if (contract.StartDate__c <= Date.today() && contract.EndDate__c >= Date.today()) {

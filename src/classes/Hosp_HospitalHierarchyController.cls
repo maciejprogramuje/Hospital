@@ -55,7 +55,7 @@ public with sharing class Hosp_HospitalHierarchyController {
             currentId = System.currentPageReference().getParameters().get('id');
         }
 
-        System.assertNotEquals(currentId, null, 'sObject ID must be provided');
+        //System.assertNotEquals(currentId, null, 'sObject ID must be provided');
         asm = formatObjectStructure(CurrentId);
 
         return asm;

@@ -8,6 +8,7 @@ public class Hosp_DoctorProfileImageController {
     public Boolean uploadCroping { get; set; }
     public Transient String upldocUrl { get; set; }
     public Transient String inputdataUrl { get; set; }
+
     public String DocID { get; set; }
     public String recordId { get; set; }
     public String firstLastName { get; set; }
@@ -68,7 +69,7 @@ public class Hosp_DoctorProfileImageController {
                 doneuploading = true;
             }
         } catch (Exception ex) {
-            ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, ex.getStackTraceString() + ' Message: ' + ex.getMessage());
+            ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, String.format(Label.Message, new List<String>{ex.getStackTraceString(), ex.getMessage()}));
             ApexPages.addMessage(msg);
         }
         return null;

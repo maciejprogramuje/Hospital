@@ -40,7 +40,7 @@ public with sharing class Hosp_DoctorImportController {
         }
 
         try {
-            fileName = Hosp_Utils.blobToString(csvFileBody, 'ISO-8859-1');
+            fileName = Hosp_Utils.blobToString(csvFileBody, Label.Iso_Code);
             checkCorrectImportFile();
 
             csvAsString = csvFileBody.toString();
@@ -54,7 +54,7 @@ public with sharing class Hosp_DoctorImportController {
 
             for (Integer i = 1; i < csvFileLines.size(); i++) {
                 Doctor__c doctor = new Doctor__c(Name = '') ;
-                string[] csvRecordData = csvfilelines[i].split(',');
+                String[] csvRecordData = csvfilelines[i].split(',');
 
                 doctor.FirstName__c = csvRecordData[0] ;
                 doctor.Name = csvRecordData[1];
@@ -177,7 +177,7 @@ public with sharing class Hosp_DoctorImportController {
         doneUploading = false;
     }
 
-    private void doctorsFromDataBase() {
+    /*private void doctorsFromDataBase() {
         String query = 'SELECT Id, FirstName__c, Name, Email__c, Country__c, City__c, FirstLastName__c, FROM Doctor__c';
 
         doctorsFromDataBase = new List<Doctor__c>();
@@ -187,7 +187,9 @@ public with sharing class Hosp_DoctorImportController {
         } else {
             doctorsFromDataBase = new List<Doctor__c>();
         }
-    }
+
+        //doctorsFromDataBase = [SELECT Id, FirstName__c, Name, Email__c, Country__c, City__c, FirstLastName__c FROM Doctor__c];
+    }*/
 
     private void doctorsToImport() {
         doctorsToImport = new List<Doctor__c>();

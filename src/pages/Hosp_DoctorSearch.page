@@ -16,7 +16,6 @@
                                  required="true"/>
 
                 <apex:inputField value="{! currentDoctor.Country__c }"/>
-
             </apex:pageBlockSection>
 
             <center>
@@ -42,7 +41,6 @@
 
                 <apex:commandButton action="{! expToJson }"
                                     value="{! $Label.Export_to_JSON}"/>
-
             </center>
 
             <apex:pageBlockSection id="doctors_list"
@@ -61,7 +59,6 @@
                                           style="text-decoration:none">
 
                             <apex:commandButton value="{! $Label.Edit }"/>
-
                         </apex:commandLink>
 
                         <apex:commandLink action="/{! doc.id }"
@@ -69,9 +66,7 @@
                                           style="text-decoration:none">
 
                             <apex:commandButton value="{! $Label.View_Action }"/>
-
                         </apex:commandLink>
-
                     </apex:column>
 
                     <apex:column value="{! doc.FirstLastName__c }">
@@ -82,10 +77,7 @@
                                               reRender="doctors_list"
                                               status="statusComp">{! $ObjectType.Doctor__c.fields.FirstLastName__c.label } {! sortOrderSignName }
                             </apex:commandLink>
-
-
                         </apex:facet>
-
                     </apex:column>
 
                     <apex:column value="{! doc.Email__c}">
@@ -96,9 +88,7 @@
                                               reRender="doctors_list"
                                               status="statusComp">{! $ObjectType.Doctor__c.fields.Email__c.label } {! sortOrderSignEmail }
                             </apex:commandLink>
-
                         </apex:facet>
-
                     </apex:column>
 
                     <apex:column value="{! doc.Country__c}">
@@ -109,9 +99,7 @@
                                               reRender="doctors_list"
                                               status="statusComp">{! $ObjectType.Doctor__c.fields.Country__c.label } {! sortOrderSignCountry }
                             </apex:commandLink>
-
                         </apex:facet>
-
                     </apex:column>
 
                 </apex:pageBlockTable>
@@ -139,11 +127,8 @@
                                       status="statusComp">{! $Label.Last }</apex:commandlink>
 
                 </apex:panelGrid>
-
             </apex:pageBlockSection>
-
         </apex:pageBlock>
-
     </apex:form>
 
     <c:Hosp_StatusComponent/>

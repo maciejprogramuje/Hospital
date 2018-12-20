@@ -14,7 +14,6 @@
         <meta http-equiv='expires' content='0'/>
 
         <meta http-equiv='pragma' content='no-cache'/>
-
     </head>
 
 
@@ -52,7 +51,6 @@
             <apex:actionFunction name="EditProfilePicture" id="editpic" action="{! uploadPicture }">
 
                 <apex:param value="false" name="uploadDoc" assignTo="{! uploadCroping }"/>
-
             </apex:actionFunction>
 
             <!--Start ChangeProfile_picture-->
@@ -65,7 +63,6 @@
                     <br/>
 
                     <div id="ErrorDiv"></div>
-
                 </center>
                 <!--Start formbox-->
 
@@ -90,7 +87,6 @@
                                           style="text-decoration: none">
 
                             <apex:commandButton value="{! $Label.Submit }" />
-
                         </apex:commandLink>
 
 
@@ -98,18 +94,13 @@
                                           style="text-decoration: none">
 
                             <apex:commandButton value="{! $Label.Cancel }" />
-
                         </apex:commandLink>
-
                     </apex:pageBlockButtons>
-
                 </apex:pageBlock>
 
                 <!--End formbox-->
             </div>
-
         </apex:form>
-
     </apex:outputPanel>
 
 
@@ -197,7 +188,6 @@
                     <div class="thumbBox"></div>
 
                     <div class="spinner" style="display: none">...</div>
-
                 </div>
 
                 <div class="action"
@@ -206,16 +196,12 @@
                     <a href="javascript:void(0);" id="btnZoomIn" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Zoom_IN }</a>
                     <a href="javascript:void(0);" id="btnZoomOut" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Zoom_Out }</a>
                     <a href="javascript:void(0);" id="btnCrop" class="btn" style="padding: 5px; text-decoration: none;">{! $Label.Crop }</a>
-
                 </div>
 
                 <div class="cropped">
                 </div>
-
             </div>
-
         </apex:form>
-
     </apex:outputPanel>
 
     </body>
@@ -442,7 +428,6 @@
          loadImagesection();
 
          </script>
-
     </apex:outputPanel>
 
     <c:Hosp_StatusComponent/>

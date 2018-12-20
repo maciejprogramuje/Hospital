@@ -17,11 +17,7 @@
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Country__c.label }"
                              value="{! doctor.Country__c }"/>
-
             </apex:pageBlockTable>
-
         </apex:outputPanel>
-
     </apex:pageBlock>
-
 </apex:page>
