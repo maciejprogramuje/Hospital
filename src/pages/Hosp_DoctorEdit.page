@@ -1,8 +1,8 @@
 <apex:page id="Hosp_DoctorEdit" standardController="Doctor__c" extensions="Hosp_DoctorEditControllerExtension">
 
-    <apex:outputField>
+    <apex:outputPanel>
         <apex:pageMessages/>
-    </apex:outputField>
+    </apex:outputPanel>
 
 
     <apex:form>

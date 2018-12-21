@@ -44,17 +44,17 @@
             <apex:outputPanel rendered="{! doctors.size > 0 }">
 
                 <apex:commandButton value="{! $Label.SelectAll }"
-                                    action="{! selectCheckBox }"
+                                    action="{! selectAllCheckBoxes }"
                                     reRender="apexForm"
                                     status="statusComp"/>
 
                 <apex:commandButton value="{! $Label.ClearAll }"
-                                    action="{! clearAllCheckBox }"
+                                    action="{! clearAllCheckBoxes }"
                                     reRender="apexForm"
                                     status="statusComp"/>
 
-                <apex:commandButton value="{! $Label.Deselect }"
-                                    action="{! deselectCheckBox }"
+                <apex:commandButton value="{! $Label.Hosp_Revert_Selection }"
+                                    action="{! revertCheckBoxes }"
                                     reRender="apexForm"
                                     status="statusComp"/>
             </apex:outputPanel>
@@ -85,7 +85,7 @@
 
                     <apex:commandLink value="{! $Label.Success }"
                                       action="{! URLFOR($Action.Doctor__c.View, oneDoctor.doctorIdWrapper) }"
-                                      rendered="{! oneDoctor.doctorInformationAfterImport > 0 }"
+                                      rendered="{! oneDoctor.doctorInformationAfterImport = SUCCESS }"
                                       target="_blank"
                                       immediate="true">
 
@@ -96,11 +96,9 @@
                     </apex:commandLink>
 
 
-                    <apex:commandLink value="{! $Label.Failed }"
-                                      rendered="{! oneDoctor.doctorInformationAfterImport < 0 }"
-                                      reRender="actionSection"
-                                      status="statusComp"
-                                      style="text-decoration: none;"/>
+                    <apex:outputLabel value="{! $Label.Hosp_Record_Already_Exists }" rendered="{! oneDoctor.doctorInformationAfterImport = ALREADY_EXISTS }" />
+
+                    <apex:outputLabel value="{! $Label.Failed_missing_required_fields }" rendered="{!oneDoctor.doctorInformationAfterImport = EMPTY_NAME}" />
                 </apex:column>
             </apex:pageBlockTable>
 

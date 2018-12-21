@@ -22,13 +22,13 @@
 
                 <apex:image width="200"
                             height="200"
-                            value="{! URLFOR($Action.Attachment.Download, avatarSrc.Id)}"
+                            value="{! URLFOR($Action.Attachment.Download, avatarSrc.Id) }"
                             id="doctorCustomAvatar"
                             rendered="{! hasAvatar }"/>
 
                 <apex:image width="200"
                             height="200"
-                            value="{! $Resource.man}"
+                            value="{! $Resource.man }"
                             id="doctorDefaultAvatar"
                             rendered="{! NOT(hasAvatar) }"/>
 
