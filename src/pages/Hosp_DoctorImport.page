@@ -12,17 +12,10 @@
 
             <apex:pageBlockSection columns="2">
 
-                <apex:actionRegion id="actionBrowse"
-                                   renderRegionOnly="false">
-
-                    <apex:inputFile value="{! csvFileBody }"
-                                    filename="{! csvAsString }"
-                                    fileSize="{! fileSize }"
-                                    contentType="{! contentType }"/>
-
-                </apex:actionRegion>
+                <apex:inputFile value="{! csvFileBody }"
+                                filename="{! csvAsString }"
+                                contentType="{! contentType }"/>
             </apex:pageBlockSection>
-
 
             <apex:outputPanel>
 
@@ -30,7 +23,6 @@
 
                     <apex:commandButton value="{! $Label.Process }"
                                         action="{! importCSVFile }"/>
-
                 </div>
             </apex:outputPanel>
         </apex:pageBlock>
@@ -41,7 +33,7 @@
 
         <apex:pageBlock id="doctorsTable" rendered="{! doneUploading }">
 
-            <apex:outputPanel rendered="{! doctors.size > 0 }">
+            <apex:outputPanel rendered="{! !doctorsFromFile.empty }">
 
                 <apex:commandButton value="{! $Label.SelectAll }"
                                     action="{! selectAllCheckBoxes }"
@@ -59,55 +51,39 @@
                                     status="statusComp"/>
             </apex:outputPanel>
 
-
             <apex:pageBlockTable id="doctorColumn"
-                                 value="{! doctorWrappers }" var="oneDoctor"
-                                 rendered="{! doctors.size > 0 }">
+                                 value="{! doctorsFromFile }" var="oneDoctor"
+                                 rendered="{! !doctorsFromFile.empty }">
 
                 <apex:column headerValue="{! $Label.Start_Import }">
 
-                    <apex:inputCheckbox id="checkBox" value="{! oneDoctor.doctorIsSelectedWrapper }"/>
+                    <apex:inputCheckbox id="checkBox" value="{! oneDoctor.isSelectedWrapper }"/>
                 </apex:column>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Name.label }"
-                             value="{! oneDoctor.doctorNameWrapper }"/>
+                             value="{! oneDoctor.nameWrapper }"/>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstName__c.Label }"
-                             value="{! oneDoctor.doctorFirstNameWrapper }"/>
+                             value="{! oneDoctor.firstNameWrapper }"/>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.City__c.Label }"
-                             value="{! oneDoctor.doctorCityWrapper }"/>
+                             value="{! oneDoctor.cityWrapper }"/>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Country__c.Label }"
-                             value="{!oneDoctor.doctorCountryWrapper}"/>
+                             value="{! oneDoctor.countryWrapper }"/>
 
-                <apex:column headerValue="{! $Label.Status }">
-
-                    <apex:commandLink value="{! $Label.Success }"
-                                      action="{! URLFOR($Action.Doctor__c.View, oneDoctor.doctorIdWrapper) }"
-                                      rendered="{! oneDoctor.doctorInformationAfterImport = SUCCESS }"
-                                      target="_blank"
-                                      immediate="true">
-
-                        <apex:param name="doctorId"
-                                    value="{! oneDoctor.doctorIdWrapper }"
-                                    assignTo="{! currentDoctorId }"/>
-
-                    </apex:commandLink>
+                <apex:column headerValue="{! $Label.Status }"
+                             value="{! oneDoctor.statusWrapper }"/>
 
 
-                    <apex:outputLabel value="{! $Label.Hosp_Record_Already_Exists }" rendered="{! oneDoctor.doctorInformationAfterImport = ALREADY_EXISTS }" />
-
-                    <apex:outputLabel value="{! $Label.Failed_missing_required_fields }" rendered="{!oneDoctor.doctorInformationAfterImport = EMPTY_NAME}" />
-                </apex:column>
             </apex:pageBlockTable>
 
 
-            <apex:outputPanel rendered="{! doctorWrappers.size > 0 }">
+            <apex:outputPanel rendered="{! !doctorsFromFile.empty }">
 
                 <div style="text-align: center;">
 
-                    <apex:commandButton action="{! importDoctors }"
+                    <apex:commandButton action="{! importCheckedDoctors }"
                                         value="{! $Label.Import }"
                                         reRender="apexForm"
                                         status="statusComp"/>

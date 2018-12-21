@@ -1,81 +1,58 @@
 public with sharing class Hosp_DoctorImportController {
-    public final Integer SUCCESS { get{
-        return 1;
-    }}
-    public final Integer ALREADY_EXISTS { get{
-        return -1;
-    }}
-    public final Integer EMPTY_NAME { get{
-        return -2;
-    }}
+    public List<DoctorImportWrapper> doctorsFromFile { get; set; }
 
     public Transient Blob csvFileBody { get; set; }
-    public Integer fileSize { get; set; }
     public Boolean doneUploading { get; set; }
     public Transient String fileName { get; set; }
     public Transient String contentType { get; set; }
     public String csvAsString { get; set; }
-    public String[] csvFileLines { get; set; }
-    public String[] inputValues { get; set; }
+    public List<String> csvFileLines { get; set; }
+    public List<String> inputValues { get; set; }
     public List<String> fieldList { get; set; }
 
-    public Doctor__c doctor { get; set; }
-    public String currentDoctorId { get; set; }
-    public List<Doctor__c> doctors { get; set; }
-    public List<Doctor__c> doctorsToImport { get; set; }
-    public List<Hosp_WrapperDoctorsCsvImport> doctorWrappers { get; set; }
-    public List<Hosp_WrapperDoctorsCsvImport> doctorsAfterImportNotSelected { get; set; }
-    public List<Hosp_WrapperDoctorsCsvImport> doctorsAfterImportFailed { get; set; }
-    public List<Hosp_WrapperDoctorsCsvImport> doctorsAfterImportSuccess { get; set; }
 
     public Hosp_DoctorImportController() {
-        csvFileLines = new String[]{
+        csvFileLines = new List<String>{
         };
-        fieldList = New List<string>();
-        doctors = New List<Doctor__c>();
+        fieldList = New List<String>();
 
-        setWrappersEmpty();
+        doctorsFromFile = new List<Hosp_DoctorImportController.DoctorImportWrapper>();
     }
 
-    public void importCSVFile() {
-        if (!doctors.isEmpty()) {
-            doctors.clear();
-            setWrappersEmpty();
-        }
-
+    public PageReference importCSVFile() {
         try {
             fileName = Hosp_Utils.blobToString(csvFileBody, Label.Iso_Code);
             checkCorrectImportFile();
 
             csvAsString = csvFileBody.toString();
             csvFileLines = csvAsString.split('\n');
-            inputValues = new String[]{
+            inputValues = new List<String>{
             };
 
-            for (String st : csvFileLines[0].split(',')) {
+            for (String st : csvFileLines.get(0).split(',')) {
                 fieldList.add(st);
             }
 
             for (Integer i = 1; i < csvFileLines.size(); i++) {
                 Doctor__c doc = new Doctor__c(Name = '') ;
-                String[] csvRecordData = csvfilelines[i].split(',');
+                List<String> csvRecordData = csvfilelines[i].split(',');
 
                 doc.FirstName__c = csvRecordData[0] ;
                 doc.Name = csvRecordData[1];
                 doc.City__c = csvRecordData[2];
                 doc.Country__c = csvRecordData[3];
 
-                doctors.add(doc);
-                doctorWrappers.add(new Hosp_WrapperDoctorsCsvImport(doc));
+                doctorsFromFile.add(new DoctorImportWrapper(doc));
                 doneUploading = true;
             }
-
         } catch (Exception e) {
             ApexPages.Message message = new ApexPages.Message(ApexPages.severity.ERROR, String.format(Label.Error_reading_CSV, new List<String>{
                     e.getMessage()
             }));
             ApexPages.addMessage(message);
         }
+
+        return null;
     }
 
     public void checkCorrectImportFile() {
@@ -95,114 +72,97 @@ public with sharing class Hosp_DoctorImportController {
 
     }
 
+    // wypełniona doctorsFromFile
+
     public void revertCheckBoxes() {
-        for (Hosp_WrapperDoctorsCsvImport doctorWrapper : doctorWrappers) {
-            if (doctorWrapper.doctorIsSelectedWrapper) {
-                doctorWrapper.doctorIsSelectedWrapper = false;
+        for (DoctorImportWrapper doc : doctorsFromFile) {
+            if (doc.isSelectedWrapper) {
+                doc.isSelectedWrapper = false;
             } else {
-                doctorWrapper.doctorIsSelectedWrapper = true;
+                doc.isSelectedWrapper = true;
             }
         }
     }
 
     public void clearAllCheckBoxes() {
-        for (Hosp_WrapperDoctorsCsvImport doctorWrapper : doctorWrappers) {
-            doctorWrapper.doctorIsSelectedWrapper = false;
+        for (DoctorImportWrapper doc : doctorsFromFile) {
+            doc.isSelectedWrapper = false;
         }
     }
     public void selectAllCheckBoxes() {
-        for (Hosp_WrapperDoctorsCsvImport doctorWrapper : doctorWrappers) {
-            doctorWrapper.doctorIsSelectedWrapper = true;
+        for (DoctorImportWrapper doc : doctorsFromFile) {
+            doc.isSelectedWrapper = true;
         }
     }
 
-    public void importDoctors() {
-        doctorsAfterImportSuccess = new List<Hosp_WrapperDoctorsCsvImport>();
-        doctorsAfterImportFailed = new List<Hosp_WrapperDoctorsCsvImport>();
+    // wyświetla liste wszystkich wczytanych lekarzy, checki działają, można przystąpić do importCheckedDoctors
 
-        resetDoctorWrapersStatus();
+    public void importCheckedDoctors() {
+        List<DoctorImportWrapper> doctorsToImport = new List<DoctorImportWrapper>();
 
-        populateDoctorsToImport();
+        for (DoctorImportWrapper doc : doctorsFromFile) {
+            if (doc.isSelectedWrapper) {
+                doctorsToImport.add(doc);
+            }
+        }
 
-        for (Doctor__c doc : doctorsToImport) {
-            if (String.isNotBlank(doc.Name)) {
-                try {
-                    insert doc;
-                    doctorsAfterImportSuccess.add(doctorWrapperSelectedBeforeImport(doc));
-                } catch (DmlException ex) {
-                    doctorsAfterImportFailed.add(doctorWrapperSelectedBeforeImport(doc));
+        List<Doctor__c> rawDoctorsToImport = new List<Doctor__c>();
+        for (DoctorImportWrapper doc : doctorsToImport) {
+            Doctor__c d = new Doctor__c(Name = doc.nameWrapper,
+                    FirstName__c = doc.firstNameWrapper,
+                    Country__c = doc.countryWrapper,
+                    City__c = doc.cityWrapper);
+
+            rawDoctorsToImport.add(d);
+        }
+
+        List<Database.SaveResult> saveResults = Database.insert(rawDoctorsToImport, false);
+
+
+        for(Integer i = 0; i <  saveResults.size(); i++) {
+            if(saveResults.get(i).isSuccess()) {
+                doctorsToImport.get(i).statusWrapper = Url.getSalesforceBaseUrl().toExternalForm() + '/' + saveResults.get(i).Id;
+            } else {
+                doctorsToImport.get(i).statusWrapper = saveResults.get(i).errors[0].getMessage();
+            }
+        }
+
+        for(DoctorImportWrapper docWithStatus : doctorsToImport) {
+            for(DoctorImportWrapper docFromFile : doctorsFromFile) {
+                if(docFromFile.guidWrapper ==  docWithStatus.guidWrapper) {
+                    docFromFile.statusWrapper = docWithStatus.statusWrapper;
+                    break;
                 }
-            } else {
-                doctorsAfterImportFailed.add(doctorWrapperSelectedBeforeImport(doc));
             }
         }
 
-        List<Hosp_WrapperDoctorsCsvImport> tempDoctorWrappers = (changeDoctorInformation(doctorsAfterImportSuccess, SUCCESS));
-        tempDoctorWrappers.addAll(changeDoctorInformation(doctorsAfterImportFailed, ALREADY_EXISTS));
-        tempDoctorWrappers.addAll(doctorsAfterImportNotSelected);
-
-        doctorWrappers.clear();
-        doctorWrappers.addAll(tempDoctorWrappers);
-    }
-
-    private Hosp_WrapperDoctorsCsvImport doctorWrapperSelectedBeforeImport(Doctor__c doc) {
-        Hosp_WrapperDoctorsCsvImport doctorWrapper = new Hosp_WrapperDoctorsCsvImport(doc);
-        doctorWrapper.setDoctorIsSelectedBeforeImport();
-        return doctorWrapper;
-    }
-
-    private void populateDoctorsToImport() {
-        doctorsToImport = new List<Doctor__c>();
-        doctorsAfterImportNotSelected = new List<Hosp_WrapperDoctorsCsvImport>();
-
-        for (Hosp_WrapperDoctorsCsvImport doc : doctorWrappers) {
-            if (doc.doctorIsSelectedWrapper) {
-                Doctor__c doctorToImport = new Doctor__c(
-                        Name = doc.doctorNameWrapper,
-                        FirstName__c = doc.doctorFirstNameWrapper,
-                        City__c = doc.doctorCityWrapper,
-                        Country__c = doc.doctorCountryWrapper,
-                        Phone__c = '');
-
-                doctorsToImport.add(doctorToImport);
-            } else {
-                doctorsAfterImportNotSelected.add(doc);
-            }
-        }
-    }
-
-    public List<Hosp_WrapperDoctorsCsvImport> changeDoctorInformation(List<Hosp_WrapperDoctorsCsvImport> doctorsToChange, Integer result) {
-        List<Hosp_WrapperDoctorsCsvImport> doctorWrappersToReturn = new List<Hosp_WrapperDoctorsCsvImport>();
-
-        for (Hosp_WrapperDoctorsCsvImport doctorWrapper : doctorsToChange) {
-            if (String.isBlank(doctorWrapper.doctorNameWrapper)) {
-                doctorWrapper.doctorInformationAfterImport = EMPTY_NAME;
-            } else {
-                doctorWrapper.doctorInformationAfterImport = result;
-            }
-
-            doctorWrapper.doctorIsSelectedWrapper = true;
-            doctorWrapper.doctorIsSelectedBeforeImport = true;
-
-            doctorWrappersToReturn.add(doctorWrapper);
-        }
-
-        return doctorWrappersToReturn;
-    }
-
-    private void setWrappersEmpty() {
-        doctorWrappers = new List<Hosp_WrapperDoctorsCsvImport>();
-    }
-
-    private void resetDoctorWrapersStatus() {
-        for (Hosp_WrapperDoctorsCsvImport doctorWrapper : doctorWrappers) {
-            doctorWrapper.doctorInformationAfterImport = 0;
-        }
     }
 
     public void clear() {
-        doctorWrappers = new List<Hosp_WrapperDoctorsCsvImport>();
-        doctors.clear();
+        doctorsFromFile.clear();
         doneUploading = false;
+    }
+
+
+    private class DoctorImportWrapper {
+        public String idWrapper { get; set; }
+        public String nameWrapper { get; set; }
+        public String firstNameWrapper { get; set; }
+        public String countryWrapper { get; set; }
+        public String cityWrapper { get; set; }
+        public Boolean isSelectedWrapper { get; set; }
+        public String guidWrapper;
+        public String statusWrapper { get; set; }
+
+        public DoctorImportWrapper(Doctor__c doc) {
+            idWrapper = doc.Id;
+            nameWrapper = doc.Name;
+            firstNameWrapper = doc.FirstName__c;
+            countryWrapper = doc.Country__c;
+            cityWrapper = doc.City__c;
+            isSelectedWrapper = true;
+            guidWrapper = Hosp_Utils.generateGuid();
+            statusWrapper = '';
+        }
     }
 }
