@@ -12,8 +12,7 @@ public with sharing class Hosp_DoctorImportController {
 
 
     public Hosp_DoctorImportController() {
-        csvFileLines = new List<String>{
-        };
+        csvFileLines = new List<String>();
         fieldList = New List<String>();
 
         doctorsFromFile = new List<Hosp_DoctorImportController.DoctorImportWrapper>();
@@ -26,8 +25,7 @@ public with sharing class Hosp_DoctorImportController {
 
             csvAsString = csvFileBody.toString();
             csvFileLines = csvAsString.split('\n');
-            inputValues = new List<String>{
-            };
+            inputValues = new List<String>();
 
             for (String st : csvFileLines.get(0).split(',')) {
                 fieldList.add(st);
