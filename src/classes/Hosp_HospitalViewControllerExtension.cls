@@ -148,8 +148,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public Contract__c contractInWrapper { get; set; }
 
         public String fullNameContractsWrapper { get{
-            List<Doctor__c> ds = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c LIMIT 1];
-            return ds.get(0).FirstLastName__c;
+            return String.format(Label.Hosp_Hire_Doc_to_Hosp, new List<String>{contractInWrapper.Doctor__r.FirstName__c, contractInWrapper.Doctor__r.Name});
         } set; }
 
         public Boolean isEditingContractsWrapper { get; set; }

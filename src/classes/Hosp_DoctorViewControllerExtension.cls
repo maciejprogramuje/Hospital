@@ -1,32 +1,31 @@
 public with sharing class Hosp_DoctorViewControllerExtension {
-    public List<Contract__c> contracts { get; set; }
-    public String contractIdCurrent { get; set; }
-    public Doctor__c doctorCurrent { get; set; }
-    public String firstLastName { get {
-        Doctor__c doctor = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :doctorCurrent.Id];
-        return doctor.FirstLastName__c;
-    } set; }
-
-    public String hireFullName { get{
-        return String.format(Label.Hosp_Hire_Name, new List<String>{firstLastName});
-    } set; }
-
     public String renderingService { get; private set; }
     public Boolean printToPDF { get; set; }
-
     public String pageReferenceUrl;
     public Boolean hasAvatar { get; set; }
     public Attachment avatarSrc { get; set; }
 
+    public Doctor__c doctorCurrent { get; set; }
+    public String firstLastName { get; set; }
+    public String hireFullName { get{
+        return String.format(Label.Hosp_Hire_Name, new List<String>{firstLastName});
+    } set; }
+
     public Hospital__c hospital { get; set; }
     public List<Hospital__c> hospitals { get; set; }
-    public Contract__c contract { get; set; }
     public List<HospitalWrapper> hospitalsWrappers { get; set; }
+
+    public Contract__c contract { get; set; }
+    public String contractIdToDismiss { get; set; }
+    public List<Contract__c> contracts { get; set; }
+
     public Boolean isImportSuccess { get; set; }
 
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
         doctorCurrent = (Doctor__c) standardController.getRecord();
+        firstLastName = String.format(Label.Hosp_Full_Name, new List<String>{doctorCurrent.FirstName__c, doctorCurrent.Name});
+
         getContracts();
         hasAvatar = false;
 
@@ -43,7 +42,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void dismiss() {
-        Contract__c contract = [SELECT Id, StartDate__c, EndDate__c, isFinished__c  FROM Contract__c WHERE Id = :contractIdCurrent];
+        Contract__c contract = [SELECT Id, StartDate__c, EndDate__c, isFinished__c  FROM Contract__c WHERE Id = :contractIdToDismiss];
         if (contract.StartDate__c > Date.today()) {
             delete contract;
         } else if (contract.StartDate__c <= Date.today() && contract.EndDate__c >= Date.today()) {
@@ -129,10 +128,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         ApexPages.getMessages().clear();
 
         setFieldsEmpty();
-    }
-
-    public Doctor__c getDoctor() {
-        return [SELECT Id, Name, FirstLastName__c FROM Doctor__c WHERE Id = :doctorCurrent.Id];
     }
 
     public Hospital__c getSelectedHospital() {

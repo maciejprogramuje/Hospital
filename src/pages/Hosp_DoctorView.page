@@ -151,7 +151,7 @@
 
                             <apex:param name="contractId"
                                         value="{! contr.Id }"
-                                        assignTo="{! contractIdCurrent }"/>
+                                        assignTo="{! contractIdToDismiss }"/>
 
                             <apex:commandButton value="{! $Label.Dismiss }"
                                                 rendered="{! if(contr.EndDate__c <= TODAY(), 'false', 'true') }"/>
@@ -175,7 +175,7 @@
     </apex:pageBlock>
 
 
-    <div id="myModal" style="display: none">
+    <div id="modalHireDoctor" style="display: none">
         <apex:pageBlock mode="edit" id="pb">
 
             <apex:form id="pbForm">
@@ -257,7 +257,7 @@
 
                         <apex:pageBlockSection columns="2">
 
-                            <apex:outputField value="{! doctor.FirstLastName__c }"/>
+                            <apex:outputField value="{! doctorCurrent.FirstLastName__c }"/>
 
                             <apex:outputField value="{! selectedHospital.Name }"/>
 
@@ -347,7 +347,7 @@
         }
 
         function showHireDialog(name) {
-            $("#myModal").dialog({
+            $("#modalHireDoctor").dialog({
                 resizable: true,
                 autoOpen: false,
                 height:700,
@@ -358,20 +358,20 @@
                     hideModal();
                 }
             });
-            $("#myModal").dialog("open");
+            $("#modalHireDoctor").dialog("open");
         }
 
         function checkHideModal() {
             let errors = document.getElementById(messageID).textContent;
 
-            if (!(errors.indexOf('Error') != -1)) {
+            if (!(errors.indexOf('{! $Label.Error }') != -1)) {
                 hideModal();
             }
         }
 
         function hideModal() {
             clearFieldsAndResultList();
-            $('#myModal').dialog('close');
+            $('#modalHireDoctor').dialog('close');
 
             return false;
         }
