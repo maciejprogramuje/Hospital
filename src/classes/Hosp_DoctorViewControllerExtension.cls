@@ -1,9 +1,9 @@
 public with sharing class Hosp_DoctorViewControllerExtension {
     public List<Contract__c> contracts { get; set; }
     public String contractIdCurrent { get; set; }
-    public String doctorIdCurrent { get; set; }
+    public Doctor__c doctorCurrent { get; set; }
     public String firstLastName { get {
-        Doctor__c doctor = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :doctorIdCurrent];
+        Doctor__c doctor = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :doctorCurrent.Id];
         return doctor.FirstLastName__c;
     } set; }
     public String hireFullName { get{
@@ -27,11 +27,11 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
-        doctorIdCurrent = standardController.getRecord().Id;
+        doctorCurrent = (Doctor__c) standardController.getRecord();
         getContracts();
         hasAvatar = false;
 
-        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :doctorIdCurrent AND name = :Label.Hosp_DefaultPicture];
+        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :doctorCurrent.Id AND name = :Label.Hosp_DefaultPicture];
         if (savedPicture.size() > 0) {
             hasAvatar = true;
             avatarSrc = savedPicture[0];
@@ -66,7 +66,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
                 Doctor__r.Id,
                 Hospital__r.Name
             FROM Contract__c
-            WHERE Doctor__c = :doctorIdCurrent
+            WHERE Doctor__c = :doctorCurrent.Id
             ORDER BY StartDate__c];
     }
 
@@ -80,7 +80,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
     public PageReference changeRecordPicture() {
         PageReference cropImagePage = Page.Hosp_DoctorProfileImage;
-        cropImagePage.getParameters().put('recordId', doctorIdCurrent);
+        cropImagePage.getParameters().put('recordId', doctorCurrent.Id);
         cropImagePage.getParameters().put('pageReferenceURL', ApexPages.currentPage().getUrl());
         cropImagePage.setRedirect(true);
 
@@ -88,7 +88,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void changeRecordPictureToDefault() {
-        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :doctorIdCurrent AND name = :Label.Hosp_DefaultPicture];
+        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :doctorCurrent.Id AND name = :Label.Hosp_DefaultPicture];
         if (savedPicture.size() > 0) {
             delete savedPicture;
         }
@@ -132,7 +132,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public Doctor__c getDoctor() {
-        return [SELECT Id, Name, FirstLastName__c FROM Doctor__c WHERE Id = :doctorIdCurrent];
+        return [SELECT Id, Name, FirstLastName__c FROM Doctor__c WHERE Id = :doctorCurrent.Id];
     }
 
     public Hospital__c getSelectedHospital() {
@@ -140,7 +140,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void hireDoctor() {
-        Contract__c contractToInsert = new Contract__c(Doctor__c = doctorIdCurrent, Hospital__c = selectedHospitalId, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
+        Contract__c contractToInsert = new Contract__c(Doctor__c = doctorCurrent.Id, Hospital__c = selectedHospitalId, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
 
         try {
             insert contractToInsert;
