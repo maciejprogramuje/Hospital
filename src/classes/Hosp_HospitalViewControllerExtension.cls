@@ -78,18 +78,10 @@ public with sharing class Hosp_HospitalViewControllerExtension {
             if (selectedDoctorIdInResults == d.idFoundWrapper) {
                 if (d.isSelectedFoundWrapper == true) {
                     d.isSelectedFoundWrapper = false;
-
-                    for(Integer i = 0; i < contractsToImport.size(); i++) {
-                        if(d.idFoundWrapper == contractsToImport.get(i).contractInWrapper.Doctor__c) {
-                            contractsToImport.remove(i);
-                            break;
-                        }
-                    }
                 } else {
                     d.isSelectedFoundWrapper = true;
 
                     Contract__c c = new Contract__c(Hospital__c = hospitalCurrent.Id, Doctor__c = selectedDoctorIdInResults);
-
                     contractsToImport.add(new ContractsWrapper(c));
                 }
                 break;
