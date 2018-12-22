@@ -21,7 +21,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public Hospital__c hospital { get; set; }
     public List<Hospital__c> hospitals { get; set; }
     public Contract__c contract { get; set; }
-    public List<HospitalWrapper> hosptalsWrappers { get; set; }
+    public List<HospitalWrapper> hospitalsWrappers { get; set; }
     public Boolean isImportSuccess { get; set; }
 
 
@@ -36,9 +36,10 @@ public with sharing class Hosp_DoctorViewControllerExtension {
             avatarSrc = savedPicture[0];
         }
 
-        setHospitalEmpty();
-        contract = new Contract__c();
-        setHospitalsEmpty();
+        createNewHospital();
+        createNewContract();
+        hospitals = new List<Hospital__c>();
+        hospitalsWrappers = new List<HospitalWrapper>();
     }
 
     public void dismiss() {
@@ -114,13 +115,13 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         if(String.isNotBlank(query)) {
             hospitals = Database.query(query);
         } else {
-            setHospitalsEmpty();
+            hospitals.clear();
         }
 
-        setHospitalWrappersEmpty();
+        hospitalsWrappers.clear();
 
         for(Hospital__c h :  hospitals) {
-            hosptalsWrappers.add(new HospitalWrapper(h));
+            hospitalsWrappers.add(new HospitalWrapper(h));
         }
     }
 
@@ -153,7 +154,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void changeSelect() {
-        for(HospitalWrapper w : hosptalsWrappers) {
+        for(HospitalWrapper w : hospitalsWrappers) {
             if(w.hospitalId == hospital.Id) {
                 w.isSelected = true;
             } else {
@@ -162,27 +163,19 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         }
     }
 
-    private void setHospitalEmpty() {
+    public void setFieldsEmpty() {
+        hospitalsWrappers.clear();
+        createNewHospital();
+        hospitals.clear();
+        createNewContract();
+    }
+
+    private void createNewHospital() {
         hospital = new Hospital__c(Name='', WWW__c='', Master_Unit__c='', Street__c='', PostalCode__c='', City__c='', Country__c='');
     }
 
-    private void setHospitalsEmpty() {
-        hospitals = new List<Hospital__c>();
-    }
-
-    private void setHospitalWrappersEmpty() {
-        hosptalsWrappers = new List<HospitalWrapper>();
-    }
-
-    private void setContractEmpty() {
+    private void createNewContract() {
         contract = new Contract__c();
-    }
-
-    public void setFieldsEmpty() {
-        setHospitalWrappersEmpty();
-        setHospitalEmpty();
-        setHospitalsEmpty();
-        setContractEmpty();
     }
 
     public Class HospitalWrapper {

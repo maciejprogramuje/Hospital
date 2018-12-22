@@ -106,7 +106,7 @@
 
                 <apex:panelGrid id="navigation_pg"
                                 columns="4"
-                                rendered="{! doctorsToExport.size > 0}">
+                                rendered="{! !doctorsToExport.empty }">
 
                     <apex:commandLink action="{! first }"
                                       reRender="doctors_list"

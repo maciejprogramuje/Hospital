@@ -214,9 +214,9 @@
                     <apex:pageBlockSection id="results"
                                            title="{! $Label.Hospital_Results }"
                                            columns="1"
-                                           rendered="{! hospitals.size > 0 }">
+                                           rendered="{! !hospitals.empty }">
 
-                        <apex:pageBlockTable value="{! hosptalsWrappers }"
+                        <apex:pageBlockTable value="{! hospitalsWrappers }"
                                              var="hosp" columns="4"
                                              columnsWidth="10%,30%,30%,30%">
 
