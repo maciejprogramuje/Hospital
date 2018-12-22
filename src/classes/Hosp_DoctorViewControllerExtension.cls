@@ -6,6 +6,9 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         Doctor__c doctor = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :doctorIdCurrent];
         return doctor.FirstLastName__c;
     } set; }
+    public String hireFullName { get{
+        return String.format(Label.Hosp_Hire_Name, new List<String>{firstLastName});
+    } set; }
 
     public String renderingService { get; private set; }
     public Boolean printToPDF { get; set; }

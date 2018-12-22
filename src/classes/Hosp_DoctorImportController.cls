@@ -44,9 +44,7 @@ public with sharing class Hosp_DoctorImportController {
                 doneUploading = true;
             }
         } catch (Exception e) {
-            ApexPages.Message message = new ApexPages.Message(ApexPages.severity.ERROR, String.format(Label.Error_reading_CSV, new List<String>{
-                    e.getMessage()
-            }));
+            ApexPages.Message message = new ApexPages.Message(ApexPages.severity.ERROR, Label.Error_reading_CSV);
             ApexPages.addMessage(message);
         }
 

@@ -2,6 +2,9 @@
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <head>
         <style>
             .datePicker { z-index: 200 }
@@ -10,9 +13,6 @@
             .content { width: 75%; }
         </style>
     </head>
-
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <apex:pageBlock id="wholeDoctorView" title="{! $Label.Doctor }" mode="edit">
 
@@ -109,7 +109,7 @@
                                     value="{! $Label.Edit }" />
 
                 <apex:commandButton id="opener"
-                                    onclick="showHireDialog('{! firstLastName }'); return false;"
+                                    onclick="showHireDialog('{! hireFullName }'); return false;"
                                     value="{! $Label.Hire }"/>
 
                 <apex:commandButton action="{! delete }"
@@ -121,10 +121,6 @@
 
                     <apex:commandButton value="{! $Label.Export_To_PDF }"/>`
                 </apex:commandLink>
-
-                <!--<apex:actionFunction name="getFirstLastName"
-                                     onComplete="showHireDialog('{! firstLastName }')">
-                </apex:actionFunction>-->
             </apex:form>
         </div>
 
@@ -337,17 +333,17 @@
                 document.body.removeChild(aux);
         }
 
-        var w;
+        var editWindow;
         function ChangeProfile_picture() {
             var windowWidth = document.documentElement.clientWidth;
             var windowHeight = document.documentElement.clientHeight;
-            w = window.open('/apex/Hosp_DoctorProfileImage','ProfilePicture','channelmode=0,directories=0,fullscreen=0,height=190,width=453,left='+(windowWidth/2-453/2)+',top='+(windowHeight/2-190/2)+',location=0,menubar=0,resizable=0,scrollbars=0,status=0,titlebar=0,toolbar=0');
+            editWindow = window.open('/apex/Hosp_DoctorProfileImage','ProfilePicture','channelmode=0,directories=0,fullscreen=0,height=190,width=453,left='+(windowWidth/2-453/2)+',top='+(windowHeight/2-190/2)+',location=0,menubar=0,resizable=0,scrollbars=0,status=0,titlebar=0,toolbar=0');
         }
 
         function updateURL(DocId) {
             var imgTag =  document.getElementById('imgval');
             imgTag.src = "/servlet/servlet.FileDownload?file="+DocId;
-            w.close();
+            editWindow.close();
         }
 
         function showHireDialog(name) {
@@ -357,7 +353,7 @@
                 height:700,
                 width: 600,
                 modal: true,
-                title: "Hire " + name,
+                title: name,
                 close: function() {
                     hideModal();
                 }
