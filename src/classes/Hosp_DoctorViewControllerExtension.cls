@@ -13,7 +13,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public String renderingService { get; private set; }
     public Boolean printToPDF { get; set; }
 
-    public String recordId;
     public String pageReferenceUrl;
     public Boolean hasAvatar { get; set; }
     public Attachment avatarSrc { get; set; }
@@ -98,14 +97,14 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
     private PageReference prepareRecordPageReference() {
         PageReference recordPageReference = new PageReference(pageReferenceUrl);
-        recordPageReference.getParameters().put('id', recordId);
+        recordPageReference.getParameters().put('id', doctorCurrent.Id);
         recordPageReference.setRedirect(false);
 
         return recordPageReference;
     }
 
     public void getAvatarSrc() {
-        avatarSrc = [SELECT Id, Name FROM Attachment WHERE ParentId = :recordId];
+        avatarSrc = [SELECT Id, Name FROM Attachment WHERE ParentId = :doctorCurrent.Id];
     }
 
     //
