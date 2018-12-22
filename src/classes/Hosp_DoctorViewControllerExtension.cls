@@ -21,7 +21,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public Hospital__c hospital { get; set; }
     public List<Hospital__c> hospitals { get; set; }
     public Contract__c contract { get; set; }
-    public List<Wrapper> wrappers { get; set; }
+    public List<HospitalWrapper> hosptalsWrappers { get; set; }
     public Boolean isImportSuccess { get; set; }
 
 
@@ -117,10 +117,10 @@ public with sharing class Hosp_DoctorViewControllerExtension {
             setHospitalsEmpty();
         }
 
-        setWrappersEmpty();
+        setHospitalWrappersEmpty();
 
         for(Hospital__c h :  hospitals) {
-            wrappers.add(new Wrapper(h));
+            hosptalsWrappers.add(new HospitalWrapper(h));
         }
     }
 
@@ -153,7 +153,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void changeSelect() {
-        for(Wrapper w : wrappers) {
+        for(HospitalWrapper w : hosptalsWrappers) {
             if(w.hospitalId == hospital.Id) {
                 w.isSelected = true;
             } else {
@@ -170,8 +170,8 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         hospitals = new List<Hospital__c>();
     }
 
-    private void setWrappersEmpty() {
-        wrappers = new List<Wrapper>();
+    private void setHospitalWrappersEmpty() {
+        hosptalsWrappers = new List<HospitalWrapper>();
     }
 
     private void setContractEmpty() {
@@ -179,20 +179,20 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void setFieldsEmpty() {
-        setWrappersEmpty();
+        setHospitalWrappersEmpty();
         setHospitalEmpty();
         setHospitalsEmpty();
         setContractEmpty();
     }
 
-    public Class Wrapper {
+    public Class HospitalWrapper {
         public String hospitalId { get; set; }
         public String hospitalName { get; set; }
         public String hospitalCountry { get; set; }
         public String hospitalCity { get; set; }
         public Boolean isSelected {get; set; }
 
-        public Wrapper(Hospital__c hosp) {
+        public HospitalWrapper(Hospital__c hosp) {
             hospitalId = hosp.Id;
             hospitalCountry = hosp.Country__c;
             hospitalName = hosp.Name;
