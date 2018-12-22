@@ -231,7 +231,7 @@
 
                                     <apex:param name="hospitalId"
                                                 value="{! hosp.hospitalId }"
-                                                assignTo="{! selectedHospitalId }"/>
+                                                assignTo="{! hospital.Id }"/>
                                 </apex:commandButton>
                             </apex:column>
 
@@ -253,7 +253,7 @@
                     <apex:pageBlockSection id="contractDetails"
                                            title="{! $Label.Contract_Details }"
                                            columns="1"
-                                           rendered="{! selectedHospitalId != null }">
+                                           rendered="{! hospital.Id != null }">
 
                         <apex:pageBlockSection columns="2">
 

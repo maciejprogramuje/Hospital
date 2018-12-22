@@ -6,6 +6,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         Doctor__c doctor = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :doctorCurrent.Id];
         return doctor.FirstLastName__c;
     } set; }
+
     public String hireFullName { get{
         return String.format(Label.Hosp_Hire_Name, new List<String>{firstLastName});
     } set; }
@@ -19,7 +20,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
     public Hospital__c hospital { get; set; }
     public List<Hospital__c> hospitals { get; set; }
-    public String selectedHospitalId { get; set; }
     public Contract__c contract { get; set; }
     public List<Wrapper> wrappers { get; set; }
     public Boolean isImportSuccess { get; set; }
@@ -135,11 +135,11 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public Hospital__c getSelectedHospital() {
-        return [SELECT Id, Name FROM Hospital__c WHERE Id = :selectedHospitalId];
+        return [SELECT Id, Name FROM Hospital__c WHERE Id = :hospital.Id];
     }
 
     public void hireDoctor() {
-        Contract__c contractToInsert = new Contract__c(Doctor__c = doctorCurrent.Id, Hospital__c = selectedHospitalId, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
+        Contract__c contractToInsert = new Contract__c(Doctor__c = doctorCurrent.Id, Hospital__c = hospital.Id, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
 
         try {
             insert contractToInsert;
@@ -154,7 +154,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
     public void changeSelect() {
         for(Wrapper w : wrappers) {
-            if(w.hospitalId == selectedHospitalId) {
+            if(w.hospitalId == hospital.Id) {
                 w.isSelected = true;
             } else {
                 w.isSelected = false;
@@ -179,8 +179,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void setFieldsEmpty() {
-        selectedHospitalId = '';
-
         setWrappersEmpty();
         setHospitalEmpty();
         setHospitalsEmpty();
