@@ -122,9 +122,9 @@
                     <apex:commandButton value="{! $Label.Export_To_PDF }"/>`
                 </apex:commandLink>
 
-                <apex:actionFunction name="getFirstLastName"
+                <!--<apex:actionFunction name="getFirstLastName"
                                      onComplete="showHireDialog('{! firstLastName }')">
-                </apex:actionFunction>
+                </apex:actionFunction>-->
             </apex:form>
         </div>
 
@@ -180,8 +180,6 @@
 
 
     <div id="myModal" style="display: none">
-        <!--<c:Hosp_HireDoctorComponent doctorId="{! Doctor__c.Id }"/>-->
-
         <apex:pageBlock mode="edit" id="pb">
 
             <apex:form id="pbForm">
@@ -241,11 +239,14 @@
                                 </apex:commandButton>
                             </apex:column>
 
-                            <apex:column value="{! hosp.hospitalName }"/>
+                            <apex:column headerValue="{! $ObjectType.Hospital__c.fields.Name.label }"
+                                         value="{! hosp.hospitalName }"/>
 
-                            <apex:column value="{! hosp.hospitalCountry }"/>
+                            <apex:column headerValue="{! $ObjectType.Hospital__c.fields.Country__c.label }"
+                                         value="{! hosp.hospitalCountry }"/>
 
-                            <apex:column value="{! hosp.hospitalCity }"/>
+                            <apex:column headerValue="{! $ObjectType.Hospital__c.fields.City__c.label }"
+                                         value="{! hosp.hospitalCity }"/>
                         </apex:pageBlockTable>
                     </apex:pageBlockSection>
                 </apex:outputPanel>

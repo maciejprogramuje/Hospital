@@ -87,4 +87,8 @@ public class Hosp_Utils {
 
         return query;
     }
+
+    public static String generateQuerySearchForDoctorsInHospitalViewModal() {
+        return null;
+    }
 }

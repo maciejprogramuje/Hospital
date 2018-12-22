@@ -150,22 +150,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         }
     }
 
-    public Class Wrapper {
-        public String hospitalId { get; set; }
-        public String hospitalName { get; set; }
-        public String hospitalCountry { get; set; }
-        public String hospitalCity { get; set; }
-        public Boolean isSelected {get; set; }
-
-        public Wrapper(Hospital__c hosp) {
-            hospitalId = hosp.Id;
-            hospitalCountry = hosp.Country__c;
-            hospitalName = hosp.Name;
-            hospitalCity = hosp.City__c;
-            isSelected = false;
-        }
-    }
-
     public void changeSelect() {
         for(Wrapper w : wrappers) {
             if(w.hospitalId == selectedHospitalId) {
@@ -201,5 +185,19 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         setContractEmpty();
     }
 
+    public Class Wrapper {
+        public String hospitalId { get; set; }
+        public String hospitalName { get; set; }
+        public String hospitalCountry { get; set; }
+        public String hospitalCity { get; set; }
+        public Boolean isSelected {get; set; }
 
+        public Wrapper(Hospital__c hosp) {
+            hospitalId = hosp.Id;
+            hospitalCountry = hosp.Country__c;
+            hospitalName = hosp.Name;
+            hospitalCity = hosp.City__c;
+            isSelected = false;
+        }
+    }
 }
