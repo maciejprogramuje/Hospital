@@ -14,6 +14,10 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         hospitalCurrent = (Hospital__c) standardController.getRecord();
         getContracts();
 
+        resetHireModalWindow();
+    }
+
+    private void resetHireModalWindow() {
         doctorFromSearchForm = new Doctor__c(Name = '');
         doctorsFoundWrapper = new List<DoctorsFoundWrapper>();
         contractsToImport = new List<ContractsWrapper>();
@@ -71,6 +75,8 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
     public void clearSearchForm() {
         ApexPages.getMessages().clear();
+
+        resetHireModalWindow();
     }
 
     public void changeSelectionInDoctorsFoundWrapper() {

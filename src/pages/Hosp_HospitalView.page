@@ -29,6 +29,7 @@
                 background:transparent;
             }
 
+
         </style>
     </head>
 
@@ -308,11 +309,10 @@
                                          value="{! contr.doctorInWrapper.Country__c }"/>
 
 
-
                             <apex:column headerValue="{! $ObjectType.Contract__c.fields.StartDate__c.label }">
 
-                               <apex:inputField value="{! contr.tempContract.StartDate__c }"
-                                                rendered="{! contr.isEditingContractsWrapper }"/>
+                                <apex:inputField value="{! contr.tempContract.StartDate__c }"
+                                                 rendered="{! contr.isEditingContractsWrapper }"/>
 
                                 <apex:outputField value="{! contr.contractInWrapper.StartDate__c }"
                                                   rendered="{! !contr.isEditingContractsWrapper }"/>
@@ -329,7 +329,6 @@
                             </apex:column>
 
 
-
                             <apex:column headerValue="{! $Label.Status }"
                                          value="{! contr.statusContractsWrapper }"/>
                         </apex:pageBlockTable>
@@ -337,23 +336,23 @@
 
                         <apex:pageBlock mode="maindetail">
 
-                                <apex:pageBlockButtons location="top">
+                            <apex:pageBlockButtons location="top">
 
-                                    <apex:commandButton value="{! $Label.Hire }"
-                                                        action="{! hireSelectedDoctors }"/>
-                                                        <!--onClick="checkDates('{! contract.StartDate__c }', '{! contract.EndDate__c }')"
+                                <apex:commandButton value="{! $Label.Hire }"
+                                                    action="{! hireSelectedDoctors }"/>
+                                <!--onClick="checkDates('{! contract.StartDate__c }', '{! contract.EndDate__c }')"
                                                         reRender="messages, contracts_list_main_block"
                                                         status="statusComp"
                                                         onComplete="checkHideModal()"/>-->
 
-                                    <apex:commandButton value="{! $Label.Cancel }"
-                                                        action="{! clearSearchForm }"
-                                                        immediate="true"
-                                                        onClick="hideModal()"
-                                                        reRender="messages"
-                                                        status="statusComp"/>
-                                </apex:pageBlockButtons>
-                            </apex:pageBlock>
+                                <apex:commandButton value="{! $Label.Cancel }"
+                                                    action="{! clearSearchForm }"
+                                                    immediate="true"
+                                                    onClick="hideModal()"
+                                                    reRender="searchPageBlock, messages"
+                                                    status="statusComp"/>
+                            </apex:pageBlockButtons>
+                        </apex:pageBlock>
                     </apex:pageBlockSection>
                 </apex:outputPanel>
 
@@ -364,15 +363,16 @@
                     <script>
                         var messageID = '{! $Component.messageTxt }';
 
+
                     </script>
                 </apex:outputPanel>
 
-                <!--<apex:actionFunction name="clearFieldsAndResultList"
-                                         action="{! setFieldsEmpty }"
-                                         reRender="pb, messages"
-                                         status="statusComp"
-                                         immediate="true">
-                    </apex:actionFunction>-->
+                <apex:actionFunction name="clearFieldsAndResultList"
+                                     action="{! clearSearchForm }"
+                                     reRender="searchPageBlock, messages"
+                                     status="statusComp"
+                                     immediate="true">
+                </apex:actionFunction>
             </apex:form>
         </apex:pageBlock>
     </div>
@@ -397,7 +397,7 @@
         }
 
         function hideModal() {
-            //clearFieldsAndResultList();
+            clearFieldsAndResultList();
             $('#modalHireDocToHosp').dialog('close');
 
             return false;
@@ -478,6 +478,7 @@
                }
 
            });
+
 
     </script>
 
