@@ -339,11 +339,11 @@
                             <apex:pageBlockButtons location="top">
 
                                 <apex:commandButton value="{! $Label.Hire }"
-                                                    action="{! hireSelectedDoctors }"/>
-                                <!--onClick="checkDates('{! contract.StartDate__c }', '{! contract.EndDate__c }')"
-                                                        reRender="messages, contracts_list_main_block"
-                                                        status="statusComp"
-                                                        onComplete="checkHideModal()"/>-->
+                                                    action="{! hireSelectedDoctors }"
+                                                    reRender="searchPageBlock, messages"
+                                                    status="statusComp"/>
+
+                                                    <!--onComplete="checkHideModal()"/>-->
 
                                 <apex:commandButton value="{! $Label.Cancel }"
                                                     action="{! clearSearchForm }"
@@ -362,8 +362,6 @@
                     <apex:pageMessages id="messageTxt"/>
                     <script>
                         var messageID = '{! $Component.messageTxt }';
-
-
                     </script>
                 </apex:outputPanel>
 
@@ -401,6 +399,14 @@
             $('#modalHireDocToHosp').dialog('close');
 
             return false;
+        }
+
+        function checkHideModal() {
+            let errors = document.getElementById(messageID).textContent;
+
+            if (!(errors.indexOf('{! $Label.Error }') != -1)) {
+                hideModal();
+            }
         }
 
         function checkDates(startDate, endDate) {

@@ -68,8 +68,6 @@ public with sharing class Hosp_DoctorImportController {
 
     }
 
-    // wypełniona doctorsFromFile
-
     public void revertCheckBoxes() {
         for (DoctorImportWrapper doc : doctorsFromFile) {
             if (doc.isSelectedWrapper) {
@@ -90,8 +88,6 @@ public with sharing class Hosp_DoctorImportController {
             doc.isSelectedWrapper = true;
         }
     }
-
-    // wyświetla liste wszystkich wczytanych lekarzy, checki działają, można przystąpić do importCheckedDoctors
 
     public void importCheckedDoctors() {
         List<DoctorImportWrapper> doctorsToImport = new List<DoctorImportWrapper>();
@@ -131,7 +127,6 @@ public with sharing class Hosp_DoctorImportController {
                 }
             }
         }
-
     }
 
     public void clear() {

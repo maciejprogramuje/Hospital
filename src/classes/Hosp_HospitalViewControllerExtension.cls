@@ -167,8 +167,30 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void hireSelectedDoctors() {
+        List<Contract__c> rawContractsToImport = new List<Contract__c>();
 
+        for(ContractsWrapper con : contractsToImport) {
+            Contract__c c = new Contract__c(
+                    Doctor__c = con.contractInWrapper.Doctor__c,
+                    Hospital__c = con.contractInWrapper.Hospital__c,
+                    StartDate__c = con.contractInWrapper.StartDate__c,
+                    EndDate__c = con.contractInWrapper.EndDate__c,
+                    isFinished__c = false);
+
+            rawContractsToImport.add(c);
+        }
+
+        List<Database.SaveResult> saveResults = Database.insert(rawContractsToImport, false);
+
+        for(Integer i = 0; i <  saveResults.size(); i++) {
+            if(saveResults.get(i).isSuccess()) {
+                contractsToImport.get(i).statusContractsWrapper = Url.getSalesforceBaseUrl().toExternalForm() + '/' + saveResults.get(i).Id;
+            } else {
+                contractsToImport.get(i).statusContractsWrapper = saveResults.get(i).errors[0].getMessage();
+            }
+        }
     }
+
 
     private class DoctorsFoundWrapper {
         public String idFoundWrapper { get; set; }
@@ -211,7 +233,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public ContractsWrapper(Contract__c c) {
             contractInWrapper = c;
             tempContract = new Contract__c();
-
 
             isEditingContractsWrapper = false;
             statusContractsWrapper = '';
