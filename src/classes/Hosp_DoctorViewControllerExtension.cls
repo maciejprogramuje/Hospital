@@ -4,11 +4,9 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public String pageReferenceUrl;
     public Boolean hasAvatar { get; set; }
     public Attachment avatarSrc { get; set; }
-
     public Doctor__c doctorCurrent { get; set; }
-    public String firstLastName { get; set; }
     public String hireFullName { get{
-        return String.format(Label.Hosp_Hire_Name, new List<String>{firstLastName});
+        return String.format(Label.Hosp_Hire_Name, new List<String>{doctorCurrent.FullName__c});
     } set; }
 
     public Hospital__c hospital { get; set; }
@@ -24,7 +22,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
         doctorCurrent = (Doctor__c) standardController.getRecord();
-        firstLastName = String.format(Label.Hosp_Full_Name, new List<String>{doctorCurrent.FirstName__c, doctorCurrent.Name});
+        doctorCurrent.FullName__c = String.format(Label.Hosp_Full_Name, new List<String>{doctorCurrent.FirstName__c, doctorCurrent.Name});
 
         getContracts();
         hasAvatar = false;
@@ -128,10 +126,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         ApexPages.getMessages().clear();
 
         setFieldsEmpty();
-    }
-
-    public Doctor__c getDoctor() {
-        return [SELECT Id, Name, FirstLastName__c FROM Doctor__c WHERE Id = :doctorCurrent.Id];
     }
 
     public Hospital__c getSelectedHospital() {

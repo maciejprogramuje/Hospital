@@ -100,7 +100,6 @@
         </div>
 
 
-
         <div align="center">
 
             <apex:form rendered="{! !printToPDF }">
@@ -257,7 +256,7 @@
 
                         <apex:pageBlockSection columns="2">
 
-                            <apex:outputField value="{! doctor.FirstLastName__c }"/>
+                            <apex:outputText value="{! doctorCurrent.FullName__c }"/>
 
                             <apex:outputField value="{! selectedHospital.Name }"/>
 

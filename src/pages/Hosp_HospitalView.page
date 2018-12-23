@@ -454,7 +454,7 @@
 
                    } else {
                        j$('#map').css({'height' : '15px'});
-                       j$('#map').html("Oops! address could not be found, please make sure the address is correct.");
+                       j$('#map').html('{! $Label.Hosp_No_Address }');
                        resizeIframe();
                    }
                });
