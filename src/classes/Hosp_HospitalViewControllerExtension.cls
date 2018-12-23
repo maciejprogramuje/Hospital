@@ -70,7 +70,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void clearSearchForm() {
-
+        ApexPages.getMessages().clear();
     }
 
     public void changeSelectionInDoctorsFoundWrapper() {
@@ -90,8 +90,8 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void editSelectedDoctor() {
-        for(Integer i = 0; i < contractsToImport.size(); i++) {
-            if(editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
+        for (Integer i = 0; i < contractsToImport.size(); i++) {
+            if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
                 contractsToImport.get(i).isEditingContractsWrapper = true;
             } else {
                 contractsToImport.get(i).isEditingContractsWrapper = false;
@@ -100,23 +100,61 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void templateSelectedDoctor() {
+        Date startDate;
+        Date endDate;
 
+        for (Integer i = 0; i < contractsToImport.size(); i++) {
+            if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
+                startDate = contractsToImport.get(i).contractInWrapper.StartDate__c;
+                endDate = contractsToImport.get(i).contractInWrapper.EndDate__c;
+
+                break;
+            }
+        }
+
+        if (startDate != null && endDate != null) {
+            for (Integer i = 0; i < contractsToImport.size(); i++) {
+                contractsToImport.get(i).contractInWrapper.StartDate__c = startDate;
+                contractsToImport.get(i).contractInWrapper.EndDate__c = endDate;
+            }
+        } else {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, 'No template data: no start date or no end date.'));
+        }
     }
 
     public void clearSelectedDoctor() {
+        for (Integer i = 0; i < contractsToImport.size(); i++) {
+            if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
+                contractsToImport.get(i).contractInWrapper.StartDate__c = null;
+                contractsToImport.get(i).contractInWrapper.EndDate__c = null;
 
+                break;
+            }
+        }
     }
 
     public void removeSelectedDoctor() {
-        for(Integer i = 0; i < contractsToImport.size(); i++) {
-            if(editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
+        for (Integer i = 0; i < contractsToImport.size(); i++) {
+            if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
                 contractsToImport.remove(i);
                 break;
             }
         }
-        for(DoctorsFoundWrapper d : doctorsFoundWrapper) {
-            if(d.idFoundWrapper == editingDoctorId) {
+        for (DoctorsFoundWrapper d : doctorsFoundWrapper) {
+            if (d.idFoundWrapper == editingDoctorId) {
                 d.isSelectedFoundWrapper = false;
+                break;
+            }
+        }
+    }
+
+    public void saveSelectedDoctor() {
+        for (Integer i = 0; i < contractsToImport.size(); i++) {
+            if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
+                contractsToImport.get(i).contractInWrapper.StartDate__c = contractsToImport.get(i).tempContract.StartDate__c;
+                contractsToImport.get(i).contractInWrapper.EndDate__c = contractsToImport.get(i).tempContract.EndDate__c;
+
+                contractsToImport.get(i).isEditingContractsWrapper = false;
                 break;
             }
         }
@@ -125,7 +163,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     public void hireSelectedDoctors() {
 
     }
-
 
     private class DoctorsFoundWrapper {
         public String idFoundWrapper { get; set; }
@@ -153,9 +190,12 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     private class ContractsWrapper {
         public Contract__c contractInWrapper { get; set; }
         public Contract__c tempContract { get; set; }
-        public Doctor__c doctorInWrapper { get{
-            return [SELECT Id, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
-        } set; }
+        public Doctor__c doctorInWrapper {
+            get {
+                return [SELECT Id, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
+            }
+            set;
+        }
 
         public String fullNameContractsWrapper { get; set; }
 

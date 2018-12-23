@@ -34,7 +34,7 @@
 
     <apex:pageBlock title="{! $Label.Hospital }"
                     mode="detail"
-                    id="block1">
+                    id="mainPageBlock">
 
         <apex:outputPanel>
 
@@ -243,10 +243,21 @@
                             <apex:column headerValue="{! $Label.Actions }">
 
                                 <apex:commandButton value="Edit"
-                                                    reRender="resultsPageBlockSection, selectedDoctorsDiv"
+                                                    reRender="resultsPageBlockSection, selectedDoctorsDiv, messages"
                                                     status="statusComp"
                                                     action="{! editSelectedDoctor }"
-                                                    rendered="true">
+                                                    rendered="{! !contr.isEditingContractsWrapper }">
+
+                                    <apex:param name="docId"
+                                                value="{! contr.contractInWrapper.Doctor__c }"
+                                                assignTo="{! editingDoctorId }"/>
+                                </apex:commandButton>
+
+                                <apex:commandButton value="Save"
+                                                    reRender="resultsPageBlockSection, selectedDoctorsDiv, messages"
+                                                    status="statusComp"
+                                                    action="{! saveSelectedDoctor }"
+                                                    rendered="{! contr.isEditingContractsWrapper }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
@@ -254,7 +265,7 @@
                                 </apex:commandButton>
 
                                 <apex:commandButton value="Template"
-                                                    reRender="resultsPageBlockSection, selectedDoctorsDiv"
+                                                    reRender="resultsPageBlockSection, selectedDoctorsDiv, messages"
                                                     status="statusComp"
                                                     action="{! templateSelectedDoctor }"
                                                     rendered="true">
@@ -265,7 +276,7 @@
                                 </apex:commandButton>
 
                                 <apex:commandButton value="Clear"
-                                                    reRender="resultsPageBlockSection, selectedDoctorsDiv"
+                                                    reRender="resultsPageBlockSection, selectedDoctorsDiv, messages"
                                                     status="statusComp"
                                                     action="{! clearSelectedDoctor }"
                                                     rendered="true">
@@ -276,7 +287,7 @@
                                 </apex:commandButton>
 
                                 <apex:commandButton value="Remove"
-                                                    reRender="resultsPageBlockSection, selectedDoctorsDiv"
+                                                    reRender="resultsPageBlockSection, selectedDoctorsDiv, messages"
                                                     status="statusComp"
                                                     action="{! removeSelectedDoctor }"
                                                     rendered="true"
@@ -403,7 +414,7 @@
 
 
 
-        twistSection(document.getElementById('{! $Component.block1.sectionAddress }').getElementsByTagName('img')[0])
+        twistSection(document.getElementById('{! $Component.mainPageBlock.sectionAddress }').getElementsByTagName('img')[0])
 
         $(document).ready(function() {
             var myOptions = {
