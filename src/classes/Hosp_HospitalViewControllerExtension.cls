@@ -90,7 +90,13 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void editSelectedDoctor() {
-
+        for(Integer i = 0; i < contractsToImport.size(); i++) {
+            if(editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
+                contractsToImport.get(i).isEditingContractsWrapper = true;
+            } else {
+                contractsToImport.get(i).isEditingContractsWrapper = false;
+            }
+        }
     }
 
     public void templateSelectedDoctor() {
@@ -146,16 +152,20 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
     private class ContractsWrapper {
         public Contract__c contractInWrapper { get; set; }
-
-        public String fullNameContractsWrapper { get{
-            return String.format(Label.Hosp_Hire_Doc_to_Hosp, new List<String>{contractInWrapper.Doctor__r.FirstName__c, contractInWrapper.Doctor__r.Name});
+        public Contract__c tempContract { get; set; }
+        public Doctor__c doctorInWrapper { get{
+            return [SELECT Id, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
         } set; }
+
+        public String fullNameContractsWrapper { get; set; }
 
         public Boolean isEditingContractsWrapper { get; set; }
         public String statusContractsWrapper { get; set; }
 
         public ContractsWrapper(Contract__c c) {
             contractInWrapper = c;
+            tempContract = new Contract__c();
+
 
             isEditingContractsWrapper = false;
             statusContractsWrapper = '';
