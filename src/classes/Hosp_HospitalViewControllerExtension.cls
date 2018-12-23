@@ -2,7 +2,9 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     public List<Contract__c> contracts { get; set; }
     public Hospital__c hospitalCurrent { get; set; }
     public String contractIdCurrent { get; set; }
+    public Boolean isAnyBadStatusInImport { get; set; }
 
+    public String hireDialogName { get; set; }
     public Doctor__c doctorFromSearchForm { get; set; }
     public List<DoctorsFoundWrapper> doctorsFoundWrapper { get; set; }
     public String selectedDoctorIdInResults { get; set; }
@@ -12,6 +14,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
     public Hosp_HospitalViewControllerExtension(ApexPages.StandardController standardController) {
         hospitalCurrent = (Hospital__c) standardController.getRecord();
+        hireDialogName = String.format(Label.Hosp_Hire_Doc_to_Hosp, new List<String>{ hospitalCurrent.Name });
         getContracts();
 
         resetHireModalWindow();
@@ -23,6 +26,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         contractsToImport = new List<ContractsWrapper>();
 
         isEditingDatesFields = false;
+        isAnyBadStatusInImport  = false;
     }
 
     public void getContracts() {
@@ -124,7 +128,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
                 contractsToImport.get(i).contractInWrapper.EndDate__c = endDate;
             }
         } else {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, 'No template data: no start date or no end date.'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, Label.Hosp_No_template_data));
         }
     }
 
@@ -167,6 +171,8 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void hireSelectedDoctors() {
+        isAnyBadStatusInImport = false;
+
         List<Contract__c> rawContractsToImport = new List<Contract__c>();
 
         for(ContractsWrapper con : contractsToImport) {
@@ -183,12 +189,14 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         List<Database.SaveResult> saveResults = Database.insert(rawContractsToImport, false);
 
         for(Integer i = 0; i <  saveResults.size(); i++) {
-            if(saveResults.get(i).isSuccess()) {
-                contractsToImport.get(i).statusContractsWrapper = Url.getSalesforceBaseUrl().toExternalForm() + '/' + saveResults.get(i).Id;
-            } else {
+            if(!saveResults.get(i).isSuccess()) {
                 contractsToImport.get(i).statusContractsWrapper = saveResults.get(i).errors[0].getMessage();
+
+                isAnyBadStatusInImport = true;
             }
         }
+
+        getContracts();
     }
 
 

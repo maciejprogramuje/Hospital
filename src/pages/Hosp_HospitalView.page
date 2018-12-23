@@ -89,7 +89,7 @@
                                     value="{! $Label.Edit }"/>
 
                 <apex:commandButton id="openerModalHireDocToHosp"
-                                    onclick="showHireDialog('{! hospitalCurrent.Name }'); return false;"
+                                    onclick="showHireDialog('{! hireDialogName }'); return false;"
                                     value="{! $Label.Hire }"/>
 
                 <apex:commandButton action="{! delete }"
@@ -341,15 +341,14 @@
                                 <apex:commandButton value="{! $Label.Hire }"
                                                     action="{! hireSelectedDoctors }"
                                                     reRender="searchPageBlock, messages"
-                                                    status="statusComp"/>
-
-                                                    <!--onComplete="checkHideModal()"/>-->
+                                                    status="statusComp"
+                                                    onComplete="checkHideModal({! isAnyBadStatusInImport })"/>
 
                                 <apex:commandButton value="{! $Label.Cancel }"
                                                     action="{! clearSearchForm }"
                                                     immediate="true"
                                                     onClick="hideModal()"
-                                                    reRender="searchPageBlock, messages"
+                                                    reRender="contracts_list_main_block, searchPageBlock, messages"
                                                     status="statusComp"/>
                             </apex:pageBlockButtons>
                         </apex:pageBlock>
@@ -359,15 +358,15 @@
 
                 <apex:outputPanel id="messages">
 
-                    <apex:pageMessages id="messageTxt"/>
+                    <!--<apex:pageMessages id="messageTxt"/>
                     <script>
                         var messageID = '{! $Component.messageTxt }';
-                    </script>
+                    </script>-->
                 </apex:outputPanel>
 
                 <apex:actionFunction name="clearFieldsAndResultList"
                                      action="{! clearSearchForm }"
-                                     reRender="searchPageBlock, messages"
+                                     reRender="contracts_list_main_block, searchPageBlock, messages"
                                      status="statusComp"
                                      immediate="true">
                 </apex:actionFunction>
@@ -401,10 +400,8 @@
             return false;
         }
 
-        function checkHideModal() {
-            let errors = document.getElementById(messageID).textContent;
-
-            if (!(errors.indexOf('{! $Label.Error }') != -1)) {
+        function checkHideModal(isAnyError) {
+            if (!isAnyError) {
                 hideModal();
             }
         }
