@@ -65,10 +65,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         doctorsFoundWrapper.clear();
         contractsToImport.clear();
 
-        //todo - generateQuerySearchForDoctorsInHospitalViewModal
-        String query = 'SELECT Id, Name, FirstName__c, FirstLastName__c, Country__c, City__c, Email__c FROM Doctor__c WHERE Name LIKE \'' + doctorFromSearchForm.Name + '%\'';
-
-        List<Doctor__c> doctorsFound = Database.query(query);
+        List<Doctor__c> doctorsFound = Database.query(Hosp_Utils.generateQuerySearchForDoctorsInHospitalViewModal(doctorFromSearchForm));
 
         doctorsFoundWrapper.clear();
 
@@ -210,7 +207,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public String emailFoundWrapper { get; set; }
         public Boolean isSelectedFoundWrapper { get; set; }
 
-
         public doctorsFoundWrapper(Doctor__c d) {
             idFoundWrapper = d.Id;
             nameFoundWrapper = d.Name;
@@ -226,15 +222,10 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     private class ContractsWrapper {
         public Contract__c contractInWrapper { get; set; }
         public Contract__c tempContract { get; set; }
-        public Doctor__c doctorInWrapper {
-            get {
-                return [SELECT Id, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
-            }
-            set;
-        }
-
+        public Doctor__c doctorInWrapper { get {
+            return [SELECT Id, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
+        } set; }
         public String fullNameContractsWrapper { get; set; }
-
         public Boolean isEditingContractsWrapper { get; set; }
         public String statusContractsWrapper { get; set; }
 

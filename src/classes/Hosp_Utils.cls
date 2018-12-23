@@ -88,7 +88,13 @@ public class Hosp_Utils {
         return query;
     }
 
-    public static String generateQuerySearchForDoctorsInHospitalViewModal() {
-        return null;
+    public static String generateQuerySearchForDoctorsInHospitalViewModal(Doctor__c doctor) {
+        String query = 'SELECT Id, Name, FirstName__c, FirstLastName__c, Country__c, City__c, Email__c FROM Doctor__c WHERE Name LIKE \'' + doctor.Name + '%\''
+                + addToWhereIfNotBlank('FirstName__c', doctor.FirstName__c)
+                + addToWhereIfNotBlank('Email__c', doctor.Email__c)
+                + addToWhereIfNotBlank('Country__c', doctor.Country__c)
+                + ' ORDER BY Name';
+
+        return query;
     }
 }
