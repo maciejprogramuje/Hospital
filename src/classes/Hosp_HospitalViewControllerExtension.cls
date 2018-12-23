@@ -3,7 +3,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     public Hospital__c hospitalCurrent { get; set; }
     public String contractIdCurrent { get; set; }
     public Boolean isAnyBadStatusInImport { get; set; }
-
     public String hireDialogName { get; set; }
     public Doctor__c doctorFromSearchForm { get; set; }
     public List<DoctorsFoundWrapper> doctorsFoundWrapper { get; set; }
@@ -99,6 +98,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     public void editSelectedDoctor() {
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
+                contractsToImport.get(i).tempContract = new Contract__c();
                 contractsToImport.get(i).isEditingContractsWrapper = true;
             } else {
                 contractsToImport.get(i).isEditingContractsWrapper = false;
