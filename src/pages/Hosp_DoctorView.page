@@ -1,9 +1,9 @@
 <apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" renderAs="{! renderingService }" >
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <apex:stylesheet value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.css')}"/>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/external/jquery/jquery.js')}"/>
+    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.js')}"/>
 
     <head>
         <style>
@@ -257,7 +257,7 @@
 
                         <apex:pageBlockSection columns="2">
 
-                            <apex:outputField value="{! doctorCurrent.FirstLastName__c }"/>
+                            <apex:outputField value="{! doctor.FirstLastName__c }"/>
 
                             <apex:outputField value="{! selectedHospital.Name }"/>
 

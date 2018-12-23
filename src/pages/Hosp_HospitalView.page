@@ -1,16 +1,15 @@
 <apex:page id="Hosp_HospitalView" standardController="Hospital__c" extensions="Hosp_HospitalViewControllerExtension">
 
+    <apex:stylesheet value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.css')}"/>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I"
             type="text/javascript"></script>
     <script type="text/javascript"
             src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I"></script>
-    <script type="text/javascript"
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--<apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.js')}"/>-->
+    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/external/jquery/jquery.js')}"/>
+
 
     <head>
         <style>
@@ -28,7 +27,6 @@
                 min-width:300px;
                 background:transparent;
             }
-
 
         </style>
     </head>
@@ -368,9 +366,10 @@
     <c:Hosp_StatusComponent/>
 
     <script>
+        j$ = jQuery.noConflict();
 
         function showHireDialog(name) {
-            $("#modalHireDocToHosp").dialog({
+            j$("#modalHireDocToHosp").dialog({
                 resizable: true,
                 autoOpen: false,
                 height:700,
@@ -381,12 +380,12 @@
                     hideModal();
                 }
             });
-            $("#modalHireDocToHosp").dialog("open");
+            j$("#modalHireDocToHosp").dialog("open");
         }
 
         function hideModal() {
             clearFieldsAndResultList();
-            $('#modalHireDocToHosp').dialog('close');
+            j$('#modalHireDocToHosp').dialog('close');
 
             return false;
         }
@@ -410,7 +409,7 @@
 
         twistSection(document.getElementById('{! $Component.mainPageBlock.sectionAddress }').getElementsByTagName('img')[0])
 
-        $(document).ready(function() {
+        j$(document).ready(function() {
             var myOptions = {
                    zoom: 15,
                    mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -454,8 +453,8 @@
                        }
 
                    } else {
-                       $('#map').css({'height' : '15px'});
-                       $('#map').html("Oops! address could not be found, please make sure the address is correct.");
+                       j$('#map').css({'height' : '15px'});
+                       j$('#map').html("Oops! address could not be found, please make sure the address is correct.");
                        resizeIframe();
                    }
                });

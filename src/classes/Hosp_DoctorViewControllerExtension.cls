@@ -130,6 +130,10 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         setFieldsEmpty();
     }
 
+    public Doctor__c getDoctor() {
+        return [SELECT Id, Name, FirstLastName__c FROM Doctor__c WHERE Id = :doctorCurrent.Id];
+    }
+
     public Hospital__c getSelectedHospital() {
         return [SELECT Id, Name FROM Hospital__c WHERE Id = :hospital.Id];
     }
