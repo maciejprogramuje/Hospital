@@ -75,7 +75,6 @@
                 <apex:column headerValue="{! $Label.Status }"
                              value="{! oneDoctor.statusWrapper }"/>
 
-
             </apex:pageBlockTable>
 
 

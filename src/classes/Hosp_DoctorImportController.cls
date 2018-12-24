@@ -113,7 +113,7 @@ public with sharing class Hosp_DoctorImportController {
 
         for(Integer i = 0; i <  saveResults.size(); i++) {
             if(saveResults.get(i).isSuccess()) {
-                doctorsToImport.get(i).statusWrapper = Url.getSalesforceBaseUrl().toExternalForm() + '/' + saveResults.get(i).Id;
+                doctorsToImport.get(i).statusWrapper = '/' + saveResults.get(i).Id;
             } else {
                 doctorsToImport.get(i).statusWrapper = saveResults.get(i).errors[0].getMessage();
             }

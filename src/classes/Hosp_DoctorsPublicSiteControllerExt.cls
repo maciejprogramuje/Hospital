@@ -5,28 +5,20 @@ public with sharing class Hosp_DoctorsPublicSiteControllerExt {
     
     public Hosp_DoctorsPublicSiteControllerExt(ApexPages.StandardController controller) {
         numberOfRandomDoctors = 10;
+
         randomDoctors = generateRandomDoctors();
     }
 
     private List<Doctor__c> generateRandomDoctors() {
-        Integer numberOfAllDoctors = [SELECT COUNT() FROM Doctor__c];
-
-        List<Doctor__c> doctors = new List<Doctor__c>();
-
-        for (Integer i = 0; i < numberOfRandomDoctors;) {
-            Integer rand = Math.floor(Math.random() * numberOfAllDoctors).intValue() ;
-
-            List<Doctor__c> doctorsHandler = [SELECT FirstLastName__c,
-                    Email__c,
-                    City__c,
-                    Country__c
-                FROM Doctor__c
-                LIMIT :(numberOfRandomDoctors - i) OFFSET :rand];
-            
-            doctors.addAll(doctorsHandler);
-
-            i = doctors.size();
-        }
+        Integer count = [SELECT COUNT() FROM Doctor__c];
+        Integer rand = Math.floor(Math.random() * count).intValue();
+        List<Doctor__c> doctors = [SELECT FirstLastName__c,
+                Email__c,
+                City__c,
+                Country__c
+            FROM Doctor__c
+            LIMIT :numberOfRandomDoctors
+            OFFSET :rand];
 
         return doctors;
     }
