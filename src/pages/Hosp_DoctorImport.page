@@ -36,14 +36,20 @@
             <apex:outputPanel rendered="{! !doctorsFromFile.empty }">
 
                 <apex:commandButton value="{! $Label.SelectAll }"
-                                    action="{! selectAllCheckBoxes }"
+                                    action="{! changeAllCheckBoxes }"
                                     reRender="apexForm"
-                                    status="statusComp"/>
+                                    status="statusComp">
+
+                    <apex:param name="selectAllCheckbobex" value="true" assignTo="{! areAllCheckboxesSelected }"/>
+                </apex:commandButton>
 
                 <apex:commandButton value="{! $Label.ClearAll }"
-                                    action="{! clearAllCheckBoxes }"
+                                    action="{! changeAllCheckBoxes }"
                                     reRender="apexForm"
-                                    status="statusComp"/>
+                                    status="statusComp">
+
+                    <apex:param name="clearAllCheckbobex" value="false" assignTo="{! areAllCheckboxesSelected }"/>
+                </apex:commandButton>
 
                 <apex:commandButton value="{! $Label.Hosp_Revert_Selection }"
                                     action="{! revertCheckBoxes }"
@@ -72,8 +78,19 @@
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Country__c.Label }"
                              value="{! oneDoctor.countryWrapper }"/>
 
-                <apex:column headerValue="{! $Label.Status }"
-                             value="{! oneDoctor.statusWrapper }"/>
+                <apex:column headerValue="{! $Label.Status }">
+
+                    <apex:commandLink value="{! $Label.Success }"
+                                      action="{! URLFOR($Action.Doctor__c.View, oneDoctor.idWrapper) }"
+                                      rendered="{! (IF(oneDoctor.statusWrapper == $Label.Success, true, false)) }"
+                                      target="_blank"
+                                      immediate="true">
+                    </apex:commandLink>
+
+                    <apex:outputLabel value="{! oneDoctor.statusWrapper }"
+                                      rendered="{! (IF(oneDoctor.statusWrapper != $Label.Success, true, false)) }">
+                    </apex:outputLabel>
+                </apex:column>
 
             </apex:pageBlockTable>
 
