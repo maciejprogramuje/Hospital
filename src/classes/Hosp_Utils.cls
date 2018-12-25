@@ -97,4 +97,13 @@ public class Hosp_Utils {
 
         return query;
     }
+
+    public static String generateQueryForCheckIsDoctorExistInDoctorEdit(Doctor__c doctor) {
+        String doctorQuery = 'SELECT Id, Name FROM Doctor__c WHERE Name = \'' + doctor.Name + '\'';
+        if(String.isNotBlank(doctor.FirstName__c)) {
+            doctorQuery += ' AND FirstName__c = \'' + doctor.FirstName__c + '\'' ;
+        }
+
+        return doctorQuery;
+    }
 }
