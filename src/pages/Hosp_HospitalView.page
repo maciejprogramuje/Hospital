@@ -1,17 +1,12 @@
 <apex:page id="Hosp_HospitalView" standardController="Hospital__c" extensions="Hosp_HospitalViewControllerExtension">
 
-    <apex:stylesheet value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.css')}"/>
+    <apex:stylesheet value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1/jquery-ui.css')}"/>
+
+    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1/external/jquery/jquery.js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I')}"/>
+    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1/jquery-ui.js')}"/>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I"
             type="text/javascript"></script>
-    <script type="text/javascript"
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js?key=AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I"></script>
-
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <!--<apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.js')}"/>-->
-    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/external/jquery/jquery.js')}"/>
-
 
     <head>
         <style>
@@ -347,10 +342,10 @@
                                                     onComplete="checkHideModal({! isAnyBadStatusInImport })"/>
 
                                 <apex:commandButton value="{! $Label.Cancel }"
-                                                    action="{! clearSearchForm }"
+                                                    action="{! resetHireModalWindow }"
                                                     immediate="true"
                                                     onClick="hideModal()"
-                                                    reRender="contracts_list_main_block, searchPageBlock, messages"
+                                                    reRender="contracts_list_main_block, searchPageBlock, selectedDoctorsDiv, messages"
                                                     status="statusComp"/>
                             </apex:pageBlockButtons>
                         </apex:pageBlock>
@@ -358,8 +353,8 @@
                 </apex:outputPanel>
 
                 <apex:actionFunction name="clearFieldsAndResultList"
-                                     action="{! clearSearchForm }"
-                                     reRender="contracts_list_main_block, searchPageBlock, messages"
+                                     action="{! resetHireModalWindow }"
+                                     reRender="contracts_list_main_block, searchPageBlock, selectedDoctorsDiv, messages"
                                      status="statusComp"
                                      immediate="true">
                 </apex:actionFunction>

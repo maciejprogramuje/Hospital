@@ -1,9 +1,9 @@
 <apex:page id="Hosp_DoctorView" standardController="Doctor__c" extensions="Hosp_DoctorViewControllerExtension" renderAs="{! renderingService }" >
 
-    <apex:stylesheet value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.css')}"/>
+    <apex:stylesheet value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1/jquery-ui.css')}"/>
 
-    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/external/jquery/jquery.js')}"/>
-    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.js')}"/>
+    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/>
+    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1/jquery-ui.js')}"/>
 
     <head>
         <style>

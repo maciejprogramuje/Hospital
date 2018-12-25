@@ -19,10 +19,16 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         resetHireModalWindow();
     }
 
-    private void resetHireModalWindow() {
+    public void resetHireModalWindow() {
+        contractsToImport = new List<ContractsWrapper>();
+        clearSearchForm();
+    }
+
+    public void clearSearchForm() {
+        ApexPages.getMessages().clear();
+
         doctorFromSearchForm = new Doctor__c(Name = '');
         doctorsFoundWrapper = new List<DoctorsFoundWrapper>();
-        contractsToImport = new List<ContractsWrapper>();
 
         isEditingDatesFields = false;
         isAnyBadStatusInImport  = false;
@@ -70,16 +76,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         for (Doctor__c d : doctorsFound) {
             doctorsFoundWrapper.add(new DoctorsFoundWrapper(d));
         }
-    }
-
-    public void clearSearchForm() {
-        ApexPages.getMessages().clear();
-
-        doctorFromSearchForm = new Doctor__c(Name = '');
-        doctorsFoundWrapper = new List<DoctorsFoundWrapper>();
-
-        isEditingDatesFields = false;
-        isAnyBadStatusInImport  = false;
     }
 
     public void changeSelectionInDoctorsFoundWrapper() {
