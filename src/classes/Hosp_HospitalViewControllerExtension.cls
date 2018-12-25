@@ -84,7 +84,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
     public void changeSelectionInDoctorsFoundWrapper() {
         for (DoctorsFoundWrapper d : doctorsFoundWrapper) {
-            if (selectedDoctorIdInResults == d.idFoundWrapper) {
+            if (selectedDoctorIdInResults == d.doctorInWrapper.Id) {
                 if (d.isSelectedFoundWrapper == true) {
                     d.isSelectedFoundWrapper = false;
                 } else {
@@ -137,7 +137,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
                 contractsToImport.get(i).contractInWrapper.StartDate__c = null;
                 contractsToImport.get(i).contractInWrapper.EndDate__c = null;
-
                 break;
             }
         }
@@ -151,7 +150,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
             }
         }
         for (DoctorsFoundWrapper d : doctorsFoundWrapper) {
-            if (d.idFoundWrapper == editingDoctorId) {
+            if (d.doctorInWrapper.Id == editingDoctorId) {
                 d.isSelectedFoundWrapper = false;
                 break;
             }
@@ -189,7 +188,9 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         List<Database.SaveResult> saveResults = Database.insert(rawContractsToImport, false);
 
         for(Integer i = 0; i <  saveResults.size(); i++) {
-            if(!saveResults.get(i).isSuccess()) {
+            if(saveResults.get(i).isSuccess()) {
+                contractsToImport.get(i).statusContractsWrapper = Label.Success;
+            } else {
                 contractsToImport.get(i).statusContractsWrapper = saveResults.get(i).errors[0].getMessage();
 
                 isAnyBadStatusInImport = true;
@@ -201,23 +202,11 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
 
     private class DoctorsFoundWrapper {
-        public String idFoundWrapper { get; set; }
-        public String nameFoundWrapper { get; set; }
-        public String firstNameFoundWrapper { get; set; }
-        public String firstLastNameFoundWrapper { get; set; }
-        public String countryFoundWrapper { get; set; }
-        public String cityFoundWrapper { get; set; }
-        public String emailFoundWrapper { get; set; }
+        public Doctor__c doctorInWrapper { get; set; }
         public Boolean isSelectedFoundWrapper { get; set; }
 
         public doctorsFoundWrapper(Doctor__c d) {
-            idFoundWrapper = d.Id;
-            nameFoundWrapper = d.Name;
-            firstNameFoundWrapper = d.FirstName__c;
-            firstLastNameFoundWrapper = d.FirstLastName__c;
-            countryFoundWrapper = d.Country__c;
-            cityFoundWrapper = d.City__c;
-            emailFoundWrapper = d.Email__c;
+            doctorInWrapper = d;
             isSelectedFoundWrapper = false;
         }
     }
