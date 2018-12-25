@@ -242,7 +242,8 @@
                                                     reRender="resultsPageBlockSection, selectedDoctorsDiv, messages"
                                                     status="statusComp"
                                                     action="{! editSelectedDoctor }"
-                                                    rendered="{! !contr.isEditingContractsWrapper }">
+                                                    rendered="{! !contr.isEditingContractsWrapper }"
+                                                    disabled="{! areAllButtonDisabled }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
@@ -265,7 +266,7 @@
                                                     status="statusComp"
                                                     action="{! templateSelectedDoctor }"
                                                     rendered="true"
-                                                    disabled="{! contr.isEditingContractsWrapper }">
+                                                    disabled="{! areAllButtonDisabled }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
@@ -277,7 +278,7 @@
                                                     status="statusComp"
                                                     action="{! clearSelectedDoctor }"
                                                     rendered="true"
-                                                    disabled="{! contr.isEditingContractsWrapper }">
+                                                    disabled="{! areAllButtonDisabled }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
@@ -289,7 +290,8 @@
                                                     status="statusComp"
                                                     action="{! removeSelectedDoctor }"
                                                     rendered="true"
-                                                    immediate="true">
+                                                    immediate="true"
+                                                    disabled="{! contr.isEditingContractsWrapper }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
@@ -339,7 +341,8 @@
                                                     action="{! hireSelectedDoctors }"
                                                     reRender="searchPageBlock, messages"
                                                     status="statusComp"
-                                                    onComplete="checkHideModal({! isAnyBadStatusInImport })"/>
+                                                    onComplete="checkHideModal({! isAnyBadStatusInImport })"
+                                                    disabled="{! areAllButtonDisabled }"/>
 
                                 <apex:commandButton value="{! $Label.Cancel }"
                                                     action="{! resetHireModalWindow }"

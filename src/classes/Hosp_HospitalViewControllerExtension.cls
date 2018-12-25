@@ -10,6 +10,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     public String editingDoctorId { get; set; }
     public Boolean isEditingDatesFields { get; set; }
     public List<ContractsWrapper> contractsToImport { get; set; }
+    public Boolean areAllButtonDisabled { get; set; }
 
     public Hosp_HospitalViewControllerExtension(ApexPages.StandardController standardController) {
         hospitalCurrent = (Hospital__c) standardController.getRecord();
@@ -95,6 +96,8 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void editSelectedDoctor() {
+        areAllButtonDisabled = true;
+
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
                 contractsToImport.get(i).tempContract = new Contract__c();
@@ -154,6 +157,8 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void saveSelectedDoctor() {
+        areAllButtonDisabled = false;
+
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
                 contractsToImport.get(i).contractInWrapper.StartDate__c = contractsToImport.get(i).tempContract.StartDate__c;
