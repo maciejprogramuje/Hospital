@@ -89,10 +89,10 @@ public with sharing class Hosp_DoctorImportController {
 
         List<Doctor__c> rawDoctorsToImport = new List<Doctor__c>();
         for (DoctorImportWrapper doc : doctorsToImport) {
-            Doctor__c d = new Doctor__c(Name = doc.nameWrapper,
-                    FirstName__c = doc.firstNameWrapper,
-                    Country__c = doc.countryWrapper,
-                    City__c = doc.cityWrapper);
+            Doctor__c d = new Doctor__c(Name = doc.doctorInWrapper.Name,
+                    FirstName__c = doc.doctorInWrapper.FirstName__c,
+                    Country__c = doc.doctorInWrapper.Country__c,
+                    City__c = doc.doctorInWrapper.City__c);
 
             rawDoctorsToImport.add(d);
         }
@@ -103,7 +103,7 @@ public with sharing class Hosp_DoctorImportController {
         for(Integer i = 0; i <  saveResults.size(); i++) {
             if(saveResults.get(i).isSuccess()) {
                 doctorsToImport.get(i).statusWrapper = Label.Success;
-                doctorsToImport.get(i).idWrapper = saveResults.get(i).Id;
+                doctorsToImport.get(i).doctorInWrapper.Id = saveResults.get(i).Id;
             } else {
                 doctorsToImport.get(i).statusWrapper = saveResults.get(i).errors[0].getMessage();
             }
@@ -126,21 +126,14 @@ public with sharing class Hosp_DoctorImportController {
 
 
     private class DoctorImportWrapper {
-        public String idWrapper { get; set; }
-        public String nameWrapper { get; set; }
-        public String firstNameWrapper { get; set; }
-        public String countryWrapper { get; set; }
-        public String cityWrapper { get; set; }
+        public Doctor__c doctorInWrapper { get; set; }
         public Boolean isSelectedWrapper { get; set; }
         public String guidWrapper;
         public String statusWrapper { get; set; }
 
         public DoctorImportWrapper(Doctor__c doc) {
-            idWrapper = doc.Id;
-            nameWrapper = doc.Name;
-            firstNameWrapper = doc.FirstName__c;
-            countryWrapper = doc.Country__c;
-            cityWrapper = doc.City__c;
+            doctorInWrapper = doc;
+
             isSelectedWrapper = true;
             guidWrapper = Hosp_Utils.generateGuid();
             statusWrapper = '';

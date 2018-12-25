@@ -67,21 +67,21 @@
                 </apex:column>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Name.label }"
-                             value="{! oneDoctor.nameWrapper }"/>
+                             value="{! oneDoctor.doctorInWrapper.Name }"/>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstName__c.Label }"
-                             value="{! oneDoctor.firstNameWrapper }"/>
+                             value="{! oneDoctor.doctorInWrapper.FirstName__c }"/>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.City__c.Label }"
-                             value="{! oneDoctor.cityWrapper }"/>
+                             value="{! oneDoctor.doctorInWrapper.City__c }"/>
 
                 <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Country__c.Label }"
-                             value="{! oneDoctor.countryWrapper }"/>
+                             value="{! oneDoctor.doctorInWrapper.Country__c }"/>
 
                 <apex:column headerValue="{! $Label.Status }">
 
                     <apex:commandLink value="{! $Label.Success }"
-                                      action="{! URLFOR($Action.Doctor__c.View, oneDoctor.idWrapper) }"
+                                      action="{! URLFOR($Action.Doctor__c.View, oneDoctor.doctorInWrapper.Id) }"
                                       rendered="{! (IF(oneDoctor.statusWrapper == $Label.Success, true, false)) }"
                                       target="_blank"
                                       immediate="true">
