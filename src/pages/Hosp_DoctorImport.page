@@ -1,6 +1,6 @@
 <apex:page id="Hosp_DoctorImport" controller="Hosp_DoctorImportController">
 
-    <apex:form id="firstForm">
+    <apex:form id="chooseFileForm">
 
         <apex:outputPanel id="messages">
             <apex:pageMessages showDetail="false"/>
@@ -29,7 +29,7 @@
     </apex:form>
 
 
-    <apex:form id="apexForm">
+    <apex:form id="doctorsForm">
 
         <apex:pageBlock id="doctorsTable" rendered="{! doneUploading }">
 
@@ -37,7 +37,7 @@
 
                 <apex:commandButton value="{! $Label.SelectAll }"
                                     action="{! changeAllCheckBoxes }"
-                                    reRender="apexForm"
+                                    reRender="doctorsForm"
                                     status="statusComp">
 
                     <apex:param name="selectAllCheckbobex" value="true" assignTo="{! areAllCheckboxesSelected }"/>
@@ -45,7 +45,7 @@
 
                 <apex:commandButton value="{! $Label.ClearAll }"
                                     action="{! changeAllCheckBoxes }"
-                                    reRender="apexForm"
+                                    reRender="doctorsForm"
                                     status="statusComp">
 
                     <apex:param name="clearAllCheckbobex" value="false" assignTo="{! areAllCheckboxesSelected }"/>
@@ -53,7 +53,7 @@
 
                 <apex:commandButton value="{! $Label.Hosp_Revert_Selection }"
                                     action="{! revertCheckBoxes }"
-                                    reRender="apexForm"
+                                    reRender="doctorsForm"
                                     status="statusComp"/>
             </apex:outputPanel>
 
@@ -101,16 +101,13 @@
 
                     <apex:commandButton action="{! importCheckedDoctors }"
                                         value="{! $Label.Import }"
-                                        reRender="apexForm"
+                                        reRender="doctorsForm"
                                         status="statusComp"/>
 
                     <apex:commandButton action="{! clear }"
                                         value="{! $Label.Clear }"
-                                        reRender="apexForm"
+                                        reRender="doctorsForm"
                                         status="statusComp"/>
-
-                    <apex:actionRegion id="actionImport"
-                                       renderRegionOnly="false"/>
                 </div>
             </apex:outputPanel>
         </apex:pageBlock>

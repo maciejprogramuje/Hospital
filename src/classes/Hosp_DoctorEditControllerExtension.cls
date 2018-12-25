@@ -16,14 +16,6 @@ public class Hosp_DoctorEditControllerExtension {
 
         List<Doctor__c> doctors = Database.query(doctorQuery);
         if (doctors.isEmpty()) {
-            doctor = new Doctor__c(
-                    Name = doctor.Name,
-                    FirstName__c = doctor.FirstName__c,
-                    City__c = doctor.City__c,
-                    Country__c = doctor.Country__c,
-                    Email__c = doctor.Email__c,
-                    Phone__c = doctor.Phone__c,
-                    Street__c = doctor.Street__c);
             insert doctor;
         } else {
             update doctor;

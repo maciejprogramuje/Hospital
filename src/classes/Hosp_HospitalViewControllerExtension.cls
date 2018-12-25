@@ -1,15 +1,18 @@
 public with sharing class Hosp_HospitalViewControllerExtension {
-    public List<Contract__c> contracts { get; set; }
     public Hospital__c hospitalCurrent { get; set; }
-    public String contractIdCurrent { get; set; }
-    public Boolean isAnyBadStatusInImport { get; set; }
-    public String hireDialogName { get; set; }
     public Doctor__c doctorFromSearchForm { get; set; }
-    public List<DoctorsFoundWrapper> doctorsFoundWrapper { get; set; }
+
+    public String hireDialogName { get; set; }
+    public String contractIdCurrent { get; set; }
     public String selectedDoctorIdInResults { get; set; }
     public String editingDoctorId { get; set; }
-    public Boolean isEditingDatesFields { get; set; }
+
+    public List<Contract__c> contracts { get; set; }
+    public List<DoctorsFoundWrapper> doctorsFoundWrapper { get; set; }
     public List<ContractsWrapper> contractsToImport { get; set; }
+
+    public Boolean isAnyBadStatusInImport { get; set; }
+    public Boolean isEditingDatesFields { get; set; }
     public Boolean areAllButtonDisabled { get; set; }
 
     public Hosp_HospitalViewControllerExtension(ApexPages.StandardController standardController) {

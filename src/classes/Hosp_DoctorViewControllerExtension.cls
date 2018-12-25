@@ -4,6 +4,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public String pageReferenceUrl;
     public Boolean hasAvatar { get; set; }
     public Attachment avatarSrc { get; set; }
+
     public Doctor__c doctorCurrent { get; set; }
     public String hireFullName { get{
         return String.format(Label.Hosp_Hire_Name, new List<String>{doctorCurrent.FullName__c});
@@ -16,7 +17,6 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public Contract__c contract { get; set; }
     public String contractIdToDismiss { get; set; }
     public List<Contract__c> contracts { get; set; }
-
     public Boolean isImportSuccess { get; set; }
 
 
@@ -27,8 +27,14 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         getContracts();
         hasAvatar = false;
 
-        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :doctorCurrent.Id AND name = :Label.Hosp_DefaultPicture];
-        if (savedPicture.size() > 0) {
+        List<Attachment> savedPicture = [SELECT Id,
+                Name,
+                Body
+            FROM Attachment
+            WHERE ParentId = :doctorCurrent.Id
+            AND Name = :Label.Hosp_DefaultPicture];
+
+        if (!savedPicture.isEmpty()) {
             hasAvatar = true;
             avatarSrc = savedPicture[0];
         }
@@ -40,7 +46,13 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void dismiss() {
-        Contract__c contract = [SELECT Id, StartDate__c, EndDate__c, isFinished__c  FROM Contract__c WHERE Id = :contractIdToDismiss];
+        Contract__c contract = [SELECT Id,
+                StartDate__c,
+                EndDate__c,
+                isFinished__c
+            FROM Contract__c
+            WHERE Id = :contractIdToDismiss];
+
         if (contract.StartDate__c > Date.today()) {
             delete contract;
         } else if (contract.StartDate__c <= Date.today() && contract.EndDate__c >= Date.today()) {
@@ -85,7 +97,12 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void changeRecordPictureToDefault() {
-        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :doctorCurrent.Id AND name = :Label.Hosp_DefaultPicture];
+        List<Attachment> savedPicture = [SELECT Id,
+                Name,
+                Body
+            FROM Attachment
+            WHERE ParentId = :doctorCurrent.Id
+            AND name = :Label.Hosp_DefaultPicture];
         if (savedPicture.size() > 0) {
             delete savedPicture;
         }
@@ -102,7 +119,10 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void getAvatarSrc() {
-        avatarSrc = [SELECT Id, Name FROM Attachment WHERE ParentId = :doctorCurrent.Id];
+        avatarSrc = [SELECT Id,
+                Name
+            FROM Attachment
+            WHERE ParentId = :doctorCurrent.Id];
     }
 
     //
@@ -133,7 +153,10 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void hireDoctor() {
-        Contract__c contractToInsert = new Contract__c(Doctor__c = doctorCurrent.Id, Hospital__c = hospital.Id, StartDate__c = contract.StartDate__c, EndDate__c = contract.EndDate__c);
+        Contract__c contractToInsert = new Contract__c(Doctor__c = doctorCurrent.Id,
+                Hospital__c = hospital.Id,
+                StartDate__c = contract.StartDate__c,
+                EndDate__c = contract.EndDate__c);
 
         try {
             insert contractToInsert;
@@ -164,7 +187,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     private void createNewHospital() {
-        hospital = new Hospital__c(Name='', WWW__c='', Master_Unit__c='', Street__c='', PostalCode__c='', City__c='', Country__c='');
+        hospital = new Hospital__c();
     }
 
     private void createNewContract() {
