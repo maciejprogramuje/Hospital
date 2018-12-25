@@ -62,7 +62,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
     public void searchDoctors() {
         doctorsFoundWrapper.clear();
-        contractsToImport.clear();
 
         List<Doctor__c> doctorsFound = Database.query(Hosp_Utils.generateQuerySearchForDoctorsInHospitalViewModal(doctorFromSearchForm));
 
@@ -76,7 +75,11 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     public void clearSearchForm() {
         ApexPages.getMessages().clear();
 
-        resetHireModalWindow();
+        doctorFromSearchForm = new Doctor__c(Name = '');
+        doctorsFoundWrapper = new List<DoctorsFoundWrapper>();
+
+        isEditingDatesFields = false;
+        isAnyBadStatusInImport  = false;
     }
 
     public void changeSelectionInDoctorsFoundWrapper() {

@@ -184,7 +184,7 @@
 
                         <apex:commandButton value="{! $Label.Clear }"
                                             action="{! clearSearchForm }"
-                                            reRender="searchPageBlock"
+                                            reRender="resultsDiv, messages"
                                             status="statusComp"
                                             immediate="true"/>
                     </apex:pageBlockButtons>
@@ -269,7 +269,8 @@
                                                     reRender="resultsPageBlockSection, selectedDoctorsDiv, messages"
                                                     status="statusComp"
                                                     action="{! templateSelectedDoctor }"
-                                                    rendered="true">
+                                                    rendered="true"
+                                                    disabled="{! contr.isEditingContractsWrapper }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
@@ -280,7 +281,8 @@
                                                     reRender="resultsPageBlockSection, selectedDoctorsDiv, messages"
                                                     status="statusComp"
                                                     action="{! clearSelectedDoctor }"
-                                                    rendered="true">
+                                                    rendered="true"
+                                                    disabled="{! contr.isEditingContractsWrapper }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
