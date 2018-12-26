@@ -6,12 +6,13 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public Attachment avatarSrc { get; set; }
 
     public Doctor__c doctorCurrent { get; set; }
-    public String hireFullName { get{
-        return String.format(Label.Hosp_Hire_Name, new List<String>{doctorCurrent.FirstName__c, doctorCurrent.Name});
-    } set; }
     public String fullName { get{
         return String.format(Label.Hosp_Full_Name, new List<String>{doctorCurrent.FirstName__c, doctorCurrent.Name});
     } set; }
+    public String hireFullName { get{
+        return String.format(Label.Hosp_Hire_Name, new List<String>{fullName});
+    } set; }
+
 
     public Hospital__c hospital { get; set; }
     public List<Hospital__c> hospitals { get; set; }
