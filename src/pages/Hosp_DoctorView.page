@@ -256,7 +256,8 @@
 
                         <apex:pageBlockSection columns="2">
 
-                            <apex:outputText value="{! doctorCurrent.FullName__c }"/>
+                            <apex:outputText label="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
+                                             value="{! fullName }"/>
 
                             <apex:outputField value="{! selectedHospital.Name }"/>
 

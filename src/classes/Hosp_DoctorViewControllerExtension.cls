@@ -7,7 +7,10 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
     public Doctor__c doctorCurrent { get; set; }
     public String hireFullName { get{
-        return String.format(Label.Hosp_Hire_Name, new List<String>{doctorCurrent.FullName__c});
+        return String.format(Label.Hosp_Hire_Name, new List<String>{doctorCurrent.FirstName__c, doctorCurrent.Name});
+    } set; }
+    public String fullName { get{
+        return String.format(Label.Hosp_Full_Name, new List<String>{doctorCurrent.FirstName__c, doctorCurrent.Name});
     } set; }
 
     public Hospital__c hospital { get; set; }
@@ -15,14 +18,13 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public List<HospitalWrapper> hospitalsWrappers { get; set; }
 
     public Contract__c contract { get; set; }
-    public String contractIdToDismiss { get; set; }
     public List<Contract__c> contracts { get; set; }
+    public String contractIdToDismiss { get; set; }
     public Boolean isImportSuccess { get; set; }
 
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
         doctorCurrent = (Doctor__c) standardController.getRecord();
-        doctorCurrent.FullName__c = String.format(Label.Hosp_Full_Name, new List<String>{doctorCurrent.FirstName__c, doctorCurrent.Name});
 
         getContracts();
         hasAvatar = false;
