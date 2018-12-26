@@ -2,12 +2,12 @@ public class Hosp_DoctorProfileImageController {
     Public Transient blob propFileBody { get; set; }
     Public Transient string propFileName { get; set; }
     Public Transient string propContentType { get; set; }
-    Public Integer fsize { get; set; }
-    public Boolean doneuploading { get; set; }
-    public Boolean doneuploadingCroping { get; set; }
+    Public Integer fileSize { get; set; }
+    public Boolean doneUploading { get; set; }
+    public Boolean doneUploadingCroping { get; set; }
     public Boolean uploadCroping { get; set; }
-    public Transient String upldocUrl { get; set; }
-    public Transient String inputdataUrl { get; set; }
+    public Transient String uplDocUrl { get; set; }
+    public Transient String inputDataUrl { get; set; }
 
     public String DocID { get; set; }
     public String recordId { get; set; }
@@ -16,22 +16,21 @@ public class Hosp_DoctorProfileImageController {
     public Hosp_DoctorProfileImageController() {
         recordId = ApexPages.currentPage().getParameters().get('recordId');
 
-        Doctor__c d = [SELECT Id, FirstLastName__c FROM Doctor__c WHERE Id = :recordId];
-        firstLastName = String.format(Label.Upload_picture_title, new List<String>{d.FirstLastName__c});
+        generateFirstLastName();
 
         try {
-            upldocUrl = '';
-            inputdataUrl = '';
+            uplDocUrl = '';
+            inputDataUrl = '';
             uploadCroping = false;
-            doneuploading = false;
-            doneuploadingCroping = false;
+            doneUploading = false;
+            doneUploadingCroping = false;
         } catch (Exception ex) {
             ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, ex.getStackTraceString());
             ApexPages.addMessage(msg);
         }
     }
 
-    public Pagereference uploadPicture() {
+    public PageReference uploadPicture() {
         try {
             Transient User UserContactId;
             if (! uploadCroping ) {
@@ -46,12 +45,12 @@ public class Hosp_DoctorProfileImageController {
         return null;
     }
 
-    public Pagereference EditProfilePic() {
+    public PageReference EditProfilePic() {
         try {
-            //System.debug('@@@@# propFileBody' + propFileBody + '' + propFileName + '' + propContentType + 'fsize' + fsize + 'propFileName' + propFileName);
+            //System.debug('@@@@# propFileBody' + propFileBody + '' + propFileName + '' + propContentType + 'fileSize' + fileSize + 'propFileName' + propFileName);
 
             // checking file size should be less then 5 MB
-            if (fsize > 2097152) {
+            if (fileSize > 2097152) {
                 List<String> messageComponents = new List<String>{};
 
                 ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, String.format(Label.Image_too_large, new List<String>{propFileName}));
@@ -62,11 +61,11 @@ public class Hosp_DoctorProfileImageController {
             } else {
                 String strtemp = EncodingUtil.base64Encode(propFileBody);
                 if (!String.isblank(strtemp)) {
-                    upldocUrl = 'data:' + propContentType + ';base64,' + strtemp;    // set the image url to display image on the page
+                    uplDocUrl = 'data:' + propContentType + ';base64,' + strtemp;    // set the image url to display image on the page
                 } else {
-                    upldocUrl = '';
+                    uplDocUrl = '';
                 }
-                doneuploading = true;
+                doneUploading = true;
             }
         } catch (Exception ex) {
             ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, String.format(Label.Message, new List<String>{ex.getStackTraceString(), ex.getMessage()}));
@@ -76,24 +75,33 @@ public class Hosp_DoctorProfileImageController {
     }
 
     public Pagereference uploadCrop() {
-        List<String> datalist = inputdataUrl.split(',');
+        List<String> datalist = inputDataUrl.split(',');
         if (datalist.size() > 0) {
             propContentType = datalist[0].split(';')[0];
             propContentType = propContentType.removeStart('data:');
-            inputdataUrl = datalist[1].trim();
+            inputDataUrl = datalist[1].trim();
         }
 
-        propFileBody = EncodingUtil.base64Decode(inputdataUrl);
+        propFileBody = EncodingUtil.base64Decode(inputDataUrl);
 
-        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :recordId AND name = :Label.Hosp_DefaultPicture];
-        if (savedPicture.size() > 0) {
+        List<Attachment> savedPicture = [SELECT Id,
+                Name,
+                Body
+            FROM Attachment
+            WHERE ParentId = :recordId
+            AND Name = :Label.Hosp_DefaultPicture];
+
+        if (!savedPicture.isEmpty()) {
             delete savedPicture;
         }
 
-        Attachment currentPicture = new Attachment(parentId = recordId, name = Label.Hosp_DefaultPicture, body = propFileBody);
+        Attachment currentPicture = new Attachment(ParentId = recordId,
+                Name = Label.Hosp_DefaultPicture,
+                Body = propFileBody);
+
         insert currentPicture;
 
-        doneuploadingCroping = true;
+        doneUploadingCroping = true;
 
         PageReference recordPageReference = Page.Hosp_DoctorView;
         recordPageReference.getParameters().put('id', recordId);
@@ -106,15 +114,29 @@ public class Hosp_DoctorProfileImageController {
         PageReference cropImagePage = Page.Hosp_DoctorProfileImage;
         String recordId = cropImagePage.getParameters().get('recordId');
 
-        List<Attachment> savedPicture = [SELECT Id, name, body FROM Attachment WHERE parentId = :recordId AND name = :Label.Hosp_DefaultPicture];
+        List<Attachment> savedPicture = [SELECT Id,
+                Name,
+                Body
+            FROM Attachment
+            WHERE ParentId = :recordId
+            AND Name = :Label.Hosp_DefaultPicture];
         if (savedPicture.size() > 0) {
             delete savedPicture;
         }
 
-        Attachment currentPicture = new Attachment(parentId = recordId, name = Label.Hosp_DefaultPicture, body = propFileBody);
+        Attachment currentPicture = new Attachment(ParentId = recordId, Name = Label.Hosp_DefaultPicture, Body = propFileBody);
 
         insert currentPicture;
 
-        doneuploadingCroping = true;
+        doneUploadingCroping = true;
+    }
+
+    private void generateFirstLastName() {
+        Doctor__c d = [SELECT Id,
+                FirstLastName__c
+            FROM Doctor__c
+            WHERE Id = :recordId];
+
+        firstLastName = String.format(Label.Upload_picture_title, new List<String>{d.FirstLastName__c});
     }
 }

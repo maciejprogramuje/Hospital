@@ -72,7 +72,7 @@
 
                     <apex:inputFile style="padding: 4.5px 10px ;width: 98.5%; background-color: #F8F8F8; "
                                     id="fileid"
-                                    fileSize="{! fsize }"
+                                    fileSize="{! fileSize }"
                                     accept="image/*"
                                     size="40"
                                     title="Browse"

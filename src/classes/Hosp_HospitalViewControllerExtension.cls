@@ -36,6 +36,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
         isEditingDatesFields = false;
         isAnyBadStatusInImport  = false;
+        areAllButtonDisabled = false;
     }
 
     public void getContracts() {
