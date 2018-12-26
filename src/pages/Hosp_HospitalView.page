@@ -398,16 +398,6 @@
             }
         }
 
-        function checkDates(startDate, endDate) {
-            var sDate = new Date(startDate);
-            var eDate = new Date(endDate);
-
-            if(sDate > eDate) {
-                alert('{! $Label.Hosp_BadDates }');
-            }
-        }
-
-
 
         twistSection(document.getElementById('{! $Component.mainPageBlock.sectionAddress }').getElementsByTagName('img')[0])
 

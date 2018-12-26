@@ -5,10 +5,10 @@ public with sharing class Hosp_DoctorSearchController {
     public String doctorsInJson { get; set; }
     private Integer paginationSize = 5;
 
-    private String sortOrder = 'Name';
-    private String sortAscDesc = 'ASC';
     public static final String sortUp = '▲';
     public static final String sortDown = '▼';
+    private String sortOrder = 'Name';
+    private String sortAscDesc = 'ASC';
     public String sortOrderSignName { get; set; }
     public String sortOrderSignEmail { get; set; }
     public String sortOrderSignCountry { get; set; }

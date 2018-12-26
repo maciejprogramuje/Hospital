@@ -9,7 +9,7 @@ public class Hosp_DoctorProfileImageController {
     public Transient String uplDocUrl { get; set; }
     public Transient String inputDataUrl { get; set; }
 
-    public String DocID { get; set; }
+    public String documentId { get; set; }
     public String recordId { get; set; }
     public String firstLastName { get; set; }
 

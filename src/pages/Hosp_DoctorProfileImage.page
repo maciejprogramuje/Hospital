@@ -421,8 +421,8 @@
          function oncompCropping() {
              var doneuploadingtemp = {!doneuploadingCroping};
              if(doneuploadingtemp) {
-                 var DocId = "{!DocID}";
-                 window.opener.updateURL(DocId);
+                 var documentId = "{! documentId }";
+                 window.opener.updateURL(documentId);
              }
          }
          loadImagesection();
