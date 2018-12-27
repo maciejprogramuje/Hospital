@@ -1,20 +1,16 @@
 global with sharing class Hosp_SoapForDoctorsWebService {
 
     webService static List<Doctor__c> getDoctors(String lastName, String firstName, String city, String country) {
-        List<Doctor__c> doctors = [
-                SELECT Id,
-                        Name,
-                        FirstName__c,
-                        City__c,
-                        Country__c
-                FROM Doctor__c
-                WHERE Name = :lastName
-        ];
-        return doctors;
+        String query = Hosp_Utils.generateQueryGetDoctorsForSoapGetDoctors(lastName, firstName, city, country);
+        if(String.isNotBlank(query)) {
+            return Database.query(query);
+        } else {
+            return new List<Doctor__c>();
+        }
     }
 
     webService static String updateDoctor(String doctorId, String lastName, String firstName, String city, String country) {
-        List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, City__c, Country__c, Email__c, Phone__c, Street__c FROM Doctor__c WHERE Id = :doctorId];
+        List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Id = :doctorId];
         if (!doctors.isEmpty()) {
             Doctor__c doctor = doctors.get(0);
 

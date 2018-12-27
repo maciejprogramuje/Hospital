@@ -3,19 +3,19 @@ public class Hosp_Utils {
     public static String generateGuid() {
         Blob b = Crypto.GenerateAESKey(128);
         String h = EncodingUtil.ConvertTohex(b);
-        String guid = h.SubString(0,8)+ '-' + h.SubString(8,12) + '-' + h.SubString(12,16) + '-' + h.SubString(16,20) + '-' + h.substring(20);
+        String guid = h.SubString(0, 8) + '-' + h.SubString(8, 12) + '-' + h.SubString(12, 16) + '-' + h.SubString(16, 20) + '-' + h.substring(20);
 
         return guid;
     }
 
-    public static String blobToString(Blob input, String inCharset){
+    public static String blobToString(Blob input, String inCharset) {
         String hex = EncodingUtil.convertToHex(input);
         System.assertEquals(0, hex.length() & 1);
         final Integer bytesCount = hex.length() >> 1;
         String[] bytes = new String[bytesCount];
 
-        for(Integer i = 0; i < bytesCount; ++i) {
-            bytes[i] =  hex.mid(i << 1, 2);
+        for (Integer i = 0; i < bytesCount; ++i) {
+            bytes[i] = hex.mid(i << 1, 2);
         }
 
         return EncodingUtil.urlDecode('%' + String.join(bytes, '%'), inCharset);
@@ -74,14 +74,14 @@ public class Hosp_Utils {
     public static String generateHireDoctorHospitalsQuery(Hospital__c hospital) {
         String query = '';
 
-        if(String.isNotBlank(hospital.Name)) {
+        if (String.isNotBlank(hospital.Name)) {
             query = 'SELECT Id, Name, Country__c, City__c, WWW__c FROM Hospital__c WHERE Name LIKE \'' + hospital.Name + '%\''
                     + addToWhereIfNotBlank('WWW__c', hospital.WWW__c)
                     + addToWhereIfNotBlank('Country__c', hospital.Country__c);
-        } else if(String.isNotBlank(hospital.WWW__c)) {
+        } else if (String.isNotBlank(hospital.WWW__c)) {
             query = 'SELECT Id, Name, Country__c, City__c, WWW__c FROM Hospital__c WHERE WWW__c LIKE \'' + hospital.WWW__c + '%\''
                     + addToWhereIfNotBlank('Country__c', hospital.Country__c);
-        } else if(String.isNotBlank(hospital.Country__c)) {
+        } else if (String.isNotBlank(hospital.Country__c)) {
             query = 'SELECT Id, Name, Country__c, City__c, WWW__c FROM Hospital__c WHERE Country__c = \'' + hospital.Country__c + '\'';
         }
 
@@ -100,11 +100,33 @@ public class Hosp_Utils {
 
     public static String generateQueryForCheckIsDoctorExistInDoctorEdit(Doctor__c doctor) {
         String doctorQuery = 'SELECT Id, Name FROM Doctor__c WHERE Name = \'' + doctor.Name + '\'';
-        if(String.isNotBlank(doctor.FirstName__c)) {
+        if (String.isNotBlank(doctor.FirstName__c)) {
             doctorQuery += ' AND FirstName__c = \'' + doctor.FirstName__c + '\'' ;
         }
 
         return doctorQuery;
+    }
+
+    public static String generateQueryGetDoctorsForSoapGetDoctors(String lastName, String firstName, String city, String country) {
+        String query = '';
+
+        if (String.isNotBlank(lastName)) {
+            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Name LIKE \'' + lastName + '\''
+                    + addToWhereIfNotBlank('FirstName__c', firstName)
+                    + addToWhereIfNotBlank('City__c', city)
+                    + addToWhereIfNotBlank('Country__c', country);
+        } else if (String.isNotBlank(firstName)) {
+            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE FirstName__c LIKE \'' + firstName + '\''
+                    + addToWhereIfNotBlank('City__c', city)
+                    + addToWhereIfNotBlank('Country__c', country);
+        } else if (String.isNotBlank(city)) {
+            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE City__c LIKE \'' + city + '\''
+                    + addToWhereIfNotBlank('Country__c', country);
+        }  else if (String.isNotBlank(country)) {
+            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Country__c LIKE \'' + country + '\'';
+        }
+
+        return query;
     }
 
 }
