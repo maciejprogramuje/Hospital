@@ -79,7 +79,9 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         doctorsFoundWrapper.clear();
 
         for (Doctor__c d : doctorsFound) {
-            doctorsFoundWrapper.add(new DoctorsFoundWrapper(d));
+            if(isNotAlreadyInContractsToImport(d.Id)) {
+                doctorsFoundWrapper.add(new DoctorsFoundWrapper(d));
+            }
         }
     }
 
@@ -97,6 +99,15 @@ public with sharing class Hosp_HospitalViewControllerExtension {
                 break;
             }
         }
+    }
+
+    private Boolean isNotAlreadyInContractsToImport(String selDocIdResults) {
+        for(ContractsWrapper c : contractsToImport) {
+            if(c.doctorInWrapper.Id == selDocIdResults) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void editSelectedDoctor() {
