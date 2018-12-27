@@ -136,13 +136,9 @@ public with sharing class Hosp_HospitalViewControllerExtension {
             }
         }
 
-        if (startDate != null && endDate != null) {
-            for (Integer i = 0; i < contractsToImport.size(); i++) {
-                contractsToImport.get(i).contractInWrapper.StartDate__c = startDate;
-                contractsToImport.get(i).contractInWrapper.EndDate__c = endDate;
-            }
-        } else {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, Label.Hosp_No_template_data));
+        for (Integer i = 0; i < contractsToImport.size(); i++) {
+            contractsToImport.get(i).contractInWrapper.StartDate__c = startDate;
+            contractsToImport.get(i).contractInWrapper.EndDate__c = endDate;
         }
     }
 
