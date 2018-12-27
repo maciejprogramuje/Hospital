@@ -137,8 +137,10 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         }
 
         for (Integer i = 0; i < contractsToImport.size(); i++) {
-            contractsToImport.get(i).contractInWrapper.StartDate__c = startDate;
-            contractsToImport.get(i).contractInWrapper.EndDate__c = endDate;
+            if(contractsToImport.get(i).statusContractsWrapper != Label.Success) {
+                contractsToImport.get(i).contractInWrapper.StartDate__c = startDate;
+                contractsToImport.get(i).contractInWrapper.EndDate__c = endDate;
+            }
         }
     }
 
@@ -193,14 +195,16 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         List<Contract__c> rawContractsToImport = new List<Contract__c>();
 
         for(ContractsWrapper con : contractsToImport) {
-            Contract__c c = new Contract__c(
-                    Doctor__c = con.contractInWrapper.Doctor__c,
-                    Hospital__c = con.contractInWrapper.Hospital__c,
-                    StartDate__c = con.contractInWrapper.StartDate__c,
-                    EndDate__c = con.contractInWrapper.EndDate__c,
-                    isFinished__c = false);
+            if(con.statusContractsWrapper != Label.Success) {
+                Contract__c c = new Contract__c(
+                        Doctor__c = con.contractInWrapper.Doctor__c,
+                        Hospital__c = con.contractInWrapper.Hospital__c,
+                        StartDate__c = con.contractInWrapper.StartDate__c,
+                        EndDate__c = con.contractInWrapper.EndDate__c,
+                        isFinished__c = false);
 
-            rawContractsToImport.add(c);
+                rawContractsToImport.add(c);
+            }
         }
 
         List<Database.SaveResult> saveResults = Database.insert(rawContractsToImport, false);
