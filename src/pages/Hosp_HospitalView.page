@@ -240,7 +240,7 @@
                                                     status="statusComp"
                                                     action="{! editSelectedDoctor }"
                                                     rendered="{! !contr.isEditingContractsWrapper }"
-                                                    disabled="{! areAllButtonDisabled }">
+                                                    disabled="{! areAllButtonDisabled || IF(contr.statusContractsWrapper == $Label.Success, true, false) }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
@@ -263,7 +263,7 @@
                                                     status="statusComp"
                                                     action="{! templateSelectedDoctor }"
                                                     rendered="true"
-                                                    disabled="{! areAllButtonDisabled }">
+                                                    disabled="{! areAllButtonDisabled || IF(contr.statusContractsWrapper == $Label.Success, true, false) }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
@@ -275,7 +275,7 @@
                                                     status="statusComp"
                                                     action="{! clearSelectedDoctor }"
                                                     rendered="true"
-                                                    disabled="{! areAllButtonDisabled }">
+                                                    disabled="{! areAllButtonDisabled || IF(contr.statusContractsWrapper == $Label.Success, true, false) }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"
@@ -288,7 +288,7 @@
                                                     action="{! removeSelectedDoctor }"
                                                     rendered="true"
                                                     immediate="true"
-                                                    disabled="{! contr.isEditingContractsWrapper }">
+                                                    disabled="{! contr.isEditingContractsWrapper || IF(contr.statusContractsWrapper == $Label.Success, true, false) }">
 
                                     <apex:param name="docId"
                                                 value="{! contr.contractInWrapper.Doctor__c }"

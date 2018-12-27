@@ -172,15 +172,21 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void saveSelectedDoctor() {
-        areAllButtonDisabled = false;
-
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
-                contractsToImport.get(i).contractInWrapper.StartDate__c = contractsToImport.get(i).tempContract.StartDate__c;
-                contractsToImport.get(i).contractInWrapper.EndDate__c = contractsToImport.get(i).tempContract.EndDate__c;
 
-                contractsToImport.get(i).isEditingContractsWrapper = false;
-                break;
+                if(contractsToImport.get(i).tempContract.StartDate__c <= contractsToImport.get(i).tempContract.EndDate__c) {
+                    areAllButtonDisabled = false;
+
+                    contractsToImport.get(i).contractInWrapper.StartDate__c = contractsToImport.get(i).tempContract.StartDate__c;
+                    contractsToImport.get(i).contractInWrapper.EndDate__c = contractsToImport.get(i).tempContract.EndDate__c;
+
+                    contractsToImport.get(i).isEditingContractsWrapper = false;
+
+                    break;
+                } else {
+                    contractsToImport.get(i).statusContractsWrapper = Label.Hosp_BadDates;
+                }
             }
         }
     }
