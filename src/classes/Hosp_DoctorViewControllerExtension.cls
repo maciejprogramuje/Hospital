@@ -21,7 +21,8 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
-        //standardController.addFields()
+        standardController.addFields(new List<String>{'FirstLastName__c'});
+
         doctorCurrent = (Doctor__c) standardController.getRecord();
 
         getContracts();
@@ -153,19 +154,23 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     }
 
     public void hireDoctor() {
-        Contract__c contractToInsert = new Contract__c(Doctor__c = doctorCurrent.Id,
-                Hospital__c = hospital.Id,
-                StartDate__c = contract.StartDate__c,
-                EndDate__c = contract.EndDate__c);
+        if(contract.StartDate__c <= contract.EndDate__c) {
+            Contract__c contractToInsert = new Contract__c(Doctor__c = doctorCurrent.Id,
+                    Hospital__c = hospital.Id,
+                    StartDate__c = contract.StartDate__c,
+                    EndDate__c = contract.EndDate__c);
 
-        try {
-            insert contractToInsert;
+            try {
+                insert contractToInsert;
 
-            getContracts();
+                getContracts();
 
-            setFieldsEmpty();
-        } catch (DmlException ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getDmlMessage(0)));
+                setFieldsEmpty();
+            } catch (DmlException ex) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, ex.getDmlMessage(0)));
+            }
+        } else {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, Label.Hosp_BadDates));
         }
     }
 

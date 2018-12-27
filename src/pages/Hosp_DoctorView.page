@@ -16,8 +16,6 @@
 
     <apex:pageBlock id="wholeDoctorView" title="{! $Label.Doctor }" mode="edit">
 
-        <apex:outputText value="{! Doctor__c.FirstLastName__c }" rendered="false"/>
-
         <div>
 
             <div class="column" style="text-align: center">
