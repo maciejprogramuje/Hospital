@@ -21,6 +21,7 @@ public with sharing class Hosp_DoctorViewControllerExtension {
 
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
+        //standardController.addFields()
         doctorCurrent = (Doctor__c) standardController.getRecord();
 
         getContracts();

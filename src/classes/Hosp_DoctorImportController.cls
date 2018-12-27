@@ -29,7 +29,7 @@ public with sharing class Hosp_DoctorImportController {
             inputValues = new List<String>();
 
             for (Integer i = 1; i < csvFileLines.size(); i++) {
-                List<String> csvRecordData = csvfilelines[i].split(',');
+                List<String> csvRecordData = csvFileLines[i].split(',');
 
                 Doctor__c doc = new Doctor__c(Name = '') ;
                 doc.FirstName__c = csvRecordData[0] ;
