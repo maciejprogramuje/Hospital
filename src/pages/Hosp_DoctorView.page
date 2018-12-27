@@ -16,6 +16,8 @@
 
     <apex:pageBlock id="wholeDoctorView" title="{! $Label.Doctor }" mode="edit">
 
+        <apex:outputText value="{! Doctor__c.FirstLastName__c }" rendered="false"/>
+
         <div>
 
             <div class="column" style="text-align: center">
@@ -256,8 +258,7 @@
 
                         <apex:pageBlockSection columns="2">
 
-                            <apex:outputText label="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
-                                             value="{! fullName }"/>
+                            <apex:outputField value="{! doctorCurrent.FirstLastName__c }"/>
 
                             <apex:outputField value="{! selectedHospital.Name }"/>
 

@@ -141,9 +141,6 @@
 
             <c:Hosp_HospitalHierarchyComponent currentHospitalId="Hospital__c.Id"/>
         </apex:pageBlockSection>
-
-        <!--AIzaSyDhwcYKRuRC0YT1czh3A1fBH0CJBLfSC1I-->
-
     </apex:pageBlock>
 
 
