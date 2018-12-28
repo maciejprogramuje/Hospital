@@ -154,7 +154,8 @@
                                        title="{! $Label.Hosp_Search_for_Doctors }"
                                        columns="2">
 
-                    <apex:inputField value="{! doctorFromSearchForm.FirstName__c }" required="false"/>
+                    <apex:inputField value="{! doctorFromSearchForm.FirstName__c }"
+                                     required="false"/>
 
                     <apex:inputField value="{! doctorFromSearchForm.Country__c }"/>
 
@@ -171,7 +172,7 @@
 
                         <apex:commandButton value="{! $Label.Search }"
                                             action="{! searchDoctors }"
-                                            reRender="resultsDiv, selectedDoctorsDiv, messages"
+                                            reRender="inputPageBlockSection, resultsDiv, selectedDoctorsDiv, messages"
                                             status="statusComp"/>
 
                         <apex:commandButton value="{! $Label.Clear }"

@@ -33,7 +33,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     public void clearSearchForm() {
         ApexPages.getMessages().clear();
 
-        doctorFromSearchForm = new Doctor__c(Name = '');
+        doctorFromSearchForm = new Doctor__c();
         doctorsFoundWrapper = new List<DoctorsFoundWrapper>();
 
         isEditingDatesFields = false;
