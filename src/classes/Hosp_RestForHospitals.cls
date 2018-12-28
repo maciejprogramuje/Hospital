@@ -32,7 +32,7 @@ global with sharing class Hosp_RestForHospitals {
     }
 
     @HttpDelete
-    global static void deleteHospitals() {
+    global static List<Hospital__c> deleteHospitals() {
         RestRequest request = RestContext.request;
         String hospitalIds = request.requestURI.substring(request.requestURI.lastIndexOf('/') + 1);
 
@@ -42,8 +42,10 @@ global with sharing class Hosp_RestForHospitals {
 
             if (!listToDel.isEmpty()) {
                 delete listToDel;
+                return listToDel;
             }
         }
+        return null;
     }
 
     private static String generateQuery(Map<String, String> pairsNameValue) {
