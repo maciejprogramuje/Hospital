@@ -2,21 +2,54 @@ global with sharing class Hosp_SoapForDoctorsWebService {
 
     webService static List<Doctor__c> getDoctors(String lastName, String firstName, String city, String country) {
         String query = Hosp_Utils.generateQueryGetDoctorsForSoapGetDoctors(lastName, firstName, city, country);
-        if(String.isNotBlank(query)) {
+        if (String.isNotBlank(query)) {
             return Database.query(query);
         } else {
             return new List<Doctor__c>();
         }
     }
 
-    webService static String updateDoctor(String doctorId, String lastName, String firstName, String city, String country) {
-        List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Id = :doctorId];
-        if (!doctors.isEmpty()) {
-            Doctor__c doctor = doctors.get(0);
+    webService static Doctor__c upsertDoctor(String doctorId, String lastName, String firstName, String city, String country) {
+        if (String.isNotBlank(doctorId)) {
+            List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Id = :doctorId];
 
-            if (String.isNotBlank(lastName)) {
-                doctor.Name = lastName;
+            if (!doctors.isEmpty()) {
+                if (String.isNotBlank(lastName)) {
+                    doctors.get(0).Name = lastName;
+                }
+                if (String.isNotBlank(firstName)) {
+                    doctors.get(0).FirstName__c = firstName;
+                }
+                if (String.isNotBlank(city)) {
+                    doctors.get(0).City__c = city;
+                }
+                if (String.isNotBlank(country)) {
+                    doctors.get(0).Country__c = country;
+                }
+
+                update doctors.get(0);
+                return doctors.get(0);
             }
+            return null;
+        } else {
+            return insertDoctor(lastName, firstName, city, country);
+        }
+    }
+
+    private static Doctor__c insertDoctor(String lastName, String firstName, String city, String country) {
+        Doctor__c doc = createDoctor(lastName, firstName, city, country);
+        if(doc != null) {
+            insert doc;
+            return doc;
+        } else {
+            return null;
+        }
+    }
+
+    private static Doctor__c createDoctor(String lastName, String firstName, String city, String country) {
+        if (String.isNotBlank(lastName)) {
+            Doctor__c doctor = new Doctor__c(Name = lastName);
+
             if (String.isNotBlank(firstName)) {
                 doctor.FirstName__c = firstName;
             }
@@ -27,46 +60,20 @@ global with sharing class Hosp_SoapForDoctorsWebService {
                 doctor.Country__c = country;
             }
 
-            try {
-                update doctor;
-                return String.format(Label.Hosp_SoapSuccessUpdated, new List<String>{
-                        doctorId
-                });
-            } catch (Exception e) {
-                System.debug(e);
-                return String.format(Label.Hosp_SoapFailedProblemId, new List<String>{
-                        doctorId
-                });
-            }
+            return doctor;
         } else {
-            return String.format(Label.Hosp_SoapFialedWrongId, new List<String>{
-                    doctorId
-            });
+            return null;
         }
     }
 
-    webService static List<String> deleteDoctors(List<String> doctorsIds) {
+    webService static List<Doctor__c> deleteDoctors(List<String> doctorsIds) {
         List<Doctor__c> doctorsToDelete = [SELECT Id FROM Doctor__c WHERE Id IN :doctorsIds];
 
-        List<Database.DeleteResult> deleteResults = Database.delete(doctorsToDelete, false);
-
-        List<String> results = new List<String>();
-        for (Integer i = 0; i < deleteResults.size(); i++) {
-            if (deleteResults.get(i).isSuccess()) {
-                results.add(String.format(Label.Hosp_SoapRecordDeleted, new List<String >{
-                        doctorsIds.get(i)
-                }));
-            } else {
-                results.add(String.format(Label.Hosp_SoapRecordNotDeleted, new List<String>{
-                        doctorsIds.get(i), deleteResults.get(i).errors[0].getMessage()
-                }));
-            }
+        if (!doctorsToDelete.isEmpty()) {
+            delete  doctorsToDelete;
+            return doctorsToDelete;
         }
 
-        if (results.isEmpty()) {
-            results.add(Label.Hosp_SoapNoRecordsToDelete);
-        }
-
-        return results;
+        return null;
     }
 }

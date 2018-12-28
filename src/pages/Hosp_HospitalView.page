@@ -176,7 +176,7 @@
 
                         <apex:commandButton value="{! $Label.Clear }"
                                             action="{! clearSearchForm }"
-                                            reRender="resultsDiv, messages"
+                                            reRender="inputPageBlockSection, resultsDiv, messages"
                                             status="statusComp"
                                             immediate="true"/>
                     </apex:pageBlockButtons>

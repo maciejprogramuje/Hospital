@@ -17,7 +17,9 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
     public Hosp_HospitalViewControllerExtension(ApexPages.StandardController standardController) {
         hospitalCurrent = (Hospital__c) standardController.getRecord();
-        hireDialogName = String.format(Label.Hosp_Hire_Doc_to_Hosp, new List<String>{ hospitalCurrent.Name });
+        hireDialogName = String.format(Label.Hosp_Hire_Doc_to_Hosp, new List<String>{
+                hospitalCurrent.Name
+        });
         getContracts();
 
         resetHireModalWindow();
@@ -35,7 +37,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         doctorsFoundWrapper = new List<DoctorsFoundWrapper>();
 
         isEditingDatesFields = false;
-        isAnyBadStatusInImport  = false;
+        isAnyBadStatusInImport = false;
         areAllButtonDisabled = false;
     }
 
@@ -76,12 +78,12 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
         List<Doctor__c> doctorsFound = Database.query(Hosp_Utils.generateQuerySearchForDoctorsInHospitalViewModal(doctorFromSearchForm));
 
-        doctorsFoundWrapper.clear();
-
         for (Doctor__c d : doctorsFound) {
-            if(isNotAlreadyInContractsToImport(d.Id)) {
+            /*if(isNotAlreadyInContractsToImport(d.Id)) {
                 doctorsFoundWrapper.add(new DoctorsFoundWrapper(d));
-            }
+            }*/
+
+            doctorsFoundWrapper.add(new DoctorsFoundWrapper(d, contractsToImport));
         }
     }
 
@@ -102,20 +104,30 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     private Boolean isNotAlreadyInContractsToImport(String selDocIdResults) {
-        for(ContractsWrapper c : contractsToImport) {
-            if(c.doctorInWrapper.Id == selDocIdResults) {
+        for (ContractsWrapper c : contractsToImport) {
+            if (c.doctorInWrapper.Id == selDocIdResults) {
                 return false;
             }
         }
         return true;
     }
 
+
     public void editSelectedDoctor() {
         areAllButtonDisabled = true;
 
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
-                contractsToImport.get(i).tempContract = new Contract__c();
+
+
+                if (contractsToImport.get(i).contractInWrapper.StartDate__c == null
+                        && contractsToImport.get(i).contractInWrapper.EndDate__c == null) {
+                    contractsToImport.get(i).tempContract = new Contract__c();
+                } else {
+                    contractsToImport.get(i).tempContract.StartDate__c = contractsToImport.get(i).contractInWrapper.StartDate__c;
+                    contractsToImport.get(i).tempContract.EndDate__c = contractsToImport.get(i).contractInWrapper.EndDate__c;
+                }
+
                 contractsToImport.get(i).isEditingContractsWrapper = true;
             } else {
                 contractsToImport.get(i).isEditingContractsWrapper = false;
@@ -137,7 +149,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         }
 
         for (Integer i = 0; i < contractsToImport.size(); i++) {
-            if(contractsToImport.get(i).statusContractsWrapper != Label.Success) {
+            if (contractsToImport.get(i).statusContractsWrapper != Label.Success) {
                 contractsToImport.get(i).contractInWrapper.StartDate__c = startDate;
                 contractsToImport.get(i).contractInWrapper.EndDate__c = endDate;
             }
@@ -154,26 +166,30 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         }
     }
 
+
     public void removeSelectedDoctor() {
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
                 contractsToImport.remove(i);
+
                 break;
             }
         }
         for (DoctorsFoundWrapper d : doctorsFoundWrapper) {
             if (d.doctorInWrapper.Id == editingDoctorId) {
                 d.isSelectedFoundWrapper = false;
+
                 break;
             }
         }
     }
 
+
     public void saveSelectedDoctor() {
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
 
-                if(contractsToImport.get(i).tempContract.StartDate__c <= contractsToImport.get(i).tempContract.EndDate__c) {
+                if (contractsToImport.get(i).tempContract.StartDate__c <= contractsToImport.get(i).tempContract.EndDate__c) {
                     areAllButtonDisabled = false;
 
                     contractsToImport.get(i).contractInWrapper.StartDate__c = contractsToImport.get(i).tempContract.StartDate__c;
@@ -194,8 +210,8 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
         List<Contract__c> rawContractsToImport = new List<Contract__c>();
 
-        for(ContractsWrapper con : contractsToImport) {
-            if(con.statusContractsWrapper != Label.Success) {
+        for (ContractsWrapper con : contractsToImport) {
+            if (con.statusContractsWrapper != Label.Success) {
                 Contract__c c = new Contract__c(
                         Doctor__c = con.contractInWrapper.Doctor__c,
                         Hospital__c = con.contractInWrapper.Hospital__c,
@@ -209,8 +225,8 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
         List<Database.SaveResult> saveResults = Database.insert(rawContractsToImport, false);
 
-        for(Integer i = 0; i <  saveResults.size(); i++) {
-            if(saveResults.get(i).isSuccess()) {
+        for (Integer i = 0; i < saveResults.size(); i++) {
+            if (saveResults.get(i).isSuccess()) {
                 contractsToImport.get(i).statusContractsWrapper = Label.Success;
             } else {
                 contractsToImport.get(i).statusContractsWrapper = saveResults.get(i).errors[0].getMessage();
@@ -227,18 +243,39 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public Doctor__c doctorInWrapper { get; set; }
         public Boolean isSelectedFoundWrapper { get; set; }
 
-        public doctorsFoundWrapper(Doctor__c d) {
+        public doctorsFoundWrapper(Doctor__c d, List<ContractsWrapper> contractsToImport) {
             doctorInWrapper = d;
+
             isSelectedFoundWrapper = false;
+
+            System.debug('contractsToImport.size=' + contractsToImport.size());
+
+            /*for(ContractsWrapper c : contractsToImport) {
+                System.debug(c.doctorInWrapper.Name);
+            }*/
+
+
+            /*for (ContractsWrapper c : contractsToImport) {
+                if (c.doctorInWrapper.Id == doctorInWrapper.Id) {
+                    isSelectedFoundWrapper = true;
+                    break;
+                } else {
+                    isSelectedFoundWrapper = false;
+                    break;
+                }
+            }*/
         }
     }
 
     private class ContractsWrapper {
         public Contract__c contractInWrapper { get; set; }
         public Contract__c tempContract { get; set; }
-        public Doctor__c doctorInWrapper { get {
-            return [SELECT Id, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
-        } set; }
+        public Doctor__c doctorInWrapper {
+            get {
+                return [SELECT Id, Name, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
+            }
+            set;
+        }
         public String fullNameContractsWrapper { get; set; }
         public Boolean isEditingContractsWrapper { get; set; }
         public String statusContractsWrapper { get; set; }
