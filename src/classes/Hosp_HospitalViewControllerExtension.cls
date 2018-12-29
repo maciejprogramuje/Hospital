@@ -78,14 +78,25 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
         List<Doctor__c> doctorsFound = Database.query(Hosp_Utils.generateQuerySearchForDoctorsInHospitalViewModal(doctorFromSearchForm));
 
+
         for (Doctor__c d : doctorsFound) {
             /*if(isNotAlreadyInContractsToImport(d.Id)) {
                 doctorsFoundWrapper.add(new DoctorsFoundWrapper(d));
             }*/
 
-            doctorsFoundWrapper.add(new DoctorsFoundWrapper(d, contractsToImport));
+            doctorsFoundWrapper.add(new DoctorsFoundWrapper(d));
         }
     }
+
+    /*private Boolean isNotAlreadyInContractsToImport(String selDocIdResults) {
+        for (ContractsWrapper c : contractsToImport) {
+            if (c.doctorInWrapper.Id == selDocIdResults) {
+                return false;
+            }
+        }
+        return true;
+    }*/
+
 
     public void changeSelectionInDoctorsFoundWrapper() {
         for (DoctorsFoundWrapper d : doctorsFoundWrapper) {
@@ -102,16 +113,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
             }
         }
     }
-
-    private Boolean isNotAlreadyInContractsToImport(String selDocIdResults) {
-        for (ContractsWrapper c : contractsToImport) {
-            if (c.doctorInWrapper.Id == selDocIdResults) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 
     public void editSelectedDoctor() {
         areAllButtonDisabled = true;
@@ -179,9 +180,13 @@ public with sharing class Hosp_HospitalViewControllerExtension {
             if (d.doctorInWrapper.Id == editingDoctorId) {
                 d.isSelectedFoundWrapper = false;
 
+                //doctorsFoundWrapper.add(new DoctorsFoundWrapper(d.doctorInWrapper));
+
                 break;
             }
         }
+
+
     }
 
 
@@ -243,42 +248,28 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public Doctor__c doctorInWrapper { get; set; }
         public Boolean isSelectedFoundWrapper { get; set; }
 
-        public doctorsFoundWrapper(Doctor__c d, List<ContractsWrapper> contractsToImport) {
+        public doctorsFoundWrapper(Doctor__c d) {
             doctorInWrapper = d;
 
             isSelectedFoundWrapper = false;
-
-            System.debug('contractsToImport.size=' + contractsToImport.size());
-
-            /*for(ContractsWrapper c : contractsToImport) {
-                System.debug(c.doctorInWrapper.Name);
-            }*/
-
-
-            /*for (ContractsWrapper c : contractsToImport) {
-                if (c.doctorInWrapper.Id == doctorInWrapper.Id) {
-                    isSelectedFoundWrapper = true;
-                    break;
-                } else {
-                    isSelectedFoundWrapper = false;
-                    break;
-                }
-            }*/
         }
     }
 
     private class ContractsWrapper {
         public Contract__c contractInWrapper { get; set; }
         public Contract__c tempContract { get; set; }
+
+        // to nie jest w pętli! wykorzystuję przy wyświetlaniu na page
         public Doctor__c doctorInWrapper {
             get {
                 return [SELECT Id, Name, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
             }
             set;
         }
-        public String fullNameContractsWrapper { get; set; }
+
         public Boolean isEditingContractsWrapper { get; set; }
         public String statusContractsWrapper { get; set; }
+
 
         public ContractsWrapper(Contract__c c) {
             contractInWrapper = c;
