@@ -78,24 +78,19 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
         List<Doctor__c> doctorsFound = Database.query(Hosp_Utils.generateQuerySearchForDoctorsInHospitalViewModal(doctorFromSearchForm));
 
-
         for (Doctor__c d : doctorsFound) {
-            /*if(isNotAlreadyInContractsToImport(d.Id)) {
-                doctorsFoundWrapper.add(new DoctorsFoundWrapper(d));
-            }*/
-
-            doctorsFoundWrapper.add(new DoctorsFoundWrapper(d));
+            doctorsFoundWrapper.add(new DoctorsFoundWrapper(d, isNotAlreadyInContractsToImport(d.Id)));
         }
     }
 
-    /*private Boolean isNotAlreadyInContractsToImport(String selDocIdResults) {
+    private Boolean isNotAlreadyInContractsToImport(String selDocIdResults) {
         for (ContractsWrapper c : contractsToImport) {
-            if (c.doctorInWrapper.Id == selDocIdResults) {
-                return false;
+            if (c.contractInWrapper.Doctor__c == selDocIdResults) {
+                return true;
             }
         }
-        return true;
-    }*/
+        return false;
+    }
 
 
     public void changeSelectionInDoctorsFoundWrapper() {
@@ -248,10 +243,10 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public Doctor__c doctorInWrapper { get; set; }
         public Boolean isSelectedFoundWrapper { get; set; }
 
-        public doctorsFoundWrapper(Doctor__c d) {
+        public doctorsFoundWrapper(Doctor__c d, Boolean isOnImportList) {
             doctorInWrapper = d;
 
-            isSelectedFoundWrapper = false;
+            isSelectedFoundWrapper = isOnImportList;
         }
     }
 
@@ -259,7 +254,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public Contract__c contractInWrapper { get; set; }
         public Contract__c tempContract { get; set; }
 
-        // to nie jest w pętli! wykorzystuję przy wyświetlaniu na page
+        // todo - jak zastąpić wywołaniem z __r
         public Doctor__c doctorInWrapper {
             get {
                 return [SELECT Id, Name, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
