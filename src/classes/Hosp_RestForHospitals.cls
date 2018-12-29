@@ -49,7 +49,7 @@ global with sharing class Hosp_RestForHospitals {
     }
 
     private static String generateQuery(Map<String, String> pairsNameValue) {
-        String query = 'SELECT Name, Country__c, City__c, Id, Region__c FROM Hospital__c';
+        String query = 'SELECT Id, Name, Country__c, City__c FROM Hospital__c';
         try {
             Set<String> fields = pairsNameValue.keySet();
             if (!fields.isEmpty()) {

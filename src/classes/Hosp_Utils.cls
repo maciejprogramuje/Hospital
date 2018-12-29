@@ -111,22 +111,30 @@ public class Hosp_Utils {
         String query = '';
 
         if (String.isNotBlank(lastName)) {
-            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Name LIKE \'' + lastName + '\''
-                    + addToWhereIfNotBlank('FirstName__c', firstName)
-                    + addToWhereIfNotBlank('City__c', city)
-                    + addToWhereIfNotBlank('Country__c', country);
+            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Name = \'' + lastName + '\''
+                    + addToWhereIfNotBlankAndEquals('FirstName__c', firstName)
+                    + addToWhereIfNotBlankAndEquals('City__c', city)
+                    + addToWhereIfNotBlankAndEquals('Country__c', country);
         } else if (String.isNotBlank(firstName)) {
-            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE FirstName__c LIKE \'' + firstName + '\''
-                    + addToWhereIfNotBlank('City__c', city)
-                    + addToWhereIfNotBlank('Country__c', country);
+            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE FirstName__c = \'' + firstName + '\''
+                    + addToWhereIfNotBlankAndEquals('City__c', city)
+                    + addToWhereIfNotBlankAndEquals('Country__c', country);
         } else if (String.isNotBlank(city)) {
-            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE City__c LIKE \'' + city + '\''
-                    + addToWhereIfNotBlank('Country__c', country);
+            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE City__c = \'' + city + '\''
+                    + addToWhereIfNotBlankAndEquals('Country__c', country);
         }  else if (String.isNotBlank(country)) {
-            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Country__c LIKE \'' + country + '\'';
+            query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Country__c = \'' + country + '\'';
         }
 
         return query;
+    }
+
+    private static String addToWhereIfNotBlankAndEquals(String fieldName, String checkedField) {
+        if (String.isNotBlank(checkedField)) {
+            return ' AND ' + fieldName + ' = \'' + checkedField + '\'';
+        } else {
+            return ' ';
+        }
     }
 
 }

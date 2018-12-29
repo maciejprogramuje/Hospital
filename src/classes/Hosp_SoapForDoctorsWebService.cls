@@ -2,6 +2,7 @@ global with sharing class Hosp_SoapForDoctorsWebService {
 
     webService static List<Doctor__c> getDoctors(String lastName, String firstName, String city, String country) {
         String query = Hosp_Utils.generateQueryGetDoctorsForSoapGetDoctors(lastName, firstName, city, country);
+
         if (String.isNotBlank(query)) {
             return Database.query(query);
         } else {
@@ -72,8 +73,8 @@ global with sharing class Hosp_SoapForDoctorsWebService {
         if (!doctorsToDelete.isEmpty()) {
             delete  doctorsToDelete;
             return doctorsToDelete;
+        } else {
+            return new List<Doctor__c>();
         }
-
-        return null;
     }
 }
