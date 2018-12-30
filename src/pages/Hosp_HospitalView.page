@@ -299,8 +299,18 @@
 
                             </apex:column>
 
+
+
                             <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
                                          value="{! contr.doctorInWrapper.FirstLastName__c }"/>
+
+
+
+                            <!--<apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
+                                         value="{! contr.contractInWrapper.Doctor__r.Name }"/>-->
+
+
+
 
                             <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Country__c.label }"
                                          value="{! contr.doctorInWrapper.Country__c }"/>

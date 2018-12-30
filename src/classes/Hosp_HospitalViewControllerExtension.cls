@@ -102,6 +102,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
                     d.isSelectedFoundWrapper = true;
 
                     Contract__c c = new Contract__c(Hospital__c = hospitalCurrent.Id, Doctor__c = selectedDoctorIdInResults);
+
                     contractsToImport.add(new ContractsWrapper(c));
                 }
                 break;
@@ -114,8 +115,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
-
-
                 if (contractsToImport.get(i).contractInWrapper.StartDate__c == null
                         && contractsToImport.get(i).contractInWrapper.EndDate__c == null) {
                     contractsToImport.get(i).tempContract = new Contract__c();
@@ -139,7 +138,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
                 startDate = contractsToImport.get(i).contractInWrapper.StartDate__c;
                 endDate = contractsToImport.get(i).contractInWrapper.EndDate__c;
-
                 break;
             }
         }
@@ -162,28 +160,20 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         }
     }
 
-
     public void removeSelectedDoctor() {
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
                 contractsToImport.remove(i);
-
                 break;
             }
         }
         for (DoctorsFoundWrapper d : doctorsFoundWrapper) {
             if (d.doctorInWrapper.Id == editingDoctorId) {
                 d.isSelectedFoundWrapper = false;
-
-                //doctorsFoundWrapper.add(new DoctorsFoundWrapper(d.doctorInWrapper));
-
                 break;
             }
         }
-
-
     }
-
 
     public void saveSelectedDoctor() {
         for (Integer i = 0; i < contractsToImport.size(); i++) {
@@ -254,7 +244,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public Contract__c contractInWrapper { get; set; }
         public Contract__c tempContract { get; set; }
 
-        // todo - jak zastąpić wywołaniem z __r
+        // todo - jak zastąpić wywołaniem np: contractInWrapper.Doctor __r.Name
         public Doctor__c doctorInWrapper {
             get {
                 return [SELECT Id, Name, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
