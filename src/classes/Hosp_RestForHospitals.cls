@@ -18,7 +18,12 @@ global with sharing class Hosp_RestForHospitals {
     global static List<String> upsertHospitals(List<HospitalWrapper> hospitals) {
         List<Hospital__c> hospitalsList = new List<Hospital__c>();
         for (HospitalWrapper h : hospitals) {
-            hospitalsList.add(new Hospital__c(Id = h.hospitalId, Name = h.name, Country__c = h.country, City__c = h.city));
+            hospitalsList.add(new Hospital__c(Id = h.hospitalId,
+                    Name = h.name,
+                    Country__c = h.country,
+                    City__c = h.city,
+                    PostalCode__c = h.postalCode,
+                    Street__c = h.street));
         }
 
         upsert hospitalsList;
@@ -83,16 +88,16 @@ global with sharing class Hosp_RestForHospitals {
         public String name { get; set; }
         public String country { get; set; }
         public String city { get; set; }
-
-        global HospitalWrapper() {
-
-        }
+        public String postalCode { get; set; }
+        public String street { get; set; }
 
         global HospitalWrapper(Hospital__c hospital) {
             hospitalId = hospital.Id;
             name = hospital.Name;
             country = hospital.Country__c;
             city = hospital.City__c;
+            postalCode = hospital.PostalCode__c;
+            street = hospital.Street__c;
         }
     }
 }
