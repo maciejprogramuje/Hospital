@@ -15,7 +15,7 @@ private class Hosp_SoapForDoctorsTest {
     }
 
     @isTest
-    static void shouldGetDoctorsWithAllParams() {
+    static void shouldGetDoctors_WithAllParams() {
         //given
         String doctorsNames = 'TestDoctorName1';
         String doctorsFirstNames = 'TestDoctorFirstName1';
@@ -32,7 +32,7 @@ private class Hosp_SoapForDoctorsTest {
     }
 
     @isTest
-    static void shouldGetDoctorsWithNoParams() {
+    static void shouldNotGetDoctors_WithNoParams() {
         //given
         String doctorsNames = '';
         String doctorsFirstNames = '';
@@ -49,7 +49,7 @@ private class Hosp_SoapForDoctorsTest {
     }
 
     @isTest
-    static void shouldGetDoctorsWithNotExistsName() {
+    static void shouldNotGetDoctors_WithNotExistsName() {
         //given
         String doctorsNames = 'TestDoctorName3';
         String doctorsFirstNames = '';
@@ -66,7 +66,7 @@ private class Hosp_SoapForDoctorsTest {
     }
 
     @isTest
-    static void shouldDeleteDoctorsTrueDoctorId() {
+    static void shouldDeleteDoctors_TrueDoctorsIds() {
         //given
         List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, Country__c, City__c FROM Doctor__c WHERE Name LIKE 'TestDoctorName%'];
         List<String> doctorsIds = new List<String>();
@@ -84,7 +84,7 @@ private class Hosp_SoapForDoctorsTest {
     }
 
     @isTest
-    static void shouldDeleteDoctorsFakeDoctorId() {
+    static void shouldNotDeleteDoctors_FakeDoctorsIds() {
         //given
         List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, Country__c, City__c FROM Doctor__c WHERE Name LIKE 'TestDoctorName3'];
         List<String> doctorsIds = new List<String>();
@@ -102,7 +102,7 @@ private class Hosp_SoapForDoctorsTest {
     }
 
     @isTest
-    static void shouldUpsertDoctorUpsertTrueDoctor() {
+    static void shouldUpsertDoctor_UpsertTrueDoctor() {
         //given
         List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, Country__c, City__c FROM Doctor__c WHERE Name LIKE 'TestDoctorName1'];
 
@@ -120,19 +120,15 @@ private class Hosp_SoapForDoctorsTest {
         System.assertEquals(lastNameAfterChange, result.Name);
     }
 
-
-
-
-
-
-
     @isTest
-    static void shouldUpsertDoctorUpsertFakeDoctor() {
+    static void shouldNotUpsertDoctor_UpsertFakeDoctor() {
         //given
         List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, Country__c, City__c FROM Doctor__c WHERE Name LIKE 'TestDoctorName4'];
 
         String lastNameAfterChange = 'TestDoctorName3';
         String firstNameAfterChange = 'TestDoctorFirstName3';
+
+        Integer numberOfDoctors = 0;
 
         Doctor__c result;
 
@@ -142,17 +138,11 @@ private class Hosp_SoapForDoctorsTest {
         }
 
         //then
-        System.assertEquals(null, result);
+        System.assertEquals(numberOfDoctors, doctors.size());
     }
 
-
-
-
-
-
-
     @isTest
-    static void shouldUpsertDoctorInsert() {
+    static void shouldUpsertDoctor_Insert() {
         //given
         String lastName = 'TestDoctorName4';
         String firstName = 'TestDoctorFirstName4';
@@ -166,4 +156,18 @@ private class Hosp_SoapForDoctorsTest {
         System.assertNotEquals(null, result.Id);
     }
 
+    @isTest
+    static void shouldNotUpsertDoctor_InsertWithoutRequiredFields() {
+        //given
+        String lastName;
+        String firstName;
+        String city = 'City4';
+        String country = 'PL';
+
+        //when
+        Doctor__c result = Hosp_SoapForDoctorsWebService.upsertDoctor('', lastName, firstName, city, country);
+
+        //then
+        System.assertEquals(null, result);
+    }
 }
