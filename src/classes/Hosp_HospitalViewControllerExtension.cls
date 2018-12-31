@@ -103,7 +103,7 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
                     Contract__c c = new Contract__c(Hospital__c = hospitalCurrent.Id, Doctor__c = selectedDoctorIdInResults);
 
-                    contractsToImport.add(new ContractsWrapper(c));
+                    contractsToImport.add(new ContractsWrapper(c, d.doctorInWrapper.FirstLastName__c, d.doctorInWrapper.Country__c));
                 }
                 break;
             }
@@ -243,22 +243,16 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     private class ContractsWrapper {
         public Contract__c contractInWrapper { get; set; }
         public Contract__c tempContract { get; set; }
-
-        // todo - jak zastąpić wywołaniem np: contractInWrapper.Doctor __r.Name
-        public Doctor__c doctorInWrapper {
-            get {
-                return [SELECT Id, Name, FirstLastName__c, Country__c FROM Doctor__c WHERE Id = :contractInWrapper.Doctor__c];
-            }
-            set;
-        }
-
+        public String doctorName { get; set; }
+        public String doctorCountry { get; set; }
         public Boolean isEditingContractsWrapper { get; set; }
         public String statusContractsWrapper { get; set; }
 
-
-        public ContractsWrapper(Contract__c c) {
+        public ContractsWrapper(Contract__c c, String doctorName, String doctorCountry) {
             contractInWrapper = c;
             tempContract = new Contract__c();
+            this.doctorName = doctorName;
+            this.doctorCountry = doctorCountry;
 
             isEditingContractsWrapper = false;
             statusContractsWrapper = '';

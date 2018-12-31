@@ -295,25 +295,15 @@
                                                 value="{! contr.contractInWrapper.Doctor__c }"
                                                 assignTo="{! editingDoctorId }"/>
                                 </apex:commandButton>
-
-
                             </apex:column>
 
 
-
                             <apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
-                                         value="{! contr.doctorInWrapper.FirstLastName__c }"/>
-
-
-
-                            <!--<apex:column headerValue="{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }"
-                                         value="{! contr.contractInWrapper.Doctor__r.Name }"/>-->
-
-
+                                         value="{! contr.doctorName }"/>
 
 
                             <apex:column headerValue="{! $ObjectType.Doctor__c.fields.Country__c.label }"
-                                         value="{! contr.doctorInWrapper.Country__c }"/>
+                                         value="{! contr.doctorCountry }"/>
 
 
                             <apex:column headerValue="{! $ObjectType.Contract__c.fields.StartDate__c.label }">
