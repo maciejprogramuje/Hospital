@@ -38,7 +38,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
         isEditingDatesFields = false;
         isAnyBadStatusInImport = false;
-        areAllButtonDisabled = false;
     }
 
     public void getContracts() {
@@ -167,12 +166,18 @@ public with sharing class Hosp_HospitalViewControllerExtension {
                 break;
             }
         }
+
         for (DoctorsFoundWrapper d : doctorsFoundWrapper) {
             if (d.doctorInWrapper.Id == editingDoctorId) {
                 d.isSelectedFoundWrapper = false;
                 break;
             }
         }
+
+
+
+
+
     }
 
     public void saveSelectedDoctor() {
