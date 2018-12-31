@@ -15,9 +15,9 @@ global with sharing class Hosp_RestForHospitals {
     }
 
     @HttpPut
-    global static List<String> upsertHospitals(List<HospitalWrapper> hospitals) {
+    global static List<String> upsertHospitals(List<HospitalWrapperForRest> hospitals) {
         List<Hospital__c> hospitalsList = new List<Hospital__c>();
-        for (HospitalWrapper h : hospitals) {
+        for (HospitalWrapperForRest h : hospitals) {
             hospitalsList.add(new Hospital__c(Id = h.hospitalId,
                     Name = h.name,
                     Country__c = h.country,
@@ -28,7 +28,7 @@ global with sharing class Hosp_RestForHospitals {
 
         upsert hospitalsList;
 
-        List<ID> hId = new List<ID>();
+        List<String> hId = new List<String>();
         for (Hospital__c h : hospitalsList) {
             hId.add(h.Id);
         }
@@ -77,27 +77,10 @@ global with sharing class Hosp_RestForHospitals {
                 }
             }
         } catch (Exception ex) {
+            System.debug(ex);
             return null;
         }
         return query;
     }
 
-
-    global class HospitalWrapper {
-        public String hospitalId { get; set; }
-        public String name { get; set; }
-        public String country { get; set; }
-        public String city { get; set; }
-        public String postalCode { get; set; }
-        public String street { get; set; }
-
-        global HospitalWrapper(Hospital__c hospital) {
-            hospitalId = hospital.Id;
-            name = hospital.Name;
-            country = hospital.Country__c;
-            city = hospital.City__c;
-            postalCode = hospital.PostalCode__c;
-            street = hospital.Street__c;
-        }
-    }
 }
