@@ -172,7 +172,7 @@
 
                         <apex:commandButton value="{! $Label.Search }"
                                             action="{! searchDoctors }"
-                                            reRender="inputPageBlockSection, resultsDiv, selectedDoctorsDiv, messages"
+                                            reRender="inputPageBlockSection, resultsDiv, messages"
                                             status="statusComp"/>
 
                         <apex:commandButton value="{! $Label.Clear }"
@@ -182,6 +182,10 @@
                                             immediate="true"/>
                     </apex:pageBlockButtons>
                 </apex:pageBlock>
+
+            </apex:form>
+
+            <apex:form id="resultsForm">
 
                 <apex:outputPanel id="resultsDiv">
 
@@ -221,6 +225,9 @@
                     </apex:pageBlockSection>
                 </apex:outputPanel>
 
+            </apex:form>
+
+            <apex:form id="selectedDoctorsForm">
 
                 <apex:outputPanel id="selectedDoctorsDiv">
 
