@@ -22,13 +22,11 @@ private class Hosp_SoapForDoctorsTest {
         String doctorsCity = 'City1';
         String doctorsCountry = 'PL';
 
-        Integer numberOfSpecificDoctorsInBase = 1;
-
         //when
         List<Hosp_DoctorWrapperForSoap> results = Hosp_SoapForDoctorsWebService.getDoctors(doctorsNames, doctorsFirstNames, doctorsCity, doctorsCountry);
 
         //then
-        System.assertEquals(numberOfSpecificDoctorsInBase, results.size());
+        System.assertEquals(1, results.size());
     }
 
     @isTest
@@ -39,13 +37,11 @@ private class Hosp_SoapForDoctorsTest {
         String doctorsCity = '';
         String doctorsCountry = '';
 
-        Integer numberOfSpecificDoctorsInBase = 0;
-
         //when
         List<Hosp_DoctorWrapperForSoap> results = Hosp_SoapForDoctorsWebService.getDoctors(doctorsNames, doctorsFirstNames, doctorsCity, doctorsCountry);
 
         //then
-        System.assertEquals(numberOfSpecificDoctorsInBase, results.size());
+        System.assertEquals(0, results.size());
     }
 
     @isTest
@@ -56,13 +52,11 @@ private class Hosp_SoapForDoctorsTest {
         String doctorsCity = '';
         String doctorsCountry = '';
 
-        Integer numberOfSpecificDoctorsInBase = 0;
-
         //when
         List<Hosp_DoctorWrapperForSoap> results = Hosp_SoapForDoctorsWebService.getDoctors(doctorsNames, doctorsFirstNames, doctorsCity, doctorsCountry);
 
         //then
-        System.assertEquals(numberOfSpecificDoctorsInBase, results.size());
+        System.assertEquals(0, results.size());
     }
 
     @isTest
@@ -74,13 +68,11 @@ private class Hosp_SoapForDoctorsTest {
             doctorsIds.add(d.Id);
         }
 
-        Integer numberOfDeletedDoctors = 2;
-
         //when
-        List<Doctor__c> results = Hosp_SoapForDoctorsWebService.deleteDoctors(doctorsIds);
+        List<Hosp_DoctorWrapperForSoap> results = Hosp_SoapForDoctorsWebService.deleteDoctors(doctorsIds);
 
         //then
-        System.assertEquals(numberOfDeletedDoctors, results.size());
+        System.assertEquals(2, results.size());
     }
 
     @isTest
@@ -92,13 +84,11 @@ private class Hosp_SoapForDoctorsTest {
             doctorsIds.add(d.Id);
         }
 
-        Integer numberOfDeletedDoctors = 0;
-
         //when
-        List<Doctor__c> results = Hosp_SoapForDoctorsWebService.deleteDoctors(doctorsIds);
+        List<Hosp_DoctorWrapperForSoap> results = Hosp_SoapForDoctorsWebService.deleteDoctors(doctorsIds);
 
         //then
-        System.assertEquals(numberOfDeletedDoctors, results.size());
+        System.assertEquals(0, results.size());
     }
 
     @isTest
@@ -109,9 +99,8 @@ private class Hosp_SoapForDoctorsTest {
         String lastNameAfterChange = 'TestDoctorName3';
         String firstNameAfterChange = 'TestDoctorFirstName3';
 
-        Doctor__c result;
-
         //when
+        Hosp_DoctorWrapperForSoap result;
         if(!doctors.isEmpty()) {
             result = Hosp_SoapForDoctorsWebService.upsertDoctor(doctors.get(0).Id, lastNameAfterChange, firstNameAfterChange, doctors.get(0).City__c, doctors.get(0).Country__c);
         }
@@ -128,17 +117,14 @@ private class Hosp_SoapForDoctorsTest {
         String lastNameAfterChange = 'TestDoctorName3';
         String firstNameAfterChange = 'TestDoctorFirstName3';
 
-        Integer numberOfDoctors = 0;
-
-        Doctor__c result;
-
         //when
+        Hosp_DoctorWrapperForSoap result;
         if(!doctors.isEmpty()) {
             result = Hosp_SoapForDoctorsWebService.upsertDoctor(doctors.get(0).Id, lastNameAfterChange, firstNameAfterChange, doctors.get(0).City__c, doctors.get(0).Country__c);
         }
 
         //then
-        System.assertEquals(numberOfDoctors, doctors.size());
+        System.assertEquals(0, doctors.size());
     }
 
     @isTest
@@ -150,13 +136,13 @@ private class Hosp_SoapForDoctorsTest {
         String country = 'PL';
 
         //when
-        Doctor__c result;
+        Hosp_DoctorWrapperForSoap result;
         if(String.isNotBlank(lastName) && String.isNotBlank(firstName)) {
             result = Hosp_SoapForDoctorsWebService.upsertDoctor('', lastName, firstName, city, country);
         }
 
         //then
-        System.assertNotEquals(null, result.Id);
+        System.assertNotEquals(null, result.doctorId);
     }
 
     @isTest
@@ -168,7 +154,7 @@ private class Hosp_SoapForDoctorsTest {
         String country = 'PL';
 
         //when
-        Doctor__c result;
+        Hosp_DoctorWrapperForSoap result;
         if(String.isNotBlank(lastName) && String.isNotBlank(firstName)) {
             result = Hosp_SoapForDoctorsWebService.upsertDoctor('', lastName, firstName, city, country);
         }

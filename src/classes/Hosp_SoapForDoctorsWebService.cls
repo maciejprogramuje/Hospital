@@ -14,7 +14,7 @@ global with sharing class Hosp_SoapForDoctorsWebService {
         return resultsDoctors;
     }
 
-    webService static Doctor__c upsertDoctor(String doctorId, String lastName, String firstName, String city, String country) {
+    webService static Hosp_DoctorWrapperForSoap upsertDoctor(String doctorId, String lastName, String firstName, String city, String country) {
         Doctor__c rawDoctor = new Doctor__c();
         if (String.isNotBlank(lastName)) {
             rawDoctor.Name = lastName;
@@ -30,17 +30,23 @@ global with sharing class Hosp_SoapForDoctorsWebService {
         }
 
         upsert rawDoctor;
-        return rawDoctor;
+
+        return new Hosp_DoctorWrapperForSoap(rawDoctor);
     }
 
-    webService static List<Doctor__c> deleteDoctors(List<String> doctorsIds) {
-        List<Doctor__c> doctorsToDelete = [SELECT Id FROM Doctor__c WHERE Id IN :doctorsIds];
+    webService static List<Hosp_DoctorWrapperForSoap> deleteDoctors(List<String> doctorsIds) {
+        List<Doctor__c> doctorsToDelete = [SELECT Id, Name, FirstName__c, Country__c, City__c FROM Doctor__c WHERE Id IN :doctorsIds];
+
+        List<Hosp_DoctorWrapperForSoap> resultsDoctors = new List<Hosp_DoctorWrapperForSoap>();
 
         if (!doctorsToDelete.isEmpty()) {
             delete doctorsToDelete;
-            return doctorsToDelete;
-        } else {
-            return new List<Doctor__c>();
+
+            for (Doctor__c rawDoctor : doctorsToDelete) {
+                resultsDoctors.add(new Hosp_DoctorWrapperForSoap(rawDoctor));
+            }
         }
+
+        return resultsDoctors;
     }
 }
