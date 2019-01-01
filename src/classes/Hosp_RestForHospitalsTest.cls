@@ -24,13 +24,17 @@ private class Hosp_RestForHospitalsTest {
         request.httpMethod = 'GET';
 
         request.addParameter('Name', 'TestHospitalName%');
+        request.addParameter('Country__c', 'PL');
+        request.addParameter('City__c', 'Warszawa');
+        request.addParameter('PostalCode__c', '03-738');
+        request.addParameter('Street__c', 'Kijowska');
 
         RestContext.request = request;
         RestContext.response = response;
 
         //when
         Test.startTest();
-        List<Hospital__c> results = Hosp_RestForHospitals.getHospitals();
+        List<HospitalWrapperForRest> results = Hosp_RestForHospitals.getHospitals();
         Test.stopTest();
 
         //then
@@ -46,13 +50,17 @@ private class Hosp_RestForHospitalsTest {
         request.httpMethod = 'GET';
 
         request.addParameter('Name', 'TestHospitalName1111');
+        request.addParameter('Country__c', 'PL');
+        request.addParameter('City__c', 'Warszawa');
+        request.addParameter('PostalCode__c', '03-738');
+        request.addParameter('Street__c', 'Kijowska');
 
         RestContext.request = request;
         RestContext.response = response;
 
         //when
         Test.startTest();
-        List<Hospital__c> results = Hosp_RestForHospitals.getHospitals();
+        List<HospitalWrapperForRest> results = Hosp_RestForHospitals.getHospitals();
         Test.stopTest();
 
         //then
@@ -74,19 +82,12 @@ private class Hosp_RestForHospitalsTest {
 
         //when
         Test.startTest();
-        List<Hospital__c> results = Hosp_RestForHospitals.getHospitals();
+        List<HospitalWrapperForRest> results = Hosp_RestForHospitals.getHospitals();
         Test.stopTest();
 
         //then
         System.assertEquals(0, results.size());
     }
-
-
-
-
-
-
-
 
     @isTest
     static void shouldUpsertHospital_Insert() {
@@ -111,7 +112,7 @@ private class Hosp_RestForHospitalsTest {
 
         //when
         Test.startTest();
-            List<String> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
+            List<HospitalWrapperForRest> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
         Test.stopTest();
 
         //then
@@ -121,12 +122,20 @@ private class Hosp_RestForHospitalsTest {
     @isTest
     static void shouldUpsertHospital_UpdateTrueHospitals() {
         //given
+        List<Hospital__c> rawHospitals = [SELECT Id,
+                Name,
+                City__c,
+                Country__c,
+                PostalCode__c,
+                Street__c
+            FROM Hospital__c
+            WHERE Name LIKE 'TestHospitalName%'];
+
         List<HospitalWrapperForRest> hospitals = new List<HospitalWrapperForRest>();
-
-
-        hospitals.addAll([SELECT Id, Name FROM Hospital__c WHERE Name LIKE 'TestHospitalName%']);
-
-        //todo - zmienić zawartośc name w hospitals
+        for(Hospital__c rawHospital : rawHospitals) {
+            rawHospital.Name = rawHospital.Name + '_Updated';
+            hospitals.add(new HospitalWrapperForRest(rawHospital));
+        }
 
         RestRequest request = new RestRequest();
         RestResponse response = new RestResponse();
@@ -138,40 +147,39 @@ private class Hosp_RestForHospitalsTest {
 
         //when
         Test.startTest();
-        List<String> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
+        List<HospitalWrapperForRest> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
         Test.stopTest();
 
         //then
-        System.assertEquals(2, results.size());
+        Boolean isUpdated = true;
+        for (HospitalWrapperForRest result : results) {
+            if(!result.Name.contains('_Updated')) {
+                isUpdated = false;
+            }
+        }
+        System.assertEquals(true, isUpdated);
     }
-
-
-
-
-
-
-
-
-
-
 
     @isTest
     static void shouldDeleteHospitals_TrueIds() {
         //given
         List<Hospital__c> hospitalsIds = [SELECT Id FROM Hospital__c WHERE Name LIKE 'TestHospitalName%'];
+        List<HospitalWrapperForRest> results = new List<HospitalWrapperForRest>();
 
-        RestRequest request = new RestRequest();
-        RestResponse response = new RestResponse();
-        request.requestURI = '/services/apexrest/Hospital__c/' + hospitalsIds[0].Id + ',' + hospitalsIds[1].Id;
-        request.httpMethod = 'DELETE';
+        if(!hospitalsIds.isEmpty()) {
+            RestRequest request = new RestRequest();
+            RestResponse response = new RestResponse();
+            request.requestURI = '/services/apexrest/Hospital__c/' + hospitalsIds[0].Id + ',' + hospitalsIds[1].Id;
+            request.httpMethod = 'DELETE';
 
-        RestContext.request = request;
-        RestContext.response = response;
+            RestContext.request = request;
+            RestContext.response = response;
 
-        //when
-        Test.startTest();
-            List<Hospital__c> results = Hosp_RestForHospitals.deleteHospitals();
-        Test.stopTest();
+            //when
+            Test.startTest();
+            results = Hosp_RestForHospitals.deleteHospitals();
+            Test.stopTest();
+        }
 
         //then
         System.assertEquals(2, results.size());
@@ -181,19 +189,22 @@ private class Hosp_RestForHospitalsTest {
     static void shouldDeleteHospitals_FakeIds() {
         //given
         List<Hospital__c> hospitalsIds = [SELECT Id FROM Hospital__c WHERE Name LIKE 'TestHospitalName1111'];
+        List<HospitalWrapperForRest> results = new List<HospitalWrapperForRest>();
 
-        RestRequest request = new RestRequest();
-        RestResponse response = new RestResponse();
-        request.requestURI = '/services/apexrest/Hospital__c/' + hospitalsIds[0].Id + ',' + hospitalsIds[1].Id;
-        request.httpMethod = 'DELETE';
+        if(!hospitalsIds.isEmpty()) {
+            RestRequest request = new RestRequest();
+            RestResponse response = new RestResponse();
+            request.requestURI = '/services/apexrest/Hospital__c/' + hospitalsIds[0].Id + ',' + hospitalsIds[1].Id;
+            request.httpMethod = 'DELETE';
 
-        RestContext.request = request;
-        RestContext.response = response;
+            RestContext.request = request;
+            RestContext.response = response;
 
-        //when
-        Test.startTest();
-        List<Hospital__c> results = Hosp_RestForHospitals.deleteHospitals();
-        Test.stopTest();
+            //when
+            Test.startTest();
+            results = Hosp_RestForHospitals.deleteHospitals();
+            Test.stopTest();
+        }
 
         //then
         System.assertEquals(0, results.size());
