@@ -42,7 +42,7 @@ private class Hosp_RestForHospitalsTest {
     }
 
     @isTest
-    static void shouldGetHospitals_HospitalsNotExist() {
+    static void shouldNotGetHospitals_HospitalsNotExist() {
         //given
         RestRequest request = new RestRequest();
         RestResponse response = new RestResponse();
@@ -68,7 +68,7 @@ private class Hosp_RestForHospitalsTest {
     }
 
     @isTest
-    static void shouldGetHospitals_WrongParams() {
+    static void shouldNotGetHospitals_WrongParams() {
         //given
         RestRequest request = new RestRequest();
         RestResponse response = new RestResponse();
@@ -186,7 +186,7 @@ private class Hosp_RestForHospitalsTest {
     }
 
     @isTest
-    static void shouldDeleteHospitals_FakeIds() {
+    static void shouldNotDeleteHospitals_FakeIds() {
         //given
         List<Hospital__c> hospitalsIds = [SELECT Id FROM Hospital__c WHERE Name LIKE 'TestHospitalName1111'];
         List<Hosp_HospitalWrapperForRest> results = new List<Hosp_HospitalWrapperForRest>();

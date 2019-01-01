@@ -1,66 +1,36 @@
 global with sharing class Hosp_SoapForDoctorsWebService {
 
-    webService static List<Doctor__c> getDoctors(String lastName, String firstName, String city, String country) {
+    webService static List<Hosp_DoctorWrapperForSoap> getDoctors(String lastName, String firstName, String city, String country) {
         String query = Hosp_Utils.generateQueryGetDoctorsForSoapGetDoctors(lastName, firstName, city, country);
 
+        List<Hosp_DoctorWrapperForSoap> resultsDoctors = new List<Hosp_DoctorWrapperForSoap>();
         if (String.isNotBlank(query)) {
-            return Database.query(query);
-        } else {
-            return new List<Doctor__c>();
+            List<Doctor__c> rawDoctors = Database.query(query);
+            for (Doctor__c rawDoctor : rawDoctors) {
+                resultsDoctors.add(new Hosp_DoctorWrapperForSoap(rawDoctor));
+            }
         }
+
+        return resultsDoctors;
     }
 
     webService static Doctor__c upsertDoctor(String doctorId, String lastName, String firstName, String city, String country) {
-        if (String.isNotBlank(doctorId)) {
-            List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Id = :doctorId];
-
-            if (String.isNotBlank(lastName)) {
-                doctors.get(0).Name = lastName;
-            }
-            if (String.isNotBlank(firstName)) {
-                doctors.get(0).FirstName__c = firstName;
-            }
-            if (String.isNotBlank(city)) {
-                doctors.get(0).City__c = city;
-            }
-            if (String.isNotBlank(country)) {
-                doctors.get(0).Country__c = country;
-            }
-
-            update doctors.get(0);
-            return doctors.get(0);
-
-        } else {
-            return insertDoctor(lastName, firstName, city, country);
+        Doctor__c rawDoctor = new Doctor__c();
+        if (String.isNotBlank(lastName)) {
+            rawDoctor.Name = lastName;
         }
-    }
-
-    private static Doctor__c insertDoctor(String lastName, String firstName, String city, String country) {
-        Doctor__c doc = createDoctor(lastName, firstName, city, country);
-
-        try {
-            insert doc;
-            return doc;
-        } catch (Exception e) {
-            System.debug(e);
-            return null;
-        }
-    }
-
-    private static Doctor__c createDoctor(String lastName, String firstName, String city, String country) {
-        Doctor__c doctor = new Doctor__c(Name = lastName);
-
         if (String.isNotBlank(firstName)) {
-            doctor.FirstName__c = firstName;
+            rawDoctor.FirstName__c = firstName;
         }
         if (String.isNotBlank(city)) {
-            doctor.City__c = city;
+            rawDoctor.City__c = city;
         }
         if (String.isNotBlank(country)) {
-            doctor.Country__c = country;
+            rawDoctor.Country__c = country;
         }
 
-        return doctor;
+        upsert rawDoctor;
+        return rawDoctor;
     }
 
     webService static List<Doctor__c> deleteDoctors(List<String> doctorsIds) {
