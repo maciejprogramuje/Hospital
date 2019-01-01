@@ -2,27 +2,27 @@
 global with sharing class Hosp_RestForHospitals {
 
     @HttpGet
-    global static List<HospitalWrapperForRest> getHospitals() {
+    global static List<Hosp_HospitalWrapperForRest> getHospitals() {
         Map<String, String> requestParams = RestContext.request.params;
 
         String query = generateQuery(requestParams);
         if (query == null) {
-            return new List<HospitalWrapperForRest>();
+            return new List<Hosp_HospitalWrapperForRest>();
         }
         List<Hospital__c> rawHospitals = Database.query(query);
 
-        List<HospitalWrapperForRest> hospitals = new List<HospitalWrapperForRest>();
+        List<Hosp_HospitalWrapperForRest> hospitals = new List<Hosp_HospitalWrapperForRest>();
         for(Hospital__c rawHospital : rawHospitals) {
-            hospitals.add(new HospitalWrapperForRest(rawHospital));
+            hospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 
         return hospitals;
     }
 
     @HttpPut
-    global static List<HospitalWrapperForRest> upsertHospitals(List<HospitalWrapperForRest> hospitals) {
+    global static List<Hosp_HospitalWrapperForRest> upsertHospitals(List<Hosp_HospitalWrapperForRest> hospitals) {
         List<Hospital__c> hospitalsList = new List<Hospital__c>();
-        for (HospitalWrapperForRest h : hospitals) {
+        for (Hosp_HospitalWrapperForRest h : hospitals) {
             hospitalsList.add(new Hospital__c(Id = h.hospitalId,
                     Name = h.name,
                     Country__c = h.country,
@@ -33,16 +33,16 @@ global with sharing class Hosp_RestForHospitals {
 
         upsert hospitalsList;
 
-        List<HospitalWrapperForRest> resultsHospitals = new List<HospitalWrapperForRest>();
+        List<Hosp_HospitalWrapperForRest> resultsHospitals = new List<Hosp_HospitalWrapperForRest>();
         for(Hospital__c rawHospital : hospitalsList) {
-            resultsHospitals.add(new HospitalWrapperForRest(rawHospital));
+            resultsHospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 
         return resultsHospitals;
     }
 
     @HttpDelete
-    global static List<HospitalWrapperForRest> deleteHospitals() {
+    global static List<Hosp_HospitalWrapperForRest> deleteHospitals() {
         RestRequest request = RestContext.request;
         String hospitalIds = request.requestURI.substring(request.requestURI.lastIndexOf('/') + 1);
 
@@ -59,9 +59,9 @@ global with sharing class Hosp_RestForHospitals {
 
         delete listToDel;
 
-        List<HospitalWrapperForRest> hospitals = new List<HospitalWrapperForRest>();
+        List<Hosp_HospitalWrapperForRest> hospitals = new List<Hosp_HospitalWrapperForRest>();
         for(Hospital__c rawHospital : listToDel) {
-            hospitals.add(new HospitalWrapperForRest(rawHospital));
+            hospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 
         return hospitals;

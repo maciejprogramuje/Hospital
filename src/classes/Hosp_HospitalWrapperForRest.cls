@@ -1,4 +1,4 @@
-global with sharing class HospitalWrapperForRest {
+global with sharing class Hosp_HospitalWrapperForRest {
     public String hospitalId { get; set; }
     public String name { get; set; }
     public String country { get; set; }
@@ -6,7 +6,7 @@ global with sharing class HospitalWrapperForRest {
     public String postalCode { get; set; }
     public String street { get; set; }
 
-    global HospitalWrapperForRest(Hospital__c hospital) {
+    global Hosp_HospitalWrapperForRest(Hospital__c hospital) {
         hospitalId = hospital.Id;
         name = hospital.Name;
         country = hospital.Country__c;

@@ -100,7 +100,11 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="HospitalWrapperForRest" />
+                            <option name="name" value="Hosp_DoctorWrapperForSoap" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalWrapperForRest" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>

@@ -34,7 +34,7 @@ private class Hosp_RestForHospitalsTest {
 
         //when
         Test.startTest();
-        List<HospitalWrapperForRest> results = Hosp_RestForHospitals.getHospitals();
+        List<Hosp_HospitalWrapperForRest> results = Hosp_RestForHospitals.getHospitals();
         Test.stopTest();
 
         //then
@@ -60,7 +60,7 @@ private class Hosp_RestForHospitalsTest {
 
         //when
         Test.startTest();
-        List<HospitalWrapperForRest> results = Hosp_RestForHospitals.getHospitals();
+        List<Hosp_HospitalWrapperForRest> results = Hosp_RestForHospitals.getHospitals();
         Test.stopTest();
 
         //then
@@ -82,7 +82,7 @@ private class Hosp_RestForHospitalsTest {
 
         //when
         Test.startTest();
-        List<HospitalWrapperForRest> results = Hosp_RestForHospitals.getHospitals();
+        List<Hosp_HospitalWrapperForRest> results = Hosp_RestForHospitals.getHospitals();
         Test.stopTest();
 
         //then
@@ -92,10 +92,10 @@ private class Hosp_RestForHospitalsTest {
     @isTest
     static void shouldUpsertHospital_Insert() {
         //given
-        List<HospitalWrapperForRest> hospitals = new List<HospitalWrapperForRest>();
+        List<Hosp_HospitalWrapperForRest> hospitals = new List<Hosp_HospitalWrapperForRest>();
 
         for (Integer i = 3; i <= 4; i++) {
-            hospitals.add(new HospitalWrapperForRest(new Hospital__c(Name = 'TestHospitalName' + i,
+            hospitals.add(new Hosp_HospitalWrapperForRest(new Hospital__c(Name = 'TestHospitalName' + i,
                     Country__c = 'PL',
                     City__c = 'Warszawa',
                     PostalCode__c = '03-738',
@@ -112,7 +112,7 @@ private class Hosp_RestForHospitalsTest {
 
         //when
         Test.startTest();
-            List<HospitalWrapperForRest> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
+            List<Hosp_HospitalWrapperForRest> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
         Test.stopTest();
 
         //then
@@ -131,10 +131,10 @@ private class Hosp_RestForHospitalsTest {
             FROM Hospital__c
             WHERE Name LIKE 'TestHospitalName%'];
 
-        List<HospitalWrapperForRest> hospitals = new List<HospitalWrapperForRest>();
+        List<Hosp_HospitalWrapperForRest> hospitals = new List<Hosp_HospitalWrapperForRest>();
         for(Hospital__c rawHospital : rawHospitals) {
             rawHospital.Name = rawHospital.Name + '_Updated';
-            hospitals.add(new HospitalWrapperForRest(rawHospital));
+            hospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 
         RestRequest request = new RestRequest();
@@ -147,12 +147,12 @@ private class Hosp_RestForHospitalsTest {
 
         //when
         Test.startTest();
-        List<HospitalWrapperForRest> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
+        List<Hosp_HospitalWrapperForRest> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
         Test.stopTest();
 
         //then
         Boolean isUpdated = true;
-        for (HospitalWrapperForRest result : results) {
+        for (Hosp_HospitalWrapperForRest result : results) {
             if(!result.Name.contains('_Updated')) {
                 isUpdated = false;
             }
@@ -164,7 +164,7 @@ private class Hosp_RestForHospitalsTest {
     static void shouldDeleteHospitals_TrueIds() {
         //given
         List<Hospital__c> hospitalsIds = [SELECT Id FROM Hospital__c WHERE Name LIKE 'TestHospitalName%'];
-        List<HospitalWrapperForRest> results = new List<HospitalWrapperForRest>();
+        List<Hosp_HospitalWrapperForRest> results = new List<Hosp_HospitalWrapperForRest>();
 
         if(!hospitalsIds.isEmpty()) {
             RestRequest request = new RestRequest();
@@ -189,7 +189,7 @@ private class Hosp_RestForHospitalsTest {
     static void shouldDeleteHospitals_FakeIds() {
         //given
         List<Hospital__c> hospitalsIds = [SELECT Id FROM Hospital__c WHERE Name LIKE 'TestHospitalName1111'];
-        List<HospitalWrapperForRest> results = new List<HospitalWrapperForRest>();
+        List<Hosp_HospitalWrapperForRest> results = new List<Hosp_HospitalWrapperForRest>();
 
         if(!hospitalsIds.isEmpty()) {
             RestRequest request = new RestRequest();
