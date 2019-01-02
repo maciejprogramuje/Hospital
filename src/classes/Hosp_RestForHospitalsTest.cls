@@ -112,7 +112,7 @@ private class Hosp_RestForHospitalsTest {
 
         //when
         Test.startTest();
-            List<Hosp_HospitalWrapperForRest> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
+        List<Hosp_HospitalWrapperForRest> results = Hosp_RestForHospitals.upsertHospitals(hospitals);
         Test.stopTest();
 
         //then

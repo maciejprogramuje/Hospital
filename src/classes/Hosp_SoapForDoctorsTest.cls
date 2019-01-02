@@ -80,8 +80,8 @@ private class Hosp_SoapForDoctorsTest {
         //given
         List<Doctor__c> doctors = [SELECT Id, Name, FirstName__c, Country__c, City__c FROM Doctor__c WHERE Name LIKE 'TestDoctorName3'];
         List<String> doctorsIds = new List<String>();
-        for (Doctor__c d : doctors) {
-            doctorsIds.add(d.Id);
+        for (Doctor__c doc : doctors) {
+            doctorsIds.add(doc.Id);
         }
 
         //when

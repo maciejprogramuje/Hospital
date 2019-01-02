@@ -58,7 +58,11 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     }
 
     public void dismiss() {
-        Contract__c contract = [SELECT Id, StartDate__c, EndDate__c FROM Contract__c WHERE Id = :contractIdCurrent];
+        Contract__c contract = [SELECT Id,
+                StartDate__c,
+                EndDate__c
+            FROM Contract__c
+            WHERE Id = :contractIdCurrent];
 
         if (contract.StartDate__c > Date.today()) {
             delete contract;
@@ -71,20 +75,19 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         getContracts();
     }
 
-
     public void searchDoctors() {
         doctorsFoundWrapper.clear();
 
         List<Doctor__c> doctorsFound = Database.query(Hosp_Utils.generateQuerySearchForDoctorsInHospitalViewModal(doctorFromSearchForm));
 
-        for (Doctor__c d : doctorsFound) {
-            doctorsFoundWrapper.add(new DoctorsFoundWrapper(d, isNotAlreadyInContractsToImport(d.Id)));
+        for (Doctor__c doc : doctorsFound) {
+            doctorsFoundWrapper.add(new DoctorsFoundWrapper(doc, isNotAlreadyInContractsToImport(doc.Id)));
         }
     }
 
     private Boolean isNotAlreadyInContractsToImport(String selDocIdResults) {
-        for (ContractsWrapper c : contractsToImport) {
-            if (c.contractInWrapper.Doctor__c == selDocIdResults) {
+        for (ContractsWrapper contr : contractsToImport) {
+            if (contr.contractInWrapper.Doctor__c == selDocIdResults) {
                 return true;
             }
         }
@@ -93,16 +96,16 @@ public with sharing class Hosp_HospitalViewControllerExtension {
 
 
     public void changeSelectionInDoctorsFoundWrapper() {
-        for (DoctorsFoundWrapper d : doctorsFoundWrapper) {
-            if (selectedDoctorIdInResults == d.doctorInWrapper.Id) {
-                if (d.isSelectedFoundWrapper == true) {
-                    d.isSelectedFoundWrapper = false;
+        for (DoctorsFoundWrapper doc : doctorsFoundWrapper) {
+            if (selectedDoctorIdInResults == doc.doctorInWrapper.Id) {
+                if (doc.isSelectedFoundWrapper == true) {
+                    doc.isSelectedFoundWrapper = false;
                 } else {
-                    d.isSelectedFoundWrapper = true;
+                    doc.isSelectedFoundWrapper = true;
 
-                    Contract__c c = new Contract__c(Hospital__c = hospitalCurrent.Id, Doctor__c = selectedDoctorIdInResults);
+                    Contract__c contr = new Contract__c(Hospital__c = hospitalCurrent.Id, Doctor__c = selectedDoctorIdInResults);
 
-                    contractsToImport.add(new ContractsWrapper(c, d.doctorInWrapper.FirstLastName__c, d.doctorInWrapper.Country__c));
+                    contractsToImport.add(new ContractsWrapper(contr, doc.doctorInWrapper.FirstLastName__c, doc.doctorInWrapper.Country__c));
                 }
                 break;
             }
@@ -173,17 +176,11 @@ public with sharing class Hosp_HospitalViewControllerExtension {
                 break;
             }
         }
-
-
-
-
-
     }
 
     public void saveSelectedDoctor() {
         for (Integer i = 0; i < contractsToImport.size(); i++) {
             if (editingDoctorId == contractsToImport.get(i).contractInWrapper.Doctor__c) {
-
                 if (contractsToImport.get(i).tempContract.StartDate__c <= contractsToImport.get(i).tempContract.EndDate__c) {
                     areAllButtonDisabled = false;
 
@@ -238,8 +235,8 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public Doctor__c doctorInWrapper { get; set; }
         public Boolean isSelectedFoundWrapper { get; set; }
 
-        public doctorsFoundWrapper(Doctor__c d, Boolean isOnImportList) {
-            doctorInWrapper = d;
+        public doctorsFoundWrapper(Doctor__c doc, Boolean isOnImportList) {
+            doctorInWrapper = doc;
 
             isSelectedFoundWrapper = isOnImportList;
         }
@@ -253,8 +250,8 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         public Boolean isEditingContractsWrapper { get; set; }
         public String statusContractsWrapper { get; set; }
 
-        public ContractsWrapper(Contract__c c, String doctorName, String doctorCountry) {
-            contractInWrapper = c;
+        public ContractsWrapper(Contract__c contr, String doctorName, String doctorCountry) {
+            contractInWrapper = contr;
             tempContract = new Contract__c();
             this.doctorName = doctorName;
             this.doctorCountry = doctorCountry;

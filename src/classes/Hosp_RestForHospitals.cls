@@ -22,13 +22,13 @@ global with sharing class Hosp_RestForHospitals {
     @HttpPut
     global static List<Hosp_HospitalWrapperForRest> upsertHospitals(List<Hosp_HospitalWrapperForRest> hospitals) {
         List<Hospital__c> hospitalsList = new List<Hospital__c>();
-        for (Hosp_HospitalWrapperForRest h : hospitals) {
-            hospitalsList.add(new Hospital__c(Id = h.hospitalId,
-                    Name = h.name,
-                    Country__c = h.country,
-                    City__c = h.city,
-                    PostalCode__c = h.postalCode,
-                    Street__c = h.street));
+        for (Hosp_HospitalWrapperForRest hosp : hospitals) {
+            hospitalsList.add(new Hospital__c(Id = hosp.hospitalId,
+                    Name = hosp.name,
+                    Country__c = hosp.country,
+                    City__c = hosp.city,
+                    PostalCode__c = hosp.postalCode,
+                    Street__c = hosp.street));
         }
 
         upsert hospitalsList;

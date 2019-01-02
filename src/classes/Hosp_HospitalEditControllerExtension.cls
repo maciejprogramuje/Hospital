@@ -31,8 +31,8 @@ public with sharing class Hosp_HospitalEditControllerExtension {
 
     public List<SelectOption> getMasterUnits() {
         List<SelectOption> options = new List<SelectOption>();
-        for(Hospital__c h : [SELECT Id, Name FROM Hospital__c WHERE Id <> :hospitalIdCurrent]) {
-            options.add(new SelectOption(h.Id, h.Name));
+        for(Hospital__c hosp : [SELECT Id, Name FROM Hospital__c WHERE Id <> :hospitalIdCurrent]) {
+            options.add(new SelectOption(hosp.Id, hosp.Name));
         }
         options.add(new SelectOption('', Label.None_Option));
         options.sort();
