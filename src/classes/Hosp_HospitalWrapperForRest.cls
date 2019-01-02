@@ -1,10 +1,10 @@
 global with sharing class Hosp_HospitalWrapperForRest {
-    public String hospitalId { get; set; }
-    public String name { get; set; }
-    public String country { get; set; }
-    public String city { get; set; }
-    public String postalCode { get; set; }
-    public String street { get; set; }
+    webService String hospitalId { get; set; }
+    webService String name { get; set; }
+    webService String country { get; set; }
+    webService String city { get; set; }
+    webService String postalCode { get; set; }
+    webService String street { get; set; }
 
     global Hosp_HospitalWrapperForRest(Hospital__c hospital) {
         hospitalId = hospital.Id;

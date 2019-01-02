@@ -16,6 +16,9 @@ global with sharing class Hosp_SoapForDoctorsWebService {
 
     webService static Hosp_DoctorWrapperForSoap upsertDoctor(String doctorId, String lastName, String firstName, String city, String country) {
         Doctor__c rawDoctor = new Doctor__c();
+        if (String.isNotBlank(doctorId)) {
+            rawDoctor.Id = doctorId;
+        }
         if (String.isNotBlank(lastName)) {
             rawDoctor.Name = lastName;
         }
@@ -49,4 +52,5 @@ global with sharing class Hosp_SoapForDoctorsWebService {
 
         return resultsDoctors;
     }
+
 }
