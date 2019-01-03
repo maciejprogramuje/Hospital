@@ -1,6 +1,63 @@
-<!--
- - Created by BRITENET on 03.01.2019.
- -->
+<apex:page id="Hosp_PiotrDoctors" controller="Hosp_PiotrDoctorsController"
+           showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false"
+           docType="html-5.0">
 
-<apex:page id="Hosp_PiotrDoctors" controller="Hosp_PiotrDoctorsController">
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS275, 'styles/salesforce-lightning-design-system.css')}"/>
+
+
+    <div class="slds-page-header">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span class="slds-page-header__title slds-truncate">{! $Label.Search }</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div aria-labelledby="searchDoctorsForm">
+        <fieldset class="slds-box slds-theme--default slds-container--small">
+            <legend id="searchDoctorsForm" class="slds-text-heading--medium slds-p-vertical--medium">Search Doctors
+            </legend>
+            <form class="slds-form--stacked">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <apex:pageBlock id="mainPageBlock">
+                            <apex:pageBlockSection id="headerPageBlockSection">
+                                <apex:form>
+                                    <apex:inputField value="{! doctorToSearch.Name }"
+                                                     label="{! $ObjectType.Doctor__c.fields.Name.label }"
+                                                     styleClass="slds-input slds-m-bottom_x-small"/>
+
+                                    <apex:inputField value="{! doctorToSearch.FirstName__c }"
+                                                     styleClass="slds-input slds-m-bottom_x-small"/>
+
+                                    <apex:inputField value="{! doctorToSearch.City__c }"
+                                                     styleClass="slds-input slds-m-bottom_x-small"/>
+
+                                    <apex:inputField value="{! doctorToSearch.Country__c }"
+                                                     styleClass="slds-input slds-m-bottom_x-small"/>
+
+                                    <apex:commandbutton value="Search"
+                                                        action="{! searchDoctors }"
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
+                                    </apex:commandbutton>
+                                </apex:form>
+                            </apex:pageBlockSection>
+                        </apex:pageBlock>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+
+
 </apex:page>
