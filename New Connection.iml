@@ -44,6 +44,9 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_ContractsComponentController" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_DoctorEditControllerExtension" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
@@ -76,6 +79,9 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_HireDoctorController" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_HospitalEditControllerExtension" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
@@ -89,6 +95,10 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_HospitalWrapperForRest" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_PiotrDoctorsController" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -117,6 +127,14 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_partnerSoapSforceCom" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_soapSforceComSchemasClassHospitalD" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_soapSforceComSchemasClassHospitalDW" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -250,6 +268,10 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_HospitalView" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_PiotrDoctors" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>

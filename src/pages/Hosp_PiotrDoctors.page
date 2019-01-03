@@ -1,0 +1,6 @@
+<!--
+ - Created by BRITENET on 03.01.2019.
+ -->
+
+<apex:page id="Hosp_PiotrDoctors" controller="Hosp_PiotrDoctorsController">
+</apex:page>
