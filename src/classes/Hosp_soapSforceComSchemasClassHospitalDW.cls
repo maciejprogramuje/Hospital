@@ -2,11 +2,11 @@
 
 public class Hosp_soapSforceComSchemasClassHospitalDW {
     public class Hospital_DoctorWrapperForSOAP {
-        public String webServiceDoctorCity;
-        public String webServiceDoctorCountry;
-        public String webServiceDoctorFirstName;
-        public String webServiceDoctorId;
-        public String webServiceDoctorLastName;
+        public String webServiceDoctorCity { get; set; }
+        public String webServiceDoctorCountry { get; set; }
+        public String webServiceDoctorFirstName { get; set; }
+        public String webServiceDoctorId { get; set; }
+        public String webServiceDoctorLastName { get; set; }
         private String[] webServiceDoctorCity_type_info = new String[]{'webServiceDoctorCity','http://soap.sforce.com/schemas/class/Hospital_DoctorWrapperForSOAP',null,'0','1','true'};
         private String[] webServiceDoctorCountry_type_info = new String[]{'webServiceDoctorCountry','http://soap.sforce.com/schemas/class/Hospital_DoctorWrapperForSOAP',null,'0','1','true'};
         private String[] webServiceDoctorFirstName_type_info = new String[]{'webServiceDoctorFirstName','http://soap.sforce.com/schemas/class/Hospital_DoctorWrapperForSOAP',null,'0','1','true'};

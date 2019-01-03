@@ -5,7 +5,7 @@
     <apex:stylesheet value="{!URLFOR($Resource.SLDS275, 'styles/salesforce-lightning-design-system.css')}"/>
 
 
-    <div class="slds-page-header">
+    <div class="slds-page-header slds-m-around_medium">
         <div class="slds-page-header__row">
             <div class="slds-page-header__col-title">
                 <div class="slds-media">
@@ -24,7 +24,7 @@
     </div>
 
     <div aria-labelledby="searchDoctorsForm">
-        <fieldset class="slds-box slds-theme--default slds-container--small">
+        <fieldset class="slds-box slds-theme--default slds-container--small slds-m-around_medium">
             <legend id="searchDoctorsForm" class="slds-text-heading--medium slds-p-vertical--medium">Search Doctors
             </legend>
             <form class="slds-form--stacked">
@@ -34,16 +34,19 @@
                             <apex:pageBlockSection id="headerPageBlockSection">
                                 <apex:form>
                                     <apex:inputField value="{! doctorToSearch.Name }"
-                                                     label="{! $ObjectType.Doctor__c.fields.Name.label }"
+                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
                                     <apex:inputField value="{! doctorToSearch.FirstName__c }"
+                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
                                     <apex:inputField value="{! doctorToSearch.City__c }"
+                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.City__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
                                     <apex:inputField value="{! doctorToSearch.Country__c }"
+                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
                                     <apex:commandbutton value="Search"
@@ -59,5 +62,62 @@
         </fieldset>
     </div>
 
+    <div id="accountList" class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-around_medium">
+        <apex:pageBlock id="doctorsResultsListPageBlock">
+            <apex:form>
+                <apex:pageBlockSection id="doctorsResultsListPageBlockSection"
+                                       columns="1">
+
+                    <apex:pageBlockTable value="{! doctorsResults }"
+                                         var="doc"
+                                         columns="5">
+
+                        <apex:column headerValue="{! $Label.Actions }">
+
+                            <apex:commandLink action="{! URLFOR($Action.Doctor__c.Edit, doc.webServiceDoctorId) }"
+                                              target="_blank"
+                                              style="text-decoration:none">
+
+                                <apex:commandButton value="{! $Label.Edit }"
+                                                    styleClass="slds-button slds-button_neutral"/>
+                            </apex:commandLink>
+
+                            <apex:commandLink action="/{! doc.webServiceDoctorId }"
+                                              target="_blank"
+                                              style="text-decoration:none">
+
+                                <apex:commandButton value="{! $Label.View_Action }"
+                                                    styleClass="slds-button slds-button_neutral"/>
+                            </apex:commandLink>
+                        </apex:column>
+
+                        <apex:column value="{! doc.webServiceDoctorLastName }"
+                                     headerValue="{! $ObjectType.Doctor__c.fields.Name.label }"
+                                     styleClass="slds-truncate"/>
+
+                        <apex:column value="{! doc.webServiceDoctorFirstName }"
+                                     headerValue="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
+                                     styleClass="slds-truncate"/>
+
+                        <apex:column value="{! doc.webServiceDoctorCity}"
+                                     headerValue="{! $ObjectType.Doctor__c.fields.City__c.label }"
+                                     styleClass="slds-truncate"/>
+
+                        <apex:column value="{! doc.webServiceDoctorCountry}"
+                                     headerValue="{! $ObjectType.Doctor__c.fields.Country__c.label }"
+                                     styleClass="slds-truncate"/>
+
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:form>
+        </apex:pageBlock>
+    </div>
+
+
+    <footer role="contentinfo" class="slds-p-around--large slds-m-around_medium">
+        <div class="slds-grid slds-grid--align-spread">
+            <p class="slds-col">&copy; Maciej Szymczyk</p>
+        </div>
+    </footer>
 
 </apex:page>
