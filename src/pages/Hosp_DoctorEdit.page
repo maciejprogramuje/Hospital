@@ -1,11 +1,11 @@
 <apex:page id="Hosp_DoctorEdit" standardController="Doctor__c" extensions="Hosp_DoctorEditControllerExtension">
 
-    <apex:outputPanel>
-        <apex:pageMessages/>
+    <apex:outputPanel >
+        <apex:pageMessages />
     </apex:outputPanel>
 
 
-    <apex:form>
+    <apex:form >
 
         <apex:pageBlock title="{! $Label.Edit_Doctor }"
                         mode="edit">

@@ -430,6 +430,6 @@
          </script>
     </apex:outputPanel>
 
-    <c:Hosp_StatusComponent/>
+    <c:Hosp_StatusComponent />
 
 </apex:page>

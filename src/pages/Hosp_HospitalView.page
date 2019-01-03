@@ -32,9 +32,9 @@
                     mode="detail"
                     id="mainPageBlock">
 
-        <apex:outputPanel>
+        <apex:outputPanel >
 
-            <apex:pageMessages/>
+            <apex:pageMessages />
         </apex:outputPanel>
 
 
@@ -78,7 +78,7 @@
 
         <center>
 
-            <apex:form>
+            <apex:form >
 
                 <apex:commandButton action="{! edit }"
                                     value="{! $Label.Edit }"/>
@@ -108,7 +108,7 @@
 
                 <apex:column headerValue="{! $Label.Actions }">
 
-                    <apex:form>
+                    <apex:form >
 
                         <apex:commandLink action="{! dismiss }"
                                           reRender="contracts_list_main_block"
@@ -370,7 +370,7 @@
         </apex:pageBlock>
     </div>
 
-    <c:Hosp_StatusComponent/>
+    <c:Hosp_StatusComponent />
 
     <script>
         j$ = jQuery.noConflict();

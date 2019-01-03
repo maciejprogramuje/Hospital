@@ -30,7 +30,7 @@ private class Hosp_RestForHospitalsTest {
         request.addParameter('Street__c', 'Kijowska');
 
         RestContext.request = request;
-        RestContext.response = response;
+        //RestContext.response = response;
 
         //when
         Test.startTest();

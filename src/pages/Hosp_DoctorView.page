@@ -66,9 +66,9 @@
 
                         <apex:outputText value="{! $ObjectType.Doctor__c.fields.Phone__c.Label }"/>
 
-                        <apex:form>
+                        <apex:form >
 
-                            <apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
 
                                 <apex:outputField id="copytext"
                                                   value="{! Doctor__c.Phone__c }"/>
@@ -311,7 +311,7 @@
         </apex:pageBlock>
     </div>
 
-    <c:Hosp_StatusComponent/>
+    <c:Hosp_StatusComponent />
 
     <script>
         function checkDates(startDate, endDate) {

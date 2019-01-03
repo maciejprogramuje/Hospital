@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -73,6 +73,17 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Hosp_Cont_Full_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Doctor__r.FirstLastName__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Full Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Hospital__c</fullName>
         <externalId>false</externalId>
         <label>Hospital</label>
@@ -118,7 +129,6 @@
         <customTabListAdditionalFields>Hospital__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>StartDate__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>EndDate__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields xsi:nil="true"/>
         <lookupDialogsAdditionalFields>Doctor__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Hospital__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>StartDate__c</lookupDialogsAdditionalFields>
@@ -138,6 +148,15 @@
         <searchResultsAdditionalFields>EndDate__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>No_Contract_In_Past</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ StartDate__c &lt;  TODAY(),
+ EndDate__c &lt; TODAY()
+)</errorConditionFormula>
+        <errorMessage>Contract in past not allowed</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>StartDateBeforeEndDate</fullName>
         <active>true</active>

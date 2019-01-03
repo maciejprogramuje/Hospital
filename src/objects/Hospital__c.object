@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -138,23 +138,18 @@
     </nameField>
     <pluralLabel>Hospitals</pluralLabel>
     <searchLayouts>
-        <customTabListAdditionalFields xsi:nil="true"/>
         <customTabListAdditionalFields>City__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Country__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>WWW__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields xsi:nil="true"/>
         <lookupDialogsAdditionalFields>City__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Country__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>WWW__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields xsi:nil="true"/>
         <lookupPhoneDialogsAdditionalFields>City__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>Country__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>WWW__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields xsi:nil="true"/>
         <searchFilterFields>City__c</searchFilterFields>
         <searchFilterFields>Country__c</searchFilterFields>
         <searchFilterFields>WWW__c</searchFilterFields>
-        <searchResultsAdditionalFields xsi:nil="true"/>
         <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Country__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>WWW__c</searchResultsAdditionalFields>

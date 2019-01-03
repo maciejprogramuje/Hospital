@@ -17,7 +17,7 @@
                                 contentType="{! contentType }"/>
             </apex:pageBlockSection>
 
-            <apex:outputPanel>
+            <apex:outputPanel >
 
                 <div style="text-align: center;">
 
@@ -113,6 +113,6 @@
         </apex:pageBlock>
     </apex:form>
 
-    <c:Hosp_StatusComponent/>
+    <c:Hosp_StatusComponent />
 
 </apex:page>

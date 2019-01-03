@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -149,22 +149,18 @@
     </nameField>
     <pluralLabel>Doctors</pluralLabel>
     <searchLayouts>
-        <customTabListAdditionalFields xsi:nil="true"/>
         <customTabListAdditionalFields>FirstName__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>City__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Country__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Phone__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields xsi:nil="true"/>
         <lookupDialogsAdditionalFields>FirstName__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>City__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Country__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Phone__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields xsi:nil="true"/>
         <lookupPhoneDialogsAdditionalFields>FirstName__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>City__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>Country__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>Phone__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields xsi:nil="true"/>
         <searchFilterFields>FirstName__c</searchFilterFields>
         <searchFilterFields>City__c</searchFilterFields>
         <searchFilterFields>Country__c</searchFilterFields>

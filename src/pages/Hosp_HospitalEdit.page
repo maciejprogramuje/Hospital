@@ -1,7 +1,7 @@
 <apex:page id="Hosp_HospitalEdit" standardController="Hospital__c" extensions="Hosp_HospitalEditControllerExtension">
     <apex:form >
 
-        <apex:outputPanel>
+        <apex:outputPanel >
 
             <apex:pageMessages />
         </apex:outputPanel>
