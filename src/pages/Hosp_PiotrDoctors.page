@@ -1,123 +1,222 @@
-<apex:page id="Hosp_PiotrDoctors" controller="Hosp_PiotrDoctorsController"
-           showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false"
-           docType="html-5.0">
+<apex:page id="Hosp_PiotrDoctors" controller="Hosp_PiotrDoctorsController">
 
-    <apex:stylesheet value="{!URLFOR($Resource.SLDS275, 'styles/salesforce-lightning-design-system.css')}"/>
+    <head>
+        <apex:slds />
+    </head>
 
 
-    <div class="slds-page-header slds-m-around_medium">
-        <div class="slds-page-header__row">
-            <div class="slds-page-header__col-title">
-                <div class="slds-media">
-                    <div class="slds-media__body">
-                        <div class="slds-page-header__name">
-                            <div class="slds-page-header__name-title">
-                                <h1>
-                                    <span class="slds-page-header__title slds-truncate">{! $Label.Search }</span>
-                                </h1>
+    <div class="slds-scope">
+
+        <div class="slds-page-header slds-m-around_medium">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate">{! $Label.Search }</span>
+                                    </h1>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div aria-labelledby="searchDoctorsForm">
-        <fieldset class="slds-box slds-theme--default slds-container--small slds-m-around_medium">
-            <legend id="searchDoctorsForm" class="slds-text-heading--medium slds-p-vertical--medium">Search Doctors
-            </legend>
-            <form class="slds-form--stacked">
-                <div class="slds-form-element">
-                    <div class="slds-form-element__control">
-                        <apex:pageBlock id="mainPageBlock">
-                            <apex:pageBlockSection id="headerPageBlockSection">
-                                <apex:form>
-                                    <apex:inputField value="{! doctorToSearch.Name }"
-                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
+        <div aria-labelledby="searchDoctorsForm">
+            <fieldset class="slds-box slds-theme--default slds-container--small slds-m-around_medium">
+                <legend id="searchDoctorsForm" class="slds-text-heading--medium slds-p-vertical--medium">Search Doctors
+                </legend>
+                <form class="slds-form--stacked">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <apex:form>
+                                <apex:inputField value="{! doctorToSearch.Name }"
+                                                 html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
+                                                 styleClass="slds-input slds-m-bottom_x-small"/>
 
-                                    <apex:inputField value="{! doctorToSearch.FirstName__c }"
-                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
+                                <apex:inputField value="{! doctorToSearch.FirstName__c }"
+                                                 html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
+                                                 styleClass="slds-input slds-m-bottom_x-small"/>
 
-                                    <apex:inputField value="{! doctorToSearch.City__c }"
-                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.City__c.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
+                                <apex:inputField value="{! doctorToSearch.City__c }"
+                                                 html-placeholder="{! $ObjectType.Doctor__c.fields.City__c.label }"
+                                                 styleClass="slds-input slds-m-bottom_x-small"/>
 
-                                    <apex:inputField value="{! doctorToSearch.Country__c }"
-                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
+                                <apex:inputField value="{! doctorToSearch.Country__c }"
+                                                 html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
+                                                 styleClass="slds-input slds-m-bottom_x-small"/>
 
-                                    <apex:commandbutton value="Search"
-                                                        action="{! searchDoctors }"
-                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
-                                    </apex:commandbutton>
-                                </apex:form>
-                            </apex:pageBlockSection>
-                        </apex:pageBlock>
+                                <apex:commandbutton value="Search"
+                                                    action="{! searchDoctors }"
+                                                    styleClass="slds-button slds-button--brand slds-m-top--medium"
+                                                    reRender="searchResultTable">
+                                </apex:commandbutton>
+
+                                <apex:commandbutton value="New"
+                                                    action="{! upsertDoctors }"
+                                                    styleClass="slds-button slds-button--brand slds-m-top--medium">
+                                </apex:commandbutton>
+                            </apex:form>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </fieldset>
-    </div>
-
-    <div id="accountList" class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-around_medium">
-        <apex:pageBlock id="doctorsResultsListPageBlock">
-            <apex:form>
-                <apex:pageBlockSection id="doctorsResultsListPageBlockSection"
-                                       columns="1">
-
-                    <apex:pageBlockTable value="{! doctorsResults }"
-                                         var="doc"
-                                         columns="5">
-
-                        <apex:column headerValue="{! $Label.Actions }">
-
-                            <apex:commandLink action="{! URLFOR($Action.Doctor__c.Edit, doc.webServiceDoctorId) }"
-                                              target="_blank"
-                                              style="text-decoration:none">
-
-                                <apex:commandButton value="{! $Label.Edit }"
-                                                    styleClass="slds-button slds-button_neutral"/>
-                            </apex:commandLink>
-
-                            <apex:commandLink action="/{! doc.webServiceDoctorId }"
-                                              target="_blank"
-                                              style="text-decoration:none">
-
-                                <apex:commandButton value="{! $Label.View_Action }"
-                                                    styleClass="slds-button slds-button_neutral"/>
-                            </apex:commandLink>
-                        </apex:column>
-
-                        <apex:column value="{! doc.webServiceDoctorLastName }"
-                                     headerValue="{! $ObjectType.Doctor__c.fields.Name.label }"
-                                     styleClass="slds-truncate"/>
-
-                        <apex:column value="{! doc.webServiceDoctorFirstName }"
-                                     headerValue="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
-                                     styleClass="slds-truncate"/>
-
-                        <apex:column value="{! doc.webServiceDoctorCity}"
-                                     headerValue="{! $ObjectType.Doctor__c.fields.City__c.label }"
-                                     styleClass="slds-truncate"/>
-
-                        <apex:column value="{! doc.webServiceDoctorCountry}"
-                                     headerValue="{! $ObjectType.Doctor__c.fields.Country__c.label }"
-                                     styleClass="slds-truncate"/>
-
-                    </apex:pageBlockTable>
-                </apex:pageBlockSection>
-            </apex:form>
-        </apex:pageBlock>
-    </div>
-
-
-    <footer role="contentinfo" class="slds-p-around--large slds-m-around_medium">
-        <div class="slds-grid slds-grid--align-spread">
-            <p class="slds-col">&copy; Maciej Szymczyk</p>
+                </form>
+            </fieldset>
         </div>
-    </footer>
+
+        <apex:outputPanel id="searchResultTable">
+            <table id="doctorsResultsListPageBlock" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate" title="Actions">Actions</div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{! $ObjectType.Doctor__c.fields.Name.label }">{! $ObjectType.Doctor__c.fields.Name.label }</div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{! $ObjectType.Doctor__c.fields.FirstName__c.label }">{! $ObjectType.Doctor__c.fields.FirstName__c.label }</div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{! $ObjectType.Doctor__c.fields.City__c.label }">{! $ObjectType.Doctor__c.fields.City__c.label }</div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{! $ObjectType.Doctor__c.fields.Country__c.label }">{! $ObjectType.Doctor__c.fields.Country__c.label }</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <apex:repeat value="{! doctorsResults }" var="doc">
+                    <tr class="slds-hint-parent">
+                        <td data-label="Account Name">
+                            <div class="slds-truncate">
+                                <apex:form>
+                                    <apex:commandButton id="openerModalEditDoctor"
+                                                        action="{! upsertDoctors }"
+                                                        onClick="showHireDialog('Doctor'); return false;"
+                                                        styleClass="slds-button slds-button_neutral"
+                                                        value="{! $Label.Edit }"/>
+
+                                    <apex:commandLink action="/{! doc.webServiceDoctorId }"
+                                                      target="_blank"
+                                                      style="text-decoration:none">
+
+                                        <apex:commandButton value="{! $Label.View_Action }"
+                                                            styleClass="slds-button slds-button_neutral"/>
+                                    </apex:commandLink>
+                                </apex:form>
+                            </div>
+                        </td>
+
+                        <td data-label="{! $ObjectType.Doctor__c.fields.Name.label }">
+                            <div class="slds-truncate"
+                                 title="{! $ObjectType.Doctor__c.fields.Name.label }">{! doc.webServiceDoctorLastName }</div>
+                        </td>
+
+                        <td data-label="{! $ObjectType.Doctor__c.fields.FirstName__c.label }">
+                            <div class="slds-truncate"
+                                 title="{! $ObjectType.Doctor__c.fields.FirstName__c.label }">{! doc.webServiceDoctorFirstName }</div>
+                        </td>
+
+                        <td data-label="{! $ObjectType.Doctor__c.fields.City__c.label }">
+                            <div class="slds-truncate"
+                                 title="{! $ObjectType.Doctor__c.fields.City__c.label }">{! doc.webServiceDoctorCity}</div>
+                        </td>
+
+                        <td data-label="{! $ObjectType.Doctor__c.fields.Country__c.label }">
+                            <div class="slds-truncate"
+                                 title="{! $ObjectType.Doctor__c.fields.Country__c.label }">{! doc.webServiceDoctorCountry}</div>
+                        </td>
+                    </tr>
+                </apex:repeat>
+                </tbody>
+            </table>
+        </apex:outputPanel>
+
+        <div id="modalEditDoc" style="display: none; height: 640px;">
+            <apex:form id="editForm">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Doctor</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                            <apex:inputField value="{! doctorToEdit.Name }"
+                                             html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
+                                             styleClass="slds-input slds-m-bottom_x-small"
+                                             required="true"/>
+
+                            <apex:inputField value="{! doctorToEdit.FirstName__c }"
+                                             html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
+                                             styleClass="slds-input slds-m-bottom_x-small"
+                                             required="true"/>
+
+                            <apex:inputField value="{! doctorToEdit.City__c }"
+                                             html-placeholder="{! $ObjectType.Doctor__c.fields.City__c.label }"
+                                             styleClass="slds-input slds-m-bottom_x-small"/>
+
+                            <apex:inputField value="{! doctorToEdit.Country__c }"
+                                             html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
+                                             styleClass="slds-input slds-m-bottom_x-small"/>
+                        </div>
+
+                        <footer class="slds-modal__footer">
+
+                            <apex:outputPanel id="footerOutputPanel">
+                                <apex:commandButton styleClass="slds-button slds-button--brand"
+                                                    value="{! $Label.Save }"
+                                                    action="{! upsertDoctors }"
+                                                    onComplete="checkHideModal({! isAnyBadStatusInImport })"/>
+
+                                <apex:commandButton value="{! $Label.Cancel }"
+                                                    action="{! cancelDoctorToEdit }"
+                                                    styleClass="slds-button slds-button--neutral"
+                                                    immediate="true"
+                                                    onClick="hideModal()"/>
+                            </apex:outputPanel>
+                        </footer>
+                    </div>
+                </section>
+            </apex:form>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+
+        <footer role="contentinfo" class="slds-p-around--large slds-m-around_medium">
+            <div class="slds-grid slds-grid--align-spread">
+                <p class="slds-col">&copy; Maciej Szymczyk</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+
+        function showHireDialog(name) {
+            document.getElementById("modalEditDoc").style.display = "block";
+        }
+
+        function hideModal() {
+            //clearFieldsAndResultList();
+            document.getElementById("modalEditDoc").style.display = "none";
+
+            return false;
+        }
+
+        function checkHideModal(isAnyError) {
+            if (!isAnyError) {
+                hideModal();
+            }
+        }
+
+    </script>
 
 </apex:page>

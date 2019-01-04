@@ -1,7 +1,9 @@
 public with sharing class Hosp_PiotrDoctorsController {
     public Doctor__c doctorToSearch { get; set; }
+    public Doctor__c doctorToEdit { get; set; }
     public Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP doctorsService { get; set; }
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsResults { get; set; }
+    public Boolean isAnyBadStatusInImport { get; set; }
 
     public Hosp_PiotrDoctorsController() {
         doctorsService = new Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP();
@@ -11,6 +13,8 @@ public with sharing class Hosp_PiotrDoctorsController {
         doctorsService.SessionHeader.sessionId = loginToPiotr();
 
         doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
+
+        isAnyBadStatusInImport = false;
     }
 
     public void searchDoctors() {
@@ -28,11 +32,15 @@ public with sharing class Hosp_PiotrDoctorsController {
         }
     }
 
-    public void editDoctor() {
+    public void upsertDoctors() {
 
     }
 
     public void deleteDoctor() {
+
+    }
+
+    public void cancelDoctorToEdit() {
 
     }
 
