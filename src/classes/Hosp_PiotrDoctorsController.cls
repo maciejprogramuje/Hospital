@@ -1,6 +1,7 @@
 public with sharing class Hosp_PiotrDoctorsController {
     public Doctor__c doctorToSearch { get; set; }
     public Doctor__c doctorToEdit { get; set; }
+    public String doctorToEditId { get; set; }
     public Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP doctorsService { get; set; }
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsResults { get; set; }
     public Boolean isAnyBadStatusInImport { get; set; }
@@ -8,6 +9,7 @@ public with sharing class Hosp_PiotrDoctorsController {
     public Hosp_PiotrDoctorsController() {
         doctorsService = new Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP();
         doctorToSearch = new Doctor__c();
+        doctorToEdit = new Doctor__c();
         doctorsService.timeout_x = 1000;
         doctorsService.SessionHeader = new Hosp_soapSforceComSchemasClassHospitalD.SessionHeader_element();
         doctorsService.SessionHeader.sessionId = loginToPiotr();
@@ -20,20 +22,32 @@ public with sharing class Hosp_PiotrDoctorsController {
     public void searchDoctors() {
         doctorsResults = doctorsService.getDoctors(doctorToSearch.Name, doctorToSearch.FirstName__c, doctorToSearch.City__c, doctorToSearch.Country__c);
 
-        if(doctorsResults != null) {
-            System.debug('doctorsResults.size='+doctorsResults.size());
+        if (doctorsResults != null) {
+            System.debug('doctorsResults.size=' + doctorsResults.size());
 
-            for(Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorResult : doctorsResults) {
-                System.debug('search clicked and N='+doctorResult.webServiceDoctorLastName
-                        +', FN='+doctorResult.webServiceDoctorFirstName
-                        +', City='+doctorResult.webServiceDoctorCity
-                        +', Country='+doctorResult.webServiceDoctorCountry);
+            for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorResult : doctorsResults) {
+                System.debug('search clicked and N=' + doctorResult.webServiceDoctorLastName
+                        + ', FN=' + doctorResult.webServiceDoctorFirstName
+                        + ', City=' + doctorResult.webServiceDoctorCity
+                        + ', Country=' + doctorResult.webServiceDoctorCountry
+                        + ', Id=' + doctorResult.webServiceDoctorId);
             }
         }
     }
 
     public void upsertDoctors() {
+        for(Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doc : doctorsResults) {
+            if(doc.webServiceDoctorId == doctorToEditId) {
+                doctorToEdit.Id = doc.webServiceDoctorId;
+                doctorToEdit.Name = doc.webServiceDoctorLastName;
+                doctorToEdit.FirstName__c = doc.webServiceDoctorFirstName;
+                doctorToEdit.City__c = doc.webServiceDoctorCity;
+                doctorToEdit.Country__c = doc.webServiceDoctorCountry;
+                break;
+            }
+        }
 
+        System.debug('doctorToEdit='+doctorToEdit);
     }
 
     public void deleteDoctor() {
@@ -41,6 +55,10 @@ public with sharing class Hosp_PiotrDoctorsController {
     }
 
     public void cancelDoctorToEdit() {
+
+    }
+
+    public void newDoctor() {
 
     }
 

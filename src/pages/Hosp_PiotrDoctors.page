@@ -1,7 +1,7 @@
 <apex:page id="Hosp_PiotrDoctors" controller="Hosp_PiotrDoctorsController">
 
     <head>
-        <apex:slds />
+        <apex:slds/>
     </head>
 
 
@@ -22,6 +22,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="newDoctor" class="slds-col slds-no-flex slds-align-middle">
+                    <apex:form>
+                        <apex:commandbutton value="New"
+                                            action="{! newDoctor }"
+                                            styleClass="slds-button slds-button--brand slds-m-top--medium">
+                        </apex:commandbutton>
+                    </apex:form>
+                </div>
+
             </div>
         </div>
 
@@ -53,11 +63,6 @@
                                                     action="{! searchDoctors }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
                                                     reRender="searchResultTable">
-                                </apex:commandbutton>
-
-                                <apex:commandbutton value="New"
-                                                    action="{! upsertDoctors }"
-                                                    styleClass="slds-button slds-button--brand slds-m-top--medium">
                                 </apex:commandbutton>
                             </apex:form>
                         </div>
@@ -95,22 +100,26 @@
 
                 <apex:repeat value="{! doctorsResults }" var="doc">
                     <tr class="slds-hint-parent">
-                        <td data-label="Account Name">
+                        <td data-label="doctorsResultsDataTable">
                             <div class="slds-truncate">
                                 <apex:form>
                                     <apex:commandButton id="openerModalEditDoctor"
                                                         action="{! upsertDoctors }"
-                                                        onClick="showHireDialog('Doctor'); return false;"
+                                                        onComplete="showHireDialog(); return false;"
+                                                        reRender="modalEditDoc"
                                                         styleClass="slds-button slds-button_neutral"
-                                                        value="{! $Label.Edit }"/>
+                                                        value="{! $Label.Edit }">
 
-                                    <apex:commandLink action="/{! doc.webServiceDoctorId }"
-                                                      target="_blank"
-                                                      style="text-decoration:none">
+                                        <apex:param name="editedDoctor" value="{! doc.webServiceDoctorId }"
+                                                    assignTo="{! doctorToEditId }"/>
 
-                                        <apex:commandButton value="{! $Label.View_Action }"
-                                                            styleClass="slds-button slds-button_neutral"/>
-                                    </apex:commandLink>
+                                    </apex:commandButton>
+
+                                    <apex:commandButton id="deleteEditDoctor"
+                                                        action="{! deleteDoctor }"
+                                                        styleClass="slds-button slds-button_neutral"
+                                                        value="Delete"/>
+
                                 </apex:form>
                             </div>
                         </td>
@@ -140,67 +149,110 @@
             </table>
         </apex:outputPanel>
 
-        <div id="modalEditDoc" style="display: none; height: 640px;">
-            <apex:form id="editForm">
-                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                    <div class="slds-modal__container">
-                        <header class="slds-modal__header">
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Doctor</h2>
-                        </header>
-                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                            <apex:inputField value="{! doctorToEdit.Name }"
-                                             html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
-                                             styleClass="slds-input slds-m-bottom_x-small"
-                                             required="true"/>
 
-                            <apex:inputField value="{! doctorToEdit.FirstName__c }"
-                                             html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
-                                             styleClass="slds-input slds-m-bottom_x-small"
-                                             required="true"/>
 
-                            <apex:inputField value="{! doctorToEdit.City__c }"
-                                             html-placeholder="{! $ObjectType.Doctor__c.fields.City__c.label }"
-                                             styleClass="slds-input slds-m-bottom_x-small"/>
+        <apex:outputPanel id="modalEditDoc">
+            <apex:outputPanel rendered="{!doctorToEditId != null}">
+                <div class="demo-only" style="height: 640px;" >
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                             aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                        title="Close">
 
-                            <apex:inputField value="{! doctorToEdit.Country__c }"
-                                             html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
-                                             styleClass="slds-input slds-m-bottom_x-small"/>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-01"
+                                    class="slds-text-heading_medium slds-hyphenate">Create</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <apex:form>
+                                    <apex:outputField value="{! doctorToEdit.Name}"
+                                                      styleClass="slds-input slds-m-bottom_x-small"/>
+                                    <!--<apex:outputField value="{! doctorCreateData.First_Name__c }"
+                                                      styleClass="slds-input slds-m-bottom_x-small"/>
+                                    <apex:outputField value="{! doctorCreateData.City__c }"
+                                                      styleClass="slds-input slds-m-bottom_x-small"/>
+                                    <apex:outputField value="{! doctorCreateData.Country__c }"
+                                                      styleClass="slds-input slds-m-bottom_x-small"/>-->
+                                </apex:form>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <apex:form>
+                                    <!--<apex:commandbutton value="{!$Label.Save}" reRender="doctorsResultsPanelList"
+                                                        action="{!upsertDoctors}"
+                                                        styleClass="slds-button slds-button&#45;&#45;brand slds-m-top&#45;&#45;medium"/>
+                                    <apex:commandButton styleClass="slds-button slds-button&#45;&#45;brand slds-m-top&#45;&#45;medium"
+                                                        value="{!$Label.Cancel}" onClick="hideModal(); return false;"/>
+                                    <apex:commandButton styleClass="slds-button slds-button&#45;&#45;brand slds-m-top&#45;&#45;medium" reRender="modalEditDoc"
+                                                        value="refresh"/>-->
+                                </apex:form>
+                            </footer>
                         </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
 
-                        <footer class="slds-modal__footer">
 
-                            <apex:outputPanel id="footerOutputPanel">
-                                <apex:commandButton styleClass="slds-button slds-button--brand"
-                                                    value="{! $Label.Save }"
-                                                    action="{! upsertDoctors }"
-                                                    onComplete="checkHideModal({! isAnyBadStatusInImport })"/>
+        <!--<apex:outputPanel id="modalEditDoc">
+            <apex:outputPanel rendered="{! doctorToEditId != null }">
+                <div style="height: 640px;">
+                    <apex:form id="editForm">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit
+                                        Doctor</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                                <apex:commandButton value="{! $Label.Cancel }"
-                                                    action="{! cancelDoctorToEdit }"
-                                                    styleClass="slds-button slds-button--neutral"
-                                                    immediate="true"
-                                                    onClick="hideModal()"/>
-                            </apex:outputPanel>
-                        </footer>
-                    </div>
-                </section>
-            </apex:form>
-            <div class="slds-backdrop slds-backdrop_open"></div>
-        </div>
+                                    <apex:outputField value="{! doctorToEdit.Name }"
+                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
-        <footer role="contentinfo" class="slds-p-around--large slds-m-around_medium">
-            <div class="slds-grid slds-grid--align-spread">
-                <p class="slds-col">&copy; Maciej Szymczyk</p>
-            </div>
-        </footer>
+                                    <apex:outputField value="{! doctorToEdit.FirstName__c }"
+                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <apex:outputField value="{! doctorToEdit.City__c }"
+                                                      styleClass="slds-input slds-m-bottom_x-small"/>
+
+                                    <apex:outputField value="{! doctorToEdit.Country__c }"
+                                                      styleClass="slds-input slds-m-bottom_x-small"/>
+                                </div>
+
+                                <footer class="slds-modal__footer">
+
+                                    <apex:outputPanel id="footerOutputPanel">
+                                        <apex:commandButton styleClass="slds-button slds-button&#45;&#45;brand"
+                                                            value="{! $Label.Save }"
+                                                            action="{! upsertDoctors }"
+                                                            onComplete="checkHideModal({! isAnyBadStatusInImport })"/>
+
+                                        <apex:commandButton value="{! $Label.Cancel }"
+                                                            action="{! cancelDoctorToEdit }"
+                                                            styleClass="slds-button slds-button&&#45;&#45;neutral"
+                                                            immediate="true"
+                                                            reRender="editForm"
+                                                            onClick="hideModal()"/>
+                                    </apex:outputPanel>
+                                </footer>
+                            </div>
+                        </section>
+
+                    </apex:form>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>-->
     </div>
 
     <script>
 
-        function showHireDialog(name) {
+        function showHireDialog() {
             document.getElementById("modalEditDoc").style.display = "block";
         }
 
@@ -216,6 +268,13 @@
                 hideModal();
             }
         }
+
+
+
+
+
+
+
 
     </script>
 
