@@ -63,14 +63,6 @@ public class Hosp_Utils {
                 + ' ORDER BY ' + sortOrder + ' ' + sortAscDesc;
     }
 
-    private static String addToWhereIfNotBlank(String fieldName, String checkedField) {
-        if (String.isNotBlank(checkedField)) {
-            return ' AND ' + fieldName + ' LIKE \'' + checkedField + '%\'';
-        } else {
-            return ' ';
-        }
-    }
-
     public static String generateHireDoctorHospitalsQuery(Hospital__c hospital) {
         String query = '';
 
@@ -112,12 +104,12 @@ public class Hosp_Utils {
 
         if (String.isNotBlank(lastName)) {
             query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Name LIKE \'' + lastName + '%\''
-                    + addToWhereIfNotBlankAndEquals('FirstName__c', firstName)
-                    + addToWhereIfNotBlankAndEquals('City__c', city)
+                    + addToWhereIfNotBlank('FirstName__c', firstName)
+                    + addToWhereIfNotBlank('City__c', city)
                     + addToWhereIfNotBlankAndEquals('Country__c', country);
         } else if (String.isNotBlank(firstName)) {
             query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE FirstName__c LIKE \'' + firstName + '%\''
-                    + addToWhereIfNotBlankAndEquals('City__c', city)
+                    + addToWhereIfNotBlank('City__c', city)
                     + addToWhereIfNotBlankAndEquals('Country__c', country);
         } else if (String.isNotBlank(city)) {
             query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE City__c LIKE \'' + city + '%\''
@@ -132,6 +124,14 @@ public class Hosp_Utils {
     private static String addToWhereIfNotBlankAndEquals(String fieldName, String checkedField) {
         if (String.isNotBlank(checkedField)) {
             return ' AND ' + fieldName + ' = \'' + checkedField + '\'';
+        } else {
+            return ' ';
+        }
+    }
+
+    private static String addToWhereIfNotBlank(String fieldName, String checkedField) {
+        if (String.isNotBlank(checkedField)) {
+            return ' AND ' + fieldName + ' LIKE \'' + checkedField + '%\'';
         } else {
             return ' ';
         }
