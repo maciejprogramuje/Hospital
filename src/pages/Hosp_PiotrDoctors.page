@@ -21,6 +21,7 @@
                             <apex:commandButton value="New"
                                                 action="{! resetDoctorToInsert }"
                                                 reRender="modalInsertOutputPanel"
+                                                status="statusCompLsds"
                                                 onComplete="showInsertDialog(); return false;"
                                                 styleClass="slds-button slds-button--neutral">
                             </apex:commandButton>
@@ -57,7 +58,8 @@
                                 <apex:commandbutton value="Search"
                                                     action="{! searchDoctors }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    reRender="searchResultTable">
+                                                    reRender="searchResultTable"
+                                                    status="statusCompLsds">
                                 </apex:commandbutton>
                             </apex:form>
                         </div>
@@ -111,6 +113,7 @@
                                                 action="{! openDoctorToEdit }"
                                                 onComplete="showEditDialog(); return false;"
                                                 reRender="modalEditDoc, modalEditOutputPanel, searchResultTable"
+                                                status="statusCompLsds"
                                                 styleClass="slds-button slds-button_neutral"
                                                 value="{! $Label.Edit }">
 
@@ -122,7 +125,8 @@
                                         <apex:commandButton action="{! deleteDoctor }"
                                                             styleClass="slds-button slds-button_neutral"
                                                             value="Delete"
-                                                            reRender="searchResultTable">
+                                                            reRender="searchResultTable"
+                                                            status="statusCompLsds">
 
                                             <apex:param name="editedDoctor"
                                                         value="{! doc.webServiceDoctorId }"
@@ -201,13 +205,13 @@
                                 <apex:commandbutton value="Save"
                                                     action="{! upsertDoctor }"
                                                     reRender="searchResultTable"
+                                                    status="statusCompLsds"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
                                                     onClick="checkHideModal(false)"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="Cancel"
                                                     onClick="hideModal(); return false;"/>
-
                             </footer>
                         </apex:form>
                     </div>
@@ -253,6 +257,7 @@
 
                                 <apex:commandbutton value="Add doctor"
                                                     reRender="searchResultTable"
+                                                    status="statusCompLsds"
                                                     action="{! insertDoctor }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
                                                     onClick="checkHideInsertModal(false)"/>
@@ -269,6 +274,7 @@
         </div>
     </div>
 
+    <c:Hosp_StatusComponentLsds />
 
     <script>
 

@@ -187,6 +187,10 @@
                             <option name="name" value="Hosp_StatusComponent" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_StatusComponentLsds" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="ApexComponent" />
