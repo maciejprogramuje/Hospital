@@ -78,25 +78,15 @@ public with sharing class Hosp_PiotrDoctorsController {
     public void deleteDoctor() {
         List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> deletedDoctors = doctorsService.deleteDoctors(new List<String>{doctorToEditId});
 
+        ApexPages.addMessage(new ApexPages.message(ApexPages.severity.FATAL,'Please enter Account name'));
+
         searchDoctors();
     }
-
-    /*private void refreshResultsListAfterDelete() {
-        List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> tempDoctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
-        for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doc : doctorsResults) {
-            if (doc.webServiceDoctorId != doctorToEditId) {
-                tempDoctorsResults.add(doc);
-            }
-        }
-
-        doctorsResults.clear();
-        doctorsResults = tempDoctorsResults;
-    }*/
 
     private String loginToPiotr() {
         try {
             Hosp_partnerSoapSforceCom.Soap partnerSoap = new Hosp_partnerSoapSforceCom.Soap();
-            Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login('maciej.szymczyk@britenet.com.pl', 'Ulka!2002sjScbwznYDOocJSdloEwSJ8l');
+            Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login(Label.Hosp_login_to_Piotr, Label.Hosp_password_to_Piotr);
             return loginResult.sessionId;
         } catch (Exception ex) {
             System.debug(ex.getMessage());

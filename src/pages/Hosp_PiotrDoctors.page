@@ -4,23 +4,23 @@
         <apex:slds/>
 
         <apex:outputPanel id="messages">
-            <apex:pageMessages id="messageTxt"/>
+            <apex:pageMessages/>
         </apex:outputPanel>
 
         <div class="slds-page-header" role="banner">
             <div class="slds-grid">
                 <div class="slds-col">
-                    <p class="slds-text-heading--label">List of</p>
-                    <h1 class="slds-text-heading--medium">Piotr's Doctors</h1>
+                    <p class="slds-text-heading--label">{! $Label.Hosp_List_of }</p>
+                    <h1 class="slds-text-heading--medium">{! $Label.Hosp_Piotr_s_Doctors }</h1>
                 </div>
 
                 <div class="slds-col slds-no-flex slds-align-middle">
 
                     <div class="slds-button-group" role="group">
                         <apex:form>
-                            <apex:commandButton value="New"
+                            <apex:commandButton value="{! $Label.Hosp_New }"
                                                 action="{! resetDoctorToInsert }"
-                                                reRender="modalInsertOutputPanel"
+                                                reRender="modalInsertOutputPanel, messages"
                                                 status="statusCompLsds"
                                                 onComplete="showInsertDialog(); return false;"
                                                 styleClass="slds-button slds-button--neutral">
@@ -55,10 +55,10 @@
                                                  html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
-                                <apex:commandbutton value="Search"
+                                <apex:commandbutton value="{! $Label.Search }"
                                                     action="{! searchDoctors }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    reRender="searchResultTable"
+                                                    reRender="searchResultTable, messages"
                                                     status="statusCompLsds">
                                 </apex:commandbutton>
                             </apex:form>
@@ -74,7 +74,7 @@
                     <thead>
                     <tr class="slds-line-height_reset">
                         <th class="slds-text-title_caps" scope="col">
-                            <div class="slds-truncate" title="Actions">Actions</div>
+                            <div class="slds-truncate" title="{! $Label.Actions }">{! $Label.Actions }</div>
                         </th>
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate"
@@ -124,8 +124,8 @@
 
                                         <apex:commandButton action="{! deleteDoctor }"
                                                             styleClass="slds-button slds-button_neutral"
-                                                            value="Delete"
-                                                            reRender="searchResultTable"
+                                                            value="{! $Label.Delete }"
+                                                            reRender="searchResultTable, messages"
                                                             status="statusCompLsds">
 
                                             <apex:param name="editedDoctor"
@@ -174,7 +174,7 @@
                          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
                         <header class="slds-modal__header">
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Doctor</h2>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{! $Label.Edit_Doctor }</h2>
                         </header>
                         <apex:form>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
@@ -202,15 +202,15 @@
 
                             <footer class="slds-modal__footer">
 
-                                <apex:commandbutton value="Save"
+                                <apex:commandbutton value="{! $Label.Save }"
                                                     action="{! upsertDoctor }"
-                                                    reRender="searchResultTable"
+                                                    reRender="searchResultTable, messages"
                                                     status="statusCompLsds"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
                                                     onClick="checkHideModal(false)"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
-                                                    value="Cancel"
+                                                    value="{! $Label.Cancel }"
                                                     onClick="hideModal(); return false;"/>
                             </footer>
                         </apex:form>
@@ -227,7 +227,7 @@
                          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
                         <header class="slds-modal__header">
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Doctor</h2>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{! $Label.Hosp_New_Doctor }</h2>
                         </header>
                         <apex:form>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
@@ -255,15 +255,15 @@
 
                             <footer class="slds-modal__footer">
 
-                                <apex:commandbutton value="Add doctor"
-                                                    reRender="searchResultTable"
+                                <apex:commandbutton value="{! $Label.Hosp_Add_doctor }"
+                                                    reRender="searchResultTable, messages"
                                                     status="statusCompLsds"
                                                     action="{! insertDoctor }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
                                                     onClick="checkHideInsertModal(false)"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
-                                                    value="Cancel"
+                                                    value="{! $Label.Cancel}"
                                                     onClick="hideInsertModal(); return false;"/>
                             </footer>
                         </apex:form>
@@ -274,7 +274,7 @@
         </div>
     </div>
 
-    <c:Hosp_StatusComponentLsds />
+    <c:Hosp_StatusComponentLsds/>
 
     <script>
 
@@ -283,7 +283,6 @@
         }
 
         function hideModal() {
-            //clearFieldsAndResultList();
             document.getElementById("modalEditDoc").style.display = "none";
 
             return false;
@@ -311,6 +310,10 @@
                 hideInsertModal();
             }
         }
+
+        $(document).ready(function(){
+       overridePageMessages();
+    });
 
     </script>
 
