@@ -42,7 +42,7 @@
                                                 action="{! resetDoctorToInsert }"
                                                 reRender="modalInsertOutputPanel, messages, messagesInInsertModal"
                                                 status="statusCompLsds"
-                                                onComplete="showInsertDialog(); return false;"
+                                                onComplete="showToast('modalInsertDoc'); return false;"
                                                 styleClass="slds-button slds-button--neutral">
                             </apex:commandButton>
                         </apex:form>
@@ -233,7 +233,7 @@
                                                     reRender="searchResultTable, messagesInUpdateModal"
                                                     status="statusCompLsds"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onComplete="checkHideUpdateModal({! isAnyUpdateProblem })"/>
+                                                    onComplete="checkHideModal({! isAnyUpdateProblem }, 'modalEditDoc')"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="{! $Label.Cancel }"
@@ -293,7 +293,7 @@
                                 <apex:commandbutton value="{! $Label.Hosp_Add_doctor }"
                                                     action="{! insertDoctor }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onComplete="checkHideInsertModal({! isAnyInsertProblem })"
+                                                    onComplete="checkHideModal({! isAnyInsertProblem }, 'modalInsertDoc')"
                                                     reRender="searchResultTable, messagesInInsertModal"
                                                     status="statusCompLsds"/>
 
@@ -302,7 +302,7 @@
                                                     action="{! resetDoctorToInsert }"
                                                     reRender="searchResultTable, messagesInInsertModal"
                                                     status="statusCompLsds"
-                                                    onClick="hideInsertModal(); return false;"/>
+                                                    onClick="hideToast('modalInsertDoc'); return false;"/>
                             </footer>
 
                             <apex:outputPanel id="messagesInInsertModal">
@@ -409,7 +409,6 @@
             $('.warningM3').removeClass('warningM3');
         }
 
-
         function checkHideDeleteToast(isProblemWithDelete) {
             if(!isProblemWithDelete) {
                 showToast('successToast');
@@ -430,29 +429,9 @@
             return false;
         }
 
-
-        function checkHideUpdateModal(isAnyProblem) {
+        function checkHideModal(isAnyProblem, modalId) {
             if (!isAnyProblem) {
-                hideUpdateModal();
-            }
-
-            overridePageMessages();
-        }
-
-
-        function showInsertDialog() {
-            showToast("modalInsertDoc");
-        }
-
-        function hideInsertModal() {
-            hideToast("modalInsertDoc");
-
-            return false;
-        }
-
-        function checkHideInsertModal(isAnyProblem) {
-            if (!isAnyProblem) {
-                hideInsertModal();
+                hideToast(modalId);
             }
 
             overridePageMessages();
