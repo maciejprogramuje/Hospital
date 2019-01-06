@@ -133,7 +133,7 @@
                                     <apex:form>
                                         <apex:commandButton
                                                 action="{! openDoctorToEdit }"
-                                                onComplete="showEditDialog(); return false;"
+                                                onComplete="showToast('modalEditDoc'); return false;"
                                                 reRender="modalEditOutputPanel, searchResultTable, messagesInUpdateModal"
                                                 status="statusCompLsds"
                                                 styleClass="slds-button slds-button_neutral"
@@ -239,7 +239,7 @@
                                                     value="{! $Label.Cancel }"
                                                     reRender="searchResultTable, messagesInUpdateModal"
                                                     action="{! resetDoctorToUpdate }"
-                                                    onClick="hideUpdateModal(); return false;"
+                                                    onClick="hideToast('modalEditDoc'); return false;"
                                                     status="statusCompLsds"/>
                             </footer>
 
@@ -426,21 +426,10 @@
 
         function hideToast(toastId) {
             document.getElementById(toastId).style.display = "none";
-        }
-
-
-
-        function showEditDialog() {
-            showToast("modalEditDoc");
-            //document.getElementById("modalEditDoc").style.display = "block";
-        }
-
-        function hideUpdateModal() {
-            hideToast("modalEditDoc");
-            //document.getElementById("modalEditDoc").style.display = "none";
 
             return false;
         }
+
 
         function checkHideUpdateModal(isAnyProblem) {
             if (!isAnyProblem) {
@@ -453,12 +442,10 @@
 
         function showInsertDialog() {
             showToast("modalInsertDoc");
-            //document.getElementById("modalInsertDoc").style.display = "block";
         }
 
         function hideInsertModal() {
             hideToast("modalInsertDoc");
-            //document.getElementById("modalInsertDoc").style.display = "none";
 
             return false;
         }
