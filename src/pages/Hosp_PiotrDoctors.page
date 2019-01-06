@@ -3,7 +3,7 @@
     <div class="slds">
         <apex:slds/>
 
-        <apex:outputPanel id="messages">
+        <apex:outputPanel id="messages" style="width: 50px">
             <apex:pageMessages/>
         </apex:outputPanel>
 
@@ -125,7 +125,8 @@
                                         <apex:commandButton action="{! deleteDoctor }"
                                                             styleClass="slds-button slds-button_neutral"
                                                             value="{! $Label.Delete }"
-                                                            reRender="searchResultTable, messages"
+                                                            onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
+                                                            reRender="searchResultTable, messages, successToastOutputPanel, errorToastOutputPanel"
                                                             status="statusCompLsds">
 
                                             <apex:param name="editedDoctor"
@@ -174,7 +175,8 @@
                          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
                         <header class="slds-modal__header">
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{! $Label.Edit_Doctor }</h2>
+                            <h2 id="modal-heading-01"
+                                class="slds-text-heading_medium slds-hyphenate">{! $Label.Edit_Doctor }</h2>
                         </header>
                         <apex:form>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
@@ -227,7 +229,8 @@
                          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
                         <header class="slds-modal__header">
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{! $Label.Hosp_New_Doctor }</h2>
+                            <h2 id="modal-heading-01"
+                                class="slds-text-heading_medium slds-hyphenate">{! $Label.Hosp_New_Doctor }</h2>
                         </header>
                         <apex:form>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
@@ -272,11 +275,94 @@
                 <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
         </div>
+
+
+        <div id="successToast" class="demo-only" style="display: none; height: 4rem;">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+                    <span class="slds-assistive-text">success</span>
+                    <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top"
+                          title="Description of icon when needed">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#success') }"></use>
+                        </svg>
+                    </span>
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small ">
+                            <apex:outputPanel id="successToastOutputPanel">
+                                    {! messageSuccessToast }
+                            </apex:outputPanel>
+                        </h2>
+                    </div>
+                    <div class="slds-notify__close">
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" onClick="hideToast('successToast')">
+                            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#close') }"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="errorToast" class="demo-only" style="display: none; height: 4rem;">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+                    <span class="slds-assistive-text">error</span>
+                    <span class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top"
+                          title="Description of icon when needed">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#error') }"></use>
+                        </svg>
+                    </span>
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small ">
+                            <apex:outputPanel id="errorToastOutputPanel">
+                                {! messageErrorToast }
+                            </apex:outputPanel>
+                        </h2>
+                    </div>
+                    <div class="slds-notify__close">
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" onClick="hideToast('errorToast')">
+                            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#close') }"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <c:Hosp_StatusComponentLsds/>
 
     <script>
+
+        function checkHideDeleteToast(isProblemWithDelete) {
+            if(!isProblemWithDelete) {
+                showToast('successToast');
+                hideToast('errorToast');
+            } else {
+                showToast('errorToast');
+                hideToast('successToast');
+            }
+        }
+
+        function showToast(toastId) {
+            document.getElementById(toastId).style.display = "block";
+        }
+
+        function hideToast(toastId) {
+            document.getElementById(toastId).style.display = "none";
+        }
 
         function showEditDialog() {
             document.getElementById("modalEditDoc").style.display = "block";

@@ -5,6 +5,13 @@ public with sharing class Hosp_PiotrDoctorsController {
     public String doctorToEditId { get; set; }
     public Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP doctorsService { get; set; }
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsResults { get; set; }
+
+    public Boolean isAnyProblemWithDelete { get; set; }
+    public String messageSuccessToast { get; set; }
+    public String messageErrorToast { get; set; }
+
+
+
     public Boolean isAnyBadStatusInImport { get; set; }
 
     public Boolean isAnyDoctorInResultsList { get; set; }
@@ -20,6 +27,7 @@ public with sharing class Hosp_PiotrDoctorsController {
 
         doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
         isAnyDoctorInResultsList = false;
+        isAnyProblemWithDelete = false;
 
         isAnyBadStatusInImport = false;
     }
@@ -60,11 +68,11 @@ public with sharing class Hosp_PiotrDoctorsController {
     }
 
     private void refreshResultsList(Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctor) {
-        if(doctor != null
+        if (doctor != null
                 && (String.isNotBlank(doctorToSearch.Name)
-                    || String.isNotBlank(doctorToSearch.FirstName__c)
-                    || String.isNotBlank(doctorToSearch.City__c)
-                    || String.isNotBlank(doctorToSearch.Country__c))) {
+                || String.isNotBlank(doctorToSearch.FirstName__c)
+                || String.isNotBlank(doctorToSearch.City__c)
+                || String.isNotBlank(doctorToSearch.Country__c))) {
             doctorToEditId = doctor.webServiceDoctorId;
 
             searchDoctors();
@@ -76,11 +84,18 @@ public with sharing class Hosp_PiotrDoctorsController {
     }
 
     public void deleteDoctor() {
-        List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> deletedDoctors = doctorsService.deleteDoctors(new List<String>{doctorToEditId});
+        List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> deletedDoctors = doctorsService.deleteDoctors(new List<String>{
+                doctorToEditId
+        });
 
-        ApexPages.addMessage(new ApexPages.message(ApexPages.severity.FATAL,'Please enter Account name'));
-
-        searchDoctors();
+        if (!deletedDoctors.isEmpty()) {
+            isAnyProblemWithDelete = false;
+            messageSuccessToast = 'Doctor successfully deleted';
+            searchDoctors();
+        } else {
+            isAnyProblemWithDelete = true;
+            messageErrorToast = 'Unable to delete doctor';
+        }
     }
 
     private String loginToPiotr() {
