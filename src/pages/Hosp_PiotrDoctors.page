@@ -1,11 +1,30 @@
 <apex:page id="Hosp_PiotrDoctors" controller="Hosp_PiotrDoctorsController">
 
+    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/>
+
+    <style>
+        .msgIcon {
+            display: none!important
+        }
+        .customMessage * {
+            color: #fff!important;
+        }
+        .customMessage {
+            opacity: 1!important;
+            max-width: 600px;
+            font-size: 16px;
+            border: 0px;
+            padding: 10px;
+            font-family: "Salesforce Sans", Arial, sans-serif;
+        }
+        .message {
+            opacity: 1
+        }
+
+    </style>
+
     <div class="slds">
         <apex:slds/>
-
-        <apex:outputPanel id="messages" style="width: 50px">
-            <apex:pageMessages/>
-        </apex:outputPanel>
 
         <div class="slds-page-header" role="banner">
             <div class="slds-grid">
@@ -20,7 +39,7 @@
                         <apex:form>
                             <apex:commandButton value="{! $Label.Hosp_New }"
                                                 action="{! resetDoctorToInsert }"
-                                                reRender="modalInsertOutputPanel, messages"
+                                                reRender="modalInsertOutputPanel, messages, messagesInInsertModal, messagesInUpdateModal"
                                                 status="statusCompLsds"
                                                 onComplete="showInsertDialog(); return false;"
                                                 styleClass="slds-button slds-button--neutral">
@@ -44,6 +63,7 @@
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
                                 <apex:inputField value="{! doctorToSearch.FirstName__c }"
+                                                 required="false"
                                                  html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
@@ -57,8 +77,9 @@
 
                                 <apex:commandbutton value="{! $Label.Search }"
                                                     action="{! searchDoctors }"
+                                                    onComplete="overridePageMessages()"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    reRender="searchResultTable, messages"
+                                                    reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal"
                                                     status="statusCompLsds">
                                 </apex:commandbutton>
                             </apex:form>
@@ -126,7 +147,7 @@
                                                             styleClass="slds-button slds-button_neutral"
                                                             value="{! $Label.Delete }"
                                                             onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
-                                                            reRender="searchResultTable, messages, successToastOutputPanel, errorToastOutputPanel"
+                                                            reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
                                                             status="statusCompLsds">
 
                                             <apex:param name="editedDoctor"
@@ -169,6 +190,7 @@
             </apex:outputPanel>
         </apex:outputPanel>
 
+
         <div id="modalEditDoc" style="display: none; height: 640px;">
             <div class="demo-only">
                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
@@ -185,9 +207,11 @@
 
                                     <apex:inputField value="{! doctorToEdit.Name }"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
+                                                     required="true"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
                                     <apex:inputField value="{! doctorToEdit.FirstName__c }"
+                                                     required="true"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
@@ -206,15 +230,24 @@
 
                                 <apex:commandbutton value="{! $Label.Save }"
                                                     action="{! upsertDoctor }"
-                                                    reRender="searchResultTable, messages"
+                                                    reRender="searchResultTable, messages, messagesInUpdateModal"
                                                     status="statusCompLsds"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onClick="checkHideModal(false)"/>
+                                                    onClick="checkHideModal(false)"
+                                                    onComplete="overridePageMessages()"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="{! $Label.Cancel }"
-                                                    onClick="hideModal(); return false;"/>
+                                                    reRender="searchResultTable, messagesInUpdateModal"
+                                                    action="{! clearMessages }"
+                                                    onClick="hideModal(); return false;"
+                                                    status="statusCompLsds"
+                                                    onComplete="overridePageMessages()"/>
                             </footer>
+
+                            <apex:outputPanel id="messagesInUpdateModal">
+                                <apex:pageMessages/>
+                            </apex:outputPanel>
                         </apex:form>
                     </div>
                 </section>
@@ -238,6 +271,7 @@
                                 <apex:outputPanel id="modalInsertOutputPanel">
 
                                     <apex:inputField value="{! doctorToInsert.Name }"
+                                                     required="true"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
@@ -259,16 +293,23 @@
                             <footer class="slds-modal__footer">
 
                                 <apex:commandbutton value="{! $Label.Hosp_Add_doctor }"
-                                                    reRender="searchResultTable, messages"
-                                                    status="statusCompLsds"
                                                     action="{! insertDoctor }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onClick="checkHideInsertModal(false)"/>
+                                                    onComplete="checkHideInsertModal({! isAnyInsertProblem })"
+                                                    reRender="searchResultTable, messagesInInsertModal"
+                                                    status="statusCompLsds"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="{! $Label.Cancel}"
+                                                    action="{! resetDoctorToInsert }"
+                                                    reRender="searchResultTable, messagesInInsertModal"
+                                                    status="statusCompLsds"
                                                     onClick="hideInsertModal(); return false;"/>
                             </footer>
+
+                            <apex:outputPanel id="messagesInInsertModal">
+                                <apex:pageMessages/>
+                            </apex:outputPanel>
                         </apex:form>
                     </div>
                 </section>
@@ -308,7 +349,6 @@
             </div>
         </div>
 
-
         <div id="errorToast" class="demo-only" style="display: none; height: 4rem;">
             <div class="slds-notify_container slds-is-relative">
                 <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
@@ -340,11 +380,32 @@
             </div>
         </div>
 
+
+        <apex:outputPanel id="messages" >
+            <apex:pageMessages/>
+        </apex:outputPanel>
+
+
     </div>
 
     <c:Hosp_StatusComponentLsds/>
 
     <script>
+
+        function overridePageMessages(){
+            var textureEffect = 'slds-theme--alert-texture';
+
+            $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
+            $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);
+            $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);
+            $('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);
+
+            $('.errorM3').removeClass('errorM3');
+            $('.confirmM3').removeClass('confirmM3');
+            $('.infoM3').removeClass('infoM3');
+            $('.warningM3').removeClass('warningM3');
+        }
+
 
         function checkHideDeleteToast(isProblemWithDelete) {
             if(!isProblemWithDelete) {
@@ -391,15 +452,13 @@
             return false;
         }
 
-        function checkHideInsertModal(isAnyError) {
-            if (!isAnyError) {
+        function checkHideInsertModal(isAnyProblem) {
+            if (!isAnyProblem) {
                 hideInsertModal();
             }
-        }
 
-        $(document).ready(function(){
-       overridePageMessages();
-    });
+            overridePageMessages();
+        }
 
     </script>
 
