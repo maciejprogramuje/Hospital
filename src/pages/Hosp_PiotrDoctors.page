@@ -431,11 +431,13 @@
 
 
         function showEditDialog() {
-            document.getElementById("modalEditDoc").style.display = "block";
+            showToast("modalEditDoc");
+            //document.getElementById("modalEditDoc").style.display = "block";
         }
 
         function hideUpdateModal() {
-            document.getElementById("modalEditDoc").style.display = "none";
+            hideToast("modalEditDoc");
+            //document.getElementById("modalEditDoc").style.display = "none";
 
             return false;
         }
@@ -450,11 +452,13 @@
 
 
         function showInsertDialog() {
-            document.getElementById("modalInsertDoc").style.display = "block";
+            showToast("modalInsertDoc");
+            //document.getElementById("modalInsertDoc").style.display = "block";
         }
 
         function hideInsertModal() {
-            document.getElementById("modalInsertDoc").style.display = "none";
+            hideToast("modalInsertDoc");
+            //document.getElementById("modalInsertDoc").style.display = "none";
 
             return false;
         }
