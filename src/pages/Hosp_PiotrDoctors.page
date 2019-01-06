@@ -21,6 +21,7 @@
             opacity: 1
         }
 
+
     </style>
 
     <div class="slds">
@@ -39,7 +40,7 @@
                         <apex:form>
                             <apex:commandButton value="{! $Label.Hosp_New }"
                                                 action="{! resetDoctorToInsert }"
-                                                reRender="modalInsertOutputPanel, messages, messagesInInsertModal, messagesInUpdateModal"
+                                                reRender="modalInsertOutputPanel, messages, messagesInInsertModal"
                                                 status="statusCompLsds"
                                                 onComplete="showInsertDialog(); return false;"
                                                 styleClass="slds-button slds-button--neutral">
@@ -133,7 +134,7 @@
                                         <apex:commandButton
                                                 action="{! openDoctorToEdit }"
                                                 onComplete="showEditDialog(); return false;"
-                                                reRender="modalEditDoc, modalEditOutputPanel, searchResultTable"
+                                                reRender="modalEditOutputPanel, searchResultTable, messagesInUpdateModal"
                                                 status="statusCompLsds"
                                                 styleClass="slds-button slds-button_neutral"
                                                 value="{! $Label.Edit }">
@@ -222,27 +223,24 @@
                                     <apex:inputField value="{! doctorToEdit.Country__c }"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
-
                                 </apex:outputPanel>
                             </div>
 
                             <footer class="slds-modal__footer">
 
-                                <apex:commandbutton value="{! $Label.Save }"
-                                                    action="{! upsertDoctor }"
-                                                    reRender="searchResultTable, messages, messagesInUpdateModal"
+                                <apex:commandButton value="{! $Label.Save }"
+                                                    action="{! updateDoctor }"
+                                                    reRender="searchResultTable, messagesInUpdateModal"
                                                     status="statusCompLsds"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onClick="checkHideModal(false)"
-                                                    onComplete="overridePageMessages()"/>
+                                                    onComplete="checkHideUpdateModal({! isAnyUpdateProblem })"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="{! $Label.Cancel }"
                                                     reRender="searchResultTable, messagesInUpdateModal"
-                                                    action="{! clearMessages }"
-                                                    onClick="hideModal(); return false;"
-                                                    status="statusCompLsds"
-                                                    onComplete="overridePageMessages()"/>
+                                                    action="{! resetDoctorToUpdate }"
+                                                    onClick="hideUpdateModal(); return false;"
+                                                    status="statusCompLsds"/>
                             </footer>
 
                             <apex:outputPanel id="messagesInUpdateModal">
@@ -326,7 +324,7 @@
                           title="Description of icon when needed">
                         <svg class="slds-icon slds-icon_small" aria-hidden="true">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#success') }"></use>
+                                 xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#success') }"></use>
                         </svg>
                     </span>
                     <div class="slds-notify__content">
@@ -337,7 +335,8 @@
                         </h2>
                     </div>
                     <div class="slds-notify__close">
-                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" onClick="hideToast('successToast')">
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close"
+                                onClick="hideToast('successToast')">
                             <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink"
                                      xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#close') }"></use>
@@ -363,12 +362,13 @@
                     <div class="slds-notify__content">
                         <h2 class="slds-text-heading_small ">
                             <apex:outputPanel id="errorToastOutputPanel">
-                                {! messageErrorToast }
+                                    {! messageErrorToast }
                             </apex:outputPanel>
                         </h2>
                     </div>
                     <div class="slds-notify__close">
-                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" onClick="hideToast('errorToast')">
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close"
+                                onClick="hideToast('errorToast')">
                             <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink"
                                      xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#close') }"></use>
@@ -381,7 +381,7 @@
         </div>
 
 
-        <apex:outputPanel id="messages" >
+        <apex:outputPanel id="messages">
             <apex:pageMessages/>
         </apex:outputPanel>
 
@@ -393,6 +393,9 @@
     <script>
 
         function overridePageMessages(){
+            hideToast('errorToast');
+            hideToast('successToast');
+
             var textureEffect = 'slds-theme--alert-texture';
 
             $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
@@ -425,20 +428,24 @@
             document.getElementById(toastId).style.display = "none";
         }
 
+
+
         function showEditDialog() {
             document.getElementById("modalEditDoc").style.display = "block";
         }
 
-        function hideModal() {
+        function hideUpdateModal() {
             document.getElementById("modalEditDoc").style.display = "none";
 
             return false;
         }
 
-        function checkHideModal(isAnyError) {
-            if (!isAnyError) {
-                hideModal();
+        function checkHideUpdateModal(isAnyProblem) {
+            if (!isAnyProblem) {
+                hideUpdateModal();
             }
+
+            overridePageMessages();
         }
 
 

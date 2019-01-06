@@ -9,6 +9,7 @@ public with sharing class Hosp_PiotrDoctorsController {
     public Boolean isAnyDoctorInResultsList { get; set; }
     public Boolean isAnyProblemWithDelete { get; set; }
     public Boolean isAnyInsertProblem { get; set; }
+    public Boolean isAnyUpdateProblem { get; set; }
     public String messageSuccessToast { get; set; }
     public String messageErrorToast { get; set; }
 
@@ -27,6 +28,7 @@ public with sharing class Hosp_PiotrDoctorsController {
         isAnyDoctorInResultsList = false;
         isAnyProblemWithDelete = false;
         isAnyInsertProblem = true;
+        isAnyUpdateProblem = true;
     }
 
     public void searchDoctors() {
@@ -42,7 +44,7 @@ public with sharing class Hosp_PiotrDoctorsController {
     }
 
     public void openDoctorToEdit() {
-        clearMessages();
+        resetDoctorToUpdate();
 
         for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doc : doctorsResults) {
             if (doc.webServiceDoctorId == doctorToEditId) {
@@ -56,25 +58,30 @@ public with sharing class Hosp_PiotrDoctorsController {
         }
     }
 
-    public void upsertDoctor() {
+    public void updateDoctor() {
         clearMessages();
 
-        Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToUpsert = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
+        try {
+            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctor = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
+            isAnyUpdateProblem = false;
+            refreshResultsList(doctor);
+        } catch (Exception e) {
+            isAnyUpdateProblem = true;
+            System.debug('isAnyUpdateProblem=' + e.getMessage());
+        }
 
-        refreshResultsList(doctorToUpsert);
     }
 
     public void insertDoctor() {
         clearMessages();
 
         try {
-            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToUpsert = doctorsService.upsertDoctor(doctorToInsert.Id, doctorToInsert.FirstName__c, doctorToInsert.Name, doctorToInsert.City__c, doctorToInsert.Country__c);
+            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctor = doctorsService.upsertDoctor(doctorToInsert.Id, doctorToInsert.FirstName__c, doctorToInsert.Name, doctorToInsert.City__c, doctorToInsert.Country__c);
             isAnyInsertProblem = false;
-            refreshResultsList(doctorToUpsert);
+            refreshResultsList(doctor);
         } catch (Exception e) {
             isAnyInsertProblem = true;
-
-            System.debug('isAnyInsertProblem='+e.getMessage());
+            System.debug('isAnyInsertProblem=' + e.getMessage());
         }
     }
 
@@ -94,6 +101,12 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
         isAnyInsertProblem = true;
         doctorToInsert = new Doctor__c();
+    }
+
+    public void resetDoctorToUpdate() {
+        clearMessages();
+        isAnyUpdateProblem = true;
+        doctorToEdit = new Doctor__c();
     }
 
     public void clearMessages() {
