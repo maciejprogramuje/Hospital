@@ -150,12 +150,6 @@ public with sharing class Hosp_PiotrHospitalsController {
         }
     }
 
-
-
-
-
-
-
     public void updateHospital() {
         clearMessages();
 
@@ -163,9 +157,11 @@ public with sharing class Hosp_PiotrHospitalsController {
             List<Hosp_HospitalWrapperForRest> updatedHospitals = insertHospitalCallout(hospitalToEdit);
 
             isAnyUpdateProblem = false;
+            messageSuccessToast = 'Hospital successfully updated';
             refreshResultsList(updatedHospitals);
         } catch (Exception e) {
             isAnyUpdateProblem = true;
+            messageErrorToast = 'Unable to update hospital';
             System.debug('isAnyUpdateProblem=' + e.getMessage());
         }
     }

@@ -230,10 +230,12 @@
 
                                 <apex:commandButton value="{! $Label.Save }"
                                                     action="{! updateDoctor }"
-                                                    reRender="searchResultTable, messagesInUpdateModal"
+
+                                                    onComplete="checkHideModalShowToast({! isAnyUpdateProblem }, 'modalEditDoc', 'successToast')"
+                                                    reRender="searchResultTable, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
+
                                                     status="statusCompLsds"
-                                                    styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onComplete="checkHideModal({! isAnyUpdateProblem }, 'modalEditDoc')"/>
+                                                    styleClass="slds-button slds-button--brand slds-m-top--medium"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="{! $Label.Cancel }"
@@ -290,11 +292,13 @@
 
                             <footer class="slds-modal__footer">
 
-                                <apex:commandbutton value="{! $Label.Hosp_Add_doctor }"
+                                <apex:commandButton value="{! $Label.Hosp_Add_doctor }"
                                                     action="{! insertDoctor }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onComplete="checkHideModal({! isAnyInsertProblem }, 'modalInsertDoc')"
-                                                    reRender="searchResultTable, messagesInInsertModal"
+
+                                                    onComplete="checkHideModalShowToast({! isAnyInsertProblem }, 'modalInsertDoc', 'successToast')"
+                                                    reRender="searchResultTable, messagesInInsertModal, successToastOutputPanel, errorToastOutputPanel"
+
                                                     status="statusCompLsds"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
@@ -429,12 +433,24 @@
             return false;
         }
 
-        function checkHideModal(isAnyProblem, modalId) {
+        /*function checkHideModal(isAnyProblem, modalId) {
             if (!isAnyProblem) {
                 hideToast(modalId);
             }
 
             overridePageMessages();
+        }*/
+
+        function checkHideModalShowToast(isAnyProblem, modalIdToHide, modalIdToShow) {
+            if (!isAnyProblem) {
+                hideToast(modalIdToHide);
+                showToast(modalIdToShow);
+
+                /*hideToast('modalInsertHosp');
+                showToast('successToast');*/
+            } else {
+                overridePageMessages();
+            }
         }
 
     </script>

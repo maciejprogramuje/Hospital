@@ -67,9 +67,11 @@ public with sharing class Hosp_PiotrDoctorsController {
         try {
             doctorToTest = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
             isAnyUpdateProblem = false;
+            messageSuccessToast = 'Doctor successfully updated';
             refreshResultsList(doctorToTest);
         } catch (Exception e) {
             isAnyUpdateProblem = true;
+            messageErrorToast = 'Unable to update doctor';
             System.debug('isAnyUpdateProblem=' + e.getMessage());
         }
 
@@ -81,9 +83,11 @@ public with sharing class Hosp_PiotrDoctorsController {
         try {
             doctorToTest = doctorsService.upsertDoctor(doctorToInsert.Id, doctorToInsert.FirstName__c, doctorToInsert.Name, doctorToInsert.City__c, doctorToInsert.Country__c);
             isAnyInsertProblem = false;
+            messageSuccessToast = 'Doctor successfully added';
             refreshResultsList(doctorToTest);
         } catch (Exception e) {
             isAnyInsertProblem = true;
+            messageErrorToast = 'Unable to add doctor';
             System.debug('isAnyInsertProblem=' + e.getMessage());
         }
     }

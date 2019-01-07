@@ -41,8 +41,8 @@
                             <apex:commandButton value="{! $Label.Hosp_New }"
                                                 action="{! resetHospitalToInsert }"
                                                 reRender="modalInsertOutputPanel, messages, messagesInInsertModal"
-                                                status="statusCompLsds"
                                                 onComplete="showToast('modalInsertHosp'); return false;"
+                                                status="statusCompLsds"
                                                 styleClass="slds-button slds-button--neutral">
                             </apex:commandButton>
                         </apex:form>
@@ -206,10 +206,12 @@
 
                                 <apex:commandButton value="{! $Label.Save }"
                                                     action="{! updateHospital }"
-                                                    reRender="searchResultTable, messagesInUpdateModal"
+
+                                                    onComplete="checkHideModalShowToast({! isAnyUpdateProblem }, 'modalEditHosp', 'successToast')"
+                                                    reRender="searchResultTable, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
+
                                                     status="statusCompLsds"
-                                                    styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onComplete="checkHideModal({! isAnyUpdateProblem }, 'modalEditHosp')"/>
+                                                    styleClass="slds-button slds-button--brand slds-m-top--medium"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="{! $Label.Cancel }"
@@ -267,16 +269,10 @@
                                 <apex:commandbutton value="Add hospital"
                                                     action="{! insertHospital }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onComplete="checkHideModal({! isAnyInsertProblem }, 'modalInsertHosp')"
 
+                                                    onComplete="checkHideModalShowToast({! isAnyInsertProblem }, 'modalInsertHosp', 'successToast')"
+                                                    reRender="searchResultTable, messagesInInsertModal, successToastOutputPanel, errorToastOutputPanel"
 
-
-                                                    onClick="checkHideDeleteToast({! isAnyInsertProblem })"
-
-
-
-
-                                                    reRender="searchResultTable, messagesInInsertModal"
                                                     status="statusCompLsds"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
@@ -412,12 +408,24 @@
             return false;
         }
 
-        function checkHideModal(isAnyProblem, modalId) {
+        /*function checkHideModal(isAnyProblem, modalId) {
             if (!isAnyProblem) {
                 hideToast(modalId);
             }
 
             overridePageMessages();
+        }*/
+
+        function checkHideModalShowToast(isAnyProblem, modalIdToHide, modalIdToShow) {
+            if (!isAnyProblem) {
+                hideToast(modalIdToHide);
+                showToast(modalIdToShow);
+
+                /*hideToast('modalInsertHosp');
+                showToast('successToast');*/
+            } else {
+                overridePageMessages();
+            }
         }
 
     </script>
