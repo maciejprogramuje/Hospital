@@ -5,6 +5,7 @@ public with sharing class Hosp_PiotrDoctorsController {
     public String doctorToEditId { get; set; }
     public Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP doctorsService { get; set; }
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsResults { get; set; }
+    public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> deletedDoctors { get; set; }
 
     public Boolean isAnyDoctorInResultsList { get; set; }
     public Boolean isAnyProblemWithDelete { get; set; }
@@ -117,9 +118,7 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         try {
-            List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> deletedDoctors = doctorsService.deleteDoctors(new List<String>{
-                    doctorToEditId
-            });
+            deletedDoctors = doctorsService.deleteDoctors(new List<String>{doctorToEditId});
             isAnyProblemWithDelete = false;
             messageSuccessToast = 'Doctor successfully deleted';
             searchDoctors();
