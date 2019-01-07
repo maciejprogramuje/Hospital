@@ -41,7 +41,7 @@
                             <apex:commandButton value="{! $Label.Hosp_New }"
                                                 action="{! resetHospitalToInsert }"
                                                 reRender="modalInsertOutputPanel, messages, messagesInInsertModal"
-                                                onComplete="showToast('modalInsertHosp'); return false;"
+                                                onComplete="showToastAndHideOthers('modalInsertHosp'); return false;"
                                                 status="statusCompLsds"
                                                 styleClass="slds-button slds-button--neutral">
                             </apex:commandButton>
@@ -53,7 +53,7 @@
 
         <div aria-labelledby="searchHospitalsForm">
             <fieldset class="slds-box slds-theme--default slds-container--small slds-m-around_medium">
-                <legend id="searchHospitalsForm" class="slds-text-heading--medium slds-p-vertical--medium">Search Hospitals
+                <legend id="searchHospitalsForm" class="slds-text-heading--medium slds-p-vertical--medium">{! $Label.Hosp_Search_Hospitals }
                 </legend>
                 <form class="slds-form--stacked">
                     <div class="slds-form-element">
@@ -122,7 +122,7 @@
                                     <apex:form>
                                         <apex:commandButton
                                                 action="{! openHospitalToEdit }"
-                                                onComplete="showToast('modalEditHosp'); return false;"
+                                                onComplete="showToastAndHideOthers('modalEditHosp'); return false;"
                                                 reRender="modalEditOutputPanel, searchResultTable, messagesInUpdateModal"
                                                 status="statusCompLsds"
                                                 styleClass="slds-button slds-button_neutral"
@@ -206,10 +206,8 @@
 
                                 <apex:commandButton value="{! $Label.Save }"
                                                     action="{! updateHospital }"
-
                                                     onComplete="checkHideModalShowToast({! isAnyUpdateProblem }, 'modalEditHosp', 'successToast')"
                                                     reRender="searchResultTable, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
-
                                                     status="statusCompLsds"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"/>
 
@@ -266,10 +264,9 @@
 
                             <footer class="slds-modal__footer">
 
-                                <apex:commandbutton value="Add hospital"
+                                <apex:commandbutton value="{! $Label.Hosp_Add_hospital }"
                                                     action="{! insertHospital }"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-
                                                     onComplete="checkHideModalShowToast({! isAnyInsertProblem }, 'modalInsertHosp', 'successToast')"
                                                     reRender="searchResultTable, messagesInInsertModal, successToastOutputPanel, errorToastOutputPanel"
 
@@ -408,24 +405,20 @@
             return false;
         }
 
-        /*function checkHideModal(isAnyProblem, modalId) {
-            if (!isAnyProblem) {
-                hideToast(modalId);
-            }
-
-            overridePageMessages();
-        }*/
-
         function checkHideModalShowToast(isAnyProblem, modalIdToHide, modalIdToShow) {
             if (!isAnyProblem) {
                 hideToast(modalIdToHide);
                 showToast(modalIdToShow);
-
-                /*hideToast('modalInsertHosp');
-                showToast('successToast');*/
             } else {
                 overridePageMessages();
             }
+        }
+
+        function showToastAndHideOthers(modalIdToShow) {
+            hideToast('successToast');
+            hideToast('errorToast');
+
+            showToast(modalIdToShow);
         }
 
     </script>

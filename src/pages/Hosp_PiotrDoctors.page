@@ -42,7 +42,7 @@
                                                 action="{! resetDoctorToInsert }"
                                                 reRender="modalInsertOutputPanel, messages, messagesInInsertModal"
                                                 status="statusCompLsds"
-                                                onComplete="showToast('modalInsertDoc'); return false;"
+                                                onComplete="showToastAndHideOthers('modalInsertDoc'); return false;"
                                                 styleClass="slds-button slds-button--neutral">
                             </apex:commandButton>
                         </apex:form>
@@ -53,7 +53,7 @@
 
         <div aria-labelledby="searchDoctorsForm">
             <fieldset class="slds-box slds-theme--default slds-container--small slds-m-around_medium">
-                <legend id="searchDoctorsForm" class="slds-text-heading--medium slds-p-vertical--medium">Search Doctors
+                <legend id="searchDoctorsForm" class="slds-text-heading--medium slds-p-vertical--medium">{! $Label.Hosp_Search_Doctors }
                 </legend>
                 <form class="slds-form--stacked">
                     <div class="slds-form-element">
@@ -133,7 +133,7 @@
                                     <apex:form>
                                         <apex:commandButton
                                                 action="{! openDoctorToEdit }"
-                                                onComplete="showToast('modalEditDoc'); return false;"
+                                                onComplete="showToastAndHideOthers('modalEditDoc'); return false;"
                                                 reRender="modalEditOutputPanel, searchResultTable, messagesInUpdateModal"
                                                 status="statusCompLsds"
                                                 styleClass="slds-button slds-button_neutral"
@@ -433,24 +433,20 @@
             return false;
         }
 
-        /*function checkHideModal(isAnyProblem, modalId) {
-            if (!isAnyProblem) {
-                hideToast(modalId);
-            }
-
-            overridePageMessages();
-        }*/
-
         function checkHideModalShowToast(isAnyProblem, modalIdToHide, modalIdToShow) {
             if (!isAnyProblem) {
                 hideToast(modalIdToHide);
                 showToast(modalIdToShow);
-
-                /*hideToast('modalInsertHosp');
-                showToast('successToast');*/
             } else {
                 overridePageMessages();
             }
+        }
+
+        function showToastAndHideOthers(modalIdToShow) {
+            hideToast('successToast');
+            hideToast('errorToast');
+
+            showToast(modalIdToShow);
         }
 
     </script>

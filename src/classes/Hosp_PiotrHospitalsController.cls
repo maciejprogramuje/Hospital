@@ -12,7 +12,7 @@ public with sharing class Hosp_PiotrHospitalsController {
     public String messageErrorToast { get; set; }
 
 
-    public String endPoint = 'https://eu16.salesforce.com/services/apexrest/Hospital__c/';
+    public String endPoint = Label.Hosp_Endpoint_Piotr_Hospital;
     public List<Hosp_HospitalWrapperForRest> hospitalsResults { get; set; }
 
     public Hosp_PiotrHospitalsController() {
@@ -83,11 +83,11 @@ public with sharing class Hosp_PiotrHospitalsController {
         try {
             List<Hosp_HospitalWrapperForRest> deletedHospitals = deleteHospitalCallout(hospitalToEditId);
             isAnyProblemWithDelete = false;
-            messageSuccessToast = 'Hospital successfully deleted';
+            messageSuccessToast = Label.Hosp_Hospital_successfully_deleted;
             searchHospitals();
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
-            messageErrorToast = 'Unable to delete hospital';
+            messageErrorToast = Label.Hosp_Unable_to_delete_hospital;
         }
     }
 
@@ -106,11 +106,11 @@ public with sharing class Hosp_PiotrHospitalsController {
         try {
             List<Hosp_HospitalWrapperForRest> insertedHospitals = insertHospitalCallout(hospitalToInsert);
             isAnyInsertProblem = false;
-            messageSuccessToast = 'Hospital successfully added';
+            messageSuccessToast = Label.Hosp_Hospital_successfully_added;
             refreshResultsList(insertedHospitals);
         } catch (Exception e) {
             isAnyInsertProblem = true;
-            messageErrorToast = 'Unable to add hospital';
+            messageErrorToast = Label.Hosp_Unable_to_add_hospital;
             System.debug('isAnyInsertProblem=' + e);
         }
     }
@@ -157,11 +157,11 @@ public with sharing class Hosp_PiotrHospitalsController {
             List<Hosp_HospitalWrapperForRest> updatedHospitals = insertHospitalCallout(hospitalToEdit);
 
             isAnyUpdateProblem = false;
-            messageSuccessToast = 'Hospital successfully updated';
+            messageSuccessToast = Label.Hosp_Hospital_successfully_updated;
             refreshResultsList(updatedHospitals);
         } catch (Exception e) {
             isAnyUpdateProblem = true;
-            messageErrorToast = 'Unable to update hospital';
+            messageErrorToast = Label.Hosp_Unable_to_update_hospital;
             System.debug('isAnyUpdateProblem=' + e.getMessage());
         }
     }

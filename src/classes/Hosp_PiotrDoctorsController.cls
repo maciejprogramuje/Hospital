@@ -67,11 +67,11 @@ public with sharing class Hosp_PiotrDoctorsController {
         try {
             doctorToTest = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
             isAnyUpdateProblem = false;
-            messageSuccessToast = 'Doctor successfully updated';
+            messageSuccessToast = Label.Hosp_Doctor_successfully_updated;
             refreshResultsList(doctorToTest);
         } catch (Exception e) {
             isAnyUpdateProblem = true;
-            messageErrorToast = 'Unable to update doctor';
+            messageErrorToast = Label.Hosp_Unable_to_update_doctor;
             System.debug('isAnyUpdateProblem=' + e.getMessage());
         }
 
@@ -83,11 +83,11 @@ public with sharing class Hosp_PiotrDoctorsController {
         try {
             doctorToTest = doctorsService.upsertDoctor(doctorToInsert.Id, doctorToInsert.FirstName__c, doctorToInsert.Name, doctorToInsert.City__c, doctorToInsert.Country__c);
             isAnyInsertProblem = false;
-            messageSuccessToast = 'Doctor successfully added';
+            messageSuccessToast = Label.Hosp_Doctor_successfully_added;
             refreshResultsList(doctorToTest);
         } catch (Exception e) {
             isAnyInsertProblem = true;
-            messageErrorToast = 'Unable to add doctor';
+            messageErrorToast = Label.Hosp_Unable_to_add_doctor;
             System.debug('isAnyInsertProblem=' + e.getMessage());
         }
     }
@@ -126,11 +126,11 @@ public with sharing class Hosp_PiotrDoctorsController {
         try {
             deletedDoctorsToTest = doctorsService.deleteDoctors(new List<String>{doctorToEditId});
             isAnyProblemWithDelete = false;
-            messageSuccessToast = 'Doctor successfully deleted';
+            messageSuccessToast = Label.Hosp_Doctor_successfully_deleted;
             searchDoctors();
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
-            messageErrorToast = 'Unable to delete doctor';
+            messageErrorToast = Label.Hosp_Unable_to_delete_doctor;
         }
     }
 
