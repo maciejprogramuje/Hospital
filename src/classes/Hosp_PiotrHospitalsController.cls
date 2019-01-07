@@ -106,9 +106,11 @@ public with sharing class Hosp_PiotrHospitalsController {
         try {
             List<Hosp_HospitalWrapperForRest> insertedHospitals = insertHospitalCallout(hospitalToInsert);
             isAnyInsertProblem = false;
+            messageSuccessToast = 'Hospital successfully added';
             refreshResultsList(insertedHospitals);
         } catch (Exception e) {
             isAnyInsertProblem = true;
+            messageErrorToast = 'Unable to add hospital';
             System.debug('isAnyInsertProblem=' + e);
         }
     }
