@@ -80,32 +80,6 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
     }
 
     @isTest
-    static void shouldNotInsertDoctorsFromPiotr() {
-        //given
-        Hosp_PiotrDoctorsMock mock = new Hosp_PiotrDoctorsMock();
-        mock.selectMethod('insertDoctor');
-        Test.setMock(WebServiceMock.class, mock);
-
-        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
-
-        Doctor__c doctor = new Doctor__c();
-        doctor.Name = '';
-        doctor.FirstName__c = '';
-        doctor.Country__c = 'TestDoctorCountry';
-        doctor.City__c = 'TestDoctorCity';
-
-        controller.doctorToInsert = doctor;
-
-        //List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctors = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
-
-        //when
-        controller.insertDoctor();
-
-        //then
-        System.assertEquals(null, controller.doctorToTest);
-    }
-
-    @isTest
     static void shouldUpdateDoctorsFromPiotr() {
         //given
         Hosp_PiotrDoctorsMock mock = new Hosp_PiotrDoctorsMock();
@@ -129,5 +103,53 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
 
         //then
         System.assertEquals('TestDoctorFirstNameUpdate', controller.doctorToTest.webServiceDoctorFirstName);
+    }
+
+    @isTest
+    static void shouldOpenDoctorToEdit() {
+        //given
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+
+        controller.doctorToEdit = new Doctor__c();
+
+        Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doc = new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP();
+        doc.webServiceDoctorLastName = 'TestDoctorLastName';
+        doc.webServiceDoctorFirstName = 'TestDoctorFirstName';
+        doc.webServiceDoctorCity = 'TestDoctorCity';
+        doc.webServiceDoctorCountry = 'TestDoctorCountry';
+
+        List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
+        controller.doctorsResults = doctorsResults;
+        controller.doctorsResults.add(doc);
+
+        //when
+        controller.openDoctorToEdit();
+
+        //then
+        System.assertEquals('TestDoctorFirstName', controller.doctorToEdit.FirstName__c);
+    }
+
+    @isTest
+    static void shouldResetDoctorToInsert() {
+        //given
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+
+        //when
+        controller.resetDoctorToInsert();
+
+        //then
+        System.assertEquals(true, controller.isAnyInsertProblem);
+    }
+
+    @isTest
+    static void shouldResetDoctorToUpdate() {
+        //given
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+
+        //when
+        controller.resetDoctorToUpdate();
+
+        //then
+        System.assertEquals(true, controller.isAnyUpdateProblem);
     }
 }
