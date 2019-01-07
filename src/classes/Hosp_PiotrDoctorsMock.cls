@@ -53,8 +53,6 @@ global with sharing class Hosp_PiotrDoctorsMock implements WebServiceMock {
 
             response.put('response_x', responseInsertElement);
         } else if (returnResult.equals('insertDoctor')) {
-            doctor.webServiceDoctorFirstName = 'TestDoctorFirstNameNew';
-
             Hosp_soapSforceComSchemasClassHospitalD.upsertDoctorResponse_element responseInsertElement = new Hosp_soapSforceComSchemasClassHospitalD.upsertDoctorResponse_element();
             responseInsertElement.result = doctor;
 

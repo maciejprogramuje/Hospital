@@ -72,13 +72,37 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
 
         controller.doctorToInsert = doctor;
 
+        //when
+        controller.insertDoctor();
+
+        //then
+        System.assertEquals('TestDoctorFirstName', controller.doctorToTest.webServiceDoctorFirstName);
+    }
+
+    @isTest
+    static void shouldNotInsertDoctorsFromPiotr() {
+        //given
+        Hosp_PiotrDoctorsMock mock = new Hosp_PiotrDoctorsMock();
+        mock.selectMethod('insertDoctor');
+        Test.setMock(WebServiceMock.class, mock);
+
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+
+        Doctor__c doctor = new Doctor__c();
+        doctor.Name = '';
+        doctor.FirstName__c = '';
+        doctor.Country__c = 'TestDoctorCountry';
+        doctor.City__c = 'TestDoctorCity';
+
+        controller.doctorToInsert = doctor;
+
         //List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctors = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
 
         //when
         controller.insertDoctor();
 
         //then
-        System.assertEquals(false, controller.isAnyInsertProblem);
+        System.assertEquals(null, controller.doctorToTest);
     }
 
     @isTest
@@ -104,6 +128,6 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
         controller.updateDoctor();
 
         //then
-        System.assertEquals(false, controller.isAnyUpdateProblem);
+        System.assertEquals('TestDoctorFirstNameUpdate', controller.doctorToTest.webServiceDoctorFirstName);
     }
 }

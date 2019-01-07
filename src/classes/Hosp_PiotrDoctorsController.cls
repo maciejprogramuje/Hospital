@@ -7,7 +7,7 @@ public with sharing class Hosp_PiotrDoctorsController {
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsResults { get; set; }
 
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> deletedDoctorsToTest { get; set; }
-    //public Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToTest { get; set; }
+    public Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToTest { get; set; }
 
     public Boolean isAnyDoctorInResultsList { get; set; }
     public Boolean isAnyProblemWithDelete { get; set; }
@@ -65,9 +65,9 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         try {
-            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctor = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
+            doctorToTest = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
             isAnyUpdateProblem = false;
-            refreshResultsList(doctor);
+            refreshResultsList(doctorToTest);
         } catch (Exception e) {
             isAnyUpdateProblem = true;
             System.debug('isAnyUpdateProblem=' + e.getMessage());
@@ -79,9 +79,9 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         try {
-            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctor = doctorsService.upsertDoctor(doctorToInsert.Id, doctorToInsert.FirstName__c, doctorToInsert.Name, doctorToInsert.City__c, doctorToInsert.Country__c);
+            doctorToTest = doctorsService.upsertDoctor(doctorToInsert.Id, doctorToInsert.FirstName__c, doctorToInsert.Name, doctorToInsert.City__c, doctorToInsert.Country__c);
             isAnyInsertProblem = false;
-            refreshResultsList(doctor);
+            refreshResultsList(doctorToTest);
         } catch (Exception e) {
             isAnyInsertProblem = true;
             System.debug('isAnyInsertProblem=' + e.getMessage());
