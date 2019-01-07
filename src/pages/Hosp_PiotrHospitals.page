@@ -162,8 +162,7 @@
 
                             <td data-label="{! $ObjectType.Hospital__c.fields.Country__c.label }">
                                 <div class="slds-truncate"
-                                     title="{! $ObjectType.Hospital__c.fields.Country__c.label }">{!
-                                hosp.country}
+                                     title="{! $ObjectType.Hospital__c.fields.Country__c.label }">{! hosp.country}
                                 </div>
                             </td>
                         </tr>
@@ -251,10 +250,12 @@
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
                                     <apex:inputField value="{! hospitalToInsert.City__c }"
+                                                     required="true"
                                                      html-placeholder="{! $ObjectType.Hospital__c.fields.City__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
                                     <apex:inputField value="{! hospitalToInsert.Country__c }"
+                                                     required="true"
                                                      html-placeholder="{! $ObjectType.Hospital__c.fields.Country__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 

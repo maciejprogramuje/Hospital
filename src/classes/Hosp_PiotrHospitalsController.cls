@@ -68,9 +68,6 @@ public with sharing class Hosp_PiotrHospitalsController {
     public HttpRequest getRequest(String methodType, String urlParams, String body) {
         HttpRequest request = new HttpRequest();
         request.setEndPoint(endPoint + urlParams);
-
-        System.debug('url=' + endPoint + urlParams);
-
         request.setHeader('Authorization', 'Bearer ' + loginToPiotr());
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setMethod(methodType);
@@ -103,64 +100,96 @@ public with sharing class Hosp_PiotrHospitalsController {
         return hospitalList;
     }
 
+    public void insertHospital() {
+        clearMessages();
 
+        try {
+            List<Hosp_HospitalWrapperForRest> insertedHospitals = insertHospitalCallout(hospitalToInsert);
+            isAnyInsertProblem = false;
+            refreshResultsList(insertedHospitals);
+        } catch (Exception e) {
+            isAnyInsertProblem = true;
+            System.debug('isAnyInsertProblem=' + e);
+        }
+    }
 
+    public List<Hosp_HospitalWrapperForRest> insertHospitalCallout(Hospital__c hospital) {
+        String body = JSON.serialize(new Hosp_HospitalWrapperForRest(hospital), true);
+        body = '{ "hospitals"  : [ ' + body + ' ] }';
 
+        Http http = new Http();
+        HttpRequest request = getRequest('PUT', '', body);
 
+        HttpResponse response = http.send(request);
+        List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserializeStrict(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
 
+        System.debug(response.getStatus());
 
+        return hospitalList;
+    }
 
     public void resetHospitalToInsert() {
-        /*clearMessages();
+        clearMessages();
         isAnyInsertProblem = true;
-        doctorToInsert = new Doctor__c();*/
+        hospitalToInsert = new Hospital__c();
     }
 
     public void openHospitalToEdit() {
-        /*resetDoctorToUpdate();
+        resetHospitalToUpdate();
 
-        for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doc : doctorsResults) {
-            if (doc.webServiceDoctorId == doctorToEditId) {
-                doctorToEdit.Id = doc.webServiceDoctorId;
-                doctorToEdit.Name = doc.webServiceDoctorLastName;
-                doctorToEdit.FirstName__c = doc.webServiceDoctorFirstName;
-                doctorToEdit.City__c = doc.webServiceDoctorCity;
-                doctorToEdit.Country__c = doc.webServiceDoctorCountry;
+        for (Hosp_HospitalWrapperForRest hosp : hospitalsResults) {
+            if (hosp.hospitalId == hospitalToEditId) {
+                hospitalToEdit.Id = hosp.hospitalId;
+                hospitalToEdit.Name = hosp.name;
+                hospitalToEdit.City__c = hosp.city;
+                hospitalToEdit.Country__c = hosp.country;
                 break;
             }
-        }*/
+        }
     }
 
+
+
+
+
+
+
     public void updateHospital() {
-        /*clearMessages();
+        clearMessages();
 
         try {
-            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctor = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
+            List<Hosp_HospitalWrapperForRest> updatedHospitals = insertHospitalCallout(hospitalToEdit);
+
             isAnyUpdateProblem = false;
-            refreshResultsList(doctor);
+            refreshResultsList(updatedHospitals);
         } catch (Exception e) {
             isAnyUpdateProblem = true;
             System.debug('isAnyUpdateProblem=' + e.getMessage());
-        }*/
+        }
     }
 
     public void resetHospitalToUpdate() {
-        /*clearMessages();
+        clearMessages();
         isAnyUpdateProblem = true;
-        doctorToEdit = new Doctor__c();*/
+        hospitalToEdit = new Hospital__c();
     }
 
-    public void insertHospital() {
-        /*clearMessages();
 
-        try {
-            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctor = doctorsService.upsertDoctor(doctorToInsert.Id, doctorToInsert.FirstName__c, doctorToInsert.Name, doctorToInsert.City__c, doctorToInsert.Country__c);
-            isAnyInsertProblem = false;
-            refreshResultsList(doctor);
-        } catch (Exception e) {
-            isAnyInsertProblem = true;
-            System.debug('isAnyInsertProblem=' + e.getMessage());
-        }*/
+
+
+
+
+
+
+    private void refreshResultsList(List<Hosp_HospitalWrapperForRest> hospitals) {
+        if (!hospitals.isEmpty()
+                && (String.isNotBlank(hospitalToSearch.Name)
+                || String.isNotBlank(hospitalToSearch.City__c)
+                || String.isNotBlank(hospitalToSearch.Country__c))) {
+            hospitalToEditId = hospitals.get(0).hospitalId;
+
+            searchHospitals();
+        }
     }
 
     public void clearMessages() {
