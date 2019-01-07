@@ -171,6 +171,10 @@
                           <MetadataEntry>
                             <option name="name" value="UpdateContactAddresses" />
                           </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_PiotrHospitalsController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="ApexClass" />
@@ -310,6 +314,10 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="mess" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_PiotrHospitals" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>
