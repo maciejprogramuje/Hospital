@@ -174,13 +174,6 @@ public with sharing class Hosp_PiotrHospitalsController {
         hospitalToEdit = new Hospital__c();
     }
 
-
-
-
-
-
-
-
     private void refreshResultsList(List<Hosp_HospitalWrapperForRest> hospitals) {
         if (!hospitals.isEmpty()
                 && (String.isNotBlank(hospitalToSearch.Name)
