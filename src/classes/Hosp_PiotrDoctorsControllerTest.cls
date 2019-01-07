@@ -49,9 +49,61 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
 
         //when
         controller.deleteDoctor();
-        doctors = controller.deletedDoctors;
+        doctors = controller.deletedDoctorsToTest;
 
         //then
         System.assertEquals(1, doctors.size());
+    }
+
+    @isTest
+    static void shouldInsertDoctorsFromPiotr() {
+        //given
+        Hosp_PiotrDoctorsMock mock = new Hosp_PiotrDoctorsMock();
+        mock.selectMethod('insertDoctor');
+        Test.setMock(WebServiceMock.class, mock);
+
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+
+        Doctor__c doctor = new Doctor__c();
+        doctor.Name = 'TestDoctorLastName';
+        doctor.FirstName__c = 'TestDoctorFirstName';
+        doctor.Country__c = 'TestDoctorCountry';
+        doctor.City__c = 'TestDoctorCity';
+
+        controller.doctorToInsert = doctor;
+
+        //List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctors = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
+
+        //when
+        controller.insertDoctor();
+
+        //then
+        System.assertEquals(false, controller.isAnyInsertProblem);
+    }
+
+    @isTest
+    static void shouldUpdateDoctorsFromPiotr() {
+        //given
+        Hosp_PiotrDoctorsMock mock = new Hosp_PiotrDoctorsMock();
+        mock.selectMethod('updateDoctor');
+        Test.setMock(WebServiceMock.class, mock);
+
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+
+        Doctor__c doctor = new Doctor__c();
+        doctor.Name = 'TestDoctorLastName';
+        doctor.FirstName__c = 'TestDoctorFirstNameUpdate';
+        doctor.Country__c = 'TestDoctorCountry';
+        doctor.City__c = 'TestDoctorCity';
+
+        controller.doctorToEdit = doctor;
+
+        //List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctors = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
+
+        //when
+        controller.updateDoctor();
+
+        //then
+        System.assertEquals(false, controller.isAnyUpdateProblem);
     }
 }
