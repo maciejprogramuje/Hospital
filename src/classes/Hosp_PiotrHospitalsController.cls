@@ -21,7 +21,6 @@ public with sharing class Hosp_PiotrHospitalsController {
         hospitalToEdit = new Hospital__c();
         hospitalToInsert = new Hospital__c();
 
-
         isAnyHospitalInResultsList = false;
         isAnyProblemWithDelete = false;
         isAnyInsertProblem = true;
