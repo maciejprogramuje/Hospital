@@ -8,9 +8,6 @@ public with sharing class Hosp_PiotrHospitalsController {
     public Boolean isAnyProblemWithDelete { get; set; }
     public Boolean isAnyInsertProblem { get; set; }
     public Boolean isAnyUpdateProblem { get; set; }
-    public String messageSuccessToast { get; set; }
-    public String messageErrorToast { get; set; }
-
 
     public String endPoint = Label.Hosp_Endpoint_Piotr_Hospital;
     public List<Hosp_HospitalWrapperForRest> hospitalsResults { get; set; }
@@ -86,13 +83,13 @@ public with sharing class Hosp_PiotrHospitalsController {
         try {
             List<Hosp_HospitalWrapperForRest> deletedHospitals = deleteHospitalCallout(hospitalToEditId);
             isAnyProblemWithDelete = false;
-            messageSuccessToast = Label.Hosp_Hospital_successfully_deleted;
+            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Hospital_successfully_deleted;
             if (!Test.isRunningTest()) {
                 searchHospitals();
             }
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
-            messageErrorToast = Label.Hosp_Unable_to_delete_hospital;
+            Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_delete_hospital;
         }
     }
 
@@ -111,11 +108,11 @@ public with sharing class Hosp_PiotrHospitalsController {
         try {
             List<Hosp_HospitalWrapperForRest> insertedHospitals = insertHospitalCallout(hospitalToInsert);
             isAnyInsertProblem = false;
-            messageSuccessToast = Label.Hosp_Hospital_successfully_added;
+            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Hospital_successfully_added;
             refreshResultsList(insertedHospitals);
         } catch (Exception e) {
             isAnyInsertProblem = true;
-            messageErrorToast = Label.Hosp_Unable_to_add_hospital;
+            Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_add_hospital;
             System.debug('isAnyInsertProblem=' + e);
         }
     }
@@ -162,11 +159,11 @@ public with sharing class Hosp_PiotrHospitalsController {
             List<Hosp_HospitalWrapperForRest> updatedHospitals = insertHospitalCallout(hospitalToEdit);
 
             isAnyUpdateProblem = false;
-            messageSuccessToast = Label.Hosp_Hospital_successfully_updated;
+            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Hospital_successfully_updated;
             refreshResultsList(updatedHospitals);
         } catch (Exception e) {
             isAnyUpdateProblem = true;
-            messageErrorToast = Label.Hosp_Unable_to_update_hospital;
+            Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_update_hospital;
             System.debug('isAnyUpdateProblem=' + e.getMessage());
         }
     }

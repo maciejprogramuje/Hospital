@@ -199,6 +199,14 @@
                             <option name="name" value="Hosp_PiotrHospitalsControllerTest" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_SuccessToastController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_ErrorToastController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="ApexClass" />
@@ -217,6 +225,14 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_StatusComponentLsds" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_ErrorToast" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_SuccessToast" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>

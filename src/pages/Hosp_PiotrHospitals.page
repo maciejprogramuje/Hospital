@@ -11,7 +11,9 @@
         }
         .customMessage {
             opacity: 1!important;
-            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
             font-size: 16px;
             border: 0px;
             padding: 10px;
@@ -20,6 +22,7 @@
         .message {
             opacity: 1
         }
+
 
 
     </style>
@@ -53,7 +56,8 @@
 
         <div aria-labelledby="searchHospitalsForm">
             <fieldset class="slds-box slds-theme--default slds-container--small slds-m-around_medium">
-                <legend id="searchHospitalsForm" class="slds-text-heading--medium slds-p-vertical--medium">{! $Label.Hosp_Search_Hospitals }
+                <legend id="searchHospitalsForm"
+                        class="slds-text-heading--medium slds-p-vertical--medium">{! $Label.Hosp_Search_Hospitals }
                 </legend>
                 <form class="slds-form--stacked">
                     <div class="slds-form-element">
@@ -84,6 +88,14 @@
                 </form>
             </fieldset>
         </div>
+
+        <apex:outputPanel id="messages">
+            <apex:pageMessages/>
+        </apex:outputPanel>
+
+        <c:Hosp_SuccessToast/>
+
+        <c:Hosp_ErrorToast/>
 
         <apex:outputPanel id="searchResultTable">
             <apex:outputPanel rendered="{! isAnyHospitalInResultsList }">
@@ -185,6 +197,10 @@
                         <apex:form>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
+                                <apex:outputPanel id="messagesInUpdateModal">
+                                    <apex:pageMessages/>
+                                </apex:outputPanel>
+
                                 <apex:outputPanel id="modalEditOutputPanel">
 
                                     <apex:inputField value="{! hospitalToEdit.Name }"
@@ -218,10 +234,6 @@
                                                     onClick="hideToast('modalEditHosp'); return false;"
                                                     status="statusCompLsds"/>
                             </footer>
-
-                            <apex:outputPanel id="messagesInUpdateModal">
-                                <apex:pageMessages/>
-                            </apex:outputPanel>
                         </apex:form>
                     </div>
                 </section>
@@ -241,6 +253,10 @@
                         </header>
                         <apex:form>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                                <apex:outputPanel id="messagesInInsertModal">
+                                    <apex:pageMessages/>
+                                </apex:outputPanel>
 
                                 <apex:outputPanel id="modalInsertOutputPanel">
 
@@ -279,89 +295,12 @@
                                                     status="statusCompLsds"
                                                     onClick="hideToast('modalInsertHosp'); return false;"/>
                             </footer>
-
-                            <apex:outputPanel id="messagesInInsertModal">
-                                <apex:pageMessages/>
-                            </apex:outputPanel>
                         </apex:form>
                     </div>
                 </section>
                 <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
         </div>
-
-
-        <div id="successToast" class="demo-only" style="display: none; height: 4rem;">
-            <div class="slds-notify_container slds-is-relative">
-                <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
-                    <span class="slds-assistive-text">success</span>
-                    <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top"
-                          title="Description of icon when needed">
-                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#success') }"></use>
-                        </svg>
-                    </span>
-                    <div class="slds-notify__content">
-                        <h2 class="slds-text-heading_small ">
-                            <apex:outputPanel id="successToastOutputPanel">
-                                    {! messageSuccessToast }
-                            </apex:outputPanel>
-                        </h2>
-                    </div>
-                    <div class="slds-notify__close">
-                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close"
-                                onClick="hideToast('successToast')">
-                            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                     xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#close') }"></use>
-                            </svg>
-                            <span class="slds-assistive-text">Close</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div id="errorToast" class="demo-only" style="display: none; height: 4rem;">
-            <div class="slds-notify_container slds-is-relative">
-                <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
-                    <span class="slds-assistive-text">error</span>
-                    <span class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top"
-                          title="Description of icon when needed">
-                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#error') }"></use>
-                        </svg>
-                    </span>
-                    <div class="slds-notify__content">
-                        <h2 class="slds-text-heading_small ">
-                            <apex:outputPanel id="errorToastOutputPanel">
-                                    {! messageErrorToast }
-                            </apex:outputPanel>
-                        </h2>
-                    </div>
-                    <div class="slds-notify__close">
-                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close"
-                                onClick="hideToast('errorToast')">
-                            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                     xlink:href="{! URLFOR($Resource.slds275, 'icons/utility-sprite/svg/symbols.svg#close') }"></use>
-                            </svg>
-                            <span class="slds-assistive-text">Close</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <apex:outputPanel id="messages">
-            <apex:pageMessages/>
-        </apex:outputPanel>
-
-
     </div>
 
     <c:Hosp_StatusComponentLsds/>
@@ -421,6 +360,7 @@
 
             showToast(modalIdToShow);
         }
+
 
     </script>
 

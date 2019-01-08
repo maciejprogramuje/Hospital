@@ -13,9 +13,6 @@ public with sharing class Hosp_PiotrDoctorsController {
     public Boolean isAnyProblemWithDelete { get; set; }
     public Boolean isAnyInsertProblem { get; set; }
     public Boolean isAnyUpdateProblem { get; set; }
-    public String messageSuccessToast { get; set; }
-    public String messageErrorToast { get; set; }
-
 
     public Hosp_PiotrDoctorsController() {
         doctorsService = new Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP();
@@ -67,11 +64,11 @@ public with sharing class Hosp_PiotrDoctorsController {
         try {
             doctorToTest = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
             isAnyUpdateProblem = false;
-            messageSuccessToast = Label.Hosp_Doctor_successfully_updated;
+            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_updated;
             refreshResultsList(doctorToTest);
         } catch (Exception e) {
             isAnyUpdateProblem = true;
-            messageErrorToast = Label.Hosp_Unable_to_update_doctor;
+            Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_update_doctor;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Hosp_Doctor_already_exists));
             System.debug('isAnyUpdateProblem=' + e.getMessage());
         }
@@ -84,13 +81,13 @@ public with sharing class Hosp_PiotrDoctorsController {
         try {
             doctorToTest = doctorsService.upsertDoctor(doctorToInsert.Id, doctorToInsert.FirstName__c, doctorToInsert.Name, doctorToInsert.City__c, doctorToInsert.Country__c);
             isAnyInsertProblem = false;
-            messageSuccessToast = Label.Hosp_Doctor_successfully_added;
+            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_added;
             refreshResultsList(doctorToTest);
 
             System.debug('insertDoctor ok');
         } catch (Exception e) {
             isAnyInsertProblem = true;
-            messageErrorToast = Label.Hosp_Unable_to_add_doctor;
+            Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_add_doctor;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Hosp_Doctor_already_exists));
             System.debug('isAnyInsertProblem=' + e.getMessage());
         }
@@ -130,11 +127,11 @@ public with sharing class Hosp_PiotrDoctorsController {
         try {
             deletedDoctorsToTest = doctorsService.deleteDoctors(new List<String>{doctorToEditId});
             isAnyProblemWithDelete = false;
-            messageSuccessToast = Label.Hosp_Doctor_successfully_deleted;
+            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_deleted;
             searchDoctors();
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
-            messageErrorToast = Label.Hosp_Unable_to_delete_doctor;
+            Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_delete_doctor;
         }
     }
 
