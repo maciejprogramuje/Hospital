@@ -178,7 +178,9 @@ public with sharing class Hosp_PiotrHospitalsController {
                 || String.isNotBlank(hospitalToSearch.Country__c))) {
             hospitalToEditId = hospitals.get(0).hospitalId;
 
-            searchHospitals();
+            if(!Test.isRunningTest()) {
+                searchHospitals();
+            }
         }
     }
 
