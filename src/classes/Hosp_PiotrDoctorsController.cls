@@ -72,6 +72,7 @@ public with sharing class Hosp_PiotrDoctorsController {
         } catch (Exception e) {
             isAnyUpdateProblem = true;
             messageErrorToast = Label.Hosp_Unable_to_update_doctor;
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Hosp_Doctor_already_exists));
             System.debug('isAnyUpdateProblem=' + e.getMessage());
         }
 
@@ -85,9 +86,12 @@ public with sharing class Hosp_PiotrDoctorsController {
             isAnyInsertProblem = false;
             messageSuccessToast = Label.Hosp_Doctor_successfully_added;
             refreshResultsList(doctorToTest);
+
+            System.debug('insertDoctor ok');
         } catch (Exception e) {
             isAnyInsertProblem = true;
             messageErrorToast = Label.Hosp_Unable_to_add_doctor;
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Hosp_Doctor_already_exists));
             System.debug('isAnyInsertProblem=' + e.getMessage());
         }
     }

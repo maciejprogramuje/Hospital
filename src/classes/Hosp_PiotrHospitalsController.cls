@@ -28,6 +28,10 @@ public with sharing class Hosp_PiotrHospitalsController {
     }
 
     public void searchHospitals() {
+        /*
+        if(String.isNotBlank(hospitalToSearch.Name)
+                || )*/
+
         hospitalsResults = getHospitalCallout(hospitalToSearch.Name, hospitalToSearch.City__c, hospitalToSearch.Country__c);
 
         if (hospitalsResults.size() > 0) {
@@ -50,13 +54,13 @@ public with sharing class Hosp_PiotrHospitalsController {
 
     private String generateQueryForgetHospitalCallout(String queryName, String queryCity, String queryCountry) {
         String query = '?';
-        if(String.isNotBlank(queryName)) {
+        if (String.isNotBlank(queryName)) {
             query += 'Name=' + queryName + '&';
         }
-        if(String.isNotBlank(queryCity)) {
+        if (String.isNotBlank(queryCity)) {
             query += 'City__c=' + queryCity + '&';
         }
-        if(String.isNotBlank(queryCountry)) {
+        if (String.isNotBlank(queryCountry)) {
             query += 'Country__c=' + queryCountry;
         }
         query = query.replaceAll(' ', '%20');
@@ -83,7 +87,9 @@ public with sharing class Hosp_PiotrHospitalsController {
             List<Hosp_HospitalWrapperForRest> deletedHospitals = deleteHospitalCallout(hospitalToEditId);
             isAnyProblemWithDelete = false;
             messageSuccessToast = Label.Hosp_Hospital_successfully_deleted;
-            searchHospitals();
+            if (!Test.isRunningTest()) {
+                searchHospitals();
+            }
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
             messageErrorToast = Label.Hosp_Unable_to_delete_hospital;
@@ -178,7 +184,7 @@ public with sharing class Hosp_PiotrHospitalsController {
                 || String.isNotBlank(hospitalToSearch.Country__c))) {
             hospitalToEditId = hospitals.get(0).hospitalId;
 
-            if(!Test.isRunningTest()) {
+            if (!Test.isRunningTest()) {
                 searchHospitals();
             }
         }
