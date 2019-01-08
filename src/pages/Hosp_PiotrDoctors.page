@@ -400,7 +400,8 @@
             hideToast('errorToast');
             hideToast('successToast');
 
-            var textureEffect = 'slds-theme--alert-texture';
+            //var textureEffect = 'slds-theme--alert-texture';
+            var textureEffect = '';
 
             $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
             $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);
