@@ -21,9 +21,7 @@ public with sharing class Hosp_PiotrDoctorsController {
         doctorToInsert = new Doctor__c();
         doctorsService.timeout_x = 1000;
         doctorsService.SessionHeader = new Hosp_soapSforceComSchemasClassHospitalD.SessionHeader_element();
-        if(!Test.isRunningTest()) {
-            doctorsService.SessionHeader.sessionId = loginToPiotr();
-        }
+        doctorsService.SessionHeader.sessionId = Hosp_Utils.loginToPiotrGetSessionId();
         doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
 
         isAnyDoctorInResultsList = false;
@@ -138,14 +136,4 @@ public with sharing class Hosp_PiotrDoctorsController {
         }
     }
 
-    public String loginToPiotr() {
-        try {
-            Hosp_partnerSoapSforceCom.Soap partnerSoap = new Hosp_partnerSoapSforceCom.Soap();
-            Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login(Label.Hosp_login_to_Piotr, Label.Hosp_password_to_Piotr);
-            return loginResult.sessionId;
-        } catch (Exception ex) {
-            System.debug(ex.getMessage());
-            return null;
-        }
-    }
 }

@@ -64,7 +64,7 @@ public with sharing class Hosp_PiotrHospitalsController {
     public HttpRequest getRequest(String methodType, String urlParams, String body) {
         HttpRequest request = new HttpRequest();
         request.setEndPoint(endPoint + urlParams);
-        request.setHeader('Authorization', 'Bearer ' + loginToPiotr());
+        request.setHeader('Authorization', 'Bearer ' + Hosp_Utils.loginToPiotrGetSessionId());
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setMethod(methodType);
         if (body != '') {
@@ -187,15 +187,5 @@ public with sharing class Hosp_PiotrHospitalsController {
         ApexPages.getMessages().clear();
     }
 
-    public String loginToPiotr() {
-        try {
-            Hosp_partnerSoapSforceCom.Soap partnerSoap = new Hosp_partnerSoapSforceCom.Soap();
-            Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login(Label.Hosp_login_to_Piotr, Label.Hosp_password_to_Piotr);
-            return loginResult.sessionId;
-        } catch (Exception ex) {
-            System.debug(ex.getMessage());
-            return null;
-        }
-    }
 }
 

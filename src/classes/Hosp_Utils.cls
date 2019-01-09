@@ -114,7 +114,7 @@ public class Hosp_Utils {
         } else if (String.isNotBlank(city)) {
             query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE City__c LIKE \'' + city + '%\''
                     + addToWhereIfNotBlankAndEquals('Country__c', country);
-        }  else if (String.isNotBlank(country)) {
+        } else if (String.isNotBlank(country)) {
             query = 'SELECT Id, Name, FirstName__c, City__c, Country__c FROM Doctor__c WHERE Country__c = \'' + country + '\'';
         }
 
@@ -135,6 +135,20 @@ public class Hosp_Utils {
         } else {
             return ' ';
         }
+    }
+
+    public static String loginToPiotrGetSessionId() {
+        if(!Test.isRunningTest()) {
+            try {
+                Hosp_partnerSoapSforceCom.Soap partnerSoap = new Hosp_partnerSoapSforceCom.Soap();
+                Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login(Label.Hosp_login_to_Piotr, Label.Hosp_password_to_Piotr);
+                return loginResult.sessionId;
+            } catch (Exception ex) {
+                System.debug(ex.getMessage());
+                return null;
+            }
+        }
+        return null;
     }
 
 }
