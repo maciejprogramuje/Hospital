@@ -181,6 +181,21 @@ public class Hosp_PiotrHospitalsControllerTest {
         System.assertEquals(true, controller.isAnyUpdateProblem);
     }
 
+    @isTest
+    static void shouldOpenHospitalToEdit() {
+        //given
+        Hosp_PiotrHospitalsController controller = new Hosp_PiotrHospitalsController();
+        //controller.hospitalsResults = new List<Hosp_HospitalWrapperForRest>();
+        Hospital__c hospital = new Hospital__c();
+        controller.hospitalsResults.add(new Hosp_HospitalWrapperForRest(hospital));
+        controller.hospitalToEditId = hospital.Id;
+
+        //when
+        controller.openHospitalToEdit();
+
+        //then
+        System.assertEquals(controller.hospitalToEditId, controller.hospitalToEdit.Id);
+    }
 }
 
 

@@ -21,11 +21,9 @@ public with sharing class Hosp_PiotrDoctorsController {
         doctorToInsert = new Doctor__c();
         doctorsService.timeout_x = 1000;
         doctorsService.SessionHeader = new Hosp_soapSforceComSchemasClassHospitalD.SessionHeader_element();
-
         if(!Test.isRunningTest()) {
             doctorsService.SessionHeader.sessionId = loginToPiotr();
         }
-
         doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
 
         isAnyDoctorInResultsList = false;
