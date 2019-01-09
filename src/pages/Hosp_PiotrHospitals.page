@@ -63,14 +63,18 @@
                     <div class="slds-form-element">
                         <div class="slds-form-element__control">
                             <apex:form id="searchHospitalsApexForm">
+
+                                <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Name.label }</label>
                                 <apex:inputField value="{! hospitalToSearch.Name }"
                                                  html-placeholder="{! $ObjectType.Hospital__c.fields.Name.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.City__c.label }</label>
                                 <apex:inputField value="{! hospitalToSearch.City__c }"
                                                  html-placeholder="{! $ObjectType.Hospital__c.fields.City__c.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Country__c.label }</label>
                                 <apex:inputField value="{! hospitalToSearch.Country__c }"
                                                  html-placeholder="{! $ObjectType.Hospital__c.fields.Country__c.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
@@ -148,6 +152,7 @@
                                         <apex:commandButton action="{! deleteHospital }"
                                                             styleClass="slds-button slds-button_neutral"
                                                             value="{! $Label.Delete }"
+                                                            onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"
                                                             onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
                                                             reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
                                                             status="statusCompLsds">
@@ -203,15 +208,18 @@
 
                                 <apex:outputPanel id="modalEditOutputPanel">
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Name.label }</label>
                                     <apex:inputField value="{! hospitalToEdit.Name }"
                                                      html-placeholder="{! $ObjectType.Hospital__c.fields.Name.label }"
                                                      required="true"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.City__c.label }</label>
                                     <apex:inputField value="{! hospitalToEdit.City__c }"
                                                      html-placeholder="{! $ObjectType.Hospital__c.fields.City__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Country__c.label }</label>
                                     <apex:inputField value="{! hospitalToEdit.Country__c }"
                                                      html-placeholder="{! $ObjectType.Hospital__c.fields.Country__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
@@ -260,16 +268,19 @@
 
                                 <apex:outputPanel id="modalInsertOutputPanel">
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Name.label }</label>
                                     <apex:inputField value="{! hospitalToInsert.Name }"
                                                      required="true"
                                                      html-placeholder="{! $ObjectType.Hospital__c.fields.Name.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.City__c.label }</label>
                                     <apex:inputField value="{! hospitalToInsert.City__c }"
                                                      required="true"
                                                      html-placeholder="{! $ObjectType.Hospital__c.fields.City__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Country__c.label }</label>
                                     <apex:inputField value="{! hospitalToInsert.Country__c }"
                                                      required="true"
                                                      html-placeholder="{! $ObjectType.Hospital__c.fields.Country__c.label }"

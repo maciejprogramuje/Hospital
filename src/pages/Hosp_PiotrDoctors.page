@@ -60,30 +60,35 @@
                     <div class="slds-form-element">
                         <div class="slds-form-element__control">
                             <apex:form id="searchDoctorsApexForm">
+
+                                <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Name.label }</label>
                                 <apex:inputField value="{! doctorToSearch.Name }"
                                                  html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.FirstName__c.label }</label>
                                 <apex:inputField value="{! doctorToSearch.FirstName__c }"
                                                  required="false"
                                                  html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.City__c.label }</label>
                                 <apex:inputField value="{! doctorToSearch.City__c }"
                                                  html-placeholder="{! $ObjectType.Doctor__c.fields.City__c.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Country__c.label }</label>
                                 <apex:inputField value="{! doctorToSearch.Country__c }"
                                                  html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
-                                <apex:commandbutton value="{! $Label.Search }"
+                                <apex:commandButton value="{! $Label.Search }"
                                                     action="{! searchDoctors }"
                                                     onComplete="overridePageMessages()"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
                                                     reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal"
                                                     status="statusCompLsds">
-                                </apex:commandbutton>
+                                </apex:commandButton>
                             </apex:form>
                         </div>
                     </div>
@@ -156,6 +161,7 @@
                                         <apex:commandButton action="{! deleteDoctor }"
                                                             styleClass="slds-button slds-button_neutral"
                                                             value="{! $Label.Delete }"
+                                                            onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"
                                                             onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
                                                             reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
                                                             status="statusCompLsds">
@@ -220,20 +226,24 @@
 
                                 <apex:outputPanel id="modalEditOutputPanel">
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Name.label }</label>
                                     <apex:inputField value="{! doctorToEdit.Name }"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
                                                      required="true"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.FirstName__c.label }</label>
                                     <apex:inputField value="{! doctorToEdit.FirstName__c }"
                                                      required="true"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.City__c.label }</label>
                                     <apex:inputField value="{! doctorToEdit.City__c }"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.City__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Country__c.label }</label>
                                     <apex:inputField value="{! doctorToEdit.Country__c }"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
@@ -282,19 +292,23 @@
 
                                 <apex:outputPanel id="modalInsertOutputPanel">
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Name.label }</label>
                                     <apex:inputField value="{! doctorToInsert.Name }"
                                                      required="true"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.FirstName__c.label }</label>
                                     <apex:inputField value="{! doctorToInsert.FirstName__c }"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.City__c.label }</label>
                                     <apex:inputField value="{! doctorToInsert.City__c }"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.City__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
 
+                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Country__c.label }</label>
                                     <apex:inputField value="{! doctorToInsert.Country__c }"
                                                      html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
                                                      styleClass="slds-input slds-m-bottom_x-small"/>
