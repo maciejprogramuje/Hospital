@@ -80,6 +80,24 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
     }
 
     @isTest
+    static void shouldNotInsertDoctorsFromPiotr() {
+        //given
+        Hosp_PiotrDoctorsMock mock = new Hosp_PiotrDoctorsMock();
+        mock.selectMethod('insertDoctor');
+        Test.setMock(WebServiceMock.class, mock);
+
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+
+        controller.doctorToInsert = null;
+
+        //when
+        controller.insertDoctor();
+
+        //then
+        System.assertEquals(null, controller.doctorToTest);
+    }
+
+    @isTest
     static void shouldUpdateDoctorsFromPiotr() {
         //given
         Hosp_PiotrDoctorsMock mock = new Hosp_PiotrDoctorsMock();
@@ -96,13 +114,29 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
 
         controller.doctorToEdit = doctor;
 
-        //List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctors = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
-
         //when
         controller.updateDoctor();
 
         //then
         System.assertEquals('TestDoctorFirstNameUpdate', controller.doctorToTest.webServiceDoctorFirstName);
+    }
+
+    @isTest
+    static void shouldNotUpdateDoctorsFromPiotr() {
+        //given
+        Hosp_PiotrDoctorsMock mock = new Hosp_PiotrDoctorsMock();
+        mock.selectMethod('updateDoctor');
+        Test.setMock(WebServiceMock.class, mock);
+
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+
+        controller.doctorToEdit = null;
+
+        //when
+        controller.updateDoctor();
+
+        //then
+        System.assertEquals(null, controller.doctorToTest);
     }
 
     @isTest

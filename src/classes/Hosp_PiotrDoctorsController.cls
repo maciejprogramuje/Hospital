@@ -86,8 +86,6 @@ public with sharing class Hosp_PiotrDoctorsController {
             isAnyInsertProblem = false;
             Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_added;
             refreshResultsList(doctorToTest);
-
-            System.debug('insertDoctor ok');
         } catch (Exception e) {
             isAnyInsertProblem = true;
             Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_add_doctor;

@@ -57,6 +57,31 @@ public class Hosp_PiotrHospitalsControllerTest {
     }
 
     @isTest
+    static void shouldNotInsertHospitals() {
+        //given
+        Map<String, String> header = new Map<String, String>();
+        header.put('sessionId', '');
+        Hosp_PiotrHospitalSingleMock fakeHospitalResp = new Hosp_PiotrHospitalSingleMock(200,
+                'Complete', '[{"name": "HospitalTest","country": "PL","city": "Lublin","postalCode": "22-222","street": "Zana"}]',
+                header);
+
+        Map<String, HttpCalloutMock> endpoint2TestResp = new Map<String, HttpCalloutMock>();
+        endpoint2TestResp.put('https://eu16.salesforce.com/services/apexrest/Hospital__c/', fakeHospitalResp);
+
+        HttpCalloutMock multiCalloutMock = new Hosp_PiotrHospitalsMultiMock(endpoint2TestResp);
+        Test.setMock(HttpCalloutMock.class, multiCalloutMock);
+
+        Hosp_PiotrHospitalsController controller = new Hosp_PiotrHospitalsController();
+        controller.hospitalToInsert = null;
+
+        //when
+        controller.insertHospital();
+
+        //then
+        System.assertEquals(true, controller.isAnyInsertProblem);
+    }
+
+    @isTest
     static void shouldUpdateHospitals() {
         //given
         Map<String, String> header = new Map<String, String>();
@@ -79,6 +104,31 @@ public class Hosp_PiotrHospitalsControllerTest {
 
         //then
         System.assertEquals(false, controller.isAnyUpdateProblem);
+    }
+
+    @isTest
+    static void shouldNotUpdateHospitals() {
+        //given
+        Map<String, String> header = new Map<String, String>();
+        header.put('sessionId', '');
+        Hosp_PiotrHospitalSingleMock fakeHospitalResp = new Hosp_PiotrHospitalSingleMock(200,
+                'Complete', '[{"name": "HospitalTest","country": "PL","city": "Lublin","postalCode": "22-222","street": "Zana"}]',
+                header);
+
+        Map<String, HttpCalloutMock> endpoint2TestResp = new Map<String, HttpCalloutMock>();
+        endpoint2TestResp.put('https://eu16.salesforce.com/services/apexrest/Hospital__c/', fakeHospitalResp);
+
+        HttpCalloutMock multiCalloutMock = new Hosp_PiotrHospitalsMultiMock(endpoint2TestResp);
+        Test.setMock(HttpCalloutMock.class, multiCalloutMock);
+
+        Hosp_PiotrHospitalsController controller = new Hosp_PiotrHospitalsController();
+        controller.hospitalToEdit = null;
+
+        //when
+        controller.updateHospital();
+
+        //then
+        System.assertEquals(true, controller.isAnyUpdateProblem);
     }
 
     @isTest
