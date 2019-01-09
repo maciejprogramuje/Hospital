@@ -107,6 +107,30 @@ public class Hosp_PiotrHospitalsControllerTest {
         System.assertEquals(false, controller.isAnyProblemWithDelete);
     }
 
+    @isTest
+    static void shouldResetHospitalToInsert() {
+        //given
+        Hosp_PiotrHospitalsController controller = new Hosp_PiotrHospitalsController();
+
+        //when
+        controller.resetHospitalToInsert();
+
+        //then
+        System.assertEquals(true, controller.isAnyInsertProblem);
+    }
+
+    @isTest
+    static void shouldResetHospitalToUpdate() {
+        //given
+        Hosp_PiotrHospitalsController controller = new Hosp_PiotrHospitalsController();
+
+        //when
+        controller.resetHospitalToUpdate();
+
+        //then
+        System.assertEquals(true, controller.isAnyUpdateProblem);
+    }
+
 }
 
 

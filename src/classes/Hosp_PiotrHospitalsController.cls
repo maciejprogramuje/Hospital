@@ -25,10 +25,6 @@ public with sharing class Hosp_PiotrHospitalsController {
     }
 
     public void searchHospitals() {
-        /*
-        if(String.isNotBlank(hospitalToSearch.Name)
-                || )*/
-
         hospitalsResults = getHospitalCallout(hospitalToSearch.Name, hospitalToSearch.City__c, hospitalToSearch.Country__c);
 
         if (hospitalsResults.size() > 0) {
@@ -191,7 +187,7 @@ public with sharing class Hosp_PiotrHospitalsController {
         ApexPages.getMessages().clear();
     }
 
-    private String loginToPiotr() {
+    public String loginToPiotr() {
         try {
             Hosp_partnerSoapSforceCom.Soap partnerSoap = new Hosp_partnerSoapSforceCom.Soap();
             Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login(Label.Hosp_login_to_Piotr, Label.Hosp_password_to_Piotr);

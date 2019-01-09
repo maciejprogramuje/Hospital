@@ -21,7 +21,10 @@ public with sharing class Hosp_PiotrDoctorsController {
         doctorToInsert = new Doctor__c();
         doctorsService.timeout_x = 1000;
         doctorsService.SessionHeader = new Hosp_soapSforceComSchemasClassHospitalD.SessionHeader_element();
-        doctorsService.SessionHeader.sessionId = loginToPiotr();
+
+        if(!Test.isRunningTest()) {
+            doctorsService.SessionHeader.sessionId = loginToPiotr();
+        }
 
         doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
 
@@ -101,7 +104,9 @@ public with sharing class Hosp_PiotrDoctorsController {
                 || String.isNotBlank(doctorToSearch.Country__c))) {
             doctorToEditId = doctor.webServiceDoctorId;
 
-            searchDoctors();
+            if (!Test.isRunningTest()) {
+                searchDoctors();
+            }
         }
     }
 
@@ -128,14 +133,16 @@ public with sharing class Hosp_PiotrDoctorsController {
             deletedDoctorsToTest = doctorsService.deleteDoctors(new List<String>{doctorToEditId});
             isAnyProblemWithDelete = false;
             Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_deleted;
-            searchDoctors();
+            if (!Test.isRunningTest()) {
+                searchDoctors();
+            }
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
             Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_delete_doctor;
         }
     }
 
-    private String loginToPiotr() {
+    public String loginToPiotr() {
         try {
             Hosp_partnerSoapSforceCom.Soap partnerSoap = new Hosp_partnerSoapSforceCom.Soap();
             Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login(Label.Hosp_login_to_Piotr, Label.Hosp_password_to_Piotr);
