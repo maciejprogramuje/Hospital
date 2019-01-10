@@ -1,100 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>AsyncHosp_partnerSoapSforceCom</members>
-        <members>Hosp_ContractHandler</members>
-        <members>Hosp_ContractsComponentController</members>
-        <members>Hosp_ContractsViewController</members>
-        <members>Hosp_ContractsViewControllerExtension</members>
-        <members>Hosp_DoctorEditControllerExtension</members>
-        <members>Hosp_DoctorImportController</members>
-        <members>Hosp_DoctorJsonHandler</members>
-        <members>Hosp_DoctorProfileImagaController</members>
-        <members>Hosp_DoctorProfileImageController</members>
-        <members>Hosp_DoctorSearchController</members>
-        <members>Hosp_DoctorViewControllerExtension</members>
-        <members>Hosp_DoctorWrapperForSoap</members>
-        <members>Hosp_DoctorsPublicSiteControllerExt</members>
-        <members>Hosp_FindDoctorController</members>
-        <members>Hosp_HireDoctorController</members>
-        <members>Hosp_HospitalEditControllerExtension</members>
-        <members>Hosp_HospitalHierarchyController</members>
-        <members>Hosp_HospitalViewControllerExtension</members>
         <members>Hosp_HospitalWrapperForRest</members>
-        <members>Hosp_PiotrDoctorsController</members>
         <members>Hosp_RestForHospitals</members>
-        <members>Hosp_RestForHospitalsTest</members>
-        <members>Hosp_SearchDoctorController</members>
-        <members>Hosp_SoapForDoctorsTest</members>
-        <members>Hosp_SoapForDoctorsWebService</members>
-        <members>Hosp_Utils</members>
-        <members>Hosp_faultPartnerSoapSforceCom</members>
-        <members>Hosp_partnerSoapSforceCom</members>
-        <members>Hosp_soapSforceComSchemasClassHospitalD</members>
-        <members>Hosp_soapSforceComSchemasClassHospitalDW</members>
-        <members>Hosp_sobjectPartnerSoapSforceCom</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Hosp_ContractsComponent</members>
-        <members>Hosp_HireDoctorComponent</members>
-        <members>Hosp_HospitalHierarchyComponent</members>
-        <members>Hosp_StatusComponent</members>
-        <members>SiteFooter</members>
-        <members>SiteHeader</members>
-        <members>SiteLogin</members>
-        <members>SitePoweredBy</members>
-        <name>ApexComponent</name>
-    </types>
-    <types>
-        <members>Hosp_DoctorEdit</members>
-        <members>Hosp_DoctorImport</members>
-        <members>Hosp_DoctorProfileImage</members>
-        <members>Hosp_DoctorSearch</members>
-        <members>Hosp_DoctorSearchJsonExport</members>
-        <members>Hosp_DoctorView</members>
-        <members>Hosp_DoctorViewPdfExport</members>
-        <members>Hosp_DoctorsPublicSite</members>
-        <members>Hosp_DoctorsSearchCsvExport</members>
-        <members>Hosp_DoctorsSearchXlsExport</members>
-        <members>Hosp_DoctorsSearchXlsxExport</members>
-        <members>Hosp_HospitalEdit</members>
-        <members>Hosp_HospitalView</members>
-        <members>Hosp_PiotrDoctors</members>
-        <name>ApexPage</name>
-    </types>
-    <types>
-        <members>Hosp_Contract</members>
-        <members>Hosp_Doctor</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>MyHospital</members>
-        <name>CustomApplication</name>
-    </types>
-    <types>
-        <members>Contract__c.Doctor__c</members>
-        <members>Contract__c.EndDate__c</members>
-        <members>Contract__c.Hospital__c</members>
-        <members>Contract__c.StartDate__c</members>
-        <members>Doctor__c.City__c</members>
-        <members>Doctor__c.Country__c</members>
-        <members>Doctor__c.Email__c</members>
-        <members>Doctor__c.FirstName__c</members>
-        <members>Doctor__c.Phone__c</members>
-        <members>Doctor__c.Street__c</members>
         <members>Hospital__c.City__c</members>
         <members>Hospital__c.Country__c</members>
+        <members>Hospital__c.Master_Unit__c</members>
+        <members>Hospital__c.PostalCode__c</members>
+        <members>Hospital__c.Street__c</members>
         <members>Hospital__c.WWW__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>Contract__c</members>
-        <members>Doctor__c</members>
         <members>Hospital__c</members>
-        <members>User__c</members>
-        <members>Hosp_Utils</members>
         <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Country</members>
+        <name>GlobalValueSet</name>
     </types>
     <types>
         <members>Contract__c-Contract Layout</members>
