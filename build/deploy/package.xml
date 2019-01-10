@@ -4,6 +4,7 @@
         <members>Hosp_HospitalWrapperForRest</members>
         <members>Hosp_RestForHospitals</members>
         <members>Hosp_HospitalTriggerHandler</members>
+        <members>Hosp_Utils</members>
         <name>ApexClass</name>
     </types>
     <types>

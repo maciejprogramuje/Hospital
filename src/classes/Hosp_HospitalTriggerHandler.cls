@@ -38,7 +38,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
     public static String loginToSecondOrgGetSessionId() {
         String username = 'maciej.szymczyk@britenet.com.pl.dev';
-        String password = 'Ulka@2002sjScbwznYDOocJSdloEwSJ8l';
+        String password = 'Ulka@2002q9k94fNBLasceuStSg3Z69Us';
         String ClientId = '3MVG9fTLmJ60pJ5IEt_O_REmXnukYYpcAtLEDZvLCLKn97kttZQ0.A.Wi._ZDE6vVrYsKPZEoJL3_RW0jU2WU';
         String ClientSecret = '6739776878073564220';
 

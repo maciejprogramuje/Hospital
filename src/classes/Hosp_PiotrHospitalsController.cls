@@ -12,6 +12,15 @@ public with sharing class Hosp_PiotrHospitalsController {
     public String endPoint = Label.Hosp_Endpoint_Piotr_Hospital;
     public List<Hosp_HospitalWrapperForRest> hospitalsResults { get; set; }
 
+    public static final String sortUp = '▲';
+    public static final String sortDown = '▼';
+    private String sortOrder = 'Name';
+    private String sortAscDesc = 'ASC';
+    public String sortOrderSignName { get; set; }
+    public String sortOrderSignEmail { get; set; }
+    public String sortOrderSignCountry { get; set; }
+    public String sortOrderSign { get; set; }
+
     public Hosp_PiotrHospitalsController() {
         hospitalsResults = new List<Hosp_HospitalWrapperForRest>();
         hospitalToSearch = new Hospital__c();
@@ -74,7 +83,7 @@ public with sharing class Hosp_PiotrHospitalsController {
     }
 
     public String loginToPiotrGetSessionId() {
-        //todo - czemu to działa?
+        //todo - czemu to działa? to powinien wygenerować Piotr...
         String username = 'maciej.szymczyk@britenet.com.pl';
         String password = 'Ulka!2002sjScbwznYDOocJSdloEwSJ8l';
         String ClientId = '3MVG9fTLmJ60pJ5IEt_O_REmXnukYYpcAtLEDZvLCLKn97kttZQ0.A.Wi._ZDE6vVrYsKPZEoJL3_RW0jU2WU';

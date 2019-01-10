@@ -112,7 +112,7 @@
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate"
                                  title="{! $ObjectType.Hospital__c.fields.Name.label }">{!
-                            $ObjectType.Hospital__c.fields.Name.label }
+                            $ObjectType.Hospital__c.fields.Name.label } {! sortOrderSignName }
                             </div>
                         </th>
                         <th class="slds-text-title_caps" scope="col">
@@ -127,6 +127,9 @@
                             $ObjectType.Hospital__c.fields.Country__c.label }
                             </div>
                         </th>
+
+
+
                     </tr>
                     </thead>
                     <tbody>

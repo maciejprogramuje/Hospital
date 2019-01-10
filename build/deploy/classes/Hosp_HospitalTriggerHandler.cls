@@ -26,7 +26,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
     public static HttpRequest getRequest(String methodType, String urlParams, String body) {
         HttpRequest request = new HttpRequest();
         request.setEndPoint(endPoint + urlParams);
-        request.setHeader('Authorization', 'Bearer ' + loginToSecondOrgGetSessionId());
+        request.setHeader('Authorization', 'Bearer ' + loginToFirstOrgGetSessionId());
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setMethod(methodType);
         if (body != '') {
@@ -35,12 +35,18 @@ public with sharing class Hosp_HospitalTriggerHandler {
         return request;
     }
 
-
-    public static String loginToSecondOrgGetSessionId() {
-
+    public static String loginToFirstOrgGetSessionId() {
 
         return '00D1t000000vZ0n!ARcAQFT08b5hYdtLhvZzzT1N0Q6Pak1teHe20a4u9heUF0eg4N2UdojEvkUO5TKfeR2gK0SSbpJZUJX.HhkIEb1RupC6guuE';
+
+        String username = 'maciejsz1979@gmail.com.dev';
+        String password = 'Ulka@2002usz8KOQKGl6DYaIh50wVpunI';
+        String ClientId = '3MVG9fTLmJ60pJ5InwHdKeAk5AEEkRJHPqwHcpnkEis2mQVV8IHfVk91xV0pSoQcfz6mEMHrEdLvITD2Tow3E';
+        String ClientSecret = '792241519016048467';
+
+        return Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
     }
+
 
     private class Hosp_HospitalWrapper {
         public String name { get; set; }
