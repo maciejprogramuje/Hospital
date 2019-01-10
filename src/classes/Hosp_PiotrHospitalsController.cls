@@ -64,13 +64,25 @@ public with sharing class Hosp_PiotrHospitalsController {
     public HttpRequest getRequest(String methodType, String urlParams, String body) {
         HttpRequest request = new HttpRequest();
         request.setEndPoint(endPoint + urlParams);
-        request.setHeader('Authorization', 'Bearer ' + Hosp_Utils.loginToPiotrGetSessionId());
+        request.setHeader('Authorization', 'Bearer ' + loginToPiotrGetSessionId());
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setMethod(methodType);
         if (body != '') {
             request.setBody(body);
         }
         return request;
+    }
+
+    public String loginToPiotrGetSessionId() {
+        String username = 'maciej.szymczyk@britenet.com.pl';
+        String password = 'Ulka!2002sjScbwznYDOocJSdloEwSJ8l';
+        //String ClientId = '3MVG9fTLmJ60pJ5KOWKrx4ZK68vbm6BizsZwIiPAZvzLsVGKYalESe4NBKdrBIrRAR0IIQ3fAaJPqJ5D5srmc';
+        //String ClientSecret = '8058418408902575444';
+
+        String ClientId = '3MVG9fTLmJ60pJ5IEt_O_REmXnukYYpcAtLEDZvLCLKn97kttZQ0.A.Wi._ZDE6vVrYsKPZEoJL3_RW0jU2WU';
+        String ClientSecret = '6739776878073564220';
+
+        return Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
     }
 
     public void deleteHospital() {
