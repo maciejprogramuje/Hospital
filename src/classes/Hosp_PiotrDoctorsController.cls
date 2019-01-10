@@ -1,7 +1,7 @@
 public with sharing class Hosp_PiotrDoctorsController {
     public Doctor__c doctorToSearch { get; set; }
     public Doctor__c doctorToEdit { get; set; }
-    public Doctor__c doctorToInsert { get; set; }
+    //public Doctor__c doctorToInsert { get; set; }
     public String doctorToEditId { get; set; }
     public Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP doctorsService { get; set; }
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsResults { get; set; }
@@ -11,14 +11,15 @@ public with sharing class Hosp_PiotrDoctorsController {
 
     public Boolean isAnyDoctorInResultsList { get; set; }
     public Boolean isAnyProblemWithDelete { get; set; }
-    public Boolean isAnyInsertProblem { get; set; }
-    public Boolean isAnyUpdateProblem { get; set; }
+    //public Boolean isAnyInsertProblem { get; set; }
+    //public Boolean isAnyUpdateProblem { get; set; }
+    public Boolean isAnyUpsertProblem { get; set; }
 
     public Hosp_PiotrDoctorsController() {
         doctorsService = new Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP();
         doctorToSearch = new Doctor__c();
         doctorToEdit = new Doctor__c();
-        doctorToInsert = new Doctor__c();
+        //doctorToInsert = new Doctor__c();
         doctorsService.timeout_x = 1000;
         doctorsService.SessionHeader = new Hosp_soapSforceComSchemasClassHospitalD.SessionHeader_element();
         doctorsService.SessionHeader.sessionId = Hosp_Utils.loginToPiotrGetSessionId();
@@ -26,8 +27,9 @@ public with sharing class Hosp_PiotrDoctorsController {
 
         isAnyDoctorInResultsList = false;
         isAnyProblemWithDelete = false;
-        isAnyInsertProblem = true;
-        isAnyUpdateProblem = true;
+        //isAnyInsertProblem = true;
+        //isAnyUpdateProblem = true;
+        isAnyUpsertProblem = true;
     }
 
     public void searchDoctors() {
@@ -43,7 +45,7 @@ public with sharing class Hosp_PiotrDoctorsController {
     }
 
     public void openDoctorToEdit() {
-        resetDoctorToUpdate();
+        resetDoctorToUpsert();
 
         for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doc : doctorsResults) {
             if (doc.webServiceDoctorId == doctorToEditId) {
@@ -57,24 +59,25 @@ public with sharing class Hosp_PiotrDoctorsController {
         }
     }
 
-    public void updateDoctor() {
+    public void upsertDoctor() {
         clearMessages();
 
         try {
             doctorToTest = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
-            isAnyUpdateProblem = false;
+            isAnyUpsertProblem = false;
             Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_updated;
             refreshResultsList(doctorToTest);
         } catch (Exception e) {
-            isAnyUpdateProblem = true;
+            isAnyUpsertProblem = true;
             Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_update_doctor;
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Hosp_Doctor_already_exists));
-            System.debug('isAnyUpdateProblem=' + e.getMessage());
+            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Hosp_Doctor_already_exists));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+            System.debug('isAnyUpsertProblem=' + e.getMessage());
         }
 
     }
 
-    public void insertDoctor() {
+    /*public void insertDoctor() {
         clearMessages();
 
         try {
@@ -88,7 +91,7 @@ public with sharing class Hosp_PiotrDoctorsController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Hosp_Doctor_already_exists));
             System.debug('isAnyInsertProblem=' + e.getMessage());
         }
-    }
+    }*/
 
     private void refreshResultsList(Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctor) {
         if (doctor != null
@@ -104,15 +107,9 @@ public with sharing class Hosp_PiotrDoctorsController {
         }
     }
 
-    public void resetDoctorToInsert() {
+    public void resetDoctorToUpsert() {
         clearMessages();
-        isAnyInsertProblem = true;
-        doctorToInsert = new Doctor__c();
-    }
-
-    public void resetDoctorToUpdate() {
-        clearMessages();
-        isAnyUpdateProblem = true;
+        isAnyUpsertProblem = true;
         doctorToEdit = new Doctor__c();
     }
 

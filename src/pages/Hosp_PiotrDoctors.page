@@ -41,10 +41,10 @@
                     <div class="slds-button-group" role="group">
                         <apex:form>
                             <apex:commandButton value="{! $Label.Hosp_New }"
-                                                action="{! resetDoctorToInsert }"
-                                                reRender="modalInsertOutputPanel, messages, messagesInInsertModal"
+                                                action="{! resetDoctorToUpsert }"
+                                                reRender="modalUpsertOutputPanel, messages, messagesInUpsertModal"
                                                 status="statusCompLsds"
-                                                onComplete="showToastAndHideOthers('modalInsertDoc'); return false;"
+                                                onComplete="showToastAndHideOthers('modalUpsertDoc'); return false;"
                                                 styleClass="slds-button slds-button--neutral">
                             </apex:commandButton>
                         </apex:form>
@@ -88,7 +88,7 @@
                                                     action="{! searchDoctors }"
                                                     onComplete="overridePageMessages()"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal"
+                                                    reRender="searchResultTable, messages, messagesInUpsertModal"
                                                     status="statusCompLsds">
                                 </apex:commandButton>
                             </apex:form>
@@ -149,8 +149,8 @@
                                     <apex:form>
                                         <apex:commandButton
                                                 action="{! openDoctorToEdit }"
-                                                onComplete="showToastAndHideOthers('modalEditDoc'); return false;"
-                                                reRender="modalEditOutputPanel, searchResultTable, messagesInUpdateModal"
+                                                onComplete="showToastAndHideOthers('modalUpsertDoc'); return false;"
+                                                reRender="modalUpsertOutputPanel, searchResultTable, messagesInUpsertModal"
                                                 status="statusCompLsds"
                                                 styleClass="slds-button slds-button_neutral"
                                                 value="{! $Label.Edit }">
@@ -163,7 +163,7 @@
                                         <apex:commandButton styleClass="slds-button slds-button_neutral"
                                                             value="{! $Label.Delete }"
                                                             onComplete="showToast('confirmationDialog');"
-                                                            reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
+                                                            reRender="searchResultTable, messages, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
                                                             status="statusCompLsds">
 
                                             <apex:param name="editedDoctor"
@@ -207,24 +207,24 @@
         </apex:outputPanel>
 
 
-        <div id="modalEditDoc" style="display: none; height: 640px;">
+        <div id="modalUpsertDoc" style="display: none; height: 640px;">
             <div class="demo-only">
                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
                          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
                         <header class="slds-modal__header">
                             <h2 id="modal-heading-01"
-                                class="slds-text-heading_medium slds-hyphenate">{! $Label.Edit_Doctor }</h2>
+                                class="slds-text-heading_medium slds-hyphenate">Upsert Doctor</h2>
                         </header>
                         <apex:form>
 
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                                <apex:outputPanel id="messagesInUpdateModal">
+                                <apex:outputPanel id="messagesInUpsertModal">
                                     <apex:pageMessages/>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel id="modalEditOutputPanel">
+                                <apex:outputPanel id="modalUpsertOutputPanel">
 
                                     <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Name.label }</label>
                                     <apex:inputField value="{! doctorToEdit.Name }"
@@ -253,86 +253,18 @@
                             <footer class="slds-modal__footer">
 
                                 <apex:commandButton value="{! $Label.Save }"
-                                                    action="{! updateDoctor }"
-                                                    onComplete="checkHideModalShowToast({! isAnyUpdateProblem }, 'modalEditDoc', 'successToast')"
-                                                    reRender="searchResultTable, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
+                                                    action="{! upsertDoctor }"
+                                                    onComplete="checkHideModalShowToast({! isAnyUpsertProblem }, 'modalUpsertDoc', 'successToast')"
+                                                    reRender="searchResultTable, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
                                                     status="statusCompLsds"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="{! $Label.Cancel }"
                                                     reRender="searchResultTable, messagesInUpdateModal"
-                                                    action="{! resetDoctorToUpdate }"
-                                                    onClick="hideToast('modalEditDoc'); return false;"
+                                                    action="{! resetDoctorToUpsert }"
+                                                    onClick="hideToast('modalUpsertDoc'); return false;"
                                                     status="statusCompLsds"/>
-                            </footer>
-                        </apex:form>
-                    </div>
-                </section>
-                <div class="slds-backdrop slds-backdrop_open"></div>
-            </div>
-        </div>
-
-
-        <div id="modalInsertDoc" style="display: none; height: 640px;">
-            <div class="demo-only">
-                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                    <div class="slds-modal__container">
-                        <header class="slds-modal__header">
-                            <h2 id="modal-heading-01"
-                                class="slds-text-heading_medium slds-hyphenate">{! $Label.Hosp_New_Doctor }</h2>
-                        </header>
-                        <apex:form>
-                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-
-                                <apex:outputPanel id="messagesInInsertModal">
-                                    <apex:pageMessages/>
-                                </apex:outputPanel>
-
-                                <apex:outputPanel id="modalInsertOutputPanel">
-
-                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Name.label }</label>
-                                    <apex:inputField value="{! doctorToInsert.Name }"
-                                                     required="true"
-                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
-
-                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.FirstName__c.label }</label>
-                                    <apex:inputField value="{! doctorToInsert.FirstName__c }"
-                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.FirstName__c.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
-
-                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.City__c.label }</label>
-                                    <apex:inputField value="{! doctorToInsert.City__c }"
-                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.City__c.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
-
-                                    <label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Country__c.label }</label>
-                                    <apex:inputField value="{! doctorToInsert.Country__c }"
-                                                     html-placeholder="{! $ObjectType.Doctor__c.fields.Country__c.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
-
-                                </apex:outputPanel>
-                            </div>
-
-                            <footer class="slds-modal__footer">
-
-                                <apex:commandButton value="{! $Label.Hosp_Add_doctor }"
-                                                    action="{! insertDoctor }"
-                                                    styleClass="slds-button slds-button--brand slds-m-top--medium"
-
-                                                    onComplete="checkHideModalShowToast({! isAnyInsertProblem }, 'modalInsertDoc', 'successToast')"
-                                                    reRender="searchResultTable, messagesInInsertModal, successToastOutputPanel, errorToastOutputPanel"
-
-                                                    status="statusCompLsds"/>
-
-                                <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
-                                                    value="{! $Label.Cancel}"
-                                                    action="{! resetDoctorToInsert }"
-                                                    reRender="searchResultTable, messagesInInsertModal"
-                                                    status="statusCompLsds"
-                                                    onClick="hideToast('modalInsertDoc'); return false;"/>
                             </footer>
                         </apex:form>
                     </div>
