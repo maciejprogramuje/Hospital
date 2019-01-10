@@ -23,6 +23,7 @@
             opacity: 1
         }
 
+
     </style>
 
     <div class="slds">
@@ -54,7 +55,8 @@
 
         <div aria-labelledby="searchDoctorsForm">
             <fieldset class="slds-box slds-theme--default slds-container--small slds-m-around_medium">
-                <legend id="searchDoctorsForm" class="slds-text-heading--medium slds-p-vertical--medium">{! $Label.Hosp_Search_Doctors }
+                <legend id="searchDoctorsForm"
+                        class="slds-text-heading--medium slds-p-vertical--medium">{! $Label.Hosp_Search_Doctors }
                 </legend>
                 <form class="slds-form--stacked">
                     <div class="slds-form-element">
@@ -138,8 +140,9 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
 
+
+                    <tbody>
                     <apex:repeat value="{! doctorsResults }" var="doc">
                         <tr class="slds-hint-parent">
                             <td data-label="doctorsResultsDataTable">
@@ -399,6 +402,7 @@
 
             showToast(modalIdToShow);
         }
+
 
     </script>
 

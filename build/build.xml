@@ -14,9 +14,10 @@
                 username="${dev_username}"
                 password="${dev_password}"
                 serverurl="https://login.salesforce.com"
-                deployRoot="../build"
+                deployRoot="../build/deploy"
                 testLevel="NoTestRun"
                 checkOnly="false"
         />
     </target>
+
 </project>

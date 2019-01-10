@@ -175,6 +175,10 @@
                           <MetadataEntry>
                             <option name="name" value="UpdateContactAddresses" />
                           </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalTriggerHandler" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="ApexClass" />
@@ -337,6 +341,10 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="ThirdTrigger" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Hospital" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>

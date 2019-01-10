@@ -3,6 +3,7 @@
     <types>
         <members>Hosp_HospitalWrapperForRest</members>
         <members>Hosp_RestForHospitals</members>
+        <members>Hosp_HospitalTriggerHandler</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -10,6 +11,10 @@
         <members>Hospital__c.Country__c</members>
         <members>Hospital__c.WWW__c</members>
         <name>CustomField</name>
+    </types>
+    <types>
+        <members>Hosp_Hospital</members>
+        <name>ApexTrigger</name>
     </types>
     <types>
         <members>Hospital__c</members>

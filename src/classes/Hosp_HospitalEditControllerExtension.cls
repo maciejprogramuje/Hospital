@@ -23,7 +23,7 @@ public with sharing class Hosp_HospitalEditControllerExtension {
                     Master_Unit__c = hospital.Master_Unit__c);
             insert hospital;
         } else {
-            update hospital;
+            insert hospital;
         }
 
         return new ApexPages.StandardController(hospital).view();
