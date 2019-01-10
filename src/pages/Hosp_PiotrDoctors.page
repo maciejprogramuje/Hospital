@@ -141,7 +141,6 @@
                     </tr>
                     </thead>
 
-
                     <tbody>
                     <apex:repeat value="{! doctorsResults }" var="doc">
                         <tr class="slds-hint-parent">
@@ -161,11 +160,9 @@
                                                         assignTo="{! doctorToEditId }"/>
                                         </apex:commandButton>
 
-                                        <apex:commandButton action="{! deleteDoctor }"
-                                                            styleClass="slds-button slds-button_neutral"
+                                        <apex:commandButton styleClass="slds-button slds-button_neutral"
                                                             value="{! $Label.Delete }"
-                                                            onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"
-                                                            onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
+                                                            onComplete="showToast('confirmationDialog');"
                                                             reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
                                                             status="statusCompLsds">
 
@@ -343,6 +340,43 @@
                 <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
         </div>
+
+        <div id="confirmationDialog" class="demo-only" style="display: none; height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Delete</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>Do You really want to delete this data?</p>
+                    </div>
+                    <apex:form>
+
+                        <footer class="slds-modal__footer">
+
+                            <apex:commandButton
+                                    styleClass="slds-button slds-button_neutral"
+                                    onClick="hideToast('confirmationDialog')"
+                                    value="{! $Label.Cancel }"
+                                    reRender="searchResultTable, messages, successToastOutputPanel, errorToastOutputPanel"
+                                    status="statusCompLsds">
+                            </apex:commandButton>
+
+                            <apex:commandButton
+                                    styleClass="slds-button slds-button_brand"
+                                    onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
+                                    action="{! deleteDoctor }"
+                                    value="{! $Label.Delete }"
+                                    reRender="searchResultTable, messages, successToastOutputPanel, errorToastOutputPanel"
+                                    status="statusCompLsds">
+                            </apex:commandButton>
+                        </footer>
+                    </apex:form>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
     </div>
 
     <c:Hosp_StatusComponentLsds/>
@@ -353,7 +387,6 @@
             hideToast('errorToast');
             hideToast('successToast');
 
-            //var textureEffect = 'slds-theme--alert-texture';
             var textureEffect = '';
 
             $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
@@ -370,6 +403,7 @@
         function checkHideDeleteToast(isProblemWithDelete) {
             if(!isProblemWithDelete) {
                 showToast('successToast');
+                hideToast('confirmationDialog')
                 hideToast('errorToast');
             } else {
                 showToast('errorToast');
@@ -402,7 +436,6 @@
 
             showToast(modalIdToShow);
         }
-
 
     </script>
 

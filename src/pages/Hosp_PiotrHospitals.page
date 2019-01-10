@@ -23,8 +23,6 @@
             opacity: 1
         }
 
-
-
     </style>
 
     <div class="slds">
@@ -64,17 +62,20 @@
                         <div class="slds-form-element__control">
                             <apex:form id="searchHospitalsApexForm">
 
-                                <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Name.label }</label>
+                                <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Name.label
+                                    }</label>
                                 <apex:inputField value="{! hospitalToSearch.Name }"
                                                  html-placeholder="{! $ObjectType.Hospital__c.fields.Name.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
-                                <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.City__c.label }</label>
+                                <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.City__c.label
+                                    }</label>
                                 <apex:inputField value="{! hospitalToSearch.City__c }"
                                                  html-placeholder="{! $ObjectType.Hospital__c.fields.City__c.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
 
-                                <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Country__c.label }</label>
+                                <label class="slds-form-element__label">{!
+                                    $ObjectType.Hospital__c.fields.Country__c.label }</label>
                                 <apex:inputField value="{! hospitalToSearch.Country__c }"
                                                  html-placeholder="{! $ObjectType.Hospital__c.fields.Country__c.label }"
                                                  styleClass="slds-input slds-m-bottom_x-small"/>
@@ -102,7 +103,7 @@
         <c:Hosp_ErrorToast/>
 
         <apex:outputPanel id="searchResultTable">
-            <apex:outputPanel rendered="{! isAnyHospitalInResultsList }">
+            <apex:outputPanel rendered="{! !hospitalsResults.empty }">
                 <table id="hospitalsResultsListPageBlock" class="slds-table slds-table_cell-buffer slds-table_bordered">
                     <thead>
                     <tr class="slds-line-height_reset">
@@ -112,28 +113,27 @@
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate"
                                  title="{! $ObjectType.Hospital__c.fields.Name.label }">{!
-                            $ObjectType.Hospital__c.fields.Name.label } {! sortOrderSignName }
+                                $ObjectType.Hospital__c.fields.Name.label }
                             </div>
                         </th>
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate"
                                  title="{! $ObjectType.Hospital__c.fields.City__c.label }">{!
-                            $ObjectType.Hospital__c.fields.City__c.label }
+                                $ObjectType.Hospital__c.fields.City__c.label }
                             </div>
                         </th>
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate"
-                                 title="{! $ObjectType.Hospital__c.fields.Country__c.label }">{!
-                            $ObjectType.Hospital__c.fields.Country__c.label }
+                                 title="{! $ObjectType.Hospital__c.fields.Country__c.label }">
+                                <span>{! $ObjectType.Hospital__c.fields.Country__c.label }</span>
+                                <span style="display: none;">&#9660;</span>
+                                <span style="display: inline-block;">&#9650;</span>
                             </div>
                         </th>
-
-
-
                     </tr>
                     </thead>
-                    <tbody>
 
+                    <tbody>
                     <apex:repeat value="{! hospitalsResults }" var="hosp">
                         <tr class="slds-hint-parent">
                             <td data-label="hospitalsResultsDataTable">
@@ -152,13 +152,12 @@
                                                         assignTo="{! hospitalToEditId }"/>
                                         </apex:commandButton>
 
-                                        <apex:commandButton action="{! deleteHospital }"
-                                                            styleClass="slds-button slds-button_neutral"
-                                                            value="{! $Label.Delete }"
-                                                            onclick="if(!confirm('{! $Label.Are_you_sure }')){ return false };"
-                                                            onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
-                                                            reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
-                                                            status="statusCompLsds">
+                                        <apex:commandButton
+                                                styleClass="slds-button slds-button_neutral"
+                                                value="{! $Label.Delete }"
+                                                onComplete="showToast('confirmationDialog');"
+                                                reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
+                                                status="statusCompLsds">
 
                                             <apex:param name="editedHospital"
                                                         value="{! hosp.hospitalId }"
@@ -315,6 +314,44 @@
                 <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
         </div>
+
+
+        <div id="confirmationDialog" class="demo-only" style="display: none; height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Delete</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>Do You really want to delete this data?</p>
+                    </div>
+                    <apex:form>
+
+                        <footer class="slds-modal__footer">
+
+                            <apex:commandButton
+                                    styleClass="slds-button slds-button_neutral"
+                                    onClick="hideToast('confirmationDialog')"
+                                    value="{! $Label.Cancel }"
+                                    reRender="searchResultTable, messages, successToastOutputPanel, errorToastOutputPanel"
+                                    status="statusCompLsds">
+                            </apex:commandButton>
+
+                            <apex:commandButton
+                                    styleClass="slds-button slds-button_brand"
+                                    onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
+                                    action="{! deleteHospital }"
+                                    value="{! $Label.Delete }"
+                                    reRender="searchResultTable, messages, successToastOutputPanel, errorToastOutputPanel"
+                                    status="statusCompLsds">
+                            </apex:commandButton>
+                        </footer>
+                    </apex:form>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
     </div>
 
     <c:Hosp_StatusComponentLsds/>
@@ -325,7 +362,6 @@
             hideToast('errorToast');
             hideToast('successToast');
 
-            //var textureEffect = 'slds-theme--alert-texture';
             var textureEffect = '';
 
             $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
@@ -342,6 +378,7 @@
         function checkHideDeleteToast(isProblemWithDelete) {
             if(!isProblemWithDelete) {
                 showToast('successToast');
+                hideToast('confirmationDialog')
                 hideToast('errorToast');
             } else {
                 showToast('errorToast');
@@ -374,7 +411,6 @@
 
             showToast(modalIdToShow);
         }
-
 
     </script>
 

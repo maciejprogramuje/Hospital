@@ -12,8 +12,6 @@ public with sharing class Hosp_PiotrHospitalsController {
     public String endPoint = Label.Hosp_Endpoint_Piotr_Hospital;
     public List<Hosp_HospitalWrapperForRest> hospitalsResults { get; set; }
 
-    public static final String sortUp = '▲';
-    public static final String sortDown = '▼';
     private String sortOrder = 'Name';
     private String sortAscDesc = 'ASC';
     public String sortOrderSignName { get; set; }
@@ -35,6 +33,8 @@ public with sharing class Hosp_PiotrHospitalsController {
 
     public void searchHospitals() {
         hospitalsResults = getHospitalCallout(hospitalToSearch.Name, hospitalToSearch.City__c, hospitalToSearch.Country__c);
+
+
 
         if (hospitalsResults.size() > 0) {
             isAnyHospitalInResultsList = true;
@@ -86,8 +86,8 @@ public with sharing class Hosp_PiotrHospitalsController {
         //todo - czemu to działa? to powinien wygenerować Piotr...
         String username = 'maciej.szymczyk@britenet.com.pl';
         String password = 'Ulka!2002sjScbwznYDOocJSdloEwSJ8l';
-        String ClientId = '3MVG9fTLmJ60pJ5IEt_O_REmXnukYYpcAtLEDZvLCLKn97kttZQ0.A.Wi._ZDE6vVrYsKPZEoJL3_RW0jU2WU';
-        String ClientSecret = '6739776878073564220';
+        String ClientId = '3MVG9fTLmJ60pJ5KOWKrx4ZK68vbm6BizsZwIiPAZvzLsVGKYalESe4NBKdrBIrRAR0IIQ3fAaJPqJ5D5srmc';
+        String ClientSecret = '8058418408902575444';
 
         return Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
     }
