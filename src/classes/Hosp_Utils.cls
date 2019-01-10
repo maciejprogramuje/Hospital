@@ -141,7 +141,7 @@ public class Hosp_Utils {
         if(!Test.isRunningTest()) {
             try {
                 Hosp_partnerSoapSforceCom.Soap partnerSoap = new Hosp_partnerSoapSforceCom.Soap();
-                Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login('maciejsz1979@gmail.com.dev', Label.Hosp_password_to_Piotr);
+                Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login(Label.Hosp_login_to_Piotr, Label.Hosp_password_to_Piotr);
                 return loginResult.sessionId;
             } catch (Exception ex) {
                 System.debug(ex.getMessage());
