@@ -16,10 +16,14 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
         String body = '{ "hospitals"  : ' + JSON.serialize(hospitalsInWrapper) + ' }';
 
+        System.debug('body='+body);
+
         Http http = new Http();
         HttpRequest request = getRequest('PUT', '', body);
 
         HttpResponse response = http.send(request);
+
+        System.debug('response='+response.getStatusCode());
     }
 
 
@@ -36,13 +40,10 @@ public with sharing class Hosp_HospitalTriggerHandler {
     }
 
     public static String loginToFirstOrgGetSessionId() {
-
-        return '00D1t000000vZ0n!ARcAQFT08b5hYdtLhvZzzT1N0Q6Pak1teHe20a4u9heUF0eg4N2UdojEvkUO5TKfeR2gK0SSbpJZUJX.HhkIEb1RupC6guuE';
-
-        String username = 'maciejsz1979@gmail.com.dev';
-        String password = 'Ulka@2002usz8KOQKGl6DYaIh50wVpunI';
-        String ClientId = '3MVG9fTLmJ60pJ5InwHdKeAk5AEEkRJHPqwHcpnkEis2mQVV8IHfVk91xV0pSoQcfz6mEMHrEdLvITD2Tow3E';
-        String ClientSecret = '792241519016048467';
+        String username = 'maciej.szymczyk@britenet.com.pl.dev';
+        String password = 'Ulka@2002q9k94fNBLasceuStSg3Z69Us';
+        String ClientId = '3MVG9fTLmJ60pJ5InwHdKeAk5APGVSVg_li6LxfLJBR7_3sPECDShp1WB4iAPueUXfrEiSJA84cpqOcOD2xPn';
+        String ClientSecret = '6095802832678610274';
 
         return Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
     }

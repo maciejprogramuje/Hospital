@@ -83,7 +83,6 @@ public with sharing class Hosp_PiotrHospitalsController {
     }
 
     public String loginToPiotrGetSessionId() {
-        //todo - czemu to działa? to powinien wygenerować Piotr...
         String username = 'maciej.szymczyk@britenet.com.pl';
         String password = 'Ulka!2002sjScbwznYDOocJSdloEwSJ8l';
         String ClientId = '3MVG9fTLmJ60pJ5KOWKrx4ZK68vbm6BizsZwIiPAZvzLsVGKYalESe4NBKdrBIrRAR0IIQ3fAaJPqJ5D5srmc';

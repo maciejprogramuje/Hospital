@@ -7,6 +7,9 @@ trigger Hosp_Hospital on Hospital__c (after insert, after update, after delete) 
 
     while (!isExecuted) {
         if (Trigger.isInsert) {
+
+            System.debug('Trigger.newMap.keySet()='+Trigger.newMap.keySet());
+
             Hosp_HospitalTriggerHandler.sendHosp(Trigger.newMap.keySet());
         }
 

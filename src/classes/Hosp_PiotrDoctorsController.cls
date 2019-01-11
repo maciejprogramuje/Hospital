@@ -16,7 +16,6 @@ public with sharing class Hosp_PiotrDoctorsController {
         doctorsService = new Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP();
         doctorToSearch = new Doctor__c();
         doctorToEdit = new Doctor__c();
-        //doctorToInsert = new Doctor__c();
         doctorsService.timeout_x = 1000;
         doctorsService.SessionHeader = new Hosp_soapSforceComSchemasClassHospitalD.SessionHeader_element();
         doctorsService.SessionHeader.sessionId = Hosp_Utils.loginToPiotrGetSessionId();
