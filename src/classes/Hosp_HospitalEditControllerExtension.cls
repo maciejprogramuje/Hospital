@@ -10,7 +10,7 @@ public with sharing class Hosp_HospitalEditControllerExtension {
     public PageReference save() {
         Hospital__c hospital = (Hospital__c) standardController.getRecord();
 
-        List<Hospital__c> hospitals = [SELECT Id, Name FROM Hospital__c WHERE Name = :hospital.Name];
+        List<Hospital__c> hospitals = [SELECT Id, Name FROM Hospital__c WHERE Id = :hospital.Id];
 
         if (hospitals.isEmpty()) {
             hospital = new Hospital__c(
@@ -23,7 +23,7 @@ public with sharing class Hosp_HospitalEditControllerExtension {
                     Master_Unit__c = hospital.Master_Unit__c);
             insert hospital;
         } else {
-            insert hospital;
+            update hospital;
         }
 
         return new ApexPages.StandardController(hospital).view();

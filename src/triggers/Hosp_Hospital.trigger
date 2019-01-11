@@ -3,18 +3,21 @@
  */
 
 trigger Hosp_Hospital on Hospital__c (after insert, after update, after delete) {
-    Boolean isExecuted = false;
 
-    while (!isExecuted) {
-        if (Trigger.isInsert) {
+    if (Trigger.isInsert || Trigger.isUpdate) {
+        Boolean isExecuted = false;
+        while (!isExecuted) {
             Hosp_HospitalTriggerHandler.sendHosp(Trigger.newMap.keySet());
+            isExecuted = true;
         }
 
 
-
-
-
-        isExecuted = true;
+    } else if (Trigger.isDelete) {
+        Boolean isExecuted = false;
+        while (!isExecuted) {
+            Hosp_HospitalTriggerHandler.deleteHosp(Trigger.oldMap.keySet());
+            isExecuted = true;
+        }
     }
 
 

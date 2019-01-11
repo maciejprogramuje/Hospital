@@ -16,11 +16,46 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
         String body = '{ "hospitals"  : ' + JSON.serialize(hospitalsInWrapper) + ' }';
 
+
         Http http = new Http();
         HttpRequest request = getRequest('PUT', '', body);
 
         HttpResponse response = http.send(request);
+        System.debug('response' + response.getStatusCode());
     }
+
+    @future(Callout=true)
+    public static void deleteHosp(Set<Id> hospitalsIds) {
+        /*List<Hospital__c> hospitals = [SELECT Id, Name, City__c, Country__c, WWW__c, Street__c, PostalCode__c FROM Hospital__c WHERE Id IN :hospitalsIds];
+
+        List<Hosp_HospitalWrapper> hospitalsInWrapper = new List<Hosp_HospitalWrapper>();
+        for (Hospital__c hospital : hospitals) {
+            hospitalsInWrapper.add(new Hosp_HospitalWrapper(hospital));
+        }
+
+        String body = '{ "hospitals"  : ' + JSON.serialize(hospitalsInWrapper) + ' }';
+
+        System.debug('body='+body);*/
+
+
+        System.debug('hospitalsIds='+hospitalsIds);
+
+        String hospitalToDeleteId;
+        for(String hospId : hospitalsIds) {
+            hospitalToDeleteId = hospId;
+            break;
+        }
+
+        System.debug('hospitalToDeleteId='+hospitalToDeleteId);
+
+
+        Http http = new Http();
+        HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '');
+        HttpResponse response = http.send(request);
+
+        System.debug('response='+response.getStatusCode());
+    }
+
 
 
     public static HttpRequest getRequest(String methodType, String urlParams, String body) {
@@ -45,7 +80,10 @@ public with sharing class Hosp_HospitalTriggerHandler {
         return Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
     }
 
+
+
     private class Hosp_HospitalWrapper {
+        public String hospitalId { get; set; }
         public String name { get; set; }
         public String country { get; set; }
         public String city { get; set; }
@@ -53,6 +91,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
         public String street { get; set; }
 
         public Hosp_HospitalWrapper(Hospital__c hospital) {
+            hospitalId = hospital.Id;
             name = hospital.Name;
             country = hospital.Country__c;
             city = hospital.City__c;

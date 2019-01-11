@@ -12,7 +12,7 @@ global with sharing class Hosp_RestForHospitals {
         List<Hospital__c> rawHospitals = Database.query(query);
 
         List<Hosp_HospitalWrapperForRest> hospitals = new List<Hosp_HospitalWrapperForRest>();
-        for(Hospital__c rawHospital : rawHospitals) {
+        for (Hospital__c rawHospital : rawHospitals) {
             hospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 
@@ -23,7 +23,7 @@ global with sharing class Hosp_RestForHospitals {
     global static List<Hosp_HospitalWrapperForRest> upsertHospitals(List<Hosp_HospitalWrapperForRest> hospitals) {
         List<Hospital__c> hospitalsList = new List<Hospital__c>();
         for (Hosp_HospitalWrapperForRest hosp : hospitals) {
-            hospitalsList.add(new Hospital__c(Id = hosp.hospitalId,
+            hospitalsList.add(new Hospital__c(ExternalId__c = hosp.hospitalId,
                     Name = hosp.name,
                     Country__c = hosp.country,
                     City__c = hosp.city,
@@ -31,10 +31,13 @@ global with sharing class Hosp_RestForHospitals {
                     Street__c = hosp.street));
         }
 
+        System.debug('hospitalsList to insert >>' + hospitalsList);
+
         upsert hospitalsList;
 
+
         List<Hosp_HospitalWrapperForRest> resultsHospitals = new List<Hosp_HospitalWrapperForRest>();
-        for(Hospital__c rawHospital : hospitalsList) {
+        for (Hospital__c rawHospital : hospitalsList) {
             resultsHospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 
@@ -46,21 +49,28 @@ global with sharing class Hosp_RestForHospitals {
         RestRequest request = RestContext.request;
         String hospitalIds = request.requestURI.substring(request.requestURI.lastIndexOf('/') + 1);
 
+
+        System.debug('hospitalIds=' + hospitalIds);
+
         List<String> ids = hospitalIds.split(',');
 
-        List<Hospital__c> listToDel = [SELECT Id,
-                Name,
-                Country__c,
-                City__c,
-                PostalCode__c,
-                Street__c
-            FROM Hospital__c
-            WHERE Id IN :ids];
+        List<Hospital__c> listToDel = [
+                SELECT Id,
+                        Name,
+                        Country__c,
+                        City__c,
+                        PostalCode__c,
+                        Street__c
+                FROM Hospital__c
+                WHERE Id IN :ids
+        ];
+
+        System.debug('listToDel=' + listToDel);
 
         delete listToDel;
 
         List<Hosp_HospitalWrapperForRest> hospitals = new List<Hosp_HospitalWrapperForRest>();
-        for(Hospital__c rawHospital : listToDel) {
+        for (Hospital__c rawHospital : listToDel) {
             hospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 

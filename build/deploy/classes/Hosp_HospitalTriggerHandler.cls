@@ -27,6 +27,9 @@ public with sharing class Hosp_HospitalTriggerHandler {
     }
 
 
+
+
+
     public static HttpRequest getRequest(String methodType, String urlParams, String body) {
         HttpRequest request = new HttpRequest();
         request.setEndPoint(endPoint + urlParams);
@@ -50,6 +53,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
 
     private class Hosp_HospitalWrapper {
+        public String id { get; set; }
         public String name { get; set; }
         public String country { get; set; }
         public String city { get; set; }
@@ -57,6 +61,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
         public String street { get; set; }
 
         public Hosp_HospitalWrapper(Hospital__c hospital) {
+            id = hospital.Id;
             name = hospital.Name;
             country = hospital.Country__c;
             city = hospital.City__c;
