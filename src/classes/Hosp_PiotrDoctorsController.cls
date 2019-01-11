@@ -1,7 +1,6 @@
 public with sharing class Hosp_PiotrDoctorsController {
     public Doctor__c doctorToSearch { get; set; }
     public Doctor__c doctorToEdit { get; set; }
-    //public Doctor__c doctorToInsert { get; set; }
     public String doctorToEditId { get; set; }
     public Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP doctorsService { get; set; }
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsResults { get; set; }
@@ -11,8 +10,6 @@ public with sharing class Hosp_PiotrDoctorsController {
 
     public Boolean isAnyDoctorInResultsList { get; set; }
     public Boolean isAnyProblemWithDelete { get; set; }
-    //public Boolean isAnyInsertProblem { get; set; }
-    //public Boolean isAnyUpdateProblem { get; set; }
     public Boolean isAnyUpsertProblem { get; set; }
 
     public Hosp_PiotrDoctorsController() {
@@ -27,8 +24,6 @@ public with sharing class Hosp_PiotrDoctorsController {
 
         isAnyDoctorInResultsList = false;
         isAnyProblemWithDelete = false;
-        //isAnyInsertProblem = true;
-        //isAnyUpdateProblem = true;
         isAnyUpsertProblem = true;
     }
 
@@ -70,28 +65,11 @@ public with sharing class Hosp_PiotrDoctorsController {
         } catch (Exception e) {
             isAnyUpsertProblem = true;
             Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_update_doctor;
-            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Hosp_Doctor_already_exists));
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
             System.debug('isAnyUpsertProblem=' + e.getMessage());
         }
 
     }
-
-    /*public void insertDoctor() {
-        clearMessages();
-
-        try {
-            doctorToTest = doctorsService.upsertDoctor(doctorToInsert.Id, doctorToInsert.FirstName__c, doctorToInsert.Name, doctorToInsert.City__c, doctorToInsert.Country__c);
-            isAnyInsertProblem = false;
-            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_added;
-            refreshResultsList(doctorToTest);
-        } catch (Exception e) {
-            isAnyInsertProblem = true;
-            Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_add_doctor;
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Hosp_Doctor_already_exists));
-            System.debug('isAnyInsertProblem=' + e.getMessage());
-        }
-    }*/
 
     private void refreshResultsList(Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctor) {
         if (doctor != null
