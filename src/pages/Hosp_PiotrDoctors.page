@@ -107,7 +107,7 @@
         <c:Hosp_ErrorToast/>
 
         <apex:outputPanel id="searchResultTable">
-            <apex:outputPanel rendered="{! IF(doctorsResults != null, true, false) }">
+            <apex:outputPanel rendered="{! IF((doctorsResults == null || doctorsResults.empty), false, true) }">
                 <table id="doctorsResultsListPageBlock" class="slds-table slds-table_cell-buffer slds-table_bordered">
                     <thead>
                     <tr class="slds-line-height_reset">
@@ -134,73 +134,81 @@
                         </th>
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate"
-                                 title="{! $ObjectType.Doctor__c.fields.Country__c.label }">{!
-                            $ObjectType.Doctor__c.fields.Country__c.label }
+                                 title="{! $ObjectType.Doctor__c.fields.Country__c.label }">{! $ObjectType.Doctor__c.fields.Country__c.label }
+
+
+                                <apex:form>
+                                    <apex:commandLink action="{! sortByCountry }"
+                                                      reRender="searchResultTable">
+                                        <span style="display: none;">&#9660;</span>
+                                        <span style="display: inline-block;">&#9650;</span>
+                                    </apex:commandLink>
+                                </apex:form>
+
                             </div>
                         </th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    <apex:repeat value="{! doctorsResults }" var="doc">
-                        <tr class="slds-hint-parent">
-                            <td data-label="doctorsResultsDataTable">
-                                <div class="slds-truncate">
-                                    <apex:form>
-                                        <apex:commandButton
-                                                action="{! openDoctorToEdit }"
-                                                onComplete="showToastAndHideOthers('modalUpsertDoc'); return false;"
-                                                reRender="modalUpsertOutputPanel, searchResultTable, messagesInUpsertModal"
-                                                status="statusCompLsds"
-                                                styleClass="slds-button slds-button_neutral"
-                                                value="{! $Label.Edit }">
+                        <apex:repeat value="{! doctorsResults }" var="doc">
+                            <tr class="slds-hint-parent">
+                                <td data-label="doctorsResultsDataTable">
+                                    <div class="slds-truncate">
+                                        <apex:form>
+                                            <apex:commandButton
+                                                    action="{! openDoctorToEdit }"
+                                                    onComplete="showToastAndHideOthers('modalUpsertDoc'); return false;"
+                                                    reRender="modalUpsertOutputPanel, searchResultTable, messagesInUpsertModal"
+                                                    status="statusCompLsds"
+                                                    styleClass="slds-button slds-button_neutral"
+                                                    value="{! $Label.Edit }">
 
-                                            <apex:param name="editedDoctor"
-                                                        value="{! doc.webServiceDoctorId }"
-                                                        assignTo="{! doctorToEditId }"/>
-                                        </apex:commandButton>
+                                                <apex:param name="editedDoctor"
+                                                            value="{! doc.webServiceDoctorId }"
+                                                            assignTo="{! doctorToEditId }"/>
+                                            </apex:commandButton>
 
-                                        <apex:commandButton styleClass="slds-button slds-button_neutral"
-                                                            value="{! $Label.Delete }"
-                                                            onComplete="showToast('confirmationDialog');"
-                                                            reRender="searchResultTable, messages, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
-                                                            status="statusCompLsds">
+                                            <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                                                value="{! $Label.Delete }"
+                                                                onComplete="showToast('confirmationDialog');"
+                                                                reRender="searchResultTable, messages, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
+                                                                status="statusCompLsds">
 
-                                            <apex:param name="editedDoctor"
-                                                        value="{! doc.webServiceDoctorId }"
-                                                        assignTo="{! doctorToEditId }"/>
-                                        </apex:commandButton>
-                                    </apex:form>
-                                </div>
-                            </td>
+                                                <apex:param name="editedDoctor"
+                                                            value="{! doc.webServiceDoctorId }"
+                                                            assignTo="{! doctorToEditId }"/>
+                                            </apex:commandButton>
+                                        </apex:form>
+                                    </div>
+                                </td>
 
-                            <td data-label="{! $ObjectType.Doctor__c.fields.Name.label }">
-                                <div class="slds-truncate"
-                                     title="{! $ObjectType.Doctor__c.fields.Name.label }">{! doc.webServiceDoctorLastName }
-                                </div>
-                            </td>
+                                <td data-label="{! $ObjectType.Doctor__c.fields.Name.label }">
+                                    <div class="slds-truncate"
+                                         title="{! $ObjectType.Doctor__c.fields.Name.label }">{! doc.webServiceDoctorLastName }
+                                    </div>
+                                </td>
 
-                            <td data-label="{! $ObjectType.Doctor__c.fields.FirstName__c.label }">
-                                <div class="slds-truncate"
-                                     title="{! $ObjectType.Doctor__c.fields.FirstName__c.label }">{!
-                                doc.webServiceDoctorFirstName }
-                                </div>
-                            </td>
+                                <td data-label="{! $ObjectType.Doctor__c.fields.FirstName__c.label }">
+                                    <div class="slds-truncate"
+                                         title="{! $ObjectType.Doctor__c.fields.FirstName__c.label }">{!
+                                    doc.webServiceDoctorFirstName }
+                                    </div>
+                                </td>
 
-                            <td data-label="{! $ObjectType.Doctor__c.fields.City__c.label }">
-                                <div class="slds-truncate"
-                                     title="{! $ObjectType.Doctor__c.fields.City__c.label }">{! doc.webServiceDoctorCity}
-                                </div>
-                            </td>
+                                <td data-label="{! $ObjectType.Doctor__c.fields.City__c.label }">
+                                    <div class="slds-truncate"
+                                         title="{! $ObjectType.Doctor__c.fields.City__c.label }">{! doc.webServiceDoctorCity}
+                                    </div>
+                                </td>
 
-                            <td data-label="{! $ObjectType.Doctor__c.fields.Country__c.label }">
-                                <div class="slds-truncate"
-                                     title="{! $ObjectType.Doctor__c.fields.Country__c.label }">{!
-                                doc.webServiceDoctorCountry}
-                                </div>
-                            </td>
-                        </tr>
-                    </apex:repeat>
+                                <td data-label="{! $ObjectType.Doctor__c.fields.Country__c.label }">
+                                    <div class="slds-truncate"
+                                         title="{! $ObjectType.Doctor__c.fields.Country__c.label }">{! doc.webServiceDoctorCountry}
+                                    </div>
+                                </td>
+                            </tr>
+                        </apex:repeat>
                     </tbody>
                 </table>
             </apex:outputPanel>

@@ -12,6 +12,10 @@ public with sharing class Hosp_PiotrDoctorsController {
     public Boolean isAnyProblemWithDelete { get; set; }
     public Boolean isAnyUpsertProblem { get; set; }
 
+
+    List<Hosp_DoctorsSorting.DoctorWrapper> sortedDoctor = new List<Hosp_DoctorsSorting.DoctorWrapper>();
+
+
     public Hosp_PiotrDoctorsController() {
         doctorsService = new Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP();
         doctorToSearch = new Doctor__c();
@@ -91,7 +95,9 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         try {
-            deletedDoctorsToTest = doctorsService.deleteDoctors(new List<String>{doctorToEditId});
+            deletedDoctorsToTest = doctorsService.deleteDoctors(new List<String>{
+                    doctorToEditId
+            });
             isAnyProblemWithDelete = false;
             Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_deleted;
             if (!Test.isRunningTest()) {
@@ -103,4 +109,28 @@ public with sharing class Hosp_PiotrDoctorsController {
         }
     }
 
+    public void sortByCountry() {
+        Hosp_DoctorsSorting.sortAscending = true;
+        Hosp_DoctorsSorting.compareBy = 'country';
+
+        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults);
+
+        /*for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToConvert : doctorsResults) {
+            sortedDoctor.add(new Hosp_DoctorsSorting.DoctorWrapper(doctorToConvert));
+        }
+
+        sortedDoctor.sort();
+
+        doctorsResults.clear();
+        for (Hosp_DoctorsSorting.DoctorWrapper doc : sortedDoctor) {
+            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorInWrapper = new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP();
+            doctorInWrapper.webServiceDoctorLastName = doc.name;
+            doctorInWrapper.webServiceDoctorFirstName = doc.firstName;
+            doctorInWrapper.webServiceDoctorCity = doc.city;
+            doctorInWrapper.webServiceDoctorCountry = doc.country;
+
+
+            doctorsResults.add(doctorInWrapper);
+        }*/
+    }
 }

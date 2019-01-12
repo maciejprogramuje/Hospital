@@ -134,58 +134,58 @@
                     </thead>
 
                     <tbody>
-                    <apex:repeat value="{! hospitalsResults }" var="hosp">
-                        <tr class="slds-hint-parent">
-                            <td data-label="hospitalsResultsDataTable">
-                                <div class="slds-truncate">
-                                    <apex:form>
-                                        <apex:commandButton
-                                                action="{! openHospitalToEdit }"
-                                                onComplete="showToastAndHideOthers('modalUpsertHosp'); return false;"
-                                                reRender="modalEditOutputPanel, searchResultTable, messagesInUpsertModal"
-                                                status="statusCompLsds"
-                                                styleClass="slds-button slds-button_neutral"
-                                                value="{! $Label.Edit }">
+                        <apex:repeat value="{! hospitalsResults }" var="hosp">
+                            <tr class="slds-hint-parent">
+                                <td data-label="hospitalsResultsDataTable">
+                                    <div class="slds-truncate">
+                                        <apex:form>
+                                            <apex:commandButton
+                                                    action="{! openHospitalToEdit }"
+                                                    onComplete="showToastAndHideOthers('modalUpsertHosp'); return false;"
+                                                    reRender="modalEditOutputPanel, searchResultTable, messagesInUpsertModal"
+                                                    status="statusCompLsds"
+                                                    styleClass="slds-button slds-button_neutral"
+                                                    value="{! $Label.Edit }">
 
-                                            <apex:param name="editedHospital"
-                                                        value="{! hosp.hospitalId }"
-                                                        assignTo="{! hospitalToEditId }"/>
-                                        </apex:commandButton>
+                                                <apex:param name="editedHospital"
+                                                            value="{! hosp.hospitalId }"
+                                                            assignTo="{! hospitalToEditId }"/>
+                                            </apex:commandButton>
 
-                                        <apex:commandButton
-                                                styleClass="slds-button slds-button_neutral"
-                                                value="{! $Label.Delete }"
-                                                onComplete="showToast('confirmationDialog');"
-                                                reRender="searchResultTable, messages, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
-                                                status="statusCompLsds">
+                                            <apex:commandButton
+                                                    styleClass="slds-button slds-button_neutral"
+                                                    value="{! $Label.Delete }"
+                                                    onComplete="showToast('confirmationDialog');"
+                                                    reRender="searchResultTable, messages, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
+                                                    status="statusCompLsds">
 
-                                            <apex:param name="editedHospital"
-                                                        value="{! hosp.hospitalId }"
-                                                        assignTo="{! hospitalToEditId }"/>
-                                        </apex:commandButton>
-                                    </apex:form>
-                                </div>
-                            </td>
+                                                <apex:param name="editedHospital"
+                                                            value="{! hosp.hospitalId }"
+                                                            assignTo="{! hospitalToEditId }"/>
+                                            </apex:commandButton>
+                                        </apex:form>
+                                    </div>
+                                </td>
 
-                            <td data-label="{! $ObjectType.Hospital__c.fields.Name.label }">
-                                <div class="slds-truncate"
-                                     title="{! $ObjectType.Hospital__c.fields.Name.label }">{! hosp.name }
-                                </div>
-                            </td>
+                                <td data-label="{! $ObjectType.Hospital__c.fields.Name.label }">
+                                    <div class="slds-truncate"
+                                         title="{! $ObjectType.Hospital__c.fields.Name.label }">{! hosp.name }
+                                    </div>
+                                </td>
 
-                            <td data-label="{! $ObjectType.Hospital__c.fields.City__c.label }">
-                                <div class="slds-truncate"
-                                     title="{! $ObjectType.Hospital__c.fields.City__c.label }">{! hosp.city}
-                                </div>
-                            </td>
+                                <td data-label="{! $ObjectType.Hospital__c.fields.City__c.label }">
+                                    <div class="slds-truncate"
+                                         title="{! $ObjectType.Hospital__c.fields.City__c.label }">{! hosp.city}
+                                    </div>
+                                </td>
 
-                            <td data-label="{! $ObjectType.Hospital__c.fields.Country__c.label }">
-                                <div class="slds-truncate"
-                                     title="{! $ObjectType.Hospital__c.fields.Country__c.label }">{! hosp.country}
-                                </div>
-                            </td>
-                        </tr>
-                    </apex:repeat>
+                                <td data-label="{! $ObjectType.Hospital__c.fields.Country__c.label }">
+                                    <div class="slds-truncate"
+                                         title="{! $ObjectType.Hospital__c.fields.Country__c.label }">{! hosp.country}
+                                    </div>
+                                </td>
+                            </tr>
+                        </apex:repeat>
                     </tbody>
                 </table>
             </apex:outputPanel>
