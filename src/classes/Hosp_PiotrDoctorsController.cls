@@ -13,10 +13,7 @@ public with sharing class Hosp_PiotrDoctorsController {
     public Boolean isAnyUpsertProblem { get; set; }
 
 
-    public Boolean sortAsc { get{
-        sortAsc = !sortAsc;
-        return sortAsc;
-    } set; }
+    public Boolean sortAsc { get; set; }
 
 
     public Hosp_PiotrDoctorsController() {
@@ -40,8 +37,7 @@ public with sharing class Hosp_PiotrDoctorsController {
         doctorsResults = doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
 
         Hosp_DoctorsSorting.compareBy = 'name';
-
-        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, sortAsc);
+        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, true);
     }
 
     public void openDoctorToEdit() {
@@ -122,7 +118,11 @@ public with sharing class Hosp_PiotrDoctorsController {
 
     public void sortByCountry() {
         Hosp_DoctorsSorting.compareBy = 'country';
-
         doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, sortAsc);
+        flipSortOrder();
+    }
+
+    private void flipSortOrder() {
+        sortAsc = !sortAsc;
     }
 }

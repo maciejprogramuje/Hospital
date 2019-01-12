@@ -171,7 +171,12 @@
 
                                             <apex:commandButton styleClass="slds-button slds-button_neutral"
                                                                 value="{! $Label.Delete }"
-                                                                onComplete="showToast('confirmationDialog');"
+
+
+
+                                                                onComplete="showToastAndHideOthers('confirmationDialog');"
+
+
                                                                 reRender="searchResultTable, messages, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
                                                                 status="statusCompLsds">
 
@@ -305,6 +310,7 @@
 
                             <apex:commandButton
                                     styleClass="slds-button slds-button_brand"
+                                    onClick=""
                                     onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
                                     action="{! deleteDoctor }"
                                     value="{! $Label.Delete }"
