@@ -3,8 +3,25 @@ public with sharing class Hosp_DoctorsSorting {
     public static String compareBy { get; set; }
 
     public static List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> sortResults(List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsToSort) {
+        List<Hosp_DoctorsSorting.DoctorWrapper> tempDoctorsToSort = new List<Hosp_DoctorsSorting.DoctorWrapper>();
+
+        for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToConvert : doctorsToSort) {
+            tempDoctorsToSort.add(new Hosp_DoctorsSorting.DoctorWrapper(doctorToConvert));
+        }
+
+        tempDoctorsToSort.sort();
 
         doctorsToSort.clear();
+        for (Hosp_DoctorsSorting.DoctorWrapper doc : tempDoctorsToSort) {
+            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorInWrapper = new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP();
+            doctorInWrapper.webServiceDoctorLastName = doc.name;
+            doctorInWrapper.webServiceDoctorFirstName = doc.firstName;
+            doctorInWrapper.webServiceDoctorCity = doc.city;
+            doctorInWrapper.webServiceDoctorCountry = doc.country;
+
+
+            doctorsToSort.add(doctorInWrapper);
+        }
 
         return doctorsToSort;
     }
