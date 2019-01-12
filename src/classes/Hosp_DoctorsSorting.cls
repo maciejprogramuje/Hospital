@@ -1,12 +1,12 @@
-public with sharing class Hosp_DoctorsSorting {
-    public static Boolean sortAscending { get; set; }
+public class Hosp_DoctorsSorting {
+    //public static Boolean sortAscending { get; set; }
     public static String compareBy { get; set; }
 
-    public static List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> sortResults(List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsToSort) {
+    public static List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> sortResults(List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsToSort, Boolean sortAsc) {
         List<Hosp_DoctorsSorting.DoctorWrapper> tempDoctorsToSort = new List<Hosp_DoctorsSorting.DoctorWrapper>();
 
         for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToConvert : doctorsToSort) {
-            tempDoctorsToSort.add(new Hosp_DoctorsSorting.DoctorWrapper(doctorToConvert));
+            tempDoctorsToSort.add(new Hosp_DoctorsSorting.DoctorWrapper(doctorToConvert, sortAsc));
         }
 
         tempDoctorsToSort.sort();
@@ -19,7 +19,6 @@ public with sharing class Hosp_DoctorsSorting {
             doctorInWrapper.webServiceDoctorCity = doc.city;
             doctorInWrapper.webServiceDoctorCountry = doc.country;
 
-
             doctorsToSort.add(doctorInWrapper);
         }
 
@@ -31,13 +30,15 @@ public with sharing class Hosp_DoctorsSorting {
         public String firstName { get; set; }
         public String country { get; set; }
         public String city { get; set; }
+        public Boolean sortAsc { get; set; }
 
-
-        public DoctorWrapper(Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToChange) {
+        public DoctorWrapper(Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToChange, Boolean sortAsc) {
             name = doctorToChange.webServiceDoctorLastName;
             firstName = doctorToChange.webServiceDoctorFirstName;
             country = doctorToChange.webServiceDoctorCountry;
             city = doctorToChange.webServiceDoctorCity;
+
+            this.sortAsc = sortAsc;
 
             if(String.isBlank(name)) {
                 name = '';
@@ -54,7 +55,7 @@ public with sharing class Hosp_DoctorsSorting {
         }
 
         public Integer compareTo(Object compareTo) {
-            if (sortAscending) {
+            if (sortAsc) {
                 if (compareBy.equals('name')) {
                     DoctorWrapper compareToDoctor = (DoctorWrapper) compareTo;
                     if (name == compareToDoctor.name) return 0;

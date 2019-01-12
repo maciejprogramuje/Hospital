@@ -13,6 +13,12 @@ public with sharing class Hosp_PiotrDoctorsController {
     public Boolean isAnyUpsertProblem { get; set; }
 
 
+    public Boolean sortAsc { get{
+        sortAsc = !sortAsc;
+        return sortAsc;
+    } set; }
+
+
     public Hosp_PiotrDoctorsController() {
         doctorsService = new Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP();
         doctorToSearch = new Doctor__c();
@@ -24,12 +30,18 @@ public with sharing class Hosp_PiotrDoctorsController {
         isAnyDoctorInResultsList = false;
         isAnyProblemWithDelete = false;
         isAnyUpsertProblem = true;
+
+        sortAsc = false;
     }
 
     public void searchDoctors() {
         clearMessages();
 
         doctorsResults = doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
+
+        Hosp_DoctorsSorting.compareBy = 'name';
+
+        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, sortAsc);
     }
 
     public void openDoctorToEdit() {
@@ -107,9 +119,8 @@ public with sharing class Hosp_PiotrDoctorsController {
     }
 
     public void sortByCountry() {
-        Hosp_DoctorsSorting.sortAscending = true;
         Hosp_DoctorsSorting.compareBy = 'country';
 
-        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults);
+        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, sortAsc);
     }
 }
