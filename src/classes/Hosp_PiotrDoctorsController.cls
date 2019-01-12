@@ -12,7 +12,6 @@ public with sharing class Hosp_PiotrDoctorsController {
     public Boolean isAnyProblemWithDelete { get; set; }
     public Boolean isAnyUpsertProblem { get; set; }
 
-
     public Boolean sortAsc { get{
         sortAsc = !sortAsc;
         return sortAsc;

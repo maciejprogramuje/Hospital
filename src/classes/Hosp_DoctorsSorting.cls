@@ -1,5 +1,4 @@
 public class Hosp_DoctorsSorting {
-    //public static Boolean sortAscending { get; set; }
     public static String compareBy { get; set; }
 
     public static List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> sortResults(List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsToSort, Boolean sortAsc) {
