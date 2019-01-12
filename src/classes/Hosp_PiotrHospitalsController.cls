@@ -1,46 +1,25 @@
 public with sharing class Hosp_PiotrHospitalsController {
     public Hospital__c hospitalToSearch { get; set; }
     public Hospital__c hospitalToEdit { get; set; }
-    public Hospital__c hospitalToInsert { get; set; }
     public String hospitalToEditId { get; set; }
 
-    public Boolean isAnyHospitalInResultsList { get; set; }
     public Boolean isAnyProblemWithDelete { get; set; }
-    public Boolean isAnyInsertProblem { get; set; }
-    public Boolean isAnyUpdateProblem { get; set; }
+    public Boolean isAnyUpsertProblem { get; set; }
 
     public String endPoint = Label.Hosp_Endpoint_Piotr_Hospital;
     public List<Hosp_HospitalWrapperForRest> hospitalsResults { get; set; }
-
-    private String sortOrder = 'Name';
-    private String sortAscDesc = 'ASC';
-    public String sortOrderSignName { get; set; }
-    public String sortOrderSignEmail { get; set; }
-    public String sortOrderSignCountry { get; set; }
-    public String sortOrderSign { get; set; }
 
     public Hosp_PiotrHospitalsController() {
         hospitalsResults = new List<Hosp_HospitalWrapperForRest>();
         hospitalToSearch = new Hospital__c();
         hospitalToEdit = new Hospital__c();
-        hospitalToInsert = new Hospital__c();
 
-        isAnyHospitalInResultsList = false;
         isAnyProblemWithDelete = false;
-        isAnyInsertProblem = true;
-        isAnyUpdateProblem = true;
+        isAnyUpsertProblem = true;
     }
 
     public void searchHospitals() {
         hospitalsResults = getHospitalCallout(hospitalToSearch.Name, hospitalToSearch.City__c, hospitalToSearch.Country__c);
-
-
-
-        if (hospitalsResults.size() > 0) {
-            isAnyHospitalInResultsList = true;
-        } else {
-            isAnyHospitalInResultsList = false;
-        }
     }
 
     public List<Hosp_HospitalWrapperForRest> getHospitalCallout(String queryName, String queryCity, String queryCountry) {
@@ -116,22 +95,22 @@ public with sharing class Hosp_PiotrHospitalsController {
         return hospitalList;
     }
 
-    public void insertHospital() {
+    public void upsertHospital() {
         clearMessages();
 
         try {
-            List<Hosp_HospitalWrapperForRest> insertedHospitals = insertHospitalCallout(hospitalToInsert);
-            isAnyInsertProblem = false;
-            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Hospital_successfully_added;
-            refreshResultsList(insertedHospitals);
+            List<Hosp_HospitalWrapperForRest> upsertedHospitals = upsertHospitalCallout(hospitalToEdit);
+            isAnyUpsertProblem = false;
+            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Hospital_successfully_updated;
+            refreshResultsList(upsertedHospitals);
         } catch (Exception e) {
-            isAnyInsertProblem = true;
-            Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_add_hospital;
-            System.debug('isAnyInsertProblem=' + e);
+            isAnyUpsertProblem = true;
+            Hosp_ErrorToastController.messageErrorToast = e.getMessage();
+            System.debug('isAnyUpsertProblem=' + e);
         }
     }
 
-    public List<Hosp_HospitalWrapperForRest> insertHospitalCallout(Hospital__c hospital) {
+    public List<Hosp_HospitalWrapperForRest> upsertHospitalCallout(Hospital__c hospital) {
         String body = JSON.serialize(new Hosp_HospitalWrapperForRest(hospital), true);
         body = '{ "hospitals"  : [ ' + body + ' ] }';
 
@@ -146,14 +125,14 @@ public with sharing class Hosp_PiotrHospitalsController {
         return hospitalList;
     }
 
-    public void resetHospitalToInsert() {
+    public void resetHospitalToUpsert() {
         clearMessages();
-        isAnyInsertProblem = true;
-        hospitalToInsert = new Hospital__c();
+        isAnyUpsertProblem = true;
+        hospitalToEdit = new Hospital__c();
     }
 
     public void openHospitalToEdit() {
-        resetHospitalToUpdate();
+        resetHospitalToUpsert();
 
         for (Hosp_HospitalWrapperForRest hosp : hospitalsResults) {
             if (hosp.hospitalId == hospitalToEditId) {
@@ -164,28 +143,6 @@ public with sharing class Hosp_PiotrHospitalsController {
                 break;
             }
         }
-    }
-
-    public void updateHospital() {
-        clearMessages();
-
-        try {
-            List<Hosp_HospitalWrapperForRest> updatedHospitals = insertHospitalCallout(hospitalToEdit);
-
-            isAnyUpdateProblem = false;
-            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Hospital_successfully_updated;
-            refreshResultsList(updatedHospitals);
-        } catch (Exception e) {
-            isAnyUpdateProblem = true;
-            Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_update_hospital;
-            System.debug('isAnyUpdateProblem=' + e.getMessage());
-        }
-    }
-
-    public void resetHospitalToUpdate() {
-        clearMessages();
-        isAnyUpdateProblem = true;
-        hospitalToEdit = new Hospital__c();
     }
 
     private void refreshResultsList(List<Hosp_HospitalWrapperForRest> hospitals) {

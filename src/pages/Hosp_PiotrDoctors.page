@@ -107,7 +107,7 @@
         <c:Hosp_ErrorToast/>
 
         <apex:outputPanel id="searchResultTable">
-            <apex:outputPanel rendered="{! isAnyDoctorInResultsList }">
+            <apex:outputPanel rendered="{! IF(doctorsResults != null, true, false) }">
                 <table id="doctorsResultsListPageBlock" class="slds-table slds-table_cell-buffer slds-table_bordered">
                     <thead>
                     <tr class="slds-line-height_reset">
@@ -261,7 +261,7 @@
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="{! $Label.Cancel }"
-                                                    reRender="searchResultTable, messagesInUpdateModal"
+                                                    reRender="searchResultTable, messagesInUpsertModal"
                                                     action="{! resetDoctorToUpsert }"
                                                     onClick="hideToast('modalUpsertDoc'); return false;"
                                                     status="statusCompLsds"/>
@@ -319,12 +319,10 @@
             hideToast('errorToast');
             hideToast('successToast');
 
-            var textureEffect = '';
-
-            $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
-            $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);
-            $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);
-            $('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);
+            $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage');
+            $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage');
+            $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage');
+            $('.infoM3').addClass('slds-notify slds-notify--toast customMessage');
 
             $('.errorM3').removeClass('errorM3');
             $('.confirmM3').removeClass('confirmM3');

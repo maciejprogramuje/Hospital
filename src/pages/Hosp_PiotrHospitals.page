@@ -40,9 +40,9 @@
                     <div class="slds-button-group" role="group">
                         <apex:form>
                             <apex:commandButton value="{! $Label.Hosp_New }"
-                                                action="{! resetHospitalToInsert }"
-                                                reRender="modalInsertOutputPanel, messages, messagesInInsertModal"
-                                                onComplete="showToastAndHideOthers('modalInsertHosp'); return false;"
+                                                action="{! resetHospitalToUpsert }"
+                                                reRender="modalUpsertOutputPanel, messages, messagesInUpsertModal"
+                                                onComplete="showToastAndHideOthers('modalUpsertHosp'); return false;"
                                                 status="statusCompLsds"
                                                 styleClass="slds-button slds-button--neutral">
                             </apex:commandButton>
@@ -84,7 +84,7 @@
                                                     action="{! searchHospitals }"
                                                     onComplete="overridePageMessages()"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal"
+                                                    reRender="searchResultTable, messages, messagesInUpsertModal"
                                                     status="statusCompLsds">
                                 </apex:commandbutton>
                             </apex:form>
@@ -141,8 +141,8 @@
                                     <apex:form>
                                         <apex:commandButton
                                                 action="{! openHospitalToEdit }"
-                                                onComplete="showToastAndHideOthers('modalEditHosp'); return false;"
-                                                reRender="modalEditOutputPanel, searchResultTable, messagesInUpdateModal"
+                                                onComplete="showToastAndHideOthers('modalUpsertHosp'); return false;"
+                                                reRender="modalEditOutputPanel, searchResultTable, messagesInUpsertModal"
                                                 status="statusCompLsds"
                                                 styleClass="slds-button slds-button_neutral"
                                                 value="{! $Label.Edit }">
@@ -156,7 +156,7 @@
                                                 styleClass="slds-button slds-button_neutral"
                                                 value="{! $Label.Delete }"
                                                 onComplete="showToast('confirmationDialog');"
-                                                reRender="searchResultTable, messages, messagesInInsertModal, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
+                                                reRender="searchResultTable, messages, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
                                                 status="statusCompLsds">
 
                                             <apex:param name="editedHospital"
@@ -192,23 +192,23 @@
         </apex:outputPanel>
 
 
-        <div id="modalEditHosp" style="display: none; height: 640px;">
+        <div id="modalUpsertHosp" style="display: none; height: 640px;">
             <div class="demo-only">
                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
                          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
                         <header class="slds-modal__header">
                             <h2 id="modal-heading-01"
-                                class="slds-text-heading_medium slds-hyphenate">Edit Hospital</h2>
+                                class="slds-text-heading_medium slds-hyphenate">Upsert Hospital</h2>
                         </header>
                         <apex:form>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                                <apex:outputPanel id="messagesInUpdateModal">
+                                <apex:outputPanel id="messagesInUpsertModal">
                                     <apex:pageMessages/>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel id="modalEditOutputPanel">
+                                <apex:outputPanel id="modalUpsertOutputPanel">
 
                                     <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Name.label }</label>
                                     <apex:inputField value="{! hospitalToEdit.Name }"
@@ -231,17 +231,17 @@
                             <footer class="slds-modal__footer">
 
                                 <apex:commandButton value="{! $Label.Save }"
-                                                    action="{! updateHospital }"
-                                                    onComplete="checkHideModalShowToast({! isAnyUpdateProblem }, 'modalEditHosp', 'successToast')"
-                                                    reRender="searchResultTable, messagesInUpdateModal, successToastOutputPanel, errorToastOutputPanel"
+                                                    action="{! upsertHospital }"
+                                                    onComplete="checkHideModalShowToast({! isAnyUpsertProblem }, 'modalUpsertHosp', 'successToast')"
+                                                    reRender="searchResultTable, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
                                                     status="statusCompLsds"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"/>
 
                                 <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
                                                     value="{! $Label.Cancel }"
-                                                    reRender="searchResultTable, messagesInUpdateModal"
-                                                    action="{! resetHospitalToUpdate }"
-                                                    onClick="hideToast('modalEditHosp'); return false;"
+                                                    reRender="searchResultTable, messagesInUpsertModal"
+                                                    action="{! resetHospitalToUpsert }"
+                                                    onClick="hideToast('modalUpsertHosp'); return false;"
                                                     status="statusCompLsds"/>
                             </footer>
                         </apex:form>
@@ -250,71 +250,6 @@
                 <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
         </div>
-
-
-        <div id="modalInsertHosp" style="display: none; height: 640px;">
-            <div class="demo-only">
-                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                    <div class="slds-modal__container">
-                        <header class="slds-modal__header">
-                            <h2 id="modal-heading-01"
-                                class="slds-text-heading_medium slds-hyphenate">New Hospital</h2>
-                        </header>
-                        <apex:form>
-                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-
-                                <apex:outputPanel id="messagesInInsertModal">
-                                    <apex:pageMessages/>
-                                </apex:outputPanel>
-
-                                <apex:outputPanel id="modalInsertOutputPanel">
-
-                                    <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Name.label }</label>
-                                    <apex:inputField value="{! hospitalToInsert.Name }"
-                                                     required="true"
-                                                     html-placeholder="{! $ObjectType.Hospital__c.fields.Name.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
-
-                                    <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.City__c.label }</label>
-                                    <apex:inputField value="{! hospitalToInsert.City__c }"
-                                                     required="true"
-                                                     html-placeholder="{! $ObjectType.Hospital__c.fields.City__c.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
-
-                                    <label class="slds-form-element__label">{! $ObjectType.Hospital__c.fields.Country__c.label }</label>
-                                    <apex:inputField value="{! hospitalToInsert.Country__c }"
-                                                     required="true"
-                                                     html-placeholder="{! $ObjectType.Hospital__c.fields.Country__c.label }"
-                                                     styleClass="slds-input slds-m-bottom_x-small"/>
-
-                                </apex:outputPanel>
-                            </div>
-
-                            <footer class="slds-modal__footer">
-
-                                <apex:commandbutton value="{! $Label.Hosp_Add_hospital }"
-                                                    action="{! insertHospital }"
-                                                    styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                                    onComplete="checkHideModalShowToast({! isAnyInsertProblem }, 'modalInsertHosp', 'successToast')"
-                                                    reRender="searchResultTable, messagesInInsertModal, successToastOutputPanel, errorToastOutputPanel"
-
-                                                    status="statusCompLsds"/>
-
-                                <apex:commandButton styleClass="slds-button slds-button--neutral slds-m-top--medium"
-                                                    value="{! $Label.Cancel}"
-                                                    action="{! resetHospitalToInsert }"
-                                                    reRender="searchResultTable, messagesInInsertModal"
-                                                    status="statusCompLsds"
-                                                    onClick="hideToast('modalInsertHosp'); return false;"/>
-                            </footer>
-                        </apex:form>
-                    </div>
-                </section>
-                <div class="slds-backdrop slds-backdrop_open"></div>
-            </div>
-        </div>
-
 
         <div id="confirmationDialog" class="demo-only" style="display: none; height: 640px;">
             <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
@@ -362,12 +297,10 @@
             hideToast('errorToast');
             hideToast('successToast');
 
-            var textureEffect = '';
-
-            $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
-            $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);
-            $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);
-            $('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);
+            $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage');
+            $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage');
+            $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage');
+            $('.infoM3').addClass('slds-notify slds-notify--toast customMessage');
 
             $('.errorM3').removeClass('errorM3');
             $('.confirmM3').removeClass('confirmM3');

@@ -19,7 +19,6 @@ public with sharing class Hosp_PiotrDoctorsController {
         doctorsService.timeout_x = 1000;
         doctorsService.SessionHeader = new Hosp_soapSforceComSchemasClassHospitalD.SessionHeader_element();
         doctorsService.SessionHeader.sessionId = Hosp_Utils.loginToPiotrGetSessionId();
-        doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
 
         isAnyDoctorInResultsList = false;
         isAnyProblemWithDelete = false;
@@ -30,12 +29,6 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         doctorsResults = doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
-
-        if (doctorsResults != null) {
-            isAnyDoctorInResultsList = true;
-        } else {
-            isAnyDoctorInResultsList = false;
-        }
     }
 
     public void openDoctorToEdit() {
