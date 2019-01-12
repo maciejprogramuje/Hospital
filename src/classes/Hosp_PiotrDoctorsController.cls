@@ -12,6 +12,7 @@ public with sharing class Hosp_PiotrDoctorsController {
     public Boolean isAnyProblemWithDelete { get; set; }
     public Boolean isAnyUpsertProblem { get; set; }
 
+
     public Boolean sortAsc { get{
         sortAsc = !sortAsc;
         return sortAsc;
@@ -45,6 +46,8 @@ public with sharing class Hosp_PiotrDoctorsController {
 
     public void openDoctorToEdit() {
         resetDoctorToUpsert();
+
+        System.debug('doctorToEditId='+doctorToEditId);
 
         for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doc : doctorsResults) {
             if (doc.webServiceDoctorId == doctorToEditId) {

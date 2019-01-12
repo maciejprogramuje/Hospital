@@ -13,6 +13,7 @@ public class Hosp_DoctorsSorting {
         doctorsToSort.clear();
         for (Hosp_DoctorsSorting.DoctorWrapper doc : tempDoctorsToSort) {
             Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorInWrapper = new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP();
+            doctorInWrapper.webServiceDoctorId = doc.id;
             doctorInWrapper.webServiceDoctorLastName = doc.name;
             doctorInWrapper.webServiceDoctorFirstName = doc.firstName;
             doctorInWrapper.webServiceDoctorCity = doc.city;
@@ -25,6 +26,7 @@ public class Hosp_DoctorsSorting {
     }
 
     public class DoctorWrapper implements Comparable {
+        public String id { get; set; }
         public String name { get; set; }
         public String firstName { get; set; }
         public String country { get; set; }
@@ -32,6 +34,7 @@ public class Hosp_DoctorsSorting {
         public Boolean sortAsc { get; set; }
 
         public DoctorWrapper(Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToChange, Boolean sortAsc) {
+            id = doctorToChange.webServiceDoctorId;
             name = doctorToChange.webServiceDoctorLastName;
             firstName = doctorToChange.webServiceDoctorFirstName;
             country = doctorToChange.webServiceDoctorCountry;
