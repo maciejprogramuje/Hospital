@@ -11,6 +11,7 @@ public class Hosp_DoctorsSorting {
         tempDoctorsToSort.sort();
 
         doctorsToSort.clear();
+
         for (Hosp_DoctorsSorting.DoctorWrapper doc : tempDoctorsToSort) {
             Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorInWrapper = new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP();
             doctorInWrapper.webServiceDoctorId = doc.id;
