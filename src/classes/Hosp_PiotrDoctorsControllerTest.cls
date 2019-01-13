@@ -70,10 +70,10 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
         doctor.Country__c = 'TestDoctorCountry';
         doctor.City__c = 'TestDoctorCity';
 
-        controller.doctorToInsert = doctor;
+        controller.doctorToEdit = doctor;
 
         //when
-        controller.insertDoctor();
+        controller.upsertDoctor();
 
         //then
         System.assertEquals('TestDoctorFirstName', controller.doctorToTest.webServiceDoctorFirstName);
@@ -88,10 +88,10 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
 
         Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
 
-        controller.doctorToInsert = null;
+        controller.doctorToEdit = null;
 
         //when
-        controller.insertDoctor();
+        controller.upsertDoctor();
 
         //then
         System.assertEquals(null, controller.doctorToTest);
@@ -115,7 +115,7 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
         controller.doctorToEdit = doctor;
 
         //when
-        controller.updateDoctor();
+        controller.upsertDoctor();
 
         //then
         System.assertEquals('TestDoctorFirstNameUpdate', controller.doctorToTest.webServiceDoctorFirstName);
@@ -133,7 +133,7 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
         controller.doctorToEdit = null;
 
         //when
-        controller.updateDoctor();
+        controller.upsertDoctor();
 
         //then
         System.assertEquals(null, controller.doctorToTest);
@@ -164,26 +164,15 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
     }
 
     @isTest
-    static void shouldResetDoctorToInsert() {
+    static void shouldResetDoctorToUpsert() {
         //given
         Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
 
         //when
-        controller.resetDoctorToInsert();
+        controller.resetDoctorToUpsert();
 
         //then
-        System.assertEquals(true, controller.isAnyInsertProblem);
+        System.assertEquals(true, controller.isAnyUpsertProblem);
     }
 
-    @isTest
-    static void shouldResetDoctorToUpdate() {
-        //given
-        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
-
-        //when
-        controller.resetDoctorToUpdate();
-
-        //then
-        System.assertEquals(true, controller.isAnyUpdateProblem);
-    }
 }
