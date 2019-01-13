@@ -9,36 +9,72 @@ public with sharing class Hosp_PiotrHospitalsControllerHandler {
         String query = generateQueryForgetHospitalCallout(queryName, queryCity, queryCountry);
 
         Http http = new Http();
-        HttpRequest request = getRequest('GET', query, '');
-        HttpResponse response = http.send(request);
+        HttpResponse response;
+        try {
+            HttpRequest request = getRequest('GET', query, '', (String)Cache.Session.get('local.Hosp.sessionIdToPiotrek'));
+            response = http.send(request);
+        } catch (Exception e) {
+            HttpRequest request = getRequest('GET', query, '', loginToPiotrGetSessionId());
+            response = http.send(request);
+
+            System.debug('Hosp_PiotrHospitalsControllerHandler.getHospitalCallout >>> ' + e.getMessage());
+        }
+
         List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
 
         return hospitalList;
     }
 
-    private String generateQueryForgetHospitalCallout(String queryName, String queryCity, String queryCountry) {
-        String query = '?';
-        if (String.isNotBlank(queryName)) {
-            query += 'Name=' + queryName + '&';
-        }
-        if (String.isNotBlank(queryCity)) {
-            query += 'City__c=' + queryCity + '&';
-        }
-        if (String.isNotBlank(queryCountry)) {
-            query += 'Country__c=' + queryCountry;
-        }
-        query = query.replaceAll(' ', '%20');
+    public List<Hosp_HospitalWrapperForRest> deleteHospitalCallout(String hospitalToDeleteId) {
+        Http http = new Http();
+        HttpResponse response;
+        try {
+            HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '', (String)Cache.Session.get('local.Hosp.sessionIdToPiotrek'));
+            response = http.send(request);
+        } catch (Exception e) {
+            HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '', loginToPiotrGetSessionId());
+            response = http.send(request);
 
-        return query;
+            System.debug('Hosp_PiotrHospitalsControllerHandler.deleteHospitalCallout >>> ' + e.getMessage());
+        }
+
+        List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
+
+        return hospitalList;
     }
 
-    public HttpRequest getRequest(String methodType, String urlParams, String body) {
+    public List<Hosp_HospitalWrapperForRest> upsertHospitalCallout(Hospital__c hospital) {
+        String body = JSON.serialize(new Hosp_HospitalWrapperForRest(hospital), true);
+        body = '{ "hospitals"  : [ ' + body + ' ] }';
+
+        System.debug('upsertHospitalCallout body=' + body);
+
+        Http http = new Http();
+        HttpResponse response;
+        try {
+            HttpRequest request = getRequest('PUT', '', body, (String)Cache.Session.get('local.Hosp.sessionIdToPiotrek'));
+            response = http.send(request);
+        } catch (Exception e) {
+            HttpRequest request = getRequest('PUT', '', body, loginToPiotrGetSessionId());
+            response = http.send(request);
+
+            System.debug('Hosp_PiotrHospitalsControllerHandler.upsertHospitalCallout >>> ' + e.getMessage());
+        }
+
+        List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
+
+        System.debug('upsertHospitalCallout response.getStatus()='+response.getStatus());
+
+        return hospitalList;
+    }
+
+    public HttpRequest getRequest(String methodType, String urlParams, String body, String sessionId) {
         HttpRequest request = new HttpRequest();
         request.setEndPoint(endPoint + urlParams);
 
         //todo - warunek, by działał multimock
         if(!Test.isRunningTest()) {
-            request.setHeader('Authorization', 'Bearer ' + loginToPiotrGetSessionId());
+            request.setHeader('Authorization', 'Bearer ' + sessionId);
         }
 
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -59,33 +95,25 @@ public with sharing class Hosp_PiotrHospitalsControllerHandler {
 
         String sessionIdToPiotr = Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
 
+        Cache.Session.put('local.Hosp.sessionIdToPiotrek', sessionIdToPiotr);
+
         return sessionIdToPiotr;
     }
 
-    public List<Hosp_HospitalWrapperForRest> deleteHospitalCallout(String hospitalToDeleteId) {
-        Http http = new Http();
-        HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '');
-        HttpResponse response = http.send(request);
-        List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
+    private String generateQueryForgetHospitalCallout(String queryName, String queryCity, String queryCountry) {
+        String query = '?';
+        if (String.isNotBlank(queryName)) {
+            query += 'Name=' + queryName + '&';
+        }
+        if (String.isNotBlank(queryCity)) {
+            query += 'City__c=' + queryCity + '&';
+        }
+        if (String.isNotBlank(queryCountry)) {
+            query += 'Country__c=' + queryCountry;
+        }
+        query = query.replaceAll(' ', '%20');
 
-        return hospitalList;
-    }
-
-    public List<Hosp_HospitalWrapperForRest> upsertHospitalCallout(Hospital__c hospital) {
-        String body = JSON.serialize(new Hosp_HospitalWrapperForRest(hospital), true);
-        body = '{ "hospitals"  : [ ' + body + ' ] }';
-
-        System.debug('upsertHospitalCallout body=' + body);
-
-        Http http = new Http();
-        HttpRequest request = getRequest('PUT', '', body);
-
-        HttpResponse response = http.send(request);
-        List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
-
-        System.debug('upsertHospitalCallout response.getStatus()='+response.getStatus());
-
-        return hospitalList;
+        return query;
     }
 
 }
