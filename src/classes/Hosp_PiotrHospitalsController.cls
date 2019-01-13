@@ -30,6 +30,8 @@ public with sharing class Hosp_PiotrHospitalsController {
     }
 
     public void searchHospitals() {
+        clearMessages();
+
         hospitalsResults = getHospitalCallout(hospitalToSearch.Name, hospitalToSearch.City__c, hospitalToSearch.Country__c);
 
         sortByName();
@@ -96,6 +98,7 @@ public with sharing class Hosp_PiotrHospitalsController {
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
             Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_delete_hospital;
+            System.debug('isAnyProblemWithDelete=' + e.getMessage());
         }
     }
 
@@ -119,7 +122,7 @@ public with sharing class Hosp_PiotrHospitalsController {
         } catch (Exception e) {
             isAnyUpsertProblem = true;
             Hosp_ErrorToastController.messageErrorToast = e.getMessage();
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Hosp_UtilsConvertErrorMessages.convert(e.getMessage())));
             System.debug('isAnyUpsertProblem=' + e);
         }
     }
@@ -181,7 +184,7 @@ public with sharing class Hosp_PiotrHospitalsController {
     public void sortByName() {
         hideAllSortOrderSigns();
 
-        if(sortAsc){
+        if (sortAsc) {
             showSortByNameSignAsc = 'display-block';
             showSortByNameSignDesc = 'none';
         } else {
@@ -198,7 +201,7 @@ public with sharing class Hosp_PiotrHospitalsController {
     public void sortByCity() {
         hideAllSortOrderSigns();
 
-        if(sortAsc){
+        if (sortAsc) {
             showSortByCitySignAsc = 'display-block';
             showSortByCitySignDesc = 'none';
         } else {
@@ -215,7 +218,7 @@ public with sharing class Hosp_PiotrHospitalsController {
     public void sortByCountry() {
         hideAllSortOrderSigns();
 
-        if(sortAsc){
+        if (sortAsc) {
             showSortByCountrySignAsc = 'display-block';
             showSortByCountrySignDesc = 'none';
         } else {

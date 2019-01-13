@@ -73,7 +73,7 @@ public with sharing class Hosp_PiotrDoctorsController {
         } catch (Exception e) {
             isAnyUpsertProblem = true;
             Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_update_doctor;
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Hosp_UtilsConvertErrorMessages.convert(e.getMessage())));
             System.debug('isAnyUpsertProblem=' + e.getMessage());
         }
 
@@ -118,6 +118,7 @@ public with sharing class Hosp_PiotrDoctorsController {
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
             Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_delete_doctor;
+            System.debug(e.getMessage());
         }
     }
 
