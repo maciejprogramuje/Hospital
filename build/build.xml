@@ -28,6 +28,7 @@
                     testlevel="RunSpecifiedTests"
                     checkOnly="true">
             <runtest>Hosp_SoapForDoctorsTest</runtest>
+            <runtest>Hosp_PiotrHospitalsControllerTest</runtest>
         </sf:deploy>
     </target>
 

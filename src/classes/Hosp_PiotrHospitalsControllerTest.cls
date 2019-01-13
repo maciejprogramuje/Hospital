@@ -1,7 +1,3 @@
-/**
- * Created by BRITENET on 08.01.2019.
- */
-
 @isTest
 public class Hosp_PiotrHospitalsControllerTest {
 
