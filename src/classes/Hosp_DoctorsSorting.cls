@@ -2,27 +2,28 @@ public class Hosp_DoctorsSorting {
     public static String compareBy { get; set; }
 
     public static List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> sortResults(List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsToSort, Boolean sortAsc) {
-        List<Hosp_DoctorsSorting.DoctorWrapper> tempDoctorsToSort = new List<Hosp_DoctorsSorting.DoctorWrapper>();
+        if(doctorsToSort != null) {
+            List<Hosp_DoctorsSorting.DoctorWrapper> tempDoctorsToSort = new List<Hosp_DoctorsSorting.DoctorWrapper>();
 
-        for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToConvert : doctorsToSort) {
-            tempDoctorsToSort.add(new Hosp_DoctorsSorting.DoctorWrapper(doctorToConvert, sortAsc));
+            for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToConvert : doctorsToSort) {
+                tempDoctorsToSort.add(new Hosp_DoctorsSorting.DoctorWrapper(doctorToConvert, sortAsc));
+            }
+
+            tempDoctorsToSort.sort();
+
+            doctorsToSort.clear();
+
+            for (Hosp_DoctorsSorting.DoctorWrapper doc : tempDoctorsToSort) {
+                Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorInWrapper = new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP();
+                doctorInWrapper.webServiceDoctorId = doc.id;
+                doctorInWrapper.webServiceDoctorLastName = doc.name;
+                doctorInWrapper.webServiceDoctorFirstName = doc.firstName;
+                doctorInWrapper.webServiceDoctorCity = doc.city;
+                doctorInWrapper.webServiceDoctorCountry = doc.country;
+
+                doctorsToSort.add(doctorInWrapper);
+            }
         }
-
-        tempDoctorsToSort.sort();
-
-        doctorsToSort.clear();
-
-        for (Hosp_DoctorsSorting.DoctorWrapper doc : tempDoctorsToSort) {
-            Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorInWrapper = new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP();
-            doctorInWrapper.webServiceDoctorId = doc.id;
-            doctorInWrapper.webServiceDoctorLastName = doc.name;
-            doctorInWrapper.webServiceDoctorFirstName = doc.firstName;
-            doctorInWrapper.webServiceDoctorCity = doc.city;
-            doctorInWrapper.webServiceDoctorCountry = doc.country;
-
-            doctorsToSort.add(doctorInWrapper);
-        }
-
         return doctorsToSort;
     }
 
