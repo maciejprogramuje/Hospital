@@ -48,6 +48,9 @@ public with sharing class Hosp_HospitalTriggerHandler {
         String ClientId = '3MVG9fTLmJ60pJ5InwHdKeAk5APGVSVg_li6LxfLJBR7_3sPECDShp1WB4iAPueUXfrEiSJA84cpqOcOD2xPn';
         String ClientSecret = '6095802832678610274';
 
+
+        //todo - access token
+
         return Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
     }
 

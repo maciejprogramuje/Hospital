@@ -137,20 +137,6 @@ public class Hosp_Utils {
         }
     }
 
-    public static String loginToPiotrGetSessionId() {
-        if(!Test.isRunningTest()) {
-            try {
-                Hosp_partnerSoapSforceCom.Soap partnerSoap = new Hosp_partnerSoapSforceCom.Soap();
-                Hosp_partnerSoapSforceCom.LoginResult loginResult = partnerSoap.login(Label.Hosp_login_to_Piotr, Label.Hosp_password_to_Piotr);
-                return loginResult.sessionId;
-            } catch (Exception ex) {
-                System.debug(ex.getMessage());
-                return null;
-            }
-        }
-        return null;
-    }
-
     public static String getAccessToken(String username, String password, String ClientId, String ClientSecret) {
         String endpoint = 'https://login.salesforce.com/services/oauth2/token';
 

@@ -55,7 +55,11 @@ public with sharing class Hosp_PiotrHospitalsControllerHandler {
         String ClientId = '3MVG9fTLmJ60pJ5KOWKrx4ZK68vbm6BizsZwIiPAZvzLsVGKYalESe4NBKdrBIrRAR0IIQ3fAaJPqJ5D5srmc';
         String ClientSecret = '8058418408902575444';
 
-        return Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
+        //todo - access token
+
+        String sessionIdToPiotr = Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
+
+        return sessionIdToPiotr;
     }
 
     public List<Hosp_HospitalWrapperForRest> deleteHospitalCallout(String hospitalToDeleteId) {

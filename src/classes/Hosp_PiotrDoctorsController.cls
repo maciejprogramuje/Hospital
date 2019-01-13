@@ -40,7 +40,15 @@ public with sharing class Hosp_PiotrDoctorsController {
     public void searchDoctors() {
         clearMessages();
 
-        doctorsResults = handler.doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
+        try {
+            System.debug('generateDoctorServiceFromCache');
+            handler.generateDoctorServiceFromCache();
+            doctorsResults = handler.doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
+        } catch (Exception e) {
+            System.debug('generateDoctorServiceFromSoap');
+            handler.generateDoctorServiceFromSoap();
+            doctorsResults = handler.doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
+        }
 
         sortAsc = true;
         sortByName();
