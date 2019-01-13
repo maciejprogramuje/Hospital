@@ -67,7 +67,12 @@ public with sharing class Hosp_PiotrHospitalsController {
     public HttpRequest getRequest(String methodType, String urlParams, String body) {
         HttpRequest request = new HttpRequest();
         request.setEndPoint(endPoint + urlParams);
-        request.setHeader('Authorization', 'Bearer ' + loginToPiotrGetSessionId());
+
+        //todo - warunek, by działał multimock
+        if(!Test.isRunningTest()) {
+            request.setHeader('Authorization', 'Bearer ' + loginToPiotrGetSessionId());
+        }
+
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setMethod(methodType);
         if (body != '') {
@@ -92,9 +97,7 @@ public with sharing class Hosp_PiotrHospitalsController {
             List<Hosp_HospitalWrapperForRest> deletedHospitals = deleteHospitalCallout(hospitalToEditId);
             isAnyProblemWithDelete = false;
             Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Hospital_successfully_deleted;
-            if (!Test.isRunningTest()) {
-                searchHospitals();
-            }
+            searchHospitals();
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
             Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_delete_hospital;
@@ -131,7 +134,7 @@ public with sharing class Hosp_PiotrHospitalsController {
         String body = JSON.serialize(new Hosp_HospitalWrapperForRest(hospital), true);
         body = '{ "hospitals"  : [ ' + body + ' ] }';
 
-        System.debug('body=' + body);
+        System.debug('upsertHospitalCallout body=' + body);
 
         Http http = new Http();
         HttpRequest request = getRequest('PUT', '', body);
@@ -139,7 +142,7 @@ public with sharing class Hosp_PiotrHospitalsController {
         HttpResponse response = http.send(request);
         List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserializeStrict(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
 
-        System.debug(response.getStatus());
+        System.debug('upsertHospitalCallout response.getStatus()='+response.getStatus());
 
         return hospitalList;
     }
@@ -171,9 +174,7 @@ public with sharing class Hosp_PiotrHospitalsController {
                 || String.isNotBlank(hospitalToSearch.Country__c))) {
             hospitalToEditId = hospitals.get(0).hospitalId;
 
-            if (!Test.isRunningTest()) {
-                searchHospitals();
-            }
+            searchHospitals();
         }
     }
 

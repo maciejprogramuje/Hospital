@@ -1,7 +1,3 @@
-/**
- * Created by BRITENET on 08.01.2019.
- */
-
 global class Hosp_PiotrHospitalsMultiMock implements HttpCalloutMock {
     Map<String, HttpCalloutMock> requests;
 
@@ -10,12 +6,14 @@ global class Hosp_PiotrHospitalsMultiMock implements HttpCalloutMock {
     }
 
     global HTTPResponse respond(HTTPRequest req) {
+        System.debug('Hosp_PiotrHospitalsMultiMock -> req='+req);
+
         HttpCalloutMock mock = requests.get(req.getEndpoint());
 
         if (mock != null) {
             return mock.respond(req);
         } else {
-            System.debug('HTTP callout not supported for test methods. MOCK == null');
+            System.debug('Hosp_PiotrHospitalsMultiMock -> HTTP callout not supported for test methods. MOCK == null, req='+req);
             return null;
         }
     }
