@@ -175,4 +175,68 @@ public with sharing class Hosp_PiotrDoctorsControllerTest {
         System.assertEquals(true, controller.isAnyUpsertProblem);
     }
 
+    @isTest
+    static void shouldSortByName() {
+        //given
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+        controller.doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
+        controller.doctorsResults.add(new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP());
+
+        //when
+        controller.sortByName();
+        controller.sortAsc = false;
+        controller.sortByName();
+
+        //then
+        System.assertEquals(1, controller.doctorsResults.size());
+    }
+
+    @isTest
+    static void shouldSortByCity() {
+        //given
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+        controller.doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
+        controller.doctorsResults.add(new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP());
+
+        //when
+        controller.sortByCity();
+        controller.sortAsc = false;
+        controller.sortByCity();
+
+        //then
+        System.assertEquals(1, controller.doctorsResults.size());
+    }
+
+    @isTest
+    static void shouldSortByFirstName() {
+        //given
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+        controller.doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
+        controller.doctorsResults.add(new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP());
+
+        //when
+        controller.sortByFirstName();
+        controller.sortAsc = false;
+        controller.sortByFirstName();
+
+        //then
+        System.assertEquals(1, controller.doctorsResults.size());
+    }
+
+    @isTest
+    static void shouldSortByCountry() {
+        //given
+        Hosp_PiotrDoctorsController controller = new Hosp_PiotrDoctorsController();
+        controller.doctorsResults = new List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP>();
+        controller.doctorsResults.add(new Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP());
+
+        //when
+        controller.sortByCountry();
+        controller.sortAsc = false;
+        controller.sortByCountry();
+
+        //then
+        System.assertEquals(1, controller.doctorsResults.size());
+    }
+
 }

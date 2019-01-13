@@ -34,6 +34,7 @@ public with sharing class Hosp_PiotrHospitalsController {
 
         hospitalsResults = getHospitalCallout(hospitalToSearch.Name, hospitalToSearch.City__c, hospitalToSearch.Country__c);
 
+        sortAsc = true;
         sortByName();
     }
 

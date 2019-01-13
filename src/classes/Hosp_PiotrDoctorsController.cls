@@ -1,10 +1,10 @@
 public with sharing class Hosp_PiotrDoctorsController {
+    public Hosp_PiotrDoctorsControllerHandler handler { get; set; }
+
     public Doctor__c doctorToSearch { get; set; }
     public Doctor__c doctorToEdit { get; set; }
     public String doctorToEditId { get; set; }
-    public Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP doctorsService { get; set; }
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> doctorsResults { get; set; }
-
     public List<Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP> deletedDoctorsToTest { get; set; }
     public Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doctorToTest { get; set; }
 
@@ -24,12 +24,10 @@ public with sharing class Hosp_PiotrDoctorsController {
 
 
     public Hosp_PiotrDoctorsController() {
-        doctorsService = new Hosp_soapSforceComSchemasClassHospitalD.Hospital_DoctorsSOAP();
+        handler = new Hosp_PiotrDoctorsControllerHandler();
+
         doctorToSearch = new Doctor__c();
         doctorToEdit = new Doctor__c();
-        doctorsService.timeout_x = 1000;
-        doctorsService.SessionHeader = new Hosp_soapSforceComSchemasClassHospitalD.SessionHeader_element();
-        doctorsService.SessionHeader.sessionId = Hosp_Utils.loginToPiotrGetSessionId();
 
         isAnyDoctorInResultsList = false;
         isAnyProblemWithDelete = false;
@@ -42,8 +40,9 @@ public with sharing class Hosp_PiotrDoctorsController {
     public void searchDoctors() {
         clearMessages();
 
-        doctorsResults = doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
+        doctorsResults = handler.doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
 
+        sortAsc = true;
         sortByName();
     }
 
@@ -66,7 +65,7 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         try {
-            doctorToTest = doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
+            doctorToTest = handler.doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
             isAnyUpsertProblem = false;
             Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_updated;
             refreshResultsList(doctorToTest);
@@ -107,9 +106,7 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         try {
-            deletedDoctorsToTest = doctorsService.deleteDoctors(new List<String>{
-                    doctorToEditId
-            });
+            deletedDoctorsToTest = handler.doctorsService.deleteDoctors(new List<String>{doctorToEditId});
             isAnyProblemWithDelete = false;
             Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_deleted;
             if (!Test.isRunningTest()) {
