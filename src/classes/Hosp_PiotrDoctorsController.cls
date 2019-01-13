@@ -41,12 +41,10 @@ public with sharing class Hosp_PiotrDoctorsController {
 
     public void searchDoctors() {
         clearMessages();
-        hideAllSortOrderSigns();
 
         doctorsResults = doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
 
-        Hosp_DoctorsSorting.compareBy = 'name';
-        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, true);
+        sortByName();
     }
 
     public void openDoctorToEdit() {

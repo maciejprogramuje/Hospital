@@ -107,27 +107,53 @@
                 <table id="hospitalsResultsListPageBlock" class="slds-table slds-table_cell-buffer slds-table_bordered">
                     <thead>
                     <tr class="slds-line-height_reset">
+
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate" title="{! $Label.Actions }">{! $Label.Actions }</div>
                         </th>
+
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate"
-                                 title="{! $ObjectType.Hospital__c.fields.Name.label }">{!
-                                $ObjectType.Hospital__c.fields.Name.label }
+                                 title="{! $ObjectType.Hospital__c.fields.Name.label }">
+                                <apex:form>
+                                    <apex:commandLink action="{! sortByName }"
+                                                      reRender="searchResultTable"
+                                                      style="text-decoration: none; color: #514F4D;">
+                                        <span>{! $ObjectType.Hospital__c.fields.Name.label }</span>
+                                        <span style="display: {! showSortByNameSignDesc };" >&#9660;</span>
+                                        <span style="display: {! showSortByNameSignAsc };">&#9650;</span>
+                                    </apex:commandLink>
+                                </apex:form>
                             </div>
                         </th>
+
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate"
-                                 title="{! $ObjectType.Hospital__c.fields.City__c.label }">{!
-                                $ObjectType.Hospital__c.fields.City__c.label }
+                                 title="{! $ObjectType.Hospital__c.fields.City__c.label }">
+                                <apex:form>
+                                    <apex:commandLink action="{! sortByCity }"
+                                                      reRender="searchResultTable"
+                                                      style="text-decoration: none; color: #514F4D;">
+                                        <span>{! $ObjectType.Hospital__c.fields.City__c.label }</span>
+                                        <span style="display: {! showSortByCitySignDesc };" >&#9660;</span>
+                                        <span style="display: {! showSortByCitySignAsc };">&#9650;</span>
+                                    </apex:commandLink>
+                                </apex:form>
                             </div>
                         </th>
+
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate"
                                  title="{! $ObjectType.Hospital__c.fields.Country__c.label }">
-                                <span>{! $ObjectType.Hospital__c.fields.Country__c.label }</span>
-                                <span style="display: none;">&#9660;</span>
-                                <span style="display: inline-block;">&#9650;</span>
+                                <apex:form>
+                                    <apex:commandLink action="{! sortByCountry }"
+                                                      reRender="searchResultTable"
+                                                      style="text-decoration: none; color: #514F4D;">
+                                        <span>{! $ObjectType.Hospital__c.fields.Country__c.label }</span>
+                                        <span style="display: {! showSortByCountrySignDesc };" >&#9660;</span>
+                                        <span style="display: {! showSortByCountrySignAsc };">&#9650;</span>
+                                    </apex:commandLink>
+                                </apex:form>
                             </div>
                         </th>
                     </tr>

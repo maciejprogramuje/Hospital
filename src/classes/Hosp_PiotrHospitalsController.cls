@@ -9,6 +9,14 @@ public with sharing class Hosp_PiotrHospitalsController {
     public String endPoint = Label.Hosp_Endpoint_Piotr_Hospital;
     public List<Hosp_HospitalWrapperForRest> hospitalsResults { get; set; }
 
+    public Boolean sortAsc { get; set; }
+    public String showSortByNameSignAsc { get; set; }
+    public String showSortByNameSignDesc { get; set; }
+    public String showSortByCitySignAsc { get; set; }
+    public String showSortByCitySignDesc { get; set; }
+    public String showSortByCountrySignAsc { get; set; }
+    public String showSortByCountrySignDesc { get; set; }
+
     public Hosp_PiotrHospitalsController() {
         hospitalsResults = new List<Hosp_HospitalWrapperForRest>();
         hospitalToSearch = new Hospital__c();
@@ -16,10 +24,15 @@ public with sharing class Hosp_PiotrHospitalsController {
 
         isAnyProblemWithDelete = false;
         isAnyUpsertProblem = true;
+
+        sortAsc = true;
+        hideAllSortOrderSigns();
     }
 
     public void searchHospitals() {
         hospitalsResults = getHospitalCallout(hospitalToSearch.Name, hospitalToSearch.City__c, hospitalToSearch.Country__c);
+
+        sortByName();
     }
 
     public List<Hosp_HospitalWrapperForRest> getHospitalCallout(String queryName, String queryCity, String queryCountry) {
@@ -165,5 +178,68 @@ public with sharing class Hosp_PiotrHospitalsController {
         ApexPages.getMessages().clear();
     }
 
+    public void sortByName() {
+        hideAllSortOrderSigns();
+
+        if(sortAsc){
+            showSortByNameSignAsc = 'display-block';
+            showSortByNameSignDesc = 'none';
+        } else {
+            showSortByNameSignAsc = 'none';
+            showSortByNameSignDesc = 'display-block';
+        }
+
+        Hosp_HospitalsSorting.compareBy = 'name';
+        hospitalsResults = Hosp_HospitalsSorting.sortResults(hospitalsResults, sortAsc);
+
+        flipSortOrder();
+    }
+
+    public void sortByCity() {
+        hideAllSortOrderSigns();
+
+        if(sortAsc){
+            showSortByCitySignAsc = 'display-block';
+            showSortByCitySignDesc = 'none';
+        } else {
+            showSortByCitySignAsc = 'none';
+            showSortByCitySignDesc = 'display-block';
+        }
+
+        Hosp_HospitalsSorting.compareBy = 'city';
+        hospitalsResults = Hosp_HospitalsSorting.sortResults(hospitalsResults, sortAsc);
+
+        flipSortOrder();
+    }
+
+    public void sortByCountry() {
+        hideAllSortOrderSigns();
+
+        if(sortAsc){
+            showSortByCountrySignAsc = 'display-block';
+            showSortByCountrySignDesc = 'none';
+        } else {
+            showSortByCountrySignAsc = 'none';
+            showSortByCountrySignDesc = 'display-block';
+        }
+
+        Hosp_HospitalsSorting.compareBy = 'country';
+        hospitalsResults = Hosp_HospitalsSorting.sortResults(hospitalsResults, sortAsc);
+
+        flipSortOrder();
+    }
+
+    private void flipSortOrder() {
+        sortAsc = !sortAsc;
+    }
+
+    private void hideAllSortOrderSigns() {
+        showSortByNameSignAsc = 'none';
+        showSortByNameSignDesc = 'none';
+        showSortByCitySignAsc = 'none';
+        showSortByCitySignDesc = 'none';
+        showSortByCountrySignAsc = 'none';
+        showSortByCountrySignDesc = 'none';
+    }
 }
 
