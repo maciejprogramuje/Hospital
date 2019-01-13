@@ -68,8 +68,6 @@ global with sharing class Hosp_RestForHospitals {
     }
 
     private static String generateQuery(Map<String, String> pairsNameValue) {
-        //todo - zabezpieczenie przed przekazaniem nulla
-
         String query = 'SELECT Id, Name, Country__c, City__c, PostalCode__c, Street__c FROM Hospital__c';
         try {
             Set<String> fields = pairsNameValue.keySet();

@@ -32,7 +32,7 @@
             <div class="slds-grid">
                 <div class="slds-col">
                     <p class="slds-text-heading--label">{! $Label.Hosp_List_of }</p>
-                    <h1 class="slds-text-heading--medium">Piotr's Hospitals</h1>
+                    <h1 class="slds-text-heading--medium">{! $Label.Hosp_Piotr_Hospitals }</h1>
                 </div>
 
                 <div class="slds-col slds-no-flex slds-align-middle">
@@ -225,7 +225,7 @@
                     <div class="slds-modal__container">
                         <header class="slds-modal__header">
                             <h2 id="modal-heading-01"
-                                class="slds-text-heading_medium slds-hyphenate">Upsert Hospital</h2>
+                                class="slds-text-heading_medium slds-hyphenate">{! $Label.Hosp_Upsert_Hospital }</h2>
                         </header>
                         <apex:form>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
@@ -285,7 +285,7 @@
                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Delete</h2>
                     </header>
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                        <p>Do You really want to delete this data?</p>
+                        <p>{! $Label. Hosp_Delete_Confirmation }</p>
                     </div>
                     <apex:form>
 
