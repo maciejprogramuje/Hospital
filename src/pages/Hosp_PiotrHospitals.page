@@ -142,7 +142,7 @@
                                             <apex:commandButton
                                                     action="{! openHospitalToEdit }"
                                                     onComplete="showToastAndHideOthers('modalUpsertHosp'); return false;"
-                                                    reRender="modalEditOutputPanel, searchResultTable, messagesInUpsertModal"
+                                                    reRender="modalUpsertOutputPanel, searchResultTable, messagesInUpsertModal"
                                                     status="statusCompLsds"
                                                     styleClass="slds-button slds-button_neutral"
                                                     value="{! $Label.Edit }">
@@ -155,7 +155,7 @@
                                             <apex:commandButton
                                                     styleClass="slds-button slds-button_neutral"
                                                     value="{! $Label.Delete }"
-                                                    onComplete="showToast('confirmationDialog');"
+                                                    onComplete="showToastAndHideOthers('confirmationDialog');"
                                                     reRender="searchResultTable, messages, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
                                                     status="statusCompLsds">
 

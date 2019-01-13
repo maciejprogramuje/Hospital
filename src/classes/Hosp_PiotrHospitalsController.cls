@@ -106,6 +106,7 @@ public with sharing class Hosp_PiotrHospitalsController {
         } catch (Exception e) {
             isAnyUpsertProblem = true;
             Hosp_ErrorToastController.messageErrorToast = e.getMessage();
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
             System.debug('isAnyUpsertProblem=' + e);
         }
     }
@@ -113,6 +114,8 @@ public with sharing class Hosp_PiotrHospitalsController {
     public List<Hosp_HospitalWrapperForRest> upsertHospitalCallout(Hospital__c hospital) {
         String body = JSON.serialize(new Hosp_HospitalWrapperForRest(hospital), true);
         body = '{ "hospitals"  : [ ' + body + ' ] }';
+
+        System.debug('body=' + body);
 
         Http http = new Http();
         HttpRequest request = getRequest('PUT', '', body);

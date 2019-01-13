@@ -12,8 +12,15 @@ public with sharing class Hosp_PiotrDoctorsController {
     public Boolean isAnyProblemWithDelete { get; set; }
     public Boolean isAnyUpsertProblem { get; set; }
 
-
     public Boolean sortAsc { get; set; }
+    public String showSortByNameSignAsc { get; set; }
+    public String showSortByNameSignDesc { get; set; }
+    public String showSortByFirstNameSignAsc { get; set; }
+    public String showSortByFirstNameSignDesc { get; set; }
+    public String showSortByCitySignAsc { get; set; }
+    public String showSortByCitySignDesc { get; set; }
+    public String showSortByCountrySignAsc { get; set; }
+    public String showSortByCountrySignDesc { get; set; }
 
 
     public Hosp_PiotrDoctorsController() {
@@ -28,11 +35,13 @@ public with sharing class Hosp_PiotrDoctorsController {
         isAnyProblemWithDelete = false;
         isAnyUpsertProblem = true;
 
-        sortAsc = false;
+        sortAsc = true;
+        hideAllSortOrderSigns();
     }
 
     public void searchDoctors() {
         clearMessages();
+        hideAllSortOrderSigns();
 
         doctorsResults = doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
 
@@ -42,8 +51,6 @@ public with sharing class Hosp_PiotrDoctorsController {
 
     public void openDoctorToEdit() {
         resetDoctorToUpsert();
-
-        System.debug('doctorToEditId='+doctorToEditId);
 
         for (Hosp_soapSforceComSchemasClassHospitalDW.Hospital_DoctorWrapperForSOAP doc : doctorsResults) {
             if (doc.webServiceDoctorId == doctorToEditId) {
@@ -116,13 +123,86 @@ public with sharing class Hosp_PiotrDoctorsController {
         }
     }
 
+    public void sortByName() {
+        hideAllSortOrderSigns();
+
+        if(sortAsc){
+            showSortByNameSignAsc = 'display-block';
+            showSortByNameSignDesc = 'none';
+        } else {
+            showSortByNameSignAsc = 'none';
+            showSortByNameSignDesc = 'display-block';
+        }
+
+        Hosp_DoctorsSorting.compareBy = 'name';
+        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, sortAsc);
+
+        flipSortOrder();
+    }
+
+    public void sortByFirstName() {
+        hideAllSortOrderSigns();
+
+        if(sortAsc){
+            showSortByFirstNameSignAsc = 'display-block';
+            showSortByFirstNameSignDesc = 'none';
+        } else {
+            showSortByFirstNameSignAsc = 'none';
+            showSortByFirstNameSignDesc = 'display-block';
+        }
+
+        Hosp_DoctorsSorting.compareBy = 'firstName';
+        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, sortAsc);
+
+        flipSortOrder();
+    }
+
+    public void sortByCity() {
+        hideAllSortOrderSigns();
+
+        if(sortAsc){
+            showSortByCitySignAsc = 'display-block';
+            showSortByCitySignDesc = 'none';
+        } else {
+            showSortByCitySignAsc = 'none';
+            showSortByCitySignDesc = 'display-block';
+        }
+
+        Hosp_DoctorsSorting.compareBy = 'city';
+        doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, sortAsc);
+
+        flipSortOrder();
+    }
+
     public void sortByCountry() {
+        hideAllSortOrderSigns();
+
+        if(sortAsc){
+            showSortByCountrySignAsc = 'display-block';
+            showSortByCountrySignDesc = 'none';
+        } else {
+            showSortByCountrySignAsc = 'none';
+            showSortByCountrySignDesc = 'display-block';
+        }
+
         Hosp_DoctorsSorting.compareBy = 'country';
         doctorsResults = Hosp_DoctorsSorting.sortResults(doctorsResults, sortAsc);
+
         flipSortOrder();
     }
 
     private void flipSortOrder() {
         sortAsc = !sortAsc;
+    }
+
+    private void hideAllSortOrderSigns() {
+        showSortByNameSignAsc = 'none';
+        showSortByNameSignDesc = 'none';
+        showSortByFirstNameSignAsc = 'none';
+        showSortByFirstNameSignDesc = 'none';
+        showSortByCitySignAsc = 'none';
+        showSortByCitySignDesc = 'none';
+        showSortByCountrySignAsc = 'none';
+        showSortByCountrySignDesc = 'none';
     }
 }

@@ -111,40 +111,68 @@
                 <table id="doctorsResultsListPageBlock" class="slds-table slds-table_cell-buffer slds-table_bordered">
                     <thead>
                     <tr class="slds-line-height_reset">
+
                         <th class="slds-text-title_caps" scope="col">
                             <div class="slds-truncate" title="{! $Label.Actions }">{! $Label.Actions }</div>
                         </th>
-                        <th class="slds-text-title_caps" scope="col">
-                            <div class="slds-truncate"
-                                 title="{! $ObjectType.Doctor__c.fields.Name.label }">{!
-                            $ObjectType.Doctor__c.fields.Name.label }
-                            </div>
-                        </th>
-                        <th class="slds-text-title_caps" scope="col">
-                            <div class="slds-truncate"
-                                 title="{! $ObjectType.Doctor__c.fields.FirstName__c.label }">{!
-                            $ObjectType.Doctor__c.fields.FirstName__c.label }
-                            </div>
-                        </th>
-                        <th class="slds-text-title_caps" scope="col">
-                            <div class="slds-truncate"
-                                 title="{! $ObjectType.Doctor__c.fields.City__c.label }">{!
-                            $ObjectType.Doctor__c.fields.City__c.label }
-                            </div>
-                        </th>
-                        <th class="slds-text-title_caps" scope="col">
-                            <div class="slds-truncate"
-                                 title="{! $ObjectType.Doctor__c.fields.Country__c.label }">{! $ObjectType.Doctor__c.fields.Country__c.label }
 
-
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate"
+                                 title="{! $ObjectType.Doctor__c.fields.Name.label }">
                                 <apex:form>
-                                    <apex:commandLink action="{! sortByCountry }"
-                                                      reRender="searchResultTable">
-                                        <span style="display: none;">&#9660;</span>
-                                        <span style="display: inline-block;">&#9650;</span>
+                                    <apex:commandLink action="{! sortByName }"
+                                                      reRender="searchResultTable"
+                                                      style="text-decoration: none; color: #514F4D;">
+                                        <span>{! $ObjectType.Doctor__c.fields.Name.label }</span>
+                                        <span style="display: {! showSortByNameSignDesc };" >&#9660;</span>
+                                        <span style="display: {! showSortByNameSignAsc };">&#9650;</span>
                                     </apex:commandLink>
                                 </apex:form>
+                            </div>
+                        </th>
 
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate"
+                                 title="{! $ObjectType.Doctor__c.fields.FirstName__c.label }">
+                                <apex:form>
+                                    <apex:commandLink action="{! sortByFirstName }"
+                                                      reRender="searchResultTable"
+                                                      style="text-decoration: none; color: #514F4D;">
+                                        <span>{! $ObjectType.Doctor__c.fields.FirstName__c.label }</span>
+                                        <span style="display: {! showSortByFirstNameSignDesc };" >&#9660;</span>
+                                        <span style="display: {! showSortByFirstNameSignAsc };">&#9650;</span>
+                                    </apex:commandLink>
+                                </apex:form>
+                            </div>
+                        </th>
+
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate"
+                                 title="{! $ObjectType.Doctor__c.fields.City__c.label }">
+                                <apex:form>
+                                    <apex:commandLink action="{! sortByCity }"
+                                                      reRender="searchResultTable"
+                                                      style="text-decoration: none; color: #514F4D;">
+                                        <span>{! $ObjectType.Doctor__c.fields.City__c.label }</span>
+                                        <span style="display: {! showSortByCitySignDesc };" >&#9660;</span>
+                                        <span style="display: {! showSortByCitySignAsc };">&#9650;</span>
+                                    </apex:commandLink>
+                                </apex:form>
+                            </div>
+                        </th>
+
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate"
+                                 title="{! $ObjectType.Doctor__c.fields.Country__c.label }">
+                                    <apex:form>
+                                        <apex:commandLink action="{! sortByCountry }"
+                                                          reRender="searchResultTable"
+                                                          style="text-decoration: none; color: #514F4D;">
+                                            <span>{! $ObjectType.Doctor__c.fields.Country__c.label }</span>
+                                            <span style="display: {! showSortByCountrySignDesc };" >&#9660;</span>
+                                            <span style="display: {! showSortByCountrySignAsc };">&#9650;</span>
+                                        </apex:commandLink>
+                                    </apex:form>
                             </div>
                         </th>
                     </tr>
@@ -171,12 +199,7 @@
 
                                             <apex:commandButton styleClass="slds-button slds-button_neutral"
                                                                 value="{! $Label.Delete }"
-
-
-
                                                                 onComplete="showToastAndHideOthers('confirmationDialog');"
-
-
                                                                 reRender="searchResultTable, messages, messagesInUpsertModal, successToastOutputPanel, errorToastOutputPanel"
                                                                 status="statusCompLsds">
 
@@ -310,7 +333,6 @@
 
                             <apex:commandButton
                                     styleClass="slds-button slds-button_brand"
-                                    onClick=""
                                     onComplete="checkHideDeleteToast({! isAnyProblemWithDelete })"
                                     action="{! deleteDoctor }"
                                     value="{! $Label.Delete }"
