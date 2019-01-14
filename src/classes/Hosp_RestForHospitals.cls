@@ -21,18 +21,18 @@ global with sharing class Hosp_RestForHospitals {
 
     @HttpPut
     global static List<Hosp_HospitalWrapperForRest> upsertHospitals(List<Hosp_HospitalWrapperForRest> hospitals) {
-
         List<String> externalIds = new List<String>();
-        for(Hosp_HospitalWrapperForRest hosp : hospitals) {
+        for (Hosp_HospitalWrapperForRest hosp : hospitals) {
             externalIds.add(hosp.externalId);
         }
 
+        List<Hospital__c> hospitalsAt2OrgAnd1Org = [SELECT Id, ExternalId__c FROM Hospital__c WHERE ExternalID__c IN :externalIds];
+
         List<Hospital__c> hospitalsToUpdate = new List<Hospital__c>();
 
-        List<Hospital__c> hospitalsAt2OrgAnd1Org = [SELECT Id, ExternalId__c FROM Hospital__c WHERE ExternalID__c IN :externalIds];
-        for(Hosp_HospitalWrapperForRest incomingHospital : hospitals) {
-            for(Hospital__c hospitalAt2OrgAnd1Org : hospitalsAt2OrgAnd1Org) {
-                if(hospitalAt2OrgAnd1Org.ExternalId__c == incomingHospital.externalId) {
+        for (Hosp_HospitalWrapperForRest incomingHospital : hospitals) {
+            for (Hospital__c hospitalAt2OrgAnd1Org : hospitalsAt2OrgAnd1Org) {
+                if (hospitalAt2OrgAnd1Org.ExternalId__c == incomingHospital.externalId) {
                     hospitalAt2OrgAnd1Org.Name = incomingHospital.name;
                     hospitalAt2OrgAnd1Org.Street__c = incomingHospital.street;
                     hospitalAt2OrgAnd1Org.City__c = incomingHospital.city;
@@ -44,49 +44,47 @@ global with sharing class Hosp_RestForHospitals {
             }
         }
 
-        update hospitalsToUpdate;
-
+        if (!hospitalsToUpdate.isEmpty()) {
+            update hospitalsToUpdate;
+        }
 
         List<Hospital__c> hospitalsToInsert = new List<Hospital__c>();
 
-        for(Hosp_HospitalWrapperForRest incomingHospital : hospitals) {
-            for(Hospital__c hospitalToUpdate : hospitalsToUpdate) {
-                if(incomingHospital.externalId != hospitalToUpdate.ExternalId__c) {
-                    hospitalsToInsert.add(new Hospital__c(
-                            ExternalId__c = incomingHospital.externalId,
-                            Name = incomingHospital.name,
-                            City__c = incomingHospital.city,
-                            Country__c = incomingHospital.country,
-                            Street__c = incomingHospital.street,
-                            PostalCode__c = incomingHospital.postalCode
-                    ));
+        for (Hosp_HospitalWrapperForRest incomingHospital : hospitals) {
+            if (!hospitalsToUpdate.isEmpty()) {
+                for (Hospital__c hospitalToUpdate : hospitalsToUpdate) {
+                    if (incomingHospital.externalId != hospitalToUpdate.ExternalId__c) {
+                        hospitalsToInsert.add(new Hospital__c(
+                                ExternalId__c = incomingHospital.externalId,
+                                Name = incomingHospital.name,
+                                City__c = incomingHospital.city,
+                                Country__c = incomingHospital.country,
+                                Street__c = incomingHospital.street,
+                                PostalCode__c = incomingHospital.postalCode
+                        ));
+                    }
                 }
+            } else {
+                hospitalsToInsert.add(new Hospital__c(
+                        ExternalId__c = incomingHospital.externalId,
+                        Name = incomingHospital.name,
+                        City__c = incomingHospital.city,
+                        Country__c = incomingHospital.country,
+                        Street__c = incomingHospital.street,
+                        PostalCode__c = incomingHospital.postalCode
+                ));
             }
         }
 
-        insert hospitalsToInsert;
-
-
-        /*List<Hospital__c> hospitalsList = new List<Hospital__c>();
-        for (Hosp_HospitalWrapperForRest hosp : hospitals) {
-
-            hospitalsList.add(new Hospital__c(
-                    ExternalId__c = hosp.externalId,
-                    Name = hosp.name,
-                    Country__c = hosp.country,
-                    City__c = hosp.city,
-                    PostalCode__c = hosp.postalCode,
-                    Street__c = hosp.street));
+        if (!hospitalsToInsert.isEmpty()) {
+            insert hospitalsToInsert;
         }
-
-        upsert hospitalsList;*/
-
 
         List<Hospital__c> hospitalsList = new List<Hospital__c>();
         hospitalsList.addAll(hospitalsToUpdate);
         hospitalsList.addAll(hospitalsToInsert);
         List<Hosp_HospitalWrapperForRest> resultsHospitals = new List<Hosp_HospitalWrapperForRest>();
-        for(Hospital__c rawHospital : hospitalsList) {
+        for (Hospital__c rawHospital : hospitalsList) {
             resultsHospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 
