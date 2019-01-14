@@ -58,6 +58,8 @@ public with sharing class Hosp_PiotrHospitalsController {
     public void upsertHospital() {
         clearMessages();
 
+        System.debug('hospitalToEdit='+hospitalToEdit);
+
         try {
             List<Hosp_HospitalWrapperForRest> upsertedHospitals = handler.upsertHospitalCallout(hospitalToEdit);
             isAnyUpsertProblem = false;
@@ -92,10 +94,7 @@ public with sharing class Hosp_PiotrHospitalsController {
     }
 
     private void refreshResultsList(List<Hosp_HospitalWrapperForRest> hospitals) {
-        if (!hospitals.isEmpty()
-                && (String.isNotBlank(hospitalToSearch.Name)
-                || String.isNotBlank(hospitalToSearch.City__c)
-                || String.isNotBlank(hospitalToSearch.Country__c))) {
+        if (!hospitals.isEmpty()) {
             hospitalToEditId = hospitals.get(0).hospitalId;
 
             searchHospitals();

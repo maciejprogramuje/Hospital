@@ -41,11 +41,9 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         try {
-            System.debug('generateDoctorServiceFromCache');
             handler.generateDoctorServiceFromCache();
             doctorsResults = handler.doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
         } catch (Exception e) {
-            System.debug('generateDoctorServiceFromSoap');
             handler.generateDoctorServiceFromSoap();
             doctorsResults = handler.doctorsService.getDoctors(doctorToSearch.FirstName__c, doctorToSearch.Name, doctorToSearch.City__c, doctorToSearch.Country__c);
         }
@@ -73,10 +71,19 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         try {
-            doctorToTest = handler.doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
-            isAnyUpsertProblem = false;
-            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_updated;
-            refreshResultsList(doctorToTest);
+            try {
+                handler.generateDoctorServiceFromCache();
+                doctorToTest = handler.doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
+                isAnyUpsertProblem = false;
+                Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_updated;
+                refreshResultsList(doctorToTest);
+            } catch (Exception ex) {
+                handler.generateDoctorServiceFromSoap();
+                doctorToTest = handler.doctorsService.upsertDoctor(doctorToEdit.Id, doctorToEdit.FirstName__c, doctorToEdit.Name, doctorToEdit.City__c, doctorToEdit.Country__c);
+                isAnyUpsertProblem = false;
+                Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_updated;
+                refreshResultsList(doctorToTest);
+            }
         } catch (Exception e) {
             isAnyUpsertProblem = true;
             Hosp_ErrorToastController.messageErrorToast = Label.Hosp_Unable_to_update_doctor;
@@ -114,11 +121,22 @@ public with sharing class Hosp_PiotrDoctorsController {
         clearMessages();
 
         try {
-            deletedDoctorsToTest = handler.doctorsService.deleteDoctors(new List<String>{doctorToEditId});
-            isAnyProblemWithDelete = false;
-            Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_deleted;
-            if (!Test.isRunningTest()) {
-                searchDoctors();
+            try {
+                handler.generateDoctorServiceFromCache();
+                deletedDoctorsToTest = handler.doctorsService.deleteDoctors(new List<String>{doctorToEditId});
+                isAnyProblemWithDelete = false;
+                Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_deleted;
+                if (!Test.isRunningTest()) {
+                    searchDoctors();
+                }
+            } catch (Exception ex) {
+                handler.generateDoctorServiceFromSoap();
+                deletedDoctorsToTest = handler.doctorsService.deleteDoctors(new List<String>{doctorToEditId});
+                isAnyProblemWithDelete = false;
+                Hosp_SuccessToastController.messageSuccessToast = Label.Hosp_Doctor_successfully_deleted;
+                if (!Test.isRunningTest()) {
+                    searchDoctors();
+                }
             }
         } catch (Exception e) {
             isAnyProblemWithDelete = true;
