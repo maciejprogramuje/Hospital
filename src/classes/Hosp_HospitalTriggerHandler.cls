@@ -1,7 +1,3 @@
-/**
- * Created by BRITENET on 10.01.2019.
- */
-
 public with sharing class Hosp_HospitalTriggerHandler {
     public static String endPoint = 'https://eu16.salesforce.com/services/apexrest/Hospital__c/';
 
@@ -16,9 +12,6 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
         String body = '{ "hospitals"  : ' + JSON.serialize(hospitalsInWrapper) + ' }';
 
-        System.debug('Hosp_HospitalTriggerHandler body='+body);
-
-
         Http http = new Http();
         HttpRequest request = getRequest('PUT', '', body);
 
@@ -27,23 +20,17 @@ public with sharing class Hosp_HospitalTriggerHandler {
     }
 
     @future(Callout=true)
-    public static void deleteHosp(Set<Id> hospitalsIds) {
-        System.debug('hospitalsIds='+hospitalsIds);
-
+    public static void deleteHosp(List<String> hospitalsIds) {
         String hospitalToDeleteId;
-        for(String hospId : hospitalsIds) {
+
+        for (String hospId : hospitalsIds) {
             hospitalToDeleteId = hospId;
             break;
         }
 
-        System.debug('hospitalToDeleteId='+hospitalToDeleteId);
-
-
         Http http = new Http();
         HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '');
         HttpResponse response = http.send(request);
-
-        System.debug('response='+response.getStatusCode());
     }
 
 
@@ -60,20 +47,14 @@ public with sharing class Hosp_HospitalTriggerHandler {
         return request;
     }
 
-
     public static String loginToSecondOrgGetSessionId() {
         String username = 'maciejsz1979@gmail.com.dev';
         String password = 'Ulka!2002WieDb9l7JqvBVtrYrgpJ6uOU';
         String ClientId = '3MVG9fTLmJ60pJ5IEt_O_REmXnukYYpcAtLEDZvLCLKn97kttZQ0.A.Wi._ZDE6vVrYsKPZEoJL3_RW0jU2WU';
         String ClientSecret = '6739776878073564220';
 
-
-        //todo - access token
-
         return Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
     }
-
-
 
     private class Hosp_HospitalWrapper {
         public String hospitalId { get; set; }

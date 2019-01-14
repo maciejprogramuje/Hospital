@@ -25,23 +25,17 @@ public with sharing class Hosp_HospitalTriggerHandler {
     }
 
     @future(Callout=true)
-    public static void deleteHosp(Set<Id> hospitalsIds) {
-        System.debug('hospitalsIds='+hospitalsIds);
-
+    public static void deleteHosp(List<String> hospitalsIds) {
         String hospitalToDeleteId;
-        for(String hospId : hospitalsIds) {
+
+        for (String hospId : hospitalsIds) {
             hospitalToDeleteId = hospId;
             break;
         }
 
-        System.debug('hospitalToDeleteId='+hospitalToDeleteId);
-
-
         Http http = new Http();
         HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '');
         HttpResponse response = http.send(request);
-
-        System.debug('response='+response.getStatusCode());
     }
 
 
@@ -63,9 +57,6 @@ public with sharing class Hosp_HospitalTriggerHandler {
         String password = 'Ulka@2002q9k94fNBLasceuStSg3Z69Us';
         String ClientId = '3MVG9fTLmJ60pJ5InwHdKeAk5APGVSVg_li6LxfLJBR7_3sPECDShp1WB4iAPueUXfrEiSJA84cpqOcOD2xPn';
         String ClientSecret = '6095802832678610274';
-
-
-        //todo - access token
 
         return Hosp_Utils.getAccessToken(username, password, ClientId, ClientSecret);
     }
