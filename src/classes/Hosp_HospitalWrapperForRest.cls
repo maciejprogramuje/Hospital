@@ -1,5 +1,6 @@
 global with sharing class Hosp_HospitalWrapperForRest {
     webService String hospitalId { get; set; }
+    webService String externalId { get; set; }
     webService String name { get; set; }
     webService String country { get; set; }
     webService String city { get; set; }
@@ -12,6 +13,7 @@ global with sharing class Hosp_HospitalWrapperForRest {
 
     global Hosp_HospitalWrapperForRest(Hospital__c hospital) {
         hospitalId = hospital.Id;
+        externalId = hospital.ExternalId__c;
         name = hospital.Name;
         country = hospital.Country__c;
         city = hospital.City__c;
