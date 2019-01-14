@@ -12,7 +12,7 @@ global with sharing class Hosp_RestForHospitals {
         List<Hospital__c> rawHospitals = Database.query(query);
 
         List<Hosp_HospitalWrapperForRest> hospitals = new List<Hosp_HospitalWrapperForRest>();
-        for(Hospital__c rawHospital : rawHospitals) {
+        for (Hospital__c rawHospital : rawHospitals) {
             hospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 
@@ -21,7 +21,52 @@ global with sharing class Hosp_RestForHospitals {
 
     @HttpPut
     global static List<Hosp_HospitalWrapperForRest> upsertHospitals(List<Hosp_HospitalWrapperForRest> hospitals) {
-        List<Hospital__c> hospitalsList = new List<Hospital__c>();
+        List<Hospital__c> hospitalListToUpdate = new List<Hospital__c>();
+        List<Hospital__c> hospitalListToInsert = new List<Hospital__c>();
+        Set<Hospital__c> hospitalSetToInsert = new Set<Hospital__c>();
+        List<Hospital__c> hospitalListToDelete = new List<Hospital__c>();
+        List<Hospital__c> listToCompare = [SELECT Id, ExternalId__c, Name, City__c, Country__c, Www__c, Street__c, PostalCode__c FROM Hospital__c];
+        for (Hosp_HospitalWrapperForRest hospitalFrom : hospitals) {
+            for (Hospital__c hospitalFromDataBase : listToCompare) {
+                if (hospitalFrom.hospitalId.equals(hospitalFromDataBase.ExternalId__c)) {
+                    hospitalFromDataBase.Name = hospitalFrom.name;
+                    hospitalFromDataBase.PostalCode__c = hospitalFrom.postalCode;
+                    hospitalFromDataBase.City__c = hospitalFrom.city;
+                    hospitalFromDataBase.Country__c = hospitalFrom.country;
+                    hospitalListToUpdate.add(hospitalFromDataBase);
+                    break;
+                } else {
+                    hospitalSetToInsert.add(new Hospital__c(ExternalId__c = hospitalFrom.hospitalId,
+                            Name = hospitalFrom.name,
+                            Country__c = hospitalFrom.country,
+                            City__c = hospitalFrom.city,
+                            PostalCode__c = hospitalFrom.postalCode,
+                            Street__c = hospitalFrom.street));
+                }
+            }
+        }
+        if (hospitalListToUpdate.size() > 0) {
+            hospitalSetToInsert.clear();
+        }
+        for (Hospital__c hospital : hospitalSetToInsert) {
+            hospitalListToInsert.add(hospital);
+        }
+        System.debug('listToCompare >> ' + listToCompare);
+        System.debug('hospitalListToInsert >> ' + hospitalListToInsert);
+        System.debug('hospitalListToUpdate >> ' + hospitalListToUpdate);
+        if (hospitalListToUpdate.size() > 0) {
+            update hospitalListToUpdate;
+        }
+        if (hospitalListToInsert.size() > 0) {
+            insert hospitalListToInsert;
+        }
+        List<Hosp_HospitalWrapperForRest> resultsHospitals = new List<Hosp_HospitalWrapperForRest>();
+        for (Hospital__c rawHospital : hospitalListToInsert) {
+            resultsHospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
+        }
+        return resultsHospitals;
+
+        /*List<Hospital__c> hospitalsList = new List<Hospital__c>();
         for (Hosp_HospitalWrapperForRest hosp : hospitals) {
             hospitalsList.add(new Hospital__c(Id = hosp.hospitalId,
                     Name = hosp.name,
@@ -38,7 +83,7 @@ global with sharing class Hosp_RestForHospitals {
             resultsHospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 
-        return resultsHospitals;
+        return resultsHospitals;*/
     }
 
     @HttpDelete
@@ -48,19 +93,22 @@ global with sharing class Hosp_RestForHospitals {
 
         List<String> ids = hospitalIds.split(',');
 
-        List<Hospital__c> listToDel = [SELECT Id,
-                Name,
-                Country__c,
-                City__c,
-                PostalCode__c,
-                Street__c
-            FROM Hospital__c
-            WHERE Id IN :ids];
+        List<Hospital__c> listToDel = [
+                SELECT Id,
+                        ExternalId__c,
+                        Name,
+                        Country__c,
+                        City__c,
+                        PostalCode__c,
+                        Street__c
+                FROM Hospital__c
+                WHERE ExternalId__c IN :ids
+        ];
 
         delete listToDel;
 
         List<Hosp_HospitalWrapperForRest> hospitals = new List<Hosp_HospitalWrapperForRest>();
-        for(Hospital__c rawHospital : listToDel) {
+        for (Hospital__c rawHospital : listToDel) {
             hospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
 

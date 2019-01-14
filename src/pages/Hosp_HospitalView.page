@@ -45,6 +45,8 @@
             <apex:outputField value="{! Hospital__c.Name }"/>
 
             <apex:outputField value="{! Hospital__c.WWW__c }"/>
+
+            <apex:outputField value="{! Hospital__c.ExternalId__c }"/>
         </apex:pageBlockSection>
 
 

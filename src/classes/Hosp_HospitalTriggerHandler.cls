@@ -7,7 +7,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
     @future(Callout=true)
     public static void sendHosp(Set<Id> hospitalsIds) {
-        List<Hospital__c> hospitals = [SELECT Id, Name, City__c, Country__c, WWW__c, Street__c, PostalCode__c FROM Hospital__c WHERE Id IN :hospitalsIds];
+        List<Hospital__c> hospitals = [SELECT Id, ExternalId__c, Name, City__c, Country__c, WWW__c, Street__c, PostalCode__c FROM Hospital__c WHERE Id IN :hospitalsIds];
 
         List<Hosp_HospitalWrapper> hospitalsInWrapper = new List<Hosp_HospitalWrapper>();
         for (Hospital__c hospital : hospitals) {
@@ -26,18 +26,6 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
     @future(Callout=true)
     public static void deleteHosp(Set<Id> hospitalsIds) {
-        /*List<Hospital__c> hospitals = [SELECT Id, Name, City__c, Country__c, WWW__c, Street__c, PostalCode__c FROM Hospital__c WHERE Id IN :hospitalsIds];
-
-        List<Hosp_HospitalWrapper> hospitalsInWrapper = new List<Hosp_HospitalWrapper>();
-        for (Hospital__c hospital : hospitals) {
-            hospitalsInWrapper.add(new Hosp_HospitalWrapper(hospital));
-        }
-
-        String body = '{ "hospitals"  : ' + JSON.serialize(hospitalsInWrapper) + ' }';
-
-        System.debug('body='+body);*/
-
-
         System.debug('hospitalsIds='+hospitalsIds);
 
         String hospitalToDeleteId;
