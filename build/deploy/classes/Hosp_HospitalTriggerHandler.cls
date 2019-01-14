@@ -73,6 +73,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
     private class Hosp_HospitalWrapper {
         public String hospitalId { get; set; }
+        public String externalId { get; set; }
         public String name { get; set; }
         public String country { get; set; }
         public String city { get; set; }
@@ -81,6 +82,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
         public Hosp_HospitalWrapper(Hospital__c hospital) {
             hospitalId = hospital.Id;
+            externalId = hospital.ExternalId__c;
             name = hospital.Name;
             country = hospital.Country__c;
             city = hospital.City__c;

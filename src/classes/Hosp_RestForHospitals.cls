@@ -21,73 +21,69 @@ global with sharing class Hosp_RestForHospitals {
 
     @HttpPut
     global static List<Hosp_HospitalWrapperForRest> upsertHospitals(List<Hosp_HospitalWrapperForRest> hospitals) {
+        List<Hospital__c> hospitalListToUpdate = new List<Hospital__c>();
+        List<Hospital__c> hospitalListToInsert = new List<Hospital__c>();
+        Set<Hospital__c> hospitalSetToInsert = new Set<Hospital__c>();
+        List<Hospital__c> hospitalListToDelete = new List<Hospital__c>();
+
         List<String> externalIds = new List<String>();
-        for (Hosp_HospitalWrapperForRest hosp : hospitals) {
-            externalIds.add(hosp.externalId);
+        for (Hosp_HospitalWrapperForRest hospital : hospitals) {
+            externalIds.add(hospital.externalId);
         }
 
-        List<Hospital__c> hospitalsAt2OrgAnd1Org = [SELECT Id, ExternalId__c FROM Hospital__c WHERE ExternalID__c IN :externalIds];
-
-        List<Hospital__c> hospitalsToUpdate = new List<Hospital__c>();
-
-        for (Hosp_HospitalWrapperForRest incomingHospital : hospitals) {
-            for (Hospital__c hospitalAt2OrgAnd1Org : hospitalsAt2OrgAnd1Org) {
-                if (hospitalAt2OrgAnd1Org.ExternalId__c == incomingHospital.externalId) {
-                    hospitalAt2OrgAnd1Org.Name = incomingHospital.name;
-                    hospitalAt2OrgAnd1Org.Street__c = incomingHospital.street;
-                    hospitalAt2OrgAnd1Org.City__c = incomingHospital.city;
-                    hospitalAt2OrgAnd1Org.Country__c = incomingHospital.country;
-                    hospitalAt2OrgAnd1Org.PostalCode__c = incomingHospital.postalCode;
-
-                    hospitalsToUpdate.add(hospitalAt2OrgAnd1Org);
+        List<Hospital__c> listToCompare = [SELECT Id, ExternalId__c, Name, City__c, Country__c, WWW__c, Street__c, PostalCode__c FROM Hospital__c WHERE ExternalId__c IN:externalIds];
+        for (Hospital__c hospital : listToCompare) {
+            for (Hosp_HospitalWrapperForRest hospitalExternal : hospitals) {
+                if (String.valueOf(hospital.ExternalId__c).equals(hospitalExternal.externalId)) {
+                    hospital.Name = hospitalExternal.name;
+                    hospital.Country__c = hospitalExternal.country;
+                    hospital.City__c = hospitalExternal.city;
+                    hospital.PostalCode__c = hospitalExternal.postalCode;
+                    hospital.Street__c = hospitalExternal.street;
                 }
             }
         }
 
-        if (!hospitalsToUpdate.isEmpty()) {
-            update hospitalsToUpdate;
+        if (listToCompare.size() > 0) {
+            update listToCompare;
         }
 
-        List<Hospital__c> hospitalsToInsert = new List<Hospital__c>();
-
-        for (Hosp_HospitalWrapperForRest incomingHospital : hospitals) {
-            if (!hospitalsToUpdate.isEmpty()) {
-                for (Hospital__c hospitalToUpdate : hospitalsToUpdate) {
-                    if (incomingHospital.externalId != hospitalToUpdate.ExternalId__c) {
-                        hospitalsToInsert.add(new Hospital__c(
-                                ExternalId__c = incomingHospital.externalId,
-                                Name = incomingHospital.name,
-                                City__c = incomingHospital.city,
-                                Country__c = incomingHospital.country,
-                                Street__c = incomingHospital.street,
-                                PostalCode__c = incomingHospital.postalCode
-                        ));
+        if (listToCompare.size() == 0) {
+            for (Hosp_HospitalWrapperForRest hospitalFrom : hospitals) {
+                hospitalListToInsert.add(new Hospital__c(
+                        ExternalId__c = hospitalFrom.externalId,
+                        Name = hospitalFrom.name,
+                        Country__c = hospitalFrom.country,
+                        City__c = hospitalFrom.city,
+                        PostalCode__c = hospitalFrom.postalCode,
+                        Street__c = hospitalFrom.street));
+            }
+        } else {
+            for (Hosp_HospitalWrapperForRest hospitalFrom : hospitals) {
+                for (Hospital__c hospital : listToCompare) {
+                    if (!String.valueOf(hospital.ExternalId__c).equals(hospitalFrom.externalId)) {
+                        hospitalListToInsert.add(new Hospital__c(
+                                ExternalId__c = hospitalFrom.externalId,
+                                Name = hospitalFrom.name,
+                                Country__c = hospitalFrom.country,
+                                City__c = hospitalFrom.city,
+                                PostalCode__c = hospitalFrom.postalCode,
+                                Street__c = hospitalFrom.street));
                     }
                 }
-            } else {
-                hospitalsToInsert.add(new Hospital__c(
-                        ExternalId__c = incomingHospital.externalId,
-                        Name = incomingHospital.name,
-                        City__c = incomingHospital.city,
-                        Country__c = incomingHospital.country,
-                        Street__c = incomingHospital.street,
-                        PostalCode__c = incomingHospital.postalCode
-                ));
             }
         }
 
-        if (!hospitalsToInsert.isEmpty()) {
-            insert hospitalsToInsert;
+        if (hospitalListToInsert.size() > 0) {
+            upsert hospitalListToInsert;
         }
 
-        List<Hospital__c> hospitalsList = new List<Hospital__c>();
-        hospitalsList.addAll(hospitalsToUpdate);
-        hospitalsList.addAll(hospitalsToInsert);
+        hospitalListToInsert.addAll(listToCompare);
+
         List<Hosp_HospitalWrapperForRest> resultsHospitals = new List<Hosp_HospitalWrapperForRest>();
-        for (Hospital__c rawHospital : hospitalsList) {
+        for (Hospital__c rawHospital : hospitalListToInsert) {
             resultsHospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
-
         return resultsHospitals;
     }
 

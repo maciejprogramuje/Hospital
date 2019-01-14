@@ -1,7 +1,3 @@
-/**
- * Created by BRITENET on 10.01.2019.
- */
-
 trigger Hosp_Hospital on Hospital__c (after insert, after update, after delete) {
 
     if (Trigger.isInsert || Trigger.isUpdate) {
