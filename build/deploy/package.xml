@@ -5,11 +5,15 @@
         <members>Hosp_RestForHospitals</members>
         <members>Hosp_HospitalTriggerHandler</members>
         <members>Hosp_Utils</members>
+        <members>Hosp_HospitalEditControllerExtension</members>
         <name>ApexClass</name>
     </types>
     <types>
         <members>Hospital__c.City__c</members>
         <members>Hospital__c.Country__c</members>
+        <members>Hospital__c.Master_Unit__c</members>
+        <members>Hospital__c.PostalCode__c</members>
+        <members>Hospital__c.Street__c</members>
         <members>Hospital__c.WWW__c</members>
         <name>CustomField</name>
     </types>
@@ -20,6 +24,10 @@
     <types>
         <members>Hospital__c</members>
         <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Hosp_HospitalEdit</members>
+        <name>ApexPage</name>
     </types>
     <version>44.0</version>
 </Package>
