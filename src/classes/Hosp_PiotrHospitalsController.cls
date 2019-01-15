@@ -43,6 +43,13 @@ public with sharing class Hosp_PiotrHospitalsController {
     public void deleteHospital() {
         clearMessages();
 
+        for(Hosp_HospitalWrapperForRest hospTemp : hospitalsResults){
+            if(hospTemp.hospitalId.equals(hospitalToEditId)){
+                hospitalToEditId = hospTemp.externalId;
+                break;
+            }
+        }
+
         try {
             List<Hosp_HospitalWrapperForRest> deletedHospitals = handler.deleteHospitalCallout(hospitalToEditId);
             isAnyProblemWithDelete = false;
@@ -57,8 +64,6 @@ public with sharing class Hosp_PiotrHospitalsController {
 
     public void upsertHospital() {
         clearMessages();
-
-        System.debug('hospitalToEdit='+hospitalToEdit);
 
         try {
             List<Hosp_HospitalWrapperForRest> upsertedHospitals = handler.upsertHospitalCallout(hospitalToEdit);
@@ -85,6 +90,7 @@ public with sharing class Hosp_PiotrHospitalsController {
         for (Hosp_HospitalWrapperForRest hosp : hospitalsResults) {
             if (hosp.hospitalId == hospitalToEditId) {
                 hospitalToEdit.Id = hosp.hospitalId;
+                hospitalToEdit.ExternalId__c = hosp.externalId;
                 hospitalToEdit.Name = hosp.name;
                 hospitalToEdit.City__c = hosp.city;
                 hospitalToEdit.Country__c = hosp.country;

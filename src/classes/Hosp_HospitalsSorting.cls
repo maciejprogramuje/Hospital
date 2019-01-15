@@ -16,6 +16,7 @@ public with sharing class Hosp_HospitalsSorting {
             for (Hosp_HospitalsSorting.HospitalWrapper hosp : tempHospitalsToSort) {
                 Hosp_HospitalWrapperForRest hospitalInWrapper = new Hosp_HospitalWrapperForRest();
                 hospitalInWrapper.hospitalId = hosp.id;
+                hospitalInWrapper.externalId = hosp.externalId;
                 hospitalInWrapper.name = hosp.name;
                 hospitalInWrapper.city = hosp.city;
                 hospitalInWrapper.country = hosp.country;
@@ -28,6 +29,7 @@ public with sharing class Hosp_HospitalsSorting {
 
     public class HospitalWrapper implements Comparable {
         public String id { get; set; }
+        public String externalId { get; set; }
         public String name { get; set; }
         public String country { get; set; }
         public String city { get; set; }
@@ -35,6 +37,7 @@ public with sharing class Hosp_HospitalsSorting {
 
         public HospitalWrapper(Hosp_HospitalWrapperForRest hospitalToChange, Boolean sortAsc) {
             id = hospitalToChange.hospitalId;
+            externalId = hospitalToChange.externalId;
             name = hospitalToChange.name;
             country = hospitalToChange.country;
             city = hospitalToChange.city;

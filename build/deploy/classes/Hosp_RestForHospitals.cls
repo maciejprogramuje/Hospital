@@ -25,6 +25,11 @@ global with sharing class Hosp_RestForHospitals {
 
         List<String> externalIds = new List<String>();
         for (Hosp_HospitalWrapperForRest hospital : hospitals) {
+
+            if(String.isBlank(hospital.externalId)) {
+                hospital.externalId = hospital.name + hospital.city + hospital.country + hospital.street;
+            }
+
             externalIds.add(hospital.externalId);
         }
 
