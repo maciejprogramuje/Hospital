@@ -36,6 +36,8 @@
                 <apex:commandButton action="{! save }" value="{! $Label.Save }"/>
 
                 <apex:commandButton action="{! cancel }" value="{! $Label.Cancel }"/>
+
+                <apex:commandButton value="deleteAll" status="status" reRender="firstForm" action="{!deleteAll}"/>
             </center>
         </apex:pageBlock>
     </apex:form>

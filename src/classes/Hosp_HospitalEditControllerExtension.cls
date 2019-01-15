@@ -39,4 +39,9 @@ public with sharing class Hosp_HospitalEditControllerExtension {
         options.sort();
         return options;
     }
+
+    public void deleteAll(){
+        List<Hospital__c> hospitals = [SELECT Id, Name FROM Hospital__c];
+        delete hospitals;
+    }
 }

@@ -32,7 +32,7 @@ public with sharing class Hosp_PiotrHospitalsControllerHandler {
         response = http.send(request);
 
         if (response.getStatusCode() == 401) {
-            HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '', loginToPiotrGetSessionId());
+            request = getRequest('DELETE', hospitalToDeleteId, '', loginToPiotrGetSessionId());
             response = http.send(request);
         }
 
@@ -54,7 +54,7 @@ public with sharing class Hosp_PiotrHospitalsControllerHandler {
         response = http.send(request);
 
         if (response.getStatusCode() == 401) {
-            HttpRequest request = getRequest('PUT', '', body, loginToPiotrGetSessionId());
+            request = getRequest('PUT', '', body, loginToPiotrGetSessionId());
             response = http.send(request);
         }
 

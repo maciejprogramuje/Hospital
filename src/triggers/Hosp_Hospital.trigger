@@ -1,9 +1,16 @@
-trigger Hosp_Hospital on Hospital__c (after insert, after update, after delete) {
+trigger Hosp_Hospital on Hospital__c (before insert, before update, before delete) {
 
     if (Trigger.isInsert || Trigger.isUpdate) {
         Boolean isExecuted = false;
         while (!isExecuted) {
-            Hosp_HospitalTriggerHandler.sendHosp(Trigger.newMap.keySet());
+            List<Hosp_HospitalWrapperForRest> hospitalsInWrapper = new List<Hosp_HospitalWrapperForRest>();
+            for(Hospital__c hosp : Trigger.new) {
+                hospitalsInWrapper.add(new Hosp_HospitalWrapperForRest(hosp));
+            }
+
+            String body = '{ "hospitals"  : ' + JSON.serialize(hospitalsInWrapper) + ' }';
+
+            Hosp_HospitalTriggerHandler.sendHosp(body);
             isExecuted = true;
         }
     } else if (Trigger.isDelete) {
@@ -17,4 +24,6 @@ trigger Hosp_Hospital on Hospital__c (after insert, after update, after delete) 
             isExecuted = true;
         }
     }
+
+    //0051t000001bOdRAAU
 }

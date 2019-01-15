@@ -2,21 +2,11 @@ public with sharing class Hosp_HospitalTriggerHandler {
     public static String endPoint = 'https://eu16.salesforce.com/services/apexrest/Hospital__c/';
 
     @future(Callout=true)
-    public static void sendHosp(Set<Id> hospitalsIds) {
-        List<Hospital__c> hospitals = [SELECT Id, ExternalId__c, Name, City__c, Country__c, WWW__c, Street__c, PostalCode__c FROM Hospital__c WHERE Id IN :hospitalsIds];
-
-        List<Hosp_HospitalWrapper> hospitalsInWrapper = new List<Hosp_HospitalWrapper>();
-        for (Hospital__c hospital : hospitals) {
-            hospitalsInWrapper.add(new Hosp_HospitalWrapper(hospital));
-        }
-
-        String body = '{ "hospitals"  : ' + JSON.serialize(hospitalsInWrapper) + ' }';
-
+    public static void sendHosp(String hospitalsJson) {
         Http http = new Http();
-        HttpRequest request = getRequest('PUT', '', body);
+        HttpRequest request = getRequest('PUT', '', hospitalsJson);
 
         HttpResponse response = http.send(request);
-        System.debug('response' + response.getStatusCode());
     }
 
     @future(Callout=true)

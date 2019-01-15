@@ -230,7 +230,6 @@ public with sharing class Hosp_HospitalViewControllerExtension {
         getContracts();
     }
 
-
     private class DoctorsFoundWrapper {
         public Doctor__c doctorInWrapper { get; set; }
         public Boolean isSelectedFoundWrapper { get; set; }
