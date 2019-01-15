@@ -25,6 +25,5 @@ trigger Hosp_Hospital on Hospital__c (before insert, before update, before delet
         }
     }
 
-
     //0051t000002SI2YAAW
 }

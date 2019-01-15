@@ -23,8 +23,6 @@ public with sharing class Hosp_HospitalTriggerHandler {
         HttpResponse response = http.send(request);
     }
 
-
-
     public static HttpRequest getRequest(String methodType, String urlParams, String body) {
         HttpRequest request = new HttpRequest();
         request.setEndPoint(endPoint + urlParams);

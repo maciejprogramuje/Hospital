@@ -22,6 +22,7 @@ global with sharing class Hosp_RestForHospitals {
     @HttpPut
     global static List<Hosp_HospitalWrapperForRest> upsertHospitals(List<Hosp_HospitalWrapperForRest> hospitals) {
         List<Hospital__c> hospitalsToInsert = new List<Hospital__c>();
+        List<Hospital__c> hospitalsToUpdate = new List<Hospital__c>();
 
         List<String> externalIds = new List<String>();
         for (Hosp_HospitalWrapperForRest hospital : hospitals) {
@@ -39,8 +40,8 @@ global with sharing class Hosp_RestForHospitals {
                 WWW__c,
                 Street__c,
                 PostalCode__c
-            FROM Hospital__c
-            WHERE ExternalId__c IN :externalIds];
+        FROM Hospital__c
+        WHERE ExternalId__c IN :externalIds];
 
         for (Hospital__c hospital : listToCompare) {
             for (Hosp_HospitalWrapperForRest hosp : hospitals) {
@@ -50,12 +51,14 @@ global with sharing class Hosp_RestForHospitals {
                     hospital.City__c = hosp.city;
                     hospital.PostalCode__c = hosp.postalCode;
                     hospital.Street__c = hosp.street;
+
+                    hospitalsToUpdate.add(hospital);
                 }
             }
         }
 
-        if (!listToCompare.isEmpty()) {
-            update listToCompare;
+        if (!hospitalsToUpdate.isEmpty()) {
+            update hospitalsToUpdate;
         }
 
         if (listToCompare.isEmpty()) {
@@ -71,7 +74,7 @@ global with sharing class Hosp_RestForHospitals {
         } else {
             for (Hosp_HospitalWrapperForRest hosp : hospitals) {
                 for (Hospital__c hospital : listToCompare) {
-                    if (!String.valueOf(hospital.ExternalId__c).equals(hosp.externalId)) {
+                    if (String.isBlank(hosp.hospitalId) && !String.valueOf(hospital.ExternalId__c).equals(hosp.externalId)) {
                         hospitalsToInsert.add(new Hospital__c(
                                 ExternalId__c = hosp.externalId,
                                 Name = hosp.name,
