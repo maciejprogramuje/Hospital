@@ -53,7 +53,8 @@
         <apex:pageBlockSection title="{! $Label.Address }"
                                columns="1"
                                collapsible="true"
-                               id="sectionAddress">
+                               id="sectionAddress"
+                               rendered="{! isAddressEnabled }">
 
             <apex:pageBlockSection columns="2">
 

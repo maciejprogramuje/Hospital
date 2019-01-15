@@ -1,10 +1,13 @@
 public class Hosp_DoctorEditControllerExtension {
     ApexPages.StandardController standardController;
 
+    public static Boolean getIsLicenseNoEnabled() {
+        return Hosp_Utils.isFunctionalityEnabled('DoctorLicenseNoEnabled');
+    }
+
     public Hosp_DoctorEditControllerExtension(ApexPages.StandardController standardController) {
         this.standardController = standardController;
     }
-
 
     public PageReference save() {
         Doctor__c doctor = (Doctor__c) standardController.getRecord();
@@ -19,7 +22,8 @@ public class Hosp_DoctorEditControllerExtension {
                     Country__c = doctor.Country__c,
                     Email__c = doctor.Email__c,
                     Phone__c = doctor.Phone__c,
-                    Street__c = doctor.Street__c);
+                    Street__c = doctor.Street__c,
+                    License_No__c = doctor.License_No__c);
             insert doctor;
         } else {
             update doctor;

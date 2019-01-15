@@ -19,6 +19,10 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public String contractIdToDismiss { get; set; }
     public Boolean isImportSuccess { get; set; }
 
+    public static Boolean getIsLicenseNoEnabled() {
+        return Hosp_Utils.isFunctionalityEnabled('DoctorLicenseNoEnabled');
+    }
+
 
     public Hosp_DoctorViewControllerExtension(ApexPages.StandardController standardController) {
         standardController.addFields(new List<String>{'FirstLastName__c'});

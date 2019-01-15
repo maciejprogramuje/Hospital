@@ -81,6 +81,8 @@
                             </apex:pageBlockSectionItem>
                         </apex:form>
                     </apex:pageBlockSectionItem>
+
+                    <apex:outputField value="{! Doctor__c.License_No__c }" rendered="{! isLicenseNoEnabled }"/>
                 </apex:pageBlockSection>
 
 

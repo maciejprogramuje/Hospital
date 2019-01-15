@@ -15,6 +15,10 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     public Boolean isEditingDatesFields { get; set; }
     public Boolean areAllButtonDisabled { get; set; }
 
+    public static Boolean getIsAddressEnabled() {
+        return Hosp_Utils.isFunctionalityEnabled('AddressEnabled');
+    }
+
     public Hosp_HospitalViewControllerExtension(ApexPages.StandardController standardController) {
         hospitalCurrent = (Hospital__c) standardController.getRecord();
         hireDialogName = String.format(Label.Hosp_Hire_Doc_to_Hosp, new List<String>{

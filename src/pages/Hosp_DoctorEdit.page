@@ -22,6 +22,8 @@
                 <apex:inputField value="{! Doctor__c.Email__c }"/>
 
                 <apex:inputField value="{! Doctor__c.Phone__c }"/>
+
+                <apex:inputField value="{! Doctor__c.License_No__c }" rendered="{! isLicenseNoEnabled }"/>
             </apex:pageBlockSection>
 
 

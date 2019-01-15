@@ -23,19 +23,6 @@ public class Hosp_Utils {
         return EncodingUtil.urlDecode('%' + String.join(bytes, '%'), inCharset);
     }
 
-    public static User__c getCurrentUser() {
-        return getUser(UserInfo.getUserId());
-    }
-
-    public static User__c getUser(String userId) {
-        List<User__c> userItem = [SELECT Id, Email__c, Country__c FROM User__c WHERE Id = :userId];
-        if (userItem.isEmpty()) {
-            return null;
-        } else {
-            return userItem[0];
-        }
-    }
-
     public static void sendEmailToDoctor(List<Doctor__c> doctors) {
         List<String> emails = new List<String>();
         for (Doctor__c doctor : doctors) {
@@ -173,4 +160,32 @@ public class Hosp_Utils {
         return accessToken;
     }
 
+    public static Boolean isFunctionalityEnabled(String csName) {
+        return isFunctionalityEnabled(csName, getCurrentUser().Country);
+    }
+
+    public static Boolean isFunctionalityEnabled(String csName, String country) {
+        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
+        if (csItem == null) {
+            return false;
+        }
+
+        List<String> values = csItem.Value__c.split(',');
+
+        System.debug('values.contains(country)='+values.contains(country));
+
+        return values.contains(country);
+    }
+
+    public static User getCurrentUser() {
+        return getUser(UserInfo.getUserId());
+    }
+
+    public static User getUser(String userId) {
+        List<User> userItem = [SELECT Id, Country FROM User WHERE Id = :userId];
+        if (userItem.isEmpty()) {
+            return null;
+        }
+        return userItem.get(0);
+    }
 }
