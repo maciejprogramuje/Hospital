@@ -8,6 +8,8 @@ public class Hosp_Utils {
         return guid;
     }
 
+    //todo - wywala się na danych ze spacjami
+
     public static String blobToString(Blob input, String inCharset) {
         String hex = EncodingUtil.convertToHex(input);
         System.assertEquals(0, hex.length() & 1);

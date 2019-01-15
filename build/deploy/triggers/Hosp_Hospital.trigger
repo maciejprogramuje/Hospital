@@ -17,6 +17,4 @@ trigger Hosp_Hospital on Hospital__c (after insert, after update, after delete) 
             isExecuted = true;
         }
     }
-
-
 }
