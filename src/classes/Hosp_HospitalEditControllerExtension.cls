@@ -21,7 +21,6 @@ public with sharing class Hosp_HospitalEditControllerExtension {
                     PostalCode__c = hospital.PostalCode__c,
                     Street__c = hospital.Street__c,
                     Master_Unit__c = hospital.Master_Unit__c,
-                    //todo - zlepek
                     ExternalId__c = hospital.Name + hospital.City__c + hospital.Country__c + hospital.Street__c);
             insert hospital;
         } else {

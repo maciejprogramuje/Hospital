@@ -16,7 +16,6 @@ public with sharing class Hosp_HospitalTriggerHandler {
 
         String body = '{ "hospitals"  : ' + JSON.serialize(hospitalsInWrapper) + ' }';
 
-
         Http http = new Http();
         HttpRequest request = getRequest('PUT', '', body);
 

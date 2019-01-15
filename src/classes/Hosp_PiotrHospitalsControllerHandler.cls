@@ -11,20 +11,13 @@ public with sharing class Hosp_PiotrHospitalsControllerHandler {
         Http http = new Http();
         HttpResponse response;
 
-
-        HttpRequest request = getRequest('GET', query, '', loginToPiotrGetSessionId());
+        HttpRequest request = getRequest('GET', query, '', (String) Cache.Session.get('local.Hosp.sessionIdToPiotrek'));
         response = http.send(request);
 
-        /*try {
-            HttpRequest request = getRequest('GET', query, '', (String) Cache.Session.get('local.Hosp.sessionIdToPiotrek'));
+        if (response.getStatusCode() == 401) {
+            request = getRequest('GET', query, '', loginToPiotrGetSessionId());
             response = http.send(request);
-        } catch (Exception e) {
-            if (e.getMessage().contains(Label.Hosp_Invalid_Session_Id)) {
-                HttpRequest request = getRequest('GET', query, '', loginToPiotrGetSessionId());
-                response = http.send(request);
-            }
-            System.debug('Hosp_PiotrHospitalsControllerHandler.getHospitalCallout >>> ' + e.getMessage());
-        }*/
+        }
 
         List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
 
@@ -35,20 +28,13 @@ public with sharing class Hosp_PiotrHospitalsControllerHandler {
         Http http = new Http();
         HttpResponse response;
 
-        HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '', loginToPiotrGetSessionId());
+        HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '', (String) Cache.Session.get('local.Hosp.sessionIdToPiotrek'));
         response = http.send(request);
 
-        /*try {
-            HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '', (String) Cache.Session.get('local.Hosp.sessionIdToPiotrek'));
+        if (response.getStatusCode() == 401) {
+            HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '', loginToPiotrGetSessionId());
             response = http.send(request);
-        } catch (Exception e) {
-            if (e.getMessage().contains(Label.Hosp_Invalid_Session_Id)) {
-                HttpRequest request = getRequest('DELETE', hospitalToDeleteId, '', loginToPiotrGetSessionId());
-                response = http.send(request);
-            }
-
-            System.debug('Hosp_PiotrHospitalsControllerHandler.deleteHospitalCallout >>> ' + e.getMessage());
-        }*/
+        }
 
         List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
 
@@ -64,20 +50,13 @@ public with sharing class Hosp_PiotrHospitalsControllerHandler {
         Http http = new Http();
         HttpResponse response;
 
-        HttpRequest request = getRequest('PUT', '', body, loginToPiotrGetSessionId());
+        HttpRequest request = getRequest('PUT', '', body, (String) Cache.Session.get('local.Hosp.sessionIdToPiotrek'));
         response = http.send(request);
 
-        /*try {
-            HttpRequest request = getRequest('PUT', '', body, (String) Cache.Session.get('local.Hosp.sessionIdToPiotrek'));
+        if (response.getStatusCode() == 401) {
+            HttpRequest request = getRequest('PUT', '', body, loginToPiotrGetSessionId());
             response = http.send(request);
-        } catch (Exception e) {
-            if (e.getMessage().contains(Label.Hosp_Invalid_Session_Id)) {
-                HttpRequest request = getRequest('PUT', '', body, loginToPiotrGetSessionId());
-                response = http.send(request);
-            }
-
-            System.debug('Hosp_PiotrHospitalsControllerHandler.upsertHospitalCallout >>> ' + e.getMessage());
-        }*/
+        }
 
         List<Hosp_HospitalWrapperForRest> hospitalList = (List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class);
 

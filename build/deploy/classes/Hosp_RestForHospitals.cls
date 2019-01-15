@@ -25,15 +25,23 @@ global with sharing class Hosp_RestForHospitals {
 
         List<String> externalIds = new List<String>();
         for (Hosp_HospitalWrapperForRest hospital : hospitals) {
-
             if(String.isBlank(hospital.externalId)) {
                 hospital.externalId = hospital.name + hospital.city + hospital.country + hospital.street;
             }
-
             externalIds.add(hospital.externalId);
         }
 
-        List<Hospital__c> listToCompare = [SELECT Id, ExternalId__c, Name, City__c, Country__c, WWW__c, Street__c, PostalCode__c FROM Hospital__c WHERE ExternalId__c IN:externalIds];
+        List<Hospital__c> listToCompare = [SELECT Id,
+                ExternalId__c,
+                Name,
+                City__c,
+                Country__c,
+                WWW__c,
+                Street__c,
+                PostalCode__c
+        FROM Hospital__c
+        WHERE ExternalId__c IN :externalIds];
+
         for (Hospital__c hospital : listToCompare) {
             for (Hosp_HospitalWrapperForRest hosp : hospitals) {
                 if (String.valueOf(hospital.ExternalId__c).equals(hosp.externalId)) {
