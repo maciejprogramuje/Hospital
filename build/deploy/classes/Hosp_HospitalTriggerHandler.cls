@@ -11,17 +11,6 @@ public with sharing class Hosp_HospitalTriggerHandler {
         HttpRequest request = getRequest('PUT', '', hospitalsJson);
 
         HttpResponse response = http.send(request);
-
-        Hosp_HospitalLogCallout__c logCallout = new Hosp_HospitalLogCallout__c(
-                RequestBody__c = request.getBody(),
-                ResponseBody__c = response.getBody(),
-                External_Id__c = '',
-                CreateDate__c = Datetime.now(),
-                OperationType__c = 'Send hospital',
-                Status__c = String.valueOf(response.getStatusCode())
-        );
-
-        insert logCallout;
     }
 
     @future(Callout=true)

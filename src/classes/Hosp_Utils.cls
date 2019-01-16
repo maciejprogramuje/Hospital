@@ -193,7 +193,7 @@ public class Hosp_Utils {
 
 
 
-    public static Integer getCsValue(String csName) {
+    public static Integer getCsValueFromInteger(String csName) {
         Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
         if (csItem == null) {
             return null;
@@ -202,7 +202,7 @@ public class Hosp_Utils {
         return Integer.valueOf(csItem.Value__c);
     }
 
-    public static Boolean getCsValueFromString(String csName) {
+    public static Boolean getCsValueFromBoolean(String csName) {
         Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
         if (csItem == null) {
             return null;
