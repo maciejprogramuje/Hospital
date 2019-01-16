@@ -7,7 +7,19 @@ public with sharing class Hosp_HospitalTriggerHandler {
         HttpRequest request = getRequest('PUT', '', hospitalsJson);
 
         HttpResponse response = http.send(request);
+
+        Hosp_HospitalLogCallout__c logCallout = new Hosp_HospitalLogCallout__c(
+                RequestBody__c = request.getBody(),
+                ResponseBody__c = response.getBody(),
+                External_Id__c = '',
+                CreateDate__c = Datetime.now(),
+                OperationType__c = 'Send hospital',
+                Status__c = String.valueOf(response.getStatusCode())
+        );
+
+        insert logCallout;
     }
+
 
     @future(Callout=true)
     public static void deleteHosp(List<String> hospitalsIds) {
@@ -52,6 +64,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
         public String city { get; set; }
         public String postalCode { get; set; }
         public String street { get; set; }
+        public String status { get; set; }
 
         public Hosp_HospitalWrapper(Hospital__c hospital) {
             hospitalId = hospital.Id;
@@ -61,6 +74,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
             city = hospital.City__c;
             postalCode = hospital.PostalCode__c;
             street = hospital.Street__c;
+            status = hospital.Status__c;
         }
     }
 }

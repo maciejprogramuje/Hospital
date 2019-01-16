@@ -23,6 +23,8 @@ global with sharing class Hosp_RestForHospitals {
     global static List<Hosp_HospitalWrapperForRest> upsertHospitals(List<Hosp_HospitalWrapperForRest> hospitals) {
         List<Hospital__c> hospitalsToInsert = new List<Hospital__c>();
         List<Hospital__c> hospitalsToUpdate = new List<Hospital__c>();
+        List<Hosp_HospitalWrapperForRest> hospitalListToInsertWrapper = new List<Hosp_HospitalWrapperForRest>();
+        List<Hosp_HospitalWrapperForRest> hospitalListToUpdateWrapper = new List<Hosp_HospitalWrapperForRest>();
 
         List<String> externalIds = new List<String>();
         for (Hosp_HospitalWrapperForRest hospital : hospitals) {
@@ -57,10 +59,6 @@ global with sharing class Hosp_RestForHospitals {
             }
         }
 
-        if (!hospitalsToUpdate.isEmpty()) {
-            update hospitalsToUpdate;
-        }
-
         if (listToCompare.isEmpty()) {
             for (Hosp_HospitalWrapperForRest hosp : hospitals) {
                 hospitalsToInsert.add(new Hospital__c(
@@ -87,14 +85,38 @@ global with sharing class Hosp_RestForHospitals {
             }
         }
 
-        if (!hospitalsToInsert.isEmpty()) {
-            upsert hospitalsToInsert;
+        if (!hospitalsToUpdate.isEmpty()) {
+            List<Database.SaveResult> resultsFromUpdate = Database.update(hospitalsToUpdate, false);
+            hospitalListToUpdateWrapper = generateWrapperFromHospital(hospitalsToUpdate);
+            generateStatusToRecords(resultsFromUpdate, hospitalListToUpdateWrapper);
         }
 
-        hospitalsToInsert.addAll(listToCompare);
+        if (!hospitalsToInsert.isEmpty()) {
+            List<Database.SaveResult> resultsFromInsert = Database.insert(hospitalsToInsert, false);
+            hospitalListToInsertWrapper = generateWrapperFromHospital(hospitalsToInsert);
+            generateStatusToRecords(resultsFromInsert, hospitalListToInsertWrapper);
+        }
 
+        hospitalsToInsert.addAll(hospitalsToUpdate);
         List<Hosp_HospitalWrapperForRest> resultsHospitals = new List<Hosp_HospitalWrapperForRest>();
-        for (Hospital__c rawHospital : hospitalsToInsert) {
+        resultsHospitals.addAll(hospitalListToUpdateWrapper);
+        resultsHospitals.addAll(hospitalListToInsertWrapper);
+
+        return resultsHospitals;
+    }
+
+    private static void generateStatusToRecords(List<Database.SaveResult> results, List<Hosp_HospitalWrapperForRest> hospitalListToInsert) {
+        for (Integer i = 0; i < results.size(); i++) {
+            if (results.get(i).isSuccess()) {
+                hospitalListToInsert.get(i).status = true;
+            } else {
+                hospitalListToInsert.get(i).status = false;
+            }
+        }
+    }
+    private static List<Hosp_HospitalWrapperForRest> generateWrapperFromHospital(List<Hospital__c> hospitals) {
+        List<Hosp_HospitalWrapperForRest> resultsHospitals = new List<Hosp_HospitalWrapperForRest>();
+        for (Hospital__c rawHospital : hospitals) {
             resultsHospitals.add(new Hosp_HospitalWrapperForRest(rawHospital));
         }
         return resultsHospitals;

@@ -172,8 +172,6 @@ public class Hosp_Utils {
 
         List<String> values = csItem.Value__c.split(',');
 
-        System.debug('values.contains(country)='+values.contains(country));
-
         return values.contains(country);
     }
 
@@ -188,4 +186,29 @@ public class Hosp_Utils {
         }
         return userItem.get(0);
     }
+
+
+
+
+
+
+
+    public static Integer getCsValue(String csName) {
+        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
+        if (csItem == null) {
+            return null;
+        }
+
+        return Integer.valueOf(csItem.Value__c);
+    }
+
+    public static Boolean getCsValueFromString(String csName) {
+        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
+        if (csItem == null) {
+            return null;
+        }
+
+        return Boolean.valueOf(csItem.Value__c);
+    }
+
 }

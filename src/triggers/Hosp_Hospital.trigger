@@ -5,6 +5,8 @@ trigger Hosp_Hospital on Hospital__c (before insert, before update, before delet
         while (!isExecuted) {
             List<Hosp_HospitalWrapperForRest> hospitalsInWrapper = new List<Hosp_HospitalWrapperForRest>();
             for(Hospital__c hosp : Trigger.new) {
+                Hosp_HospitalWrapperForREST hospToSend = new Hosp_HospitalWrapperForREST(hosp);
+                hospToSend.status = true;
                 hospitalsInWrapper.add(new Hosp_HospitalWrapperForRest(hosp));
             }
 

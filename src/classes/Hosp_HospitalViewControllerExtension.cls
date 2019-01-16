@@ -1,5 +1,5 @@
 public with sharing class Hosp_HospitalViewControllerExtension {
-    public Hospital__c hospitalCurrent { get; set; }
+    public static Hospital__c hospitalCurrent { get; set; }
     public Doctor__c doctorFromSearchForm { get; set; }
 
     public String hireDialogName { get; set; }
@@ -16,7 +16,10 @@ public with sharing class Hosp_HospitalViewControllerExtension {
     public Boolean areAllButtonDisabled { get; set; }
 
     public static Boolean getIsAddressEnabled() {
-        return Hosp_Utils.isFunctionalityEnabled('AddressEnabled');
+        if(hospitalCurrent != null) {
+            return Hosp_Utils.isFunctionalityEnabled('AddressEnabled', hospitalCurrent.Country__c);
+        }
+        return false;
     }
 
     public Hosp_HospitalViewControllerExtension(ApexPages.StandardController standardController) {

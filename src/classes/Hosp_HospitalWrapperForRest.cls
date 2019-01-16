@@ -6,6 +6,7 @@ global with sharing class Hosp_HospitalWrapperForRest {
     webService String city { get; set; }
     webService String postalCode { get; set; }
     webService String street { get; set; }
+    webService Boolean status { get; set; }
 
     global Hosp_HospitalWrapperForRest() {
 
