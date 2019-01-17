@@ -1,9 +1,6 @@
 global class Hosp_HospitalLogsSchedule implements Schedulable {
 
-
-
-    public static String timeSchedule = '0 53 * ? * *';
-
+    public static String timeSchedule = Hosp_Utils.getDeleteHospitalLogsScheduleTime();
 
 
     global static String scheduleMe() {

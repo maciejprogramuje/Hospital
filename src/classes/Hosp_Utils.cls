@@ -187,6 +187,48 @@ public class Hosp_Utils {
         return userItem.get(0);
     }
 
+
+
+
+
+    public static String getInsertHospitalScheduleTime() {
+        return getCsValueFromString('InsertHospitalScheduleTime');
+    }
+
+    public static String getDeleteHospitalLogsScheduleTime() {
+        return getCsValueFromString('DeleteHospitalLogsScheduleTime');
+    }
+
+    public static String getCsValueFromString(String csName) {
+        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
+        if (csItem == null) {
+            return null;
+        }
+
+        return csItem.Value__c;
+    }
+
+    public static Integer getCsValueFromInteger(String csName) {
+        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
+        if (csItem == null) {
+            return null;
+        }
+
+        return Integer.valueOf(csItem.Value__c);
+    }
+
+    public static Boolean getCsValueFromBoolean(String csName) {
+        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
+        if (csItem == null) {
+            return null;
+        }
+
+        return Boolean.valueOf(csItem.Value__c);
+    }
+
+
+
+
     public static void sendEmailToSystemAdmin(List<String> errorList) {
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 
@@ -211,29 +253,4 @@ public class Hosp_Utils {
 
         Messaging.sendEmail(emails);
     }
-
-
-
-
-
-
-
-    public static Integer getCsValueFromInteger(String csName) {
-        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
-        if (csItem == null) {
-            return null;
-        }
-
-        return Integer.valueOf(csItem.Value__c);
-    }
-
-    public static Boolean getCsValueFromBoolean(String csName) {
-        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
-        if (csItem == null) {
-            return null;
-        }
-
-        return Boolean.valueOf(csItem.Value__c);
-    }
-
 }

@@ -16,36 +16,47 @@ global class Hosp_HospitalBatch implements Database.Batchable<sObject>, Database
     }
 
 
-
-
     global void execute(Database.BatchableContext bc, List<Hosp_HospitalLogCallout__c> logRecords) {
         List<Hosp_HospitalWrapperForREST> hospitalFromRespond = new List<Hosp_HospitalWrapperForREST>();
         List<Hosp_HospitalWrapperForREST> hospitalWithFail = new List<Hosp_HospitalWrapperForREST>();
+        List<Hosp_HospitalWrapperForRest> hospitalWithFailUnique = new List<Hosp_HospitalWrapperForRest>();
 
         for (Hosp_HospitalLogCallout__c log : logRecords) {
             String oneRespond = log.ResponseBody__c;
             hospitalFromRespond.addAll((List<Hosp_HospitalWrapperForREST>) JSON.deserialize(oneRespond, List<Hosp_HospitalWrapperForREST>.class));
         }
 
-        for(Hosp_HospitalWrapperForRest hospital : hospitalFromRespond){
-            if(!hospital.status){
+        for (Hosp_HospitalWrapperForRest hospital : hospitalFromRespond) {
+            if (!hospital.status) {
                 hospitalWithFail.add(hospital);
                 hospital.status = true;
             }
         }
 
-        String body = '{ "hospitals"  : ' + JSON.serialize(hospitalWithFail) + ' }';
+        hospitalWithFailUnique = getUniqueValues(hospitalWithFail);
 
+        String body = '{ "hospitals"  : ' + JSON.serialize(hospitalWithFail) + ' }';
 
         HttpResponse response = sendHosp(body);
 
-        List<Hosp_HospitalWrapperForRest> hospitalAfterSend =((List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class));
+        List<Hosp_HospitalWrapperForRest> hospitalAfterSend = ((List<Hosp_HospitalWrapperForRest>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForRest>.class));
 
-        for(Hosp_HospitalWrapperForRest hospital : hospitalAfterSend){
-            if(!hospital.status){
+        for (Hosp_HospitalWrapperForRest hospital : hospitalAfterSend) {
+            if (!hospital.status) {
                 errorList.add('Record id: ' + hospital.externalId + ' Hospital name: ' + hospital.name);
             }
         }
+    }
+
+    private List<Hosp_HospitalWrapperForRest> getUniqueValues(List<Hosp_HospitalWrapperForRest> records) {
+        Map<String, Hosp_HospitalWrapperForRest> uniqueValues = new Map<String, Hosp_HospitalWrapperForRest>();
+
+        for (Hosp_HospitalWrapperForRest record : records) {
+            if (!uniqueValues.containsKey(record.externalId)) {
+                uniqueValues.put(record.externalId, record);
+            }
+        }
+        return uniqueValues.values();
     }
 
     public HttpResponse sendHosp(String hospitalsJson) {
