@@ -187,6 +187,31 @@ public class Hosp_Utils {
         return userItem.get(0);
     }
 
+    public static void sendEmailToSystemAdmin(List<String> errorList) {
+        List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+
+        List<String> address = new List<String>();
+
+        address.add('maciej.szymczyk@britenet.com.pl');
+        Messaging.SingleEmailMessage singleMail = new Messaging.SingleEmailMessage();
+
+        String body ='Errors';
+
+        for(String element : errorList){
+            body += ' ' + element;
+        }
+
+        singleMail.setSenderDisplayName('Salesforce Hospital');
+        singleMail.setSubject('Information about logs');
+        singleMail.setTreatTargetObjectAsRecipient(false);
+        singleMail.setToAddresses(address);
+        singleMail.setSaveAsActivity(false);
+        singleMail.setHtmlBody(body);
+        emails.add(singleMail);
+
+        Messaging.sendEmail(emails);
+    }
+
 
 
 

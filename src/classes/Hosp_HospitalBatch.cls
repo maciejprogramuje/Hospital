@@ -5,12 +5,11 @@ global class Hosp_HospitalBatch implements Database.Batchable<sObject>, Database
     global Database.QueryLocator start(Database.BatchableContext bc) {
         String query = 'SELECT Id, ' +
                 'External_Id__c, ' +
-                'DateTime__c, ' +
-                'Status__c OperationType__c, ' +
-                'Request__c, ' +
-                'Respond__c ' +
-                'FROM LogsFromWebService__c ' +
-                'WHERE Status__c != \'' + statusSuccess + '\'';
+                'CreateDate__c, ' +
+                'Status__c, ' +
+                'RequestBody__c, ' +
+                'ResponseBody__c ' +
+                'FROM Hosp_HospitalLogCallout__c ';
 
         return Database.getQueryLocator(query);
     }
@@ -24,17 +23,43 @@ global class Hosp_HospitalBatch implements Database.Batchable<sObject>, Database
             hospitalFromRespond.addAll((List<Hosp_HospitalWrapperForREST>) JSON.deserialize(oneRespond, List<Hosp_HospitalWrapperForREST>.class));
         }
 
-        for(Hosp_HospitalWrapperForREST hospital : hospitalFromRespond){
+        for(Hosp_HospitalWrapperForRest hospital : hospitalFromRespond){
             if(hospital.status){
                 hospitalWithFail.add(hospital);
                 hospital.status = true;
             }
         }
+
         String body = '{ "hospitals"  : ' + JSON.serialize(hospitalWithFail) + ' }';
-        Hosp_HospitalTriggerHandler.sendHosp(body);
+
+
+        System.debug('Hosp_HospitalBatch - body='+body);
+
+
+        //Hosp_HospitalTriggerHandler.sendHosp(body);
+
+
+
+        /*Http http = new Http();
+        HttpRequest request = getRequest('PUT', '', hospitalsJson);
+
+        HttpResponse response = http.send(request);
+
+        Hosp_HospitalLogCallout__c logCallout = new Hosp_HospitalLogCallout__c(
+                RequestBody__c = request.getBody(),
+                ResponseBody__c = response.getBody(),
+                External_Id__c = '',
+                CreateDate__c = Datetime.now(),
+                OperationType__c = 'Send hospital',
+                Status__c = String.valueOf(response.getStatusCode())
+        );*/
+
     }
 
     global void finish(Database.BatchableContext bc) {
-        //Hosp_Utils.sendEmailToSystemAdmin(errorList);
+
+        System.debug('Hosp_HospitalBatch - doszedł do finish');
+
+        Hosp_Utils.sendEmailToSystemAdmin(errorList);
     }
 }

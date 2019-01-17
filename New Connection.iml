@@ -27,6 +27,9 @@
                             <option name="name" value="AsyncHosp_partnerSoapSforceCom" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="AutocreatedRegHandler1547020943236" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="ChangePasswordController" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -60,28 +63,45 @@
                             <option name="name" value="Hosp_DoctorSearchController" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_DoctorsPublicSiteControllerExt" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Hosp_DoctorViewControllerExtension" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_DoctorWrapperForSoap" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorsPublicSiteControllerExt" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorsSorting" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_ErrorToastController" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_faultPartnerSoapSforceCom" />
+                            <option name="name" value="Hosp_HireDoctorController" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_HireDoctorController" />
+                            <option name="name" value="Hosp_HospitalBatch" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_HospitalEditControllerExtension" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_HospitalHierarchyController" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogsBatch" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalSchedule" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalTriggerHandler" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_HospitalViewControllerExtension" />
@@ -91,7 +111,8 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_partnerSoapSforceCom" />
+                            <option name="name" value="Hosp_HospitalsSorting" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_PiotrDoctorsCalloutTest" />
@@ -100,19 +121,27 @@
                             <option name="name" value="Hosp_PiotrDoctorsController" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_PiotrDoctorsControllerHandler" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_PiotrDoctorsControllerTest" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_PiotrDoctorsMock" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_PiotrHospitalSingleMock" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_PiotrHospitalsController" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_PiotrHospitalsControllerTest" />
+                            <option name="name" value="Hosp_PiotrHospitalsControllerHandler" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_PiotrHospitalSingleMock" />
+                            <option name="name" value="Hosp_PiotrHospitalsControllerTest" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_PiotrHospitalsMultiMock" />
@@ -131,6 +160,22 @@
                             <option name="name" value="Hosp_SoapForDoctorsWebService" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_SuccessToastController" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Utils" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_UtilsConvertErrorMessages" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_faultPartnerSoapSforceCom" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_partnerSoapSforceCom" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_soapSforceComSchemasClassHospitalD" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -138,12 +183,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_sobjectPartnerSoapSforceCom" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_SuccessToastController" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_Utils" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="LimitObjBatch" />
@@ -173,38 +212,13 @@
                             <option name="name" value="SiteRegisterControllerTest" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="ToastBuilderController" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="UpdateContactAddresses" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Hosp_HospitalTriggerHandler" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_DoctorsSorting.cls-meta.xml" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_DoctorsSorting" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_HospitalsSorting" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_UtilsConvertErrorMessages" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_PiotrDoctorsControllerHandler" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_PiotrHospitalsControllerHandler" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_HospitalBatch" />
+                            <option name="name" value="Hosp_HospitalLogsSchedule" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
@@ -229,6 +243,18 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_SuccessToast" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="SiteFooter" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="SiteHeader" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="SiteLogin" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="SitePoweredBy" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -278,6 +304,12 @@
                             <option name="name" value="Hosp_DoctorSearchJsonExport" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorView" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_DoctorViewPdfExport" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_DoctorsPublicSite" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -288,12 +320,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_DoctorsSearchXlsxExport" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_DoctorView" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_DoctorViewPdfExport" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_HospitalEdit" />
@@ -312,9 +338,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="InMaintenance" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="mess" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="MyProfilePage" />
@@ -340,6 +363,9 @@
                           <MetadataEntry>
                             <option name="name" value="UnderConstruction" />
                           </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="mess" />
+                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="ApexPage" />
@@ -362,6 +388,10 @@
                             <option name="name" value="Hosp_Doctor" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_Hospital" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="MyTrigg" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -369,10 +399,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="ThirdTrigger" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Hosp_Hospital" />
-                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -430,6 +456,13 @@
                       <option name="wildcard" value="false" />
                     </MetadataType>
                     <MetadataType>
+                      <option name="entries">
+                        <list>
+                          <MetadataEntry>
+                            <option name="name" value="Salesforce_Org_Maciej" />
+                          </MetadataEntry>
+                        </list>
+                      </option>
                       <option name="name" value="AuthProvider" />
                       <option name="wildcard" value="false" />
                     </MetadataType>
@@ -508,6 +541,21 @@
                     <MetadataType>
                       <option name="entries">
                         <list>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_For_Piotr" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_From_First_Org" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_From_Me_To_Piotr" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_From_Second_Org" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Login_From_Source_Salesforce" />
+                          </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Postman" />
                           </MetadataEntry>
@@ -624,13 +672,13 @@
                             <option name="name" value="Account.NumberofLocations__c" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Account.SLA__c" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Account.SLAExpirationDate__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Account.SLASerialNumber__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Account.SLA__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Account.UpsellOpportunity__c" />
@@ -702,10 +750,10 @@
                             <option name="name" value="Contract__c.Hospital__c" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Contract__c.isFinished__c" />
+                            <option name="name" value="Contract__c.StartDate__c" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Contract__c.StartDate__c" />
+                            <option name="name" value="Contract__c.isFinished__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Doctor__c.City__c" />
@@ -723,6 +771,9 @@
                             <option name="name" value="Doctor__c.FirstName__c" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Doctor__c.License_No__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Doctor__c.Phone__c" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -730,6 +781,33 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Goal.OrigGoalId__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_CustomSetting__c.Value__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c.CreateDate__c" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c.External_Id__c" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c.OperationType__c" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c.RequestBody__c" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c.ResponseBody__c" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c.Status__c" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hospital__c.City__c" />
@@ -740,12 +818,18 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hospital__c.ExternalId__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hospital__c.Master_Unit__c" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hospital__c.PostalCode__c" />
                             <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hospital__c.Status__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hospital__c.Street__c" />
@@ -807,6 +891,9 @@
                             <option name="name" value="Opportunity.TrackingNumber__c" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="User.Other_Salesforce_Org_Username__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="User__c.Country__c" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -845,10 +932,10 @@
                             <option name="name" value="ClearAll" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Contract_at_the_same_time" />
+                            <option name="name" value="Contract_Details" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Contract_Details" />
+                            <option name="name" value="Contract_at_the_same_time" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Contracts" />
@@ -947,10 +1034,43 @@
                             <option name="name" value="Hire" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_Add_doctor" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Add_hospital" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_BadDates" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_Cache_Piotr_Session_Id" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Close" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_DefaultPicture" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Delete_Confirmation" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Doctor_already_exists" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Doctor_successfully_added" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Doctor_successfully_deleted" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Doctor_successfully_updated" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Duplicate_Record" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Endpoint_Piotr_Hospital" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_Full_Name" />
@@ -962,13 +1082,40 @@
                             <option name="name" value="Hosp_Hire_Name" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_Hospital_successfully_added" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Hospital_successfully_deleted" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Hospital_successfully_updated" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Invalid_Session_Id" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_List_of" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_LoadingGif" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_New" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_New_Doctor" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_No_Address" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_No_template_data" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Piotr_Hospitals" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Piotr_s_Doctors" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_PleaseWait" />
@@ -981,6 +1128,12 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_Revert_Selection" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Search_Doctors" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Search_Hospitals" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_Search_for_Doctors" />
@@ -1010,7 +1163,37 @@
                             <option name="name" value="Hosp_Template" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hosp_Unable_to_add_doctor" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Unable_to_add_hospital" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Unable_to_delete_doctor" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Unable_to_delete_hospital" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Unable_to_update_doctor" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Unable_to_update_hospital" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hosp_Unable_to_upload" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Upsert_Doctor" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_Upsert_Hospital" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_login_to_Piotr" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_password_to_Piotr" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hospital" />
@@ -1085,10 +1268,10 @@
                             <option name="name" value="Search" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Search_for_Doctor" />
+                            <option name="name" value="Search_Form" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Search_Form" />
+                            <option name="name" value="Search_for_Doctor" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Select" />
@@ -1112,10 +1295,10 @@
                             <option name="name" value="Success" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="To_import" />
+                            <option name="name" value="To_Label" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="To_Label" />
+                            <option name="name" value="To_import" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Tracking_history" />
@@ -1136,13 +1319,13 @@
                             <option name="name" value="View_Action" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="www" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Zoom_IN" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Zoom_Out" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="www" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -1225,10 +1408,10 @@
                             <option name="name" value="Contract" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Contract__c" />
+                            <option name="name" value="ContractContactRole" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="ContractContactRole" />
+                            <option name="name" value="Contract__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="DandBCompany" />
@@ -1259,6 +1442,13 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="ForecastingCategoryMapping" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_CustomSetting__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hospital__c" />
@@ -1367,10 +1557,10 @@
                             <option name="name" value="User" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="User__c" />
+                            <option name="name" value="UserProvisioningRequest" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="UserProvisioningRequest" />
+                            <option name="name" value="User__c" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -1385,6 +1575,12 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Doctor__c-en_US" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_CustomSetting__c-en_US" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c-en_US" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hospital__c-en_US" />
@@ -1436,13 +1632,19 @@
                             <option name="name" value="Contract__c" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Doctor__c" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="Doctor_Import" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Doctor__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Hospital__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Piotr_s_Doctors" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Piotr_s_Hospitals" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="standard-Account" />
@@ -1502,9 +1704,6 @@
                             <option name="name" value="standard-Forecasting3" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="standard-home" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="standard-Idea" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -1529,6 +1728,9 @@
                             <option name="name" value="standard-OtherUserProfile" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="standard-PartnerNetworkConnection" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="standard-Pricebook2" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -1539,9 +1741,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="standard-ProfilePlatformOverview" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="standard-report" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="standard-Sites" />
@@ -1563,6 +1762,12 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="standard-Workspace" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="standard-home" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="standard-report" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -1714,6 +1919,9 @@
                             <option name="name" value="Doctor__c.Hosp_Doctor_Duplicate_Rule" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hospital__c.Hosp_HospDulp" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Lead.Standard_Lead_Duplicate_Rule" />
                           </MetadataEntry>
                         </list>
@@ -1737,7 +1945,35 @@
                             <option name="name" value="unfiled$public" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="unfiled$public/AcceptanceEmail" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="unfiled$public/DeactivationEmail" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="unfiled$public/InvitationEmail" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="unfiled$public/MarketingProductInquiryResponse" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="unfiled$public/RejectionEmail" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="unfiled$public/SUPPORTSelfServiceNewCommentNotificationSAMPLE" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="unfiled$public/SUPPORTSelfServiceNewUserLoginInformationSAMPLE" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="unfiled$public/SUPPORTSelfServiceResetPasswordSAMPLE" />
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -1769,15 +2005,7 @@
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="unfiled$public/SUPPORTSelfServiceNewCommentNotificationSAMPLE" />
-                            <option name="parentFolder" value="unfiled$public" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="unfiled$public/SupportSelfServiceNewLoginandPassword" />
-                            <option name="parentFolder" value="unfiled$public" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="unfiled$public/SUPPORTSelfServiceNewUserLoginInformationSAMPLE" />
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -1785,7 +2013,7 @@
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="unfiled$public/SUPPORTSelfServiceResetPasswordSAMPLE" />
+                            <option name="name" value="unfiled$public/UpdateConnEmail" />
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
                         </list>
@@ -2026,7 +2254,13 @@
                             <option name="name" value="Event-Event Layout" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="FeedItem-Feed Item Layout" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Global-Global Layout" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c-Hosp HospitalLogCallout Layout" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hospital__c-Hospital Layout" />
@@ -2111,10 +2345,6 @@
                             <option name="name" value="User-User Layout" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="User__c-User Layout" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="UserProvAccount-User Provisioning Account Layout" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -2122,6 +2352,10 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="UserProvisioningRequest-User Provisioning Request Layout" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="User__c-User Layout" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -2376,6 +2610,9 @@
                             <option name="name" value="Doctor__c.Hosp_Doctor_Matching_Rule" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Hospital__c.Hospi_Dupl" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Lead.Standard_Lead_Match_Rule_v1_0" />
                           </MetadataEntry>
                         </list>
@@ -2394,6 +2631,9 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Doctor__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hospital__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Lead" />
@@ -2416,10 +2656,24 @@
                       <option name="wildcard" value="false" />
                     </MetadataType>
                     <MetadataType>
+                      <option name="entries">
+                        <list>
+                          <MetadataEntry>
+                            <option name="name" value="Sf2SF" />
+                          </MetadataEntry>
+                        </list>
+                      </option>
                       <option name="name" value="PermissionSet" />
                       <option name="wildcard" value="false" />
                     </MetadataType>
                     <MetadataType>
+                      <option name="entries">
+                        <list>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp" />
+                          </MetadataEntry>
+                        </list>
+                      </option>
                       <option name="name" value="PlatformCachePartition" />
                       <option name="wildcard" value="false" />
                     </MetadataType>
@@ -2673,10 +2927,22 @@
                       <option name="entries">
                         <list>
                           <MetadataEntry>
-                            <option name="name" value="animals" />
+                            <option name="name" value="ApexDevNet" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="ApexDevNet" />
+                            <option name="name" value="OAuth_endpoint" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="PiotrEndpoint" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="PiotrEndpointHospitals" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="PiotrEndpointLogin" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="animals" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -2819,14 +3085,6 @@
                             <option name="parentFolder" value="AppExchangeServiceSupportDB" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="AppExchangeServiceSupportDB/APXSSSRepOpenCasesbyAgentbyStatus" />
-                            <option name="parentFolder" value="AppExchangeServiceSupportDB" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="AppExchangeServiceSupportDB/APXSSSRepOpenCasesRepbyPriority" />
-                            <option name="parentFolder" value="AppExchangeServiceSupportDB" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="AppExchangeServiceSupportDB/APXSSSRepOpenCasesRepChannelMTD" />
                             <option name="parentFolder" value="AppExchangeServiceSupportDB" />
                           </MetadataEntry>
@@ -2836,6 +3094,14 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="AppExchangeServiceSupportDB/APXSSSRepOpenCasesRepList" />
+                            <option name="parentFolder" value="AppExchangeServiceSupportDB" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="AppExchangeServiceSupportDB/APXSSSRepOpenCasesRepbyPriority" />
+                            <option name="parentFolder" value="AppExchangeServiceSupportDB" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="AppExchangeServiceSupportDB/APXSSSRepOpenCasesbyAgentbyStatus" />
                             <option name="parentFolder" value="AppExchangeServiceSupportDB" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -2855,6 +3121,10 @@
                             <option name="parentFolder" value="CampaignDashboards" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="CampaignDashboards/CampaignROIbytype" />
+                            <option name="parentFolder" value="CampaignDashboards" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="CampaignDashboards/Campaignleadsbyindustry" />
                             <option name="parentFolder" value="CampaignDashboards" />
                           </MetadataEntry>
@@ -2867,23 +3137,11 @@
                             <option name="parentFolder" value="CampaignDashboards" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="CampaignDashboards/CampaignROIbytype" />
-                            <option name="parentFolder" value="CampaignDashboards" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="CampaignDashboards/Convertedleadsvaluethisyear" />
                             <option name="parentFolder" value="CampaignDashboards" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="CampaignDashboards/leadconversionratiobyuser" />
-                            <option name="parentFolder" value="CampaignDashboards" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="CampaignDashboards/Leadsbyleadsource" />
-                            <option name="parentFolder" value="CampaignDashboards" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="CampaignDashboards/leadsconvertedintoopportspermonth" />
                             <option name="parentFolder" value="CampaignDashboards" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -2907,6 +3165,14 @@
                             <option name="parentFolder" value="CampaignDashboards" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="CampaignDashboards/leadconversionratiobyuser" />
+                            <option name="parentFolder" value="CampaignDashboards" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="CampaignDashboards/leadsconvertedintoopportspermonth" />
+                            <option name="parentFolder" value="CampaignDashboards" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="folder" value="true" />
                             <option name="name" value="Dashboard" />
                           </MetadataEntry>
@@ -2919,11 +3185,11 @@
                             <option name="parentFolder" value="Dashboard" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Dashboard/ActivitiesbyAssignedonOppty" />
+                            <option name="name" value="Dashboard/ActivitiesCompleted" />
                             <option name="parentFolder" value="Dashboard" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Dashboard/ActivitiesCompleted" />
+                            <option name="name" value="Dashboard/ActivitiesbyAssignedonOppty" />
                             <option name="parentFolder" value="Dashboard" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -3027,11 +3293,11 @@
                             <option name="parentFolder" value="DashboardReportsAdoption" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="DashboardReportsAdoption/UsageLoginbyRolebyMonth" />
+                            <option name="name" value="DashboardReportsAdoption/UsageLoginLeaderBoard" />
                             <option name="parentFolder" value="DashboardReportsAdoption" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="DashboardReportsAdoption/UsageLoginLeaderBoard" />
+                            <option name="name" value="DashboardReportsAdoption/UsageLoginbyRolebyMonth" />
                             <option name="parentFolder" value="DashboardReportsAdoption" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -3195,18 +3461,6 @@
                             <option name="parentFolder" value="DocsTabManagementDashboard" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="DocsTabManagementDashboard/DocumentsbyAuthor" />
-                            <option name="parentFolder" value="DocsTabManagementDashboard" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="DocsTabManagementDashboard/DocumentsbyAuthorFilesize5MB" />
-                            <option name="parentFolder" value="DocsTabManagementDashboard" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="DocsTabManagementDashboard/DocumentsbyFiletype" />
-                            <option name="parentFolder" value="DocsTabManagementDashboard" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="DocsTabManagementDashboard/DocumentsFilesize5MB" />
                             <option name="parentFolder" value="DocsTabManagementDashboard" />
                           </MetadataEntry>
@@ -3216,6 +3470,18 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="DocsTabManagementDashboard/DocumentsMonthbyFiletype" />
+                            <option name="parentFolder" value="DocsTabManagementDashboard" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="DocsTabManagementDashboard/DocumentsbyAuthor" />
+                            <option name="parentFolder" value="DocsTabManagementDashboard" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="DocsTabManagementDashboard/DocumentsbyAuthorFilesize5MB" />
+                            <option name="parentFolder" value="DocsTabManagementDashboard" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="DocsTabManagementDashboard/DocumentsbyFiletype" />
                             <option name="parentFolder" value="DocsTabManagementDashboard" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -3243,6 +3509,10 @@
                             <option name="parentFolder" value="LeadDashboardFolder" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="LeadDashboardFolder/LeadSourceandStatus" />
+                            <option name="parentFolder" value="LeadDashboardFolder" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="LeadDashboardFolder/LeadsbyPhone" />
                             <option name="parentFolder" value="LeadDashboardFolder" />
                           </MetadataEntry>
@@ -3252,10 +3522,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="LeadDashboardFolder/LeadsbyWeb" />
-                            <option name="parentFolder" value="LeadDashboardFolder" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="LeadDashboardFolder/LeadSourceandStatus" />
                             <option name="parentFolder" value="LeadDashboardFolder" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -3271,19 +3537,19 @@
                             <option name="name" value="SalesKPIDashboard" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="SalesKPIDashboard/ClosedSalesbyCountry" />
-                            <option name="parentFolder" value="SalesKPIDashboard" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="SalesKPIDashboard/ClosedSalesbyMonthandIndustry" />
-                            <option name="parentFolder" value="SalesKPIDashboard" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="SalesKPIDashboard/ClosedSalesQTD" />
                             <option name="parentFolder" value="SalesKPIDashboard" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="SalesKPIDashboard/ClosedSalesYTD" />
+                            <option name="parentFolder" value="SalesKPIDashboard" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="SalesKPIDashboard/ClosedSalesbyCountry" />
+                            <option name="parentFolder" value="SalesKPIDashboard" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="SalesKPIDashboard/ClosedSalesbyMonthandIndustry" />
                             <option name="parentFolder" value="SalesKPIDashboard" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -3439,10 +3705,6 @@
                             <option name="parentFolder" value="UserAdoptionDashboardfromAppExchange" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="UserAdoptionDashboardfromAppExchange/AllLeadsbyLeadSourceLast60Days" />
-                            <option name="parentFolder" value="UserAdoptionDashboardfromAppExchange" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="UserAdoptionDashboardfromAppExchange/AllLeadsConvertedLast60Days" />
                             <option name="parentFolder" value="UserAdoptionDashboardfromAppExchange" />
                           </MetadataEntry>
@@ -3451,15 +3713,19 @@
                             <option name="parentFolder" value="UserAdoptionDashboardfromAppExchange" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="UserAdoptionDashboardfromAppExchange/AllLeadsbyLeadSourceLast60Days" />
+                            <option name="parentFolder" value="UserAdoptionDashboardfromAppExchange" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="UserAdoptionDashboardfromAppExchange/AllOpportunitiesLast60Days" />
                             <option name="parentFolder" value="UserAdoptionDashboardfromAppExchange" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="UserAdoptionDashboardfromAppExchange/AllTasksbyTypeLast60Days" />
+                            <option name="name" value="UserAdoptionDashboardfromAppExchange/AllTasksLast60Days" />
                             <option name="parentFolder" value="UserAdoptionDashboardfromAppExchange" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="UserAdoptionDashboardfromAppExchange/AllTasksLast60Days" />
+                            <option name="name" value="UserAdoptionDashboardfromAppExchange/AllTasksbyTypeLast60Days" />
                             <option name="parentFolder" value="UserAdoptionDashboardfromAppExchange" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -3505,10 +3771,10 @@
                             <option name="name" value="CFO" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="ChannelSalesTeam" />
+                            <option name="name" value="COO" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="COO" />
+                            <option name="name" value="ChannelSalesTeam" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="CustomerSupportInternational" />
@@ -3689,6 +3955,12 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="FlowInterview" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_CustomSetting__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hospital__c" />
@@ -3908,19 +4180,22 @@
                       <option name="entries">
                         <list>
                           <MetadataEntry>
+                            <option name="name" value="Loading" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="SLDS275" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="SiteSamples" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="jQuery" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="jQueryUI" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="Loading" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="man" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="SiteSamples" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -3963,6 +4238,9 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Event" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_HospitalLogCallout__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hospital__c" />
@@ -4017,6 +4295,9 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Doctor__c.PolandPhonePrefix" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hospital__c.Not_111" />
                           </MetadataEntry>
                         </list>
                       </option>
