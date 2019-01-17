@@ -198,11 +198,11 @@ public class Hosp_Utils {
         String body ='Errors';
 
         for(String element : errorList){
-            body += ' ' + element;
+            body += '\n' + element + '\n';
         }
 
         singleMail.setSenderDisplayName('Salesforce Hospital');
-        singleMail.setSubject('Information about logs');
+        singleMail.setSubject('Information about fail logs');
         singleMail.setTreatTargetObjectAsRecipient(false);
         singleMail.setToAddresses(address);
         singleMail.setSaveAsActivity(false);

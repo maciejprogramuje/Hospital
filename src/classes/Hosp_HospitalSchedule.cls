@@ -1,5 +1,9 @@
 global class Hosp_HospitalSchedule implements Schedulable{
-    public static String timeSchedule = '0 23 * ? * *';
+
+
+    public static String timeSchedule = '0 18 * ? * *';
+
+
 
     global static String scheduleMe() {
         Hosp_HospitalSchedule hospitalSchedule = new Hosp_HospitalSchedule();
