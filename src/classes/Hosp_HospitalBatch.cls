@@ -35,7 +35,7 @@ global class Hosp_HospitalBatch implements Database.Batchable<sObject>, Database
 
         hospitalWithFailUnique = getUniqueValues(hospitalWithFail);
 
-        String body = '{ "hospitals"  : ' + JSON.serialize(hospitalWithFail) + ' }';
+        String body = '{ "hospitals"  : ' + JSON.serialize(hospitalWithFailUnique) + ' }';
 
         HttpResponse response = sendHosp(body);
 
