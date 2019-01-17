@@ -8,7 +8,6 @@ public class Hosp_Utils {
         return guid;
     }
 
-    //todo - wywala się na danych ze spacjami
 
     public static String blobToString(Blob input, String inCharset) {
         String hex = EncodingUtil.convertToHex(input);
@@ -199,14 +198,15 @@ public class Hosp_Utils {
 
 
     public static String getInsertHospitalScheduleTime() {
-        return getCsValueFromString('InsertHospitalScheduleTime');
+        return getCsValue('InsertHospitalScheduleTime');
     }
 
     public static String getDeleteHospitalLogsScheduleTime() {
-        return getCsValueFromString('DeleteHospitalLogsScheduleTime');
+        return getCsValue('DeleteHospitalLogsScheduleTime');
     }
 
-    public static String getCsValueFromString(String csName) {
+
+    public static String getCsValue(String csName) {
         Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
         if (csItem == null) {
             return null;
@@ -216,21 +216,13 @@ public class Hosp_Utils {
     }
 
     public static Integer getCsValueFromInteger(String csName) {
-        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
-        if (csItem == null) {
-            return null;
-        }
-
-        return Integer.valueOf(csItem.Value__c);
+        return Integer.valueOf(getCsValue(csName));
     }
 
     public static Boolean getCsValueFromBoolean(String csName) {
-        Hosp_CustomSetting__c csItem = Hosp_CustomSetting__c.getInstance(csName);
-        if (csItem == null) {
-            return null;
-        }
+        getCsValue(csName);
 
-        return Boolean.valueOf(csItem.Value__c);
+        return Boolean.valueOf(getCsValue(csName));
     }
 
 
