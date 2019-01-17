@@ -176,7 +176,11 @@ public class Hosp_Utils {
     }
 
     public static User getCurrentUser() {
-        return getUser(UserInfo.getUserId());
+        if(Cache.Session.get('HospitalCurrentUser') == null){
+            return getUser(UserInfo.getUserId());
+        }
+
+        return (User)Cache.Session.get('HospitalCurrentUser');
     }
 
     public static User getUser(String userId) {
@@ -184,6 +188,9 @@ public class Hosp_Utils {
         if (userItem.isEmpty()) {
             return null;
         }
+
+        Cache.Session.put('HospitalCurrentUser', userItem.get(0));
+
         return userItem.get(0);
     }
 

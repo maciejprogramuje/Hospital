@@ -4,8 +4,8 @@ global class Hosp_HospitalLogsSchedule implements Schedulable {
 
 
     global static String scheduleMe() {
-        Hosp_HospitalSchedule hospitalSchedule = new Hosp_HospitalSchedule();
-        return System.schedule('Insert Hospital Job', timeSchedule, hospitalSchedule);
+        Hosp_HospitalLogsSchedule hospitalSchedule = new Hosp_HospitalLogsSchedule();
+        return System.schedule('Delete Hospital Logs Job', timeSchedule, hospitalSchedule);
     }
 
     global void execute(SchedulableContext ctx) {
