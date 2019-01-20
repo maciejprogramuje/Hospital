@@ -228,6 +228,21 @@ public class Hosp_Utils {
 
 
 
+    public static Boolean isTriggerEnabled(String csName) {
+
+        //todo - Hosp_TriggerExceptions__c ???
+        Hosp_TriggerExceptions__c csItem = Hosp_TriggerExceptions__c.getInstance(UserInfo.getUserId());
+        Object customSettingObject = csItem.get(csName);
+        if (customSettingObject == null) {
+            return false;
+        }
+        Boolean customSettingValue = (Boolean) customSettingObject;
+        return customSettingValue;
+    }
+
+
+
+
     public static void sendEmailToSystemAdmin(List<String> errorList) {
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 

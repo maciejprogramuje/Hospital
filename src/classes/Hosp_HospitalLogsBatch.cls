@@ -14,5 +14,8 @@ global class Hosp_HospitalLogsBatch implements Database.Batchable<sObject> {
     }
 
     global void finish(Database.BatchableContext BC){
+
+        //todo - a co tutaj?
+
     }
 }

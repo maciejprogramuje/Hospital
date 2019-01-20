@@ -51,7 +51,7 @@ public with sharing class Hosp_HospitalTriggerHandler {
     }
 
 
-    private class Hosp_HospitalWrapper {
+    /*private class Hosp_HospitalWrapper {
         public String hospitalId { get; set; }
         public String externalId { get; set; }
         public String name { get; set; }
@@ -69,5 +69,5 @@ public with sharing class Hosp_HospitalTriggerHandler {
             postalCode = hospital.PostalCode__c;
             street = hospital.Street__c;
         }
-    }
+    }*/
 }
