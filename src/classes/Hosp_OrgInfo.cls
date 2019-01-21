@@ -3,6 +3,7 @@ public class Hosp_OrgInfo {
 
     public User selectedUser { get; set; }
     public List<LoginHistory> loginHistory { get; set; }
+    public String activateDeactivate { get; set; }
 
     public List<User> usersInOrg { get; set; }
     public Integer numberOfActiveUser { get; set; }
@@ -10,7 +11,12 @@ public class Hosp_OrgInfo {
     public String selectedUserId { get; set; }
     public String thisInstancesName { get; set; }
     public String sfdcURL { get; set; }
-    public String sessionId { get {return UserInfo.getSessionId();} set; }
+    public String sessionId {
+        get {
+            return UserInfo.getSessionId();
+        }
+        set;
+    }
     public Integer userLicense {
         get {
             return getTotalNumberOfUserLicense();
@@ -59,22 +65,30 @@ public class Hosp_OrgInfo {
             }
         }
 
-        loginHistory = [SELECT
-                UserId,
-                LoginTime,
-                SourceIp,
-                Platform,
-                Browser
-            FROM LoginHistory
-            WHERE UserId = :selectedUserId
-            AND LoginTime = LAST_N_DAYS:30
-            ORDER BY LoginTime DESC];
+        if (selectedUser.IsActive) {
+            activateDeactivate = 'Deactivate';
+        } else {
+            activateDeactivate = 'Activate';
+        }
+
+        loginHistory = [
+                SELECT
+                        UserId,
+                        LoginTime,
+                        SourceIp,
+                        Platform,
+                        Browser
+                FROM LoginHistory
+                WHERE UserId = :selectedUserId
+                AND LoginTime = LAST_N_DAYS:30
+                ORDER BY LoginTime DESC
+                LIMIT 1000
+        ];
     }
 
     public void activeUser() {
         System.debug('activeUser clicked');
-        System.debug('selectedUser='+selectedUser);
-
+        System.debug('selectedUser=' + selectedUser);
 
         selectedUser.IsActive = !selectedUser.IsActive;
         update selectedUser;
