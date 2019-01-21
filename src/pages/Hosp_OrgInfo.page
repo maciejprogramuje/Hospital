@@ -17,6 +17,7 @@
                 margin: 10px 45% !important;
                 }
 
+
         </style>
         <apex:slds/>
         <div class="slds-page-header" role="banner">
@@ -153,67 +154,91 @@
     </div>
 
 
-    <div id="detailsDialog" class="demo-only" style="display: none; height: 640px;">
-        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-            <div class="slds-modal__container">
-                <header class="slds-modal__header">
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">User's details</h2>
-                </header>
-                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <p>User's details</p>
+
+    <div id="detailsDialog" style="display: none;">
+        <div class="demo-only">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01"
+                            class="slds-text-heading_medium slds-hyphenate">User's details</h2>
+                    </header>
+                    <apex:form>
+
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                            <apex:outputPanel id="messagesInUpsertModal">
+                                <apex:pageMessages/>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel id="detailsDialogForm">
+
+                                <p>aaaa</p>
+
+                                <!--<label class="slds-form-element__label">{! $ObjectType.Doctor__c.fields.Name.label }</label>
+                                <apex:inputField value="{! doctorToEdit.Name }"
+                                                 html-placeholder="{! $ObjectType.Doctor__c.fields.Name.label }"
+                                                 required="true"
+                                                 styleClass="slds-input slds-m-bottom_x-small"/>-->
+
+                            </apex:outputPanel>
+                        </div>
+
+                        <footer class="slds-modal__footer">
+                            <apex:outputPanel id="detailsButtons">
+
+                            <apex:commandButton action="{! activeUser }"
+                                                rendered="{! !selectedUser.IsActive }"
+                                                status="statusSlds"
+                                                reRender="UserResultsList, orgInfoPage, resultPanelList, infoPanel, detailsDialogForm, detailsButtons"
+                                                styleClass="slds-button slds-button--brand slds-m-top--medium"
+                                                value="Activate">
+                            </apex:commandButton>
+
+                            <apex:commandButton action="{! activeUser }"
+                                                rendered="{! selectedUser.IsActive }"
+                                                value="Deactivate"
+                                                status="statusSlds"
+                                                reRender="UserResultsList, orgInfoPage, resultPanelList, infoPanel, detailsDialogForm, detailsButtons"
+                                                styleClass="slds-button slds-button--brand slds-m-top--medium">
+                            </apex:commandButton>
+
+
+                            <apex:commandButton value="Reset password"
+                                                status="statusSlds"
+                                                onComplete="showToastAndHideOthers('confirmationDialog');"
+                                                reRender="confirmationDialog"
+                                                styleClass="slds-button slds-button--brand slds-m-top--medium">
+                            </apex:commandButton>
+
+                            <apex:commandButton value="Change email"
+                                                action="{! changeEmail }"
+                                                status="statusSlds"
+                                                reRender="confirmationDialog"
+                                                styleClass="slds-button slds-button--brand slds-m-top--medium">
+                            </apex:commandButton>
+
+                            <apex:commandButton value="Change email & password"
+                                                action="{! changeEmailResetPassword }"
+                                                status="statusSlds"
+                                                reRender="confirmationDialog"
+                                                styleClass="slds-button slds-button--brand slds-m-top--medium">
+                            </apex:commandButton>
+
+                            <apex:commandButton styleClass="slds-button slds-button_neutral slds-m-top--medium"
+                                                onClick="hideToast('detailsDialog')"
+                                                value="{! $Label.Cancel }"
+                                                reRender="UserResultsList, orgInfoPage,resultPanelList, infoPanel, detailsDialog"
+                                                status="statusSlds">
+                            </apex:commandButton>
+                            </apex:outputPanel>
+                        </footer>
+                    </apex:form>
                 </div>
-                <apex:form>
-                    <footer class="slds-modal__footer">
-
-                        <apex:commandButton action="{! activeUser }"
-                                            rendered="{! currentUser.IsActive }"
-                                            status="statusSlds"
-                                            reRender="UserResultsList, orgInfoPage, resultPanelList, infoPanel, detailsDialog"
-                                            styleClass="slds-button slds-button--brand slds-m-top--medium"
-                                            value="ActiveUser">
-                        </apex:commandButton>
-
-                        <apex:commandButton action="{! activeUser }"
-                                            rendered="{! !currentUser.IsActive }"
-                                            value="DeactiveUser"
-                                            status="statusSlds"
-                                            reRender="UserResultsList, orgInfoPage, resultPanelList, infoPanel, detailsDialog"
-                                            styleClass="slds-button slds-button--brand slds-m-top--medium">
-                        </apex:commandButton>
-
-                        <apex:commandButton value="Reset_password"
-                                            status="statusSlds"
-                                            onComplete="showToastAndHideOthers('confirmationDialog');"
-                                            reRender="confirmationDialog"
-                                            styleClass="slds-button slds-button--brand slds-m-top--medium">
-                        </apex:commandButton>
-
-                        <apex:commandButton value="Change email"
-                                            action="{! changeEmail }"
-                                            status="statusSlds"
-                                            reRender="confirmationDialog"
-                                            styleClass="slds-button slds-button--brand slds-m-top--medium">
-                        </apex:commandButton>
-
-                        <apex:commandButton value="Change email & Reset password"
-                                            action="{! changeEmailResetPassword }"
-                                            status="statusSlds"
-                                            reRender="confirmationDialog"
-                                            styleClass="slds-button slds-button--brand slds-m-top--medium">
-                        </apex:commandButton>
-
-                        <apex:commandButton styleClass="slds-button slds-button_neutral slds-m-top--medium"
-                                            onClick="hideToast('detailsDialog')"
-                                            value="{! $Label.Cancel }"
-                                            reRender="UserResultsList, orgInfoPage,resultPanelList, infoPanel, detailsDialog"
-                                            status="statusSlds">
-                        </apex:commandButton>
-                    </footer>
-                </apex:form>
-            </div>
-        </section>
-        <div class="slds-backdrop slds-backdrop_open"></div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
     </div>
 
 
@@ -259,6 +284,7 @@
         function showToastAndHideOthers(modalIdToShow) {
             showToast(modalIdToShow);
         }
+
 
 
     </script>

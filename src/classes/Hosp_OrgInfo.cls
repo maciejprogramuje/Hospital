@@ -1,7 +1,7 @@
 public class Hosp_OrgInfo {
     public User currentUser { get; set; }
 
-    public User editedUser { get; set; }
+    public User selectedUser { get; set; }
 
     public List<User> usersInOrg { get; set; }
     public Integer numberOfActiveUser { get; set; }
@@ -16,9 +16,8 @@ public class Hosp_OrgInfo {
 
 
 
-
-
     public Hosp_OrgInfo() {
+
         getUser();
         usersInOrg = getAllUsersFromOrg();
 
@@ -58,14 +57,16 @@ public class Hosp_OrgInfo {
     }
 
     public void activeUser() {
-        for (User selectedUser : usersInOrg) {
-            if (selectedUser.Id.equals(selectedUserId)) {
-                selectedUser.IsActive = !selectedUser.IsActive;
-                editedUser = selectedUser;
-                update editedUser;
+        for (User user : usersInOrg) {
+            if (user.Id.equals(selectedUserId)) {
+                selectedUser = user;
                 break;
             }
         }
+
+        selectedUser.IsActive = !selectedUser.IsActive;
+        update selectedUser;
+
         usersInOrg = getAllUsersFromOrg();
         numberOfActiveUser = getAmountActiveUser();
     }
