@@ -1,0 +1,235 @@
+<apex:page id="Hosp_OrgInfo" controller="Hosp_OrgInfo">
+    <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/>
+
+    <div id="orgInfoPage">
+        <style>
+                .head{
+                font-size:1.3em;
+                }
+                .slds-scope .slds-icon-standard-account {
+                background-color: #7f8de1;
+                width: 35px;
+                height: 33px;
+                margin-right: 10px;
+                margin-top: 3px;
+                }
+                .wk_btn{
+                margin: 10px 45% !important;
+                }
+        </style>
+        <apex:slds />
+        <div class="slds-page-header" role="banner">
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <h1 class="slds-text-heading--medium">Organization_Detail</h1>
+                </div>
+            </div>
+        </div>
+        <apex:outputPanel id="infoPanel">
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="User_Name">User_Name</p>
+                        <apex:outputField value="{!currentUser.Name}"/>
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{!$Label.Email}">{!$Label.Email}</p>
+                        <apex:outputField value="{!currentUser.Email}"/>
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="Number_of_active_user">Number_of_active_user</p>
+                            {!numberOfActiveUser}
+                    </div>
+                </div>
+                <div class="slds-col">
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="Organization_ID">Organization_ID</p>
+                            {!orgId}
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="Visualforce Session ID">Visualforce Session ID</p>
+                            {!$Api.Session_ID}
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="URL Instance Name">URL Instance Name</p>
+                            {!thisInstancesName}
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="URL">URL</p>
+                            {!sfdcURL}
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="Total number of user license">Total number of user license</p>
+                            {!userLicense}
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="API Session Id">API Session Id</p>
+                            {!sessionId}
+                    </div>
+                </div>
+            </div>
+        </apex:outputPanel>
+        <div class="slds-grid slds-m-top_medium">
+            <div class="slds-col">
+                <h1 class="slds-text-heading--medium">All_Users</h1>
+            </div>
+        </div>
+        <apex:outputPanel id="resultPanelList">
+            <table id="UserResultsList" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate" title="Action">Action</div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.User.Fields.Name.Label}">{!$ObjectType.User.Fields.Name.Label}
+                        </div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.User.Fields.IsActive.Label}">{!$ObjectType.User.Fields.IsActive.Label}
+                        </div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.User.Fields.Email.Label}">{!$ObjectType.User.Fields.Email.Label}
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <apex:repeat value="{! usersInOrg }" var="oneUser">
+                    <tr class="slds-hint-parent">
+                        <td data-label="User Name">
+                            <div class="slds-truncate">
+                                <apex:form >
+                                    <apex:commandButton action="{!activeUser}" status="statusSlds"
+                                                        rendered="{!!oneUser.IsActive}"
+                                                        reRender="UserResultsList, orgInfoPage,resultPanelList, infoPanel"
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium"
+                                                        value="ActiveUser">
+                                        <apex:param name="userIdToSelect" value="{!oneUser.Id}"
+                                                    assignTo="{!selectedUserId}"/>
+                                    </apex:commandButton>
+
+                                    <apex:commandButton action="{!activeUser}" value="DeactiveUser"
+                                                        status="statusSlds"
+                                                        reRender="UserResultsList, orgInfoPage,resultPanelList, infoPanel"
+                                                        rendered="{!oneUser.IsActive}"
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
+                                        <apex:param name="userIdToSelect" value="{!oneUser.Id}"
+                                                    assignTo="{!selectedUserId}"/>
+                                    </apex:commandButton>
+
+                                    <apex:commandButton value="Reset_password"
+                                                        status="statusSlds"
+                                                        onComplete="showToastAndHideOthers('confirmationDialog');"
+                                                        reRender="confirmationDialog"
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
+                                        <apex:param name="userIdToSelect" value="{!oneUser.Id}"
+                                                    assignTo="{!selectedUserId}"/>
+                                    </apex:commandButton>
+
+                                    <apex:commandButton value="Change email"
+                                                        action="{! changeEmail }"
+                                                        status="statusSlds"
+                                                        reRender="confirmationDialog"
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
+
+                                        <apex:param name="userIdToSelect" value="{!oneUser.Id}"
+                                                    assignTo="{!selectedUserId}"/>
+                                    </apex:commandButton>
+
+                                    <apex:commandButton value="Change email & Reset password"
+                                                        action="{! changeEmailResetPassword }"
+                                                        status="statusSlds"
+                                                        reRender="confirmationDialog"
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
+
+                                        <apex:param name="userIdToSelect" value="{!oneUser.Id}"
+                                                    assignTo="{!selectedUserId}"/>
+                                    </apex:commandButton>
+                                </apex:form>
+                            </div>
+                        </td>
+
+                        <td data-label="{!$ObjectType.User.Fields.Name.Label}">
+                            <div class="slds-truncate"
+                                 title="{!$ObjectType.User.Fields.Name.Label}">{!oneUser.Name}
+                            </div>
+                        </td>
+
+                        <td data-label="{!$ObjectType.User.Fields.IsActive.Label}">
+                            <div class="slds-truncate"
+                                 title="{!$ObjectType.User.Fields.IsActive.Label}">{!oneUser.IsActive}
+                            </div>
+                        </td>
+
+                        <td data-label="{!$ObjectType.User.Fields.Email.Label}">
+                            <div class="slds-truncate"
+                                 title="{!$ObjectType.User.Fields.Email.Label}">{!oneUser.Email}
+                            </div>
+                        </td>
+                    </tr>
+                </apex:repeat>
+                </tbody>
+            </table>
+        </apex:outputPanel>
+    </div>
+
+    <div id="confirmationDialog" class="demo-only" style="display: none; height: 640px;">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Reset_password</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>Do_You_really_want_to_reset_this_user_password</p>
+                </div>
+                <apex:form >
+                    <footer class="slds-modal__footer">
+                        <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                            onClick="hideToast('confirmationDialog')"
+                                            value="{! $Label.Cancel }"
+                                            reRender="UserResultsList, orgInfoPage,resultPanelList, infoPanel"
+                                            status="statusSlds">
+                        </apex:commandButton>
+                        <apex:commandButton value="Reset_password" status="statusSlds"
+                                            reRender="UserResultsList, orgInfoPage,resultPanelList, infoPanel"
+                                            action="{!resetPassword}"
+                                            onComplete="hideToast('confirmationDialog')"
+                                            styleClass="slds-button slds-button_brand"/>
+                    </footer>
+                </apex:form>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    <script type="text/javascript">
+      function showToast(toastId) {
+            document.getElementById(toastId).style.display = "block";
+        }
+
+        function hideToast(toastId) {
+            document.getElementById(toastId).style.display = "none";
+        return false;
+        }
+
+        function showToastAndHideOthers(modalIdToShow) {
+            showToast(modalIdToShow);
+        }
+
+    </script>
+    <c:Hosp_StatusComponentLsds />
+</apex:page>

@@ -1,7 +1,3 @@
-/**
- * Created by BRITENET on 19.01.2019.
- */
-
 public with sharing class Hosp_TriggerFactory {
     public static void createHandler(Schema.sObjectType soType) {
         ITrigger handler = getHandler(soType);

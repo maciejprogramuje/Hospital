@@ -1,7 +1,3 @@
-/**
- * Created by BRITENET on 19.01.2019.
- */
-
 public interface ITrigger {
     void beforeInsert(List<SObject> so);
 

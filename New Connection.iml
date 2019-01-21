@@ -229,6 +229,10 @@
                             <option name="name" value="Hosp_TriggerFactory" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_OrgInfo" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="ApexClass" />
@@ -373,6 +377,10 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="mess" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_OrgInfo" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>

@@ -65,11 +65,6 @@ public with sharing class Hosp_HospitalTriggerHandler implements ITrigger {
 
         List<Hosp_HospitalWrapperForREST> hospitalAfterSend = ((List<Hosp_HospitalWrapperForREST>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForREST>.class));
 
-//        for (Hospital_HospitalWrapperForREST hospital : hospitalAfterSend) {
-//            logsToInsert.add(new LogsWebService__c(External_Id__c = hospital.externalId, DateTime__c = Datetime.now(),
-//                    OperationType__c = 'Send hospital', ParentHospital_Id__c = hospital.hospitalId, Status__c = hospital.status));
-//        }
-        System.debug('logsToInsert' + logsToInsert);
         insert logsToInsert;
 
         Hosp_HospitalLogCallout__c logsFromWebService = new Hosp_HospitalLogCallout__c(
@@ -95,13 +90,6 @@ public with sharing class Hosp_HospitalTriggerHandler implements ITrigger {
 
         List<Hosp_HospitalWrapperForREST> hospitalAfterSend = ((List<Hosp_HospitalWrapperForREST>) JSON.deserialize(response.getBody(), List<Hosp_HospitalWrapperForREST>.class));
         List<Hosp_HospitalLogCallout__c> logsToInsert = new List<Hosp_HospitalLogCallout__c>();
-
-//        for (Hospital_HospitalWrapperForREST hospital : hospitalAfterSend) {
-//            logsToInsert.add(new LogsWebService__c(External_Id__c = hospital.externalId, DateTime__c = Datetime.now(),
-//                    OperationType__c = 'Delete hospital', ParentHospital_Id__c = hospital.hospitalId, Status__c = hospital.status));
-//        }
-//        insert logsToInsert;
-
 
         Hosp_HospitalLogCallout__c logsFromWebService = new Hosp_HospitalLogCallout__c(
                 CreateDate__c = Datetime.now(),
