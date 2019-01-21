@@ -2,6 +2,7 @@ public class Hosp_OrgInfo {
     public User currentUser { get; set; }
 
     public User selectedUser { get; set; }
+    public List<LoginHistory> loginHistory { get; set; }
 
     public List<User> usersInOrg { get; set; }
     public Integer numberOfActiveUser { get; set; }
@@ -9,31 +10,25 @@ public class Hosp_OrgInfo {
     public String selectedUserId { get; set; }
     public String thisInstancesName { get; set; }
     public String sfdcURL { get; set; }
-    public String sessionId { get{return UserInfo.getSessionId();} set; }
-    public Integer userLicense { get{
-        return getTotalNumberOfUserLicense();
-    } set; }
-
+    public String sessionId { get {return UserInfo.getSessionId();} set; }
+    public Integer userLicense {
+        get {
+            return getTotalNumberOfUserLicense();
+        }
+        set;
+    }
 
 
     public Hosp_OrgInfo() {
-
         getUser();
         usersInOrg = getAllUsersFromOrg();
-
-
-        /*List<String> listOfUsersIds = new List<String>();
-        for(User user : usersInOrg) {
-            listOfUsersIds.add(user.Id);
-        }
-        List<LoginHistory> loginHistory = [SELECT Id, LoginTime, SourceIp, Platform, Browser FROM LoginHistory WHERE Id IN :listOfUsersIds];
-*/
-
 
         numberOfActiveUser = getAmountActiveUser();
         orgId = getOrgId();
         getOrganizationInfo();
         sfdcURL = URL.getSalesforceBaseUrl().toExternalForm() + '/';
+
+        loginHistory = new List<LoginHistory>();
     }
 
     public void getUser() {
@@ -56,13 +51,30 @@ public class Hosp_OrgInfo {
         return allUsers;
     }
 
-    public void activeUser() {
+    public void generateUserAndHistory() {
         for (User user : usersInOrg) {
             if (user.Id.equals(selectedUserId)) {
                 selectedUser = user;
                 break;
             }
         }
+
+        loginHistory = [SELECT
+                UserId,
+                LoginTime,
+                SourceIp,
+                Platform,
+                Browser
+            FROM LoginHistory
+            WHERE UserId = :selectedUserId
+            AND LoginTime = LAST_N_DAYS:30
+            ORDER BY LoginTime DESC];
+    }
+
+    public void activeUser() {
+        System.debug('activeUser clicked');
+        System.debug('selectedUser='+selectedUser);
+
 
         selectedUser.IsActive = !selectedUser.IsActive;
         update selectedUser;
@@ -71,16 +83,16 @@ public class Hosp_OrgInfo {
         numberOfActiveUser = getAmountActiveUser();
     }
 
-    public void getOrganizationInfo(){
+    public void getOrganizationInfo() {
         Organization orgInfo = [SELECT Id, InstanceName FROM Organization];
         thisInstancesName = orgInfo.InstanceName;
     }
 
-    public void resetPassword(){
-        System.resetPassword(selectedUserId,true);
+    public void resetPassword() {
+        System.resetPassword(selectedUserId, true);
     }
 
-    public Integer getTotalNumberOfUserLicense(){
+    public Integer getTotalNumberOfUserLicense() {
         return [SELECT COUNT() FROM UserLicense];
     }
 
