@@ -59,6 +59,8 @@ public class Hosp_OrgInfo {
     }
 
     public void generateUserAndHistory() {
+        emailField = '';
+
         for (User user : usersInOrg) {
             if (user.Id.equals(selectedUserId)) {
                 selectedUser = user;
@@ -109,38 +111,40 @@ public class Hosp_OrgInfo {
     }
 
     public void changeEmail() {
-        selectedUser.Email = emailField;
-        update selectedUser;
+        if (String.isNotBlank(emailField)) {
+            selectedUser.Email = emailField;
+            update selectedUser;
 
-        usersInOrg = getAllUsersFromOrg();
+            usersInOrg = getAllUsersFromOrg();
+        }
     }
 
     public void changeEmailResetPassword() {
         changeEmail();
-        resetPassword();
+        if (String.isNotBlank(emailField)) {
+            resetPassword();
+        }
     }
 
-    public PageReference goToApexPage(){
+    public PageReference goToApexPage() {
         PageReference apexClassesPage = Page.Hosp_OrgInfoApexClasses;
         apexClassesPage.getParameters().put('pageReferenceURL', ApexPages.currentPage().getUrl());
         apexClassesPage.setRedirect(true);
         return apexClassesPage;
     }
 
-    public PageReference goToVisualforcePage(){
+    public PageReference goToVisualforcePage() {
         PageReference apexClassesPage = Page.Hosp_OrgInfoPages;
         apexClassesPage.getParameters().put('pageReferenceURL', ApexPages.currentPage().getUrl());
         apexClassesPage.setRedirect(true);
         return apexClassesPage;
     }
 
-    public PageReference goToJobsPage(){
-        /*PageReference jobsPage = Page.Hospital_OrgInfoJobs;
+    public PageReference goToJobsPage() {
+        PageReference jobsPage = Page.Hosp_OrgInfoJobs;
         jobsPage.getParameters().put('pageReferenceURL', ApexPages.currentPage().getUrl());
         jobsPage.setRedirect(true);
-        return jobsPage;*/
-
-        return null;
+        return jobsPage;
     }
 }
 

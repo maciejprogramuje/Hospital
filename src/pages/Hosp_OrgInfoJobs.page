@@ -1,0 +1,64 @@
+<apex:page id="Hosp_OrgInfoJobs" controller="Hosp_OrgInfoJobsController">
+    <apex:slds />
+    <div class="slds-page-header" role="banner">
+        <div class="slds-grid">
+            <div class="slds-col">
+                <h1 class="slds-text-heading--medium">Apex Jobs</h1>
+            </div>
+        </div>
+    </div>
+    <apex:outputPanel id="apexJobsList">
+        <table id="jobsResultsList" class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+            <tr class="slds-line-height_reset">
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$ObjectType.AsyncApexJob.Fields.CreatedDate.Label}">{!$ObjectType.AsyncApexJob.Fields.CreatedDate.Label}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$ObjectType.AsyncApexJob.Fields.JobType.Label}">{!$ObjectType.AsyncApexJob.Fields.JobType.Label}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$ObjectType.AsyncApexJob.Fields.Status.Label}">{!$ObjectType.AsyncApexJob.Fields.Status.Label}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}">{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <apex:repeat value="{!jobsList}" var="job">
+                <tr class="slds-hint-parent">
+                    <td data-label="{!$ObjectType.AsyncApexJob.Fields.CreatedDate.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.AsyncApexJob.Fields.CreatedDate.Label}">{!job.CreatedDate}
+                        </div>
+                    </td>
+                    <td data-label="{!$ObjectType.AsyncApexJob.Fields.JobType.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.AsyncApexJob.Fields.JobType.Label}">{!job.JobType}
+                        </div>
+                    </td>
+                    <td data-label="{!$ObjectType.AsyncApexJob.Fields.Status.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.AsyncApexJob.Fields.Status.Label}">{!job.Status}
+                        </div>
+                    </td>
+                    <td data-label="{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}">{!job.JobItemsProcessed}
+                        </div>
+                    </td>
+                </tr>
+            </apex:repeat>
+            </tbody>
+        </table>
+    </apex:outputPanel>
+</apex:page>

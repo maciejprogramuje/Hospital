@@ -351,9 +351,13 @@
                                                 status="statusSlds"
                                                 reRender="UserResultsList,resultPanelList, infoPanel"
                                                 action="{! changeEmail }"
-                                                onComplete="hideToast('changeEmailDialog')"
+                                                onComplete="checkIsNotBlank('changeEmailDialog')"
                                                 styleClass="slds-button slds-button_brand"/>
                         </footer>
+
+
+                        <c:Hosp_ErrorToast/>
+
                     </div>
                 </section>
                 <div class="slds-backdrop slds-backdrop_open"></div>
@@ -389,7 +393,7 @@
                                                 status="statusSlds"
                                                 reRender="UserResultsList,resultPanelList, infoPanel"
                                                 action="{! changeEmailResetPassword }"
-                                                onComplete="hideToast('changeEmailResetPasswordDialog')"
+                                                onComplete="checkIsNotBlank('changeEmailResetPasswordDialog')"
                                                 styleClass="slds-button slds-button_brand"/>
                         </footer>
                     </div>
@@ -433,9 +437,16 @@
                 </apex:form>
             </li>
         </ul>
+
     </div>
 
     <script type="text/javascript">
+        function checkIsNotBlank(toastId) {
+            if(emailField != null && emailField != '') {
+               hideToast(toastId);
+            }
+        }
+
         function showToast(toastId) {
             document.getElementById(toastId).style.display = "block";
         }
