@@ -5,6 +5,7 @@ public class Hosp_OrgInfo {
     public List<LoginHistory> loginHistory { get; set; }
     public String activateDeactivate { get; set; }
     public String emailField { get; set; }
+    public Boolean displayRequiredMessage { get; set; }
 
     public List<User> usersInOrg { get; set; }
     public Integer numberOfActiveUser { get; set; }
@@ -36,6 +37,7 @@ public class Hosp_OrgInfo {
         sfdcURL = URL.getSalesforceBaseUrl().toExternalForm() + '/';
 
         loginHistory = new List<LoginHistory>();
+        displayRequiredMessage = false;
     }
 
     public void getUser() {
@@ -59,6 +61,7 @@ public class Hosp_OrgInfo {
     }
 
     public void generateUserAndHistory() {
+        displayRequiredMessage = false;
         emailField = '';
 
         for (User user : usersInOrg) {
@@ -111,9 +114,11 @@ public class Hosp_OrgInfo {
     }
 
     public void changeEmail() {
-        if (String.isNotBlank(emailField)) {
+        displayRequiredMessage = true;
+        if(String.isNotBlank(emailField)) {
             selectedUser.Email = emailField;
             update selectedUser;
+            displayRequiredMessage = false;
 
             usersInOrg = getAllUsersFromOrg();
         }
