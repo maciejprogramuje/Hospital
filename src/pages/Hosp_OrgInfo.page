@@ -2,8 +2,7 @@
     <apex:includeScript value="{! URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/>
 
     <div id="orgInfoPage">
-        <apex:form>
-            <style>
+        <style>
                 .head{
                 font-size:1.3em;
                 }
@@ -19,225 +18,230 @@
                 }
 
 
-            </style>
 
-            <apex:slds/>
 
-            <div class="slds-page-header" role="banner">
-                <div class="slds-grid">
-                    <div class="slds-col">
-                        <h1 class="slds-text-heading--medium">{! $Label.Hosp_Organization_Details }</h1>
-                    </div>
-                </div>
-            </div>
+        </style>
 
-            <apex:outputPanel id="infoPanel">
-                <div class="slds-grid">
-                    <div class="slds-col">
-                        <div class="slds-m-vertical_medium">
-                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
-                               title="{! $Label.Hosp_User_Name }">{! $Label.Hosp_User_Name }</p>
-                            <apex:outputField value="{! currentUser.Name }"/>
-                        </div>
-                        <div class="slds-m-vertical_medium">
-                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
-                               title="{! $Label.Email }">{! $Label.Email }</p>
-                            <apex:outputField value="{! currentUser.Email }"/>
-                        </div>
-                        <div class="slds-m-vertical_medium">
-                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
-                               title="{! $Label.Hospital_Number_of_active_users }">{! $Label.Hospital_Number_of_active_users }</p>
-                                {! numberOfActiveUser }
-                        </div>
-                    </div>
-                    <div class="slds-col">
-                        <div class="slds-m-vertical_medium">
-                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
-                               title="{! $Label.Hosp_Organization_ID }">{! $Label.Hosp_Organization_ID }</p>
-                                {! orgId }
-                        </div>
-                        <div class="slds-m-vertical_medium">
-                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
-                               title="{! $Label.Hosp_Visualforce_Session_ID }">{! $Label.Hosp_Visualforce_Session_ID }</p>
-                                {! $Api.Session_ID }
-                        </div>
-                        <div class="slds-m-vertical_medium">
-                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
-                               title="{! $Label.Hosp_URL_Instance_Name }">{! $Label.Hosp_URL_Instance_Name }</p>
-                                {! thisInstancesName }
-                        </div>
-                        <div class="slds-m-vertical_medium">
-                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
-                               title="{! $Label.Hosp_URL }">{! $Label.Hosp_URL }</p>
-                                {! sfdcURL }
-                        </div>
-                        <div class="slds-m-vertical_medium">
-                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
-                               title="{! $Label.Hosp_Total_number_of_user_license }">{! $Label.Hosp_Total_number_of_user_license }</p>
-                                {! userLicense }
-                        </div>
-                        <div class="slds-m-vertical_medium">
-                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
-                               title="{! $Label.Hosp_API_Session_Id }">{! $Label.Hosp_API_Session_Id }</p>
-                                {! sessionId }
-                        </div>
-                    </div>
-                </div>
-            </apex:outputPanel>
+        <apex:slds/>
 
-            <div class="slds-grid slds-m-top_medium">
+        <div class="slds-page-header" role="banner">
+            <div class="slds-grid">
                 <div class="slds-col">
-                    <h1 class="slds-text-heading--medium">{! $Label.Hosp_All_Users }</h1>
+                    <h1 class="slds-text-heading--medium">{! $Label.Hosp_Organization_Details }</h1>
                 </div>
             </div>
+        </div>
 
-            <apex:outputPanel id="resultPanelList">
-                <table id="UserResultsList" class="slds-table slds-table_cell-buffer slds-table_bordered">
-                    <thead>
-                    <tr class="slds-line-height_reset">
-                        <th class="slds-text-title_caps" scope="col">
-                            <div class="slds-truncate" title="{! $Label.Actions }">{! $Label.Actions }</div>
-                        </th>
-                        <th class="slds-text-title_caps" scope="col">
-                            <div class="slds-truncate"
-                                 title="{!$ObjectType.User.Fields.Name.Label}">{!$ObjectType.User.Fields.Name.Label}
-                            </div>
-                        </th>
-                        <th class="slds-text-title_caps" scope="col">
-                            <div class="slds-truncate"
-                                 title="{!$ObjectType.User.Fields.IsActive.Label}">{!$ObjectType.User.Fields.IsActive.Label}
-                            </div>
-                        </th>
-                        <th class="slds-text-title_caps" scope="col">
-                            <div class="slds-truncate"
-                                 title="{!$ObjectType.User.Fields.Email.Label}">{!$ObjectType.User.Fields.Email.Label}
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <apex:repeat value="{! usersInOrg }" var="oneUser">
-                        <tr class="slds-hint-parent">
-                            <td data-label="User Name">
-                                <div class="slds-truncate">
+        <apex:outputPanel id="infoPanel">
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{! $Label.Hosp_User_Name }">{! $Label.Hosp_User_Name }</p>
+                        <apex:outputField value="{! currentUser.Name }"/>
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{! $Label.Email }">{! $Label.Email }</p>
+                        <apex:outputField value="{! currentUser.Email }"/>
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{! $Label.Hospital_Number_of_active_users }">{! $Label.Hospital_Number_of_active_users }</p>
+                            {! numberOfActiveUser }
+                    </div>
+                </div>
+                <div class="slds-col">
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{! $Label.Hosp_Organization_ID }">{! $Label.Hosp_Organization_ID }</p>
+                            {! orgId }
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{! $Label.Hosp_Visualforce_Session_ID }">{! $Label.Hosp_Visualforce_Session_ID }</p>
+                            {! $Api.Session_ID }
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{! $Label.Hosp_URL_Instance_Name }">{! $Label.Hosp_URL_Instance_Name }</p>
+                            {! thisInstancesName }
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{! $Label.Hosp_URL }">{! $Label.Hosp_URL }</p>
+                            {! sfdcURL }
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{! $Label.Hosp_Total_number_of_user_license }">{! $Label.Hosp_Total_number_of_user_license }</p>
+                            {! userLicense }
+                    </div>
+                    <div class="slds-m-vertical_medium">
+                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small"
+                           title="{! $Label.Hosp_API_Session_Id }">{! $Label.Hosp_API_Session_Id }</p>
+                            {! sessionId }
+                    </div>
+                </div>
+            </div>
+        </apex:outputPanel>
+
+        <div class="slds-grid slds-m-top_medium">
+            <div class="slds-col">
+                <h1 class="slds-text-heading--medium">{! $Label.Hosp_All_Users }</h1>
+            </div>
+        </div>
+
+        <apex:outputPanel id="resultPanelList">
+            <table id="UserResultsList" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate" title="{! $Label.Actions }">{! $Label.Actions }</div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.User.Fields.Name.Label}">{!$ObjectType.User.Fields.Name.Label}
+                        </div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.User.Fields.IsActive.Label}">{!$ObjectType.User.Fields.IsActive.Label}
+                        </div>
+                    </th>
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.User.Fields.Email.Label}">{!$ObjectType.User.Fields.Email.Label}
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <apex:repeat value="{! usersInOrg }" var="oneUser">
+                    <tr class="slds-hint-parent">
+                        <td data-label="User Name">
+                            <div class="slds-truncate">
+                                <apex:form>
                                     <apex:commandButton value="{! $Label.Hosp_Details_Actions }"
                                                         action="{! generateUserAndHistory }"
                                                         status="statusSlds"
                                                         onComplete="showToastAndHideOthers('detailsDialog');"
-                                                        reRender="detailsDialogForm, detailsButtons, displayMessage, displayMessage2"
+                                                        reRender="detailsDialogForm, detailsButtons, changeEmailOutPanel"
                                                         styleClass="slds-button slds-button--brand slds-m-top--medium">
 
                                         <apex:param name="userIdToSelect" value="{! oneUser.Id }"
                                                     assignTo="{! selectedUserId }"/>
                                     </apex:commandButton>
-                                </div>
-                            </td>
-
-                            <td data-label="{!$ObjectType.User.Fields.Name.Label}">
-                                <div class="slds-truncate"
-                                     title="{!$ObjectType.User.Fields.Name.Label}">{!oneUser.Name}
-                                </div>
-                            </td>
-
-                            <td data-label="{!$ObjectType.User.Fields.IsActive.Label}">
-                                <div class="slds-truncate"
-                                     title="{!$ObjectType.User.Fields.IsActive.Label}">{!oneUser.IsActive}
-                                </div>
-                            </td>
-
-                            <td data-label="{!$ObjectType.User.Fields.Email.Label}">
-                                <div class="slds-truncate"
-                                     title="{!$ObjectType.User.Fields.Email.Label}">{!oneUser.Email}
-                                </div>
-                            </td>
-                        </tr>
-                    </apex:repeat>
-                    </tbody>
-                </table>
-            </apex:outputPanel>
-
-
-            <div id="detailsDialog" style="display: none;">
-                <div class="demo-only">
-                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                             aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                        <div class="slds-modal__container">
-                            <header class="slds-modal__header">
-                                <h2 id="modal-heading-01"
-                                    class="slds-text-heading_medium slds-hyphenate">{! $Label.Hosp_User_s_details }</h2>
-                            </header>
-                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                                <div style="height:380px;">
-                                    <apex:outputPanel id="detailsDialogForm">
-                                        <apex:outputPanel rendered="{! !loginHistory.empty }">
-                                            <table id="usersResultsListPageBlock"
-                                                   class="slds-table slds-table_cell-buffer slds-table_bordered"
-                                                   style="max-height: 200px;">
-                                                <thead>
-                                                <tr class="slds-line-height_reset">
-                                                    <th class="slds-text-title_caps" scope="col">
-                                                        <div class="slds-truncate"
-                                                             title="{! $Label.Hosp_Login_Time }">{! $Label.Hosp_Login_Time }
-                                                        </div>
-                                                    </th>
-
-                                                    <th class="slds-text-title_caps" scope="col">
-                                                        <div class="slds-truncate"
-                                                             title="{! $Label.Hosp_Source_IP }">{! $Label.Hosp_Source_IP }
-                                                        </div>
-                                                    </th>
-
-                                                    <th class="slds-text-title_caps" scope="col">
-                                                        <div class="slds-truncate"
-                                                             title="{! $Label.Hosp_Platform }">{! $Label.Hosp_Platform }
-                                                        </div>
-                                                    </th>
-
-                                                    <th class="slds-text-title_caps" scope="col">
-                                                        <div class="slds-truncate"
-                                                             title="{! $Label.Hosp_Browser }">{! $Label.Hosp_Browser }
-                                                        </div>
-                                                    </th>
-                                                </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                <apex:repeat value="{! loginHistory }" var="hist">
-                                                    <tr class="slds-hint-parent">
-                                                        <td data-label="Login Time">
-                                                            <div class="slds-truncate"
-                                                                 title="{! $Label.Hosp_Login_Time }">{! hist.LoginTime }
-                                                            </div>
-                                                        </td>
-
-                                                        <td data-label="Source IP">
-                                                            <div class="slds-truncate"
-                                                                 title="{! $Label.Hosp_Source_IP }">{! hist.SourceIp }
-                                                            </div>
-                                                        </td>
-
-                                                        <td data-label="Platform">
-                                                            <div class="slds-truncate"
-                                                                 title="{! $Label.Hosp_Platform }">{! hist.Platform }
-                                                            </div>
-                                                        </td>
-
-                                                        <td data-label="Browser">
-                                                            <div class="slds-truncate"
-                                                                 title="{! $Label.Hosp_Browser }">{! hist.Browser }
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </apex:repeat>
-                                                </tbody>
-                                            </table>
-                                        </apex:outputPanel>
-                                    </apex:outputPanel>
-                                </div>
+                                </apex:form>
                             </div>
+                        </td>
 
-                            <footer class="slds-modal__footer">
-                                <apex:outputPanel id="detailsButtons">
+                        <td data-label="{!$ObjectType.User.Fields.Name.Label}">
+                            <div class="slds-truncate"
+                                 title="{!$ObjectType.User.Fields.Name.Label}">{!oneUser.Name}
+                            </div>
+                        </td>
+
+                        <td data-label="{!$ObjectType.User.Fields.IsActive.Label}">
+                            <div class="slds-truncate"
+                                 title="{!$ObjectType.User.Fields.IsActive.Label}">{!oneUser.IsActive}
+                            </div>
+                        </td>
+
+                        <td data-label="{!$ObjectType.User.Fields.Email.Label}">
+                            <div class="slds-truncate"
+                                 title="{!$ObjectType.User.Fields.Email.Label}">{!oneUser.Email}
+                            </div>
+                        </td>
+                    </tr>
+                </apex:repeat>
+                </tbody>
+            </table>
+        </apex:outputPanel>
+
+
+        <div id="detailsDialog" style="display: none;">
+            <div class="demo-only">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01"
+                                class="slds-text-heading_medium slds-hyphenate">{! $Label.Hosp_User_s_details }</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div style="height:380px;">
+                                <apex:outputPanel id="detailsDialogForm">
+                                    <apex:outputPanel rendered="{! !loginHistory.empty }">
+                                        <table id="usersResultsListPageBlock"
+                                               class="slds-table slds-table_cell-buffer slds-table_bordered"
+                                               style="max-height: 200px;">
+                                            <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="slds-text-title_caps" scope="col">
+                                                    <div class="slds-truncate"
+                                                         title="{! $Label.Hosp_Login_Time }">{! $Label.Hosp_Login_Time }
+                                                    </div>
+                                                </th>
+
+                                                <th class="slds-text-title_caps" scope="col">
+                                                    <div class="slds-truncate"
+                                                         title="{! $Label.Hosp_Source_IP }">{! $Label.Hosp_Source_IP }
+                                                    </div>
+                                                </th>
+
+                                                <th class="slds-text-title_caps" scope="col">
+                                                    <div class="slds-truncate"
+                                                         title="{! $Label.Hosp_Platform }">{! $Label.Hosp_Platform }
+                                                    </div>
+                                                </th>
+
+                                                <th class="slds-text-title_caps" scope="col">
+                                                    <div class="slds-truncate"
+                                                         title="{! $Label.Hosp_Browser }">{! $Label.Hosp_Browser }
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <apex:repeat value="{! loginHistory }" var="hist">
+                                                <tr class="slds-hint-parent">
+                                                    <td data-label="Login Time">
+                                                        <div class="slds-truncate"
+                                                             title="{! $Label.Hosp_Login_Time }">{! hist.LoginTime }
+                                                        </div>
+                                                    </td>
+
+                                                    <td data-label="Source IP">
+                                                        <div class="slds-truncate"
+                                                             title="{! $Label.Hosp_Source_IP }">{! hist.SourceIp }
+                                                        </div>
+                                                    </td>
+
+                                                    <td data-label="Platform">
+                                                        <div class="slds-truncate"
+                                                             title="{! $Label.Hosp_Platform }">{! hist.Platform }
+                                                        </div>
+                                                    </td>
+
+                                                    <td data-label="Browser">
+                                                        <div class="slds-truncate"
+                                                             title="{! $Label.Hosp_Browser }">{! hist.Browser }
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            </tbody>
+                                        </table>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+
+                        <footer class="slds-modal__footer">
+                            <apex:outputPanel id="detailsButtons">
+                                <apex:form>
                                     <apex:commandButton action="{! activeUser }"
                                                         rendered="{! selectedUserId != currentUser.Id }"
                                                         status="statusSlds"
@@ -279,29 +283,29 @@
                                                         reRender="UserResultsList,resultPanelList, infoPanel, detailsDialog"
                                                         status="statusSlds">
                                     </apex:commandButton>
-
-                                </apex:outputPanel>
-                            </footer>
-                        </div>
-                    </section>
-                    <div class="slds-backdrop slds-backdrop_open"></div>
-                </div>
+                                </apex:form>
+                            </apex:outputPanel>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
+        </div>
 
 
-            <div id="confirmationDialog" class="demo-only" style="display: none; height: 640px;">
-                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                    <div class="slds-modal__container">
-                        <header class="slds-modal__header">
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
-                                Reset_password</h2>
-                        </header>
-                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                            <p>{! $Label.Hosp_Do_You_really_want_to_reset_this_user_password }</p>
-                        </div>
-                        <footer class="slds-modal__footer">
-
+        <div id="confirmationDialog" class="demo-only" style="display: none; height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                            Reset_password</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>{! $Label.Hosp_Do_You_really_want_to_reset_this_user_password }</p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <apex:form>
                             <apex:commandButton styleClass="slds-button slds-button_neutral"
                                                 onClick="hideToast('confirmationDialog')"
                                                 value="{! $Label.Cancel }"
@@ -314,78 +318,71 @@
                                                 action="{! resetPassword }"
                                                 onComplete="hideToast('confirmationDialog')"
                                                 styleClass="slds-button slds-button_brand"/>
-                        </footer>
-                    </div>
-                </section>
-                <div class="slds-backdrop slds-backdrop_open"></div>
-            </div>
+                        </apex:form>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
 
-            <div id="changeEmailDialog" class="demo-only" style="display: none; height: 640px;">
-                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                    <div class="slds-modal__container">
-                        <header class="slds-modal__header">
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
-                                    {! $Label.Hosp_Change_e_mail }</h2>
-                        </header>
-
+        <div id="changeEmailDialog" class="demo-only" style="display: none; height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                                {! $Label.Hosp_Change_e_mail }</h2>
+                    </header>
+                    <apex:form>
                         <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                            <label class="slds-form-element__label">{! $Label.Hosp_New_e_mail }</label>
 
-                            <apex:outputPanel id="displayMessage" style="color: red">
-                                <apex:outputPanel rendered="{! displayRequiredMessage }">
-                                        {! $label.Hosp_You_must_enter_a_correct_value }
-                                </apex:outputPanel>
+                            <apex:outputPanel id="changeEmailOutPanel">
+                                <label class="slds-form-element__label">{! $Label.Hosp_New_e_mail }</label>
+                                <apex:inputField value="{! selectedUser.Email }"
+                                                 required="true"
+                                                 html-placeholder="{! $Label.Hosp_New_e_mail }"
+                                                 styleClass="slds-input slds-m-bottom_x-small"/>
                             </apex:outputPanel>
-
-                            <apex:inputText value="{! emailField }"
-                                            html-placeholder="{! $Label.Hosp_New_e_mail }"
-                                            styleClass="slds-input slds-m-bottom_x-small"/>
                         </div>
-
 
                         <footer class="slds-modal__footer">
 
                             <apex:commandButton styleClass="slds-button slds-button_neutral"
                                                 onClick="hideToast('changeEmailDialog')"
                                                 value="{! $Label.Cancel }"
-                                                reRender="UserResultsList,resultPanelList, infoPanel"
+                                                reRender="UserResultsList,resultPanelList, infoPanel, changeEmailOutPanel"
                                                 status="statusSlds">
                             </apex:commandButton>
 
                             <apex:commandButton value="{! $Label.Hosp_Change_e_mail }"
                                                 status="statusSlds"
-                                                reRender="UserResultsList,resultPanelList, infoPanel, displayMessage"
+                                                reRender="UserResultsList,resultPanelList, infoPanel, changeEmailOutPanel"
                                                 action="{! changeEmail }"
-                                                onComplete="checkIsNotBlank('changeEmailDialog')"
+                                                onComplete="hideChangeEmail('{! !isChangeEmailProblem }')"
                                                 styleClass="slds-button slds-button_brand"/>
                         </footer>
-                    </div>
-                </section>
-                <div class="slds-backdrop slds-backdrop_open"></div>
-            </div>
+                    </apex:form>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
 
-            <div id="changeEmailResetPasswordDialog" class="demo-only" style="display: none; height: 640px;">
-                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                    <div class="slds-modal__container">
-                        <header class="slds-modal__header">
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
-                                    {! $Label.Hosp_Change_e_mail_and_reset_password }</h2>
-                        </header>
-
+        <div id="changeEmailResetPasswordDialog" class="demo-only" style="display: none; height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                        {! $Label.Hosp_Change_e_mail_and_reset_password } {! selectedUser.FirstName } {! selectedUser.Name }</h2>
+                    </header>
+                    <apex:form>
                         <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                            <label class="slds-form-element__label">New e-mail</label>
+                            <label class="slds-form-element__label">{! $Label.Hosp_New_e_mail }</label>
 
-                            <apex:outputPanel id="displayMessage2" style="color: red">
-                                <apex:outputPanel rendered="{! displayRequiredMessage }">
-                                        {! $label.Hosp_You_must_enter_a_correct_value }
-                                </apex:outputPanel>
-                            </apex:outputPanel>
-
-                            <apex:inputText value="{! emailField }"
-                                            html-placeholder="{! $Label.Hosp_New_e_mail }"
-                                            styleClass="slds-input slds-m-bottom_x-small"/>
+                            <apex:inputField value="{! selectedUser.Email }"
+                                             required="true"
+                                             html-placeholder="{! $Label.Hosp_New_e_mail }"
+                                             styleClass="slds-input slds-m-bottom_x-small"/>
                         </div>
 
                         <footer class="slds-modal__footer">
@@ -404,12 +401,12 @@
                                                 onComplete="checkIsNotBlank('changeEmailResetPasswordDialog')"
                                                 styleClass="slds-button slds-button_brand"/>
                         </footer>
-                    </div>
-                </section>
-                <div class="slds-backdrop slds-backdrop_open"></div>
-            </div>
+                    </apex:form>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
 
-        </apex:form>
 
         <div class="slds-grid slds-m-top_medium">
             <div class="slds-col">
@@ -422,7 +419,7 @@
                     <apex:commandLink action="{!goToApexPage}"
                                       style="color: #514F4D;"
                                       target="_blank">
-                        <span>Manage your Apex classes</span>
+                        <span>{! $Label.Hosp_Manage_your_Apex_classes }</span>
                     </apex:commandLink>
                 </apex:form>
             </li>
@@ -431,7 +428,7 @@
                     <apex:commandLink action="{!goToVisualforcePage}"
                                       style="color: #514F4D;"
                                       target="_blank">
-                        <span>Manage your Apex pages</span>
+                        <span>{! $Label.Hosp_Manage_your_Pages }</span>
                     </apex:commandLink>
                 </apex:form>
             </li>
@@ -440,18 +437,20 @@
                     <apex:commandLink action="{!goToJobsPage}"
                                       style="color: #514F4D;"
                                       target="_blank">
-                        <span>Manage your Apex Jobs</span>
+                        <span>{! $Label.Hosp_Manage_your_Apex_Jobs }</span>
                     </apex:commandLink>
                 </apex:form>
             </li>
         </ul>
-
     </div>
 
     <script type="text/javascript">
-        function checkIsNotBlank(toastId) {
-            if(emailField != null && emailField != '') {
-               hideToast(toastId);
+        function hideChangeEmail(isNotProblem) {
+
+            alert(isNotProblem);
+
+            if(isNotProblem) {
+               hideToast('changeEmailDialog');
             }
         }
 
@@ -461,12 +460,14 @@
 
         function hideToast(toastId) {
             document.getElementById(toastId).style.display = "none";
-        return false;
+            return false;
         }
 
         function showToastAndHideOthers(modalIdToShow) {
             showToast(modalIdToShow);
         }
+
+
 
 
 

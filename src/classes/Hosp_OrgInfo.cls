@@ -4,8 +4,7 @@ public class Hosp_OrgInfo {
     public User selectedUser { get; set; }
     public List<LoginHistory> loginHistory { get; set; }
     public String activateDeactivate { get; set; }
-    public String emailField { get; set; }
-    public Boolean displayRequiredMessage { get; set; }
+    public Boolean isChangeEmailProblem { get; set; }
 
     public List<User> usersInOrg { get; set; }
     public Integer numberOfActiveUser { get; set; }
@@ -26,7 +25,6 @@ public class Hosp_OrgInfo {
         set;
     }
 
-
     public Hosp_OrgInfo() {
         getUser();
         usersInOrg = getAllUsersFromOrg();
@@ -37,7 +35,7 @@ public class Hosp_OrgInfo {
         sfdcURL = URL.getSalesforceBaseUrl().toExternalForm() + '/';
 
         loginHistory = new List<LoginHistory>();
-        displayRequiredMessage = false;
+        selectedUser = new User();
     }
 
     public void getUser() {
@@ -61,9 +59,6 @@ public class Hosp_OrgInfo {
     }
 
     public void generateUserAndHistory() {
-        displayRequiredMessage = false;
-        emailField = '';
-
         for (User user : usersInOrg) {
             if (user.Id.equals(selectedUserId)) {
                 selectedUser = user;
@@ -93,11 +88,15 @@ public class Hosp_OrgInfo {
     }
 
     public void activeUser() {
-        selectedUser.IsActive = !selectedUser.IsActive;
-        update selectedUser;
+        try {
+            selectedUser.IsActive = !selectedUser.IsActive;
+            update selectedUser;
 
-        usersInOrg = getAllUsersFromOrg();
-        numberOfActiveUser = getAmountActiveUser();
+            usersInOrg = getAllUsersFromOrg();
+            numberOfActiveUser = getAmountActiveUser();
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }
     }
 
     public void getOrganizationInfo() {
@@ -114,21 +113,21 @@ public class Hosp_OrgInfo {
     }
 
     public void changeEmail() {
-        displayRequiredMessage = true;
-        if(String.isNotBlank(emailField)) {
-            selectedUser.Email = emailField;
-            update selectedUser;
-            displayRequiredMessage = false;
+        ApexPages.getMessages().clear();
+        isChangeEmailProblem = false;
 
-            usersInOrg = getAllUsersFromOrg();
+        update selectedUser;
+
+        if(ApexPages.getMessages().size() > 0) {
+            isChangeEmailProblem = true;
         }
+
+        usersInOrg = getAllUsersFromOrg();
     }
 
     public void changeEmailResetPassword() {
         changeEmail();
-        if (String.isNotBlank(emailField)) {
-            resetPassword();
-        }
+        resetPassword();
     }
 
     public PageReference goToApexPage() {
