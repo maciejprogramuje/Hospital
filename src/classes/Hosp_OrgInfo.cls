@@ -4,7 +4,11 @@ public class Hosp_OrgInfo {
     public User selectedUser { get; set; }
     public List<LoginHistory> loginHistory { get; set; }
     public String activateDeactivate { get; set; }
-    public Boolean isChangeEmailProblem { get; set; }
+    public Boolean isAnyInsertProblem { get; set; }
+
+    public String emailField { get; set; }
+
+
 
     public List<User> usersInOrg { get; set; }
     public Integer numberOfActiveUser { get; set; }
@@ -36,6 +40,7 @@ public class Hosp_OrgInfo {
 
         loginHistory = new List<LoginHistory>();
         selectedUser = new User();
+        isAnyInsertProblem = true;
     }
 
     public void getUser() {
@@ -59,6 +64,9 @@ public class Hosp_OrgInfo {
     }
 
     public void generateUserAndHistory() {
+        isAnyInsertProblem = true;
+        emailField = '';
+
         for (User user : usersInOrg) {
             if (user.Id.equals(selectedUserId)) {
                 selectedUser = user;
@@ -113,15 +121,12 @@ public class Hosp_OrgInfo {
     }
 
     public void changeEmail() {
-        ApexPages.getMessages().clear();
-        isChangeEmailProblem = false;
-
-        update selectedUser;
-
-        if(ApexPages.getMessages().size() > 0) {
-            isChangeEmailProblem = true;
+        try {
+            isAnyInsertProblem = false;
+            update selectedUser;
+        } catch (Exception ex){
+            isAnyInsertProblem = true;
         }
-
         usersInOrg = getAllUsersFromOrg();
     }
 
