@@ -233,6 +233,14 @@
                             <option name="name" value="Hosp_OrgInfo" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_OrgInfoApexClassesController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_OrgInfoPagesController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="ApexClass" />
@@ -380,6 +388,14 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Hosp_OrgInfo" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_OrgInfoApexClasses" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Hosp_OrgInfoPages" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>

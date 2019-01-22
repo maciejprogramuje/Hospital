@@ -4,6 +4,7 @@ public class Hosp_OrgInfo {
     public User selectedUser { get; set; }
     public List<LoginHistory> loginHistory { get; set; }
     public String activateDeactivate { get; set; }
+    public String emailField { get; set; }
 
     public List<User> usersInOrg { get; set; }
     public Integer numberOfActiveUser { get; set; }
@@ -87,9 +88,6 @@ public class Hosp_OrgInfo {
     }
 
     public void activeUser() {
-        System.debug('activeUser clicked');
-        System.debug('selectedUser=' + selectedUser);
-
         selectedUser.IsActive = !selectedUser.IsActive;
         update selectedUser;
 
@@ -111,26 +109,38 @@ public class Hosp_OrgInfo {
     }
 
     public void changeEmail() {
-        /*for (User selectedUser : usersInOrg) {
-            if (selectedUser.Id.equals(selectedUserId)) {
+        selectedUser.Email = emailField;
+        update selectedUser;
 
-                break;
-            }
-        }*/
+        usersInOrg = getAllUsersFromOrg();
     }
 
     public void changeEmailResetPassword() {
-
+        changeEmail();
+        resetPassword();
     }
 
-    public class UserWrapper {
-        public User userWrapp { get; set; }
-        public List<LoginHistory> loginHistoryWrapp { get; set; }
+    public PageReference goToApexPage(){
+        PageReference apexClassesPage = Page.Hosp_OrgInfoApexClasses;
+        apexClassesPage.getParameters().put('pageReferenceURL', ApexPages.currentPage().getUrl());
+        apexClassesPage.setRedirect(true);
+        return apexClassesPage;
+    }
 
-        public UserWrapper(User u, List<LoginHistory> lh) {
-            userWrapp = u;
-            loginHistoryWrapp = lh;
-        }
+    public PageReference goToVisualforcePage(){
+        PageReference apexClassesPage = Page.Hosp_OrgInfoPages;
+        apexClassesPage.getParameters().put('pageReferenceURL', ApexPages.currentPage().getUrl());
+        apexClassesPage.setRedirect(true);
+        return apexClassesPage;
+    }
+
+    public PageReference goToJobsPage(){
+        /*PageReference jobsPage = Page.Hospital_OrgInfoJobs;
+        jobsPage.getParameters().put('pageReferenceURL', ApexPages.currentPage().getUrl());
+        jobsPage.setRedirect(true);
+        return jobsPage;*/
+
+        return null;
     }
 }
 

@@ -20,6 +20,7 @@
 
 
 
+
             </style>
 
             <apex:slds/>
@@ -249,24 +250,29 @@
                                     </apex:commandButton>
 
                                     <apex:commandButton value="Reset password"
+                                                        rendered="{! selectedUser.IsActive }"
                                                         status="statusSlds"
                                                         onComplete="showToastAndHideOthers('confirmationDialog');"
                                                         reRender="confirmationDialog"
-                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium"
+                                                        onClick="hideToast('detailsDialog')">
                                     </apex:commandButton>
 
                                     <apex:commandButton value="Change email"
-                                                        action="{! changeEmail }"
                                                         status="statusSlds"
-                                                        reRender="confirmationDialog"
-                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
+                                                        reRender="UserResultsList, orgInfoPage, resultPanelList, infoPanel, detailsDialogForm, detailsButtons, detailsDialogForm"
+                                                        onComplete="showToastAndHideOthers('changeEmailDialog');"
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium"
+                                                        onClick="hideToast('detailsDialog')">
                                     </apex:commandButton>
 
                                     <apex:commandButton value="Change email & password"
-                                                        action="{! changeEmailResetPassword }"
+                                                        rendered="{! selectedUser.IsActive }"
                                                         status="statusSlds"
-                                                        reRender="confirmationDialog"
-                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
+                                                        reRender="UserResultsList, orgInfoPage, resultPanelList, infoPanel, detailsDialogForm, detailsButtons, detailsDialogForm"
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium"
+                                                        onClick="hideToast('detailsDialog')"
+                                                        onComplete="showToastAndHideOthers('changeEmailResetPasswordDialog');">
                                     </apex:commandButton>
 
                                     <apex:commandButton styleClass="slds-button slds-button_neutral slds-m-top--medium"
@@ -313,7 +319,120 @@
                 </section>
                 <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
+
+            <div id="changeEmailDialog" class="demo-only" style="display: none; height: 640px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                                Change e-mail</h2>
+                        </header>
+
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <label class="slds-form-element__label">New e-mail</label>
+
+                            <apex:inputText value="{! emailField }"
+                                            html-placeholder="New e-mail"
+                                            styleClass="slds-input slds-m-bottom_x-small"/>
+                        </div>
+
+
+                        <footer class="slds-modal__footer">
+
+                            <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                                onClick="hideToast('changeEmailDialog')"
+                                                value="{! $Label.Cancel }"
+                                                reRender="UserResultsList,resultPanelList, infoPanel"
+                                                status="statusSlds">
+                            </apex:commandButton>
+
+                            <apex:commandButton value="Change e-mail"
+                                                status="statusSlds"
+                                                reRender="UserResultsList,resultPanelList, infoPanel"
+                                                action="{! changeEmail }"
+                                                onComplete="hideToast('changeEmailDialog')"
+                                                styleClass="slds-button slds-button_brand"/>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+
+            <div id="changeEmailResetPasswordDialog" class="demo-only" style="display: none; height: 640px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                                Change e-mail and reset password</h2>
+                        </header>
+
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <label class="slds-form-element__label">New e-mail</label>
+
+                            <apex:inputText value="{! emailField }"
+                                            html-placeholder="New e-mail"
+                                            styleClass="slds-input slds-m-bottom_x-small"/>
+                        </div>
+
+                        <footer class="slds-modal__footer">
+
+                            <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                                onClick="hideToast('changeEmailResetPasswordDialog')"
+                                                value="{! $Label.Cancel }"
+                                                reRender="UserResultsList,resultPanelList, infoPanel"
+                                                status="statusSlds">
+                            </apex:commandButton>
+
+                            <apex:commandButton value="Change e-mail and reset password"
+                                                status="statusSlds"
+                                                reRender="UserResultsList,resultPanelList, infoPanel"
+                                                action="{! changeEmailResetPassword }"
+                                                onComplete="hideToast('changeEmailResetPasswordDialog')"
+                                                styleClass="slds-button slds-button_brand"/>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+
         </apex:form>
+
+        <div class="slds-grid slds-m-top_medium">
+            <div class="slds-col">
+                <h1 class="slds-text-heading--medium">Develop</h1>
+            </div>
+        </div>
+        <ul class="slds-list--dotted">
+            <li title="Manage your Apex classes">
+                <apex:form>
+                    <apex:commandLink action="{!goToApexPage}"
+                                      style="color: #514F4D;"
+                                      target="_blank">
+                        <span>Manage your Apex classes</span>
+                    </apex:commandLink>
+                </apex:form>
+            </li>
+            <li title="Manage your Pages">
+                <apex:form>
+                    <apex:commandLink action="{!goToVisualforcePage}"
+                                      style="color: #514F4D;"
+                                      target="_blank">
+                        <span>Manage your Apex pages</span>
+                    </apex:commandLink>
+                </apex:form>
+            </li>
+            <li title="Manage your Apex Jobs">
+                <apex:form>
+                    <apex:commandLink action="{!goToJobsPage}"
+                                      style="color: #514F4D;"
+                                      target="_blank">
+                        <span>Manage your Apex Jobs</span>
+                    </apex:commandLink>
+                </apex:form>
+            </li>
+        </ul>
     </div>
 
     <script type="text/javascript">
@@ -329,9 +448,6 @@
         function showToastAndHideOthers(modalIdToShow) {
             showToast(modalIdToShow);
         }
-
-
-
 
 
     </script>

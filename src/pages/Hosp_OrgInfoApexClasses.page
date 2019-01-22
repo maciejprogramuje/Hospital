@@ -1,0 +1,158 @@
+<apex:page id="Hosp_OrgInfoApexClasses" controller="Hosp_OrgInfoApexClassesController">
+
+    <style>
+    .slds-modal__container{
+    max-width: 70rem !important;
+    width:70% !important;
+    }
+
+    </style>
+
+    <apex:slds/>
+    <div class="slds-page-header" role="banner">
+        <div class="slds-grid">
+            <div class="slds-col">
+                <h1 class="slds-text-heading--medium">Apex Classes</h1>
+            </div>
+        </div>
+    </div>
+
+    <apex:outputPanel id="apexClassesList">
+        <table id="classesResultsList" class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+            <tr class="slds-line-height_reset">
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="{! $Label.Actions }">{! $Label.Actions }</div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$ObjectType.ApexClass.Fields.Name.Label}">{!$ObjectType.ApexClass.Fields.Name.Label}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$ObjectType.ApexClass.Fields.ApiVersion.Label}">{!$ObjectType.ApexClass.Fields.ApiVersion.Label}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$ObjectType.ApexClass.Fields.CreatedDate.Label}">{!$ObjectType.ApexClass.Fields.CreatedDate.Label}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="Created By">Created By
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$ObjectType.ApexClass.Fields.LastModifiedDate.Label}">{!$ObjectType.ApexClass.Fields.LastModifiedDate.Label}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="Last Modified By">Last Modified By
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <apex:repeat value="{!listApexClasses}" var="oneClass">
+                <tr class="slds-hint-parent">
+                    <td data-label="User Name">
+                        <div class="slds-truncate">
+                            <apex:form>
+                                <apex:commandLink value="Show body" action="{!openApexClasses}"
+                                                  reRender="confirmationDialog, apexOutput, modalHeading, className"
+                                                  onComplete="showToastAndHideOthers('confirmationDialog');"
+                                                  style="color: blue;">
+                                    <apex:param name="classIdToSelect" value="{!oneClass.Id}"
+                                                assignTo="{!selectedApexId}"/>
+                                </apex:commandLink>
+                            </apex:form>
+                        </div>
+                    </td>
+                    <td data-label="{!$ObjectType.ApexClass.Fields.Name.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.ApexClass.Fields.Name.Label}">{!oneClass.Name}
+                        </div>
+                    </td>
+                    <td data-label="{!$ObjectType.ApexClass.Fields.ApiVersion.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.ApexClass.Fields.ApiVersion.Label}">{!oneClass.ApiVersion}
+                        </div>
+                    </td>
+                    <td data-label="{!$ObjectType.ApexClass.Fields.CreatedDate.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.ApexClass.Fields.CreatedDate.Label}">{!oneClass.CreatedDate}
+                        </div>
+                    </td>
+                    <td data-label="Created By">
+                        <div class="slds-truncate"
+                             title="Created By">{!oneClass.CreatedBy.Name}
+                        </div>
+                    </td>
+                    <td data-label="{!$ObjectType.ApexClass.Fields.LastModifiedDate.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.ApexClass.Fields.LastModifiedDate.Label}">{!oneClass.LastModifiedDate}
+                        </div>
+                    </td>
+                    <td data-label="{!$ObjectType.ApexClass.Fields.LastModifiedDate.Label}">
+                        <div class="slds-truncate"
+                             title="Last Modified By">{!oneClass.LastModifiedBy.Name}
+                        </div>
+                    </td>
+                </tr>
+            </apex:repeat>
+            </tbody>
+        </table>
+    </apex:outputPanel>
+
+    <div id="confirmationDialog" class="demo-only" style="display: none; height: 700px;">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modalHeading"
+                        class="slds-text-heading_medium slds-hyphenate">
+                        <apex:outputPanel id="className">
+                                {!apexClass.Name}
+                        </apex:outputPanel>
+                    </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <apex:outputPanel id="apexOutput">
+                        <pre>{!apexClass.Body}</pre>
+                    </apex:outputPanel>
+                </div>
+                <apex:form>
+                    <footer class="slds-modal__footer">
+                        <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                            onClick="hideToast('confirmationDialog')"
+                                            reRender="apexClassesList"
+                                            value="{! $Label.Cancel }"
+                                            status="statusSlds">
+                        </apex:commandButton>
+                    </footer>
+                </apex:form>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    <script type="text/javascript">
+      function showToast(toastId) {
+            document.getElementById(toastId).style.display = "block";
+        }
+
+        function hideToast(toastId) {
+            document.getElementById(toastId).style.display = "none";
+        return false;
+        }
+
+        function showToastAndHideOthers(modalIdToShow) {
+            showToast(modalIdToShow);
+        }
+
+    </script>
+    <c:Hosp_StatusComponentLsds/>
+</apex:page>
