@@ -69,9 +69,9 @@ public class Hosp_OrgInfo {
         }
 
         if (selectedUser.IsActive) {
-            activateDeactivate = 'Deactivate';
+            activateDeactivate = Label.Hosp_Deactivate;
         } else {
-            activateDeactivate = 'Activate';
+            activateDeactivate = Label.Hosp_Activate;
         }
 
         loginHistory = [
