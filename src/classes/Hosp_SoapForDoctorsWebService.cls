@@ -53,4 +53,25 @@ global with sharing class Hosp_SoapForDoctorsWebService {
         return resultsDoctors;
     }
 
+
+    webService static List<Hosp_DoctorWrapperForSOAP> getAllDoctors() {
+        String query = 'SELECT Id, FirstName__c, Name, City__c, Country__c FROM Doctor__c';
+        List<Doctor__c> doctors = Database.query(query);
+        List<Hosp_DoctorWrapperForSOAP> doctorsWrapperForSOAP = new List<Hosp_DoctorWrapperForSOAP>();
+        for (Doctor__c doctor : doctors) {
+            doctorsWrapperForSOAP.add(new Hosp_DoctorWrapperForSOAP(doctor));
+        }
+        return doctorsWrapperForSOAP;
+    }
+
+    webService static List<Hosp_DoctorWrapperForSOAP> getDoctorFromPoland() {
+        String query = 'SELECT Id, FirstName__c, Name, City__c, Country__c FROM Doctor__c WHERE Country__c = \'PL\'';
+        List<Doctor__c> doctors = Database.query(query);
+        List<Hosp_DoctorWrapperForSOAP> doctorsWrapperForSOAP = new List<Hosp_DoctorWrapperForSOAP>();
+        for (Doctor__c doctor : doctors) {
+            doctorsWrapperForSOAP.add(new Hosp_DoctorWrapperForSOAP(doctor));
+        }
+        return doctorsWrapperForSOAP;
+    }
+
 }
