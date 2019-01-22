@@ -124,15 +124,23 @@ public class Hosp_OrgInfo {
         try {
             isAnyInsertProblem = false;
             update selectedUser;
-        } catch (Exception ex){
+        } catch (Exception e){
             isAnyInsertProblem = true;
+            System.debug(e.getMessage());
         }
         usersInOrg = getAllUsersFromOrg();
     }
 
     public void changeEmailResetPassword() {
-        changeEmail();
-        resetPassword();
+        try {
+            isAnyInsertProblem = false;
+            update selectedUser;
+            resetPassword();
+        } catch (Exception e){
+            isAnyInsertProblem = true;
+            System.debug(e.getMessage());
+        }
+        usersInOrg = getAllUsersFromOrg();
     }
 
     public PageReference goToApexPage() {

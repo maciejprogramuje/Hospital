@@ -17,9 +17,6 @@
                 margin: 10px 45% !important;
                 }
 
-
-
-
         </style>
 
         <apex:slds/>
@@ -126,7 +123,7 @@
                                                             action="{! generateUserAndHistory }"
                                                             status="statusSlds"
                                                             onComplete="showToastAndHideOthers('detailsDialog');"
-                                                            reRender="modalEditOutputPanel,showHeaderPanel, detailsDialogForm,detailsDialog, detailsButtons, displayMessage, displayMessageError"
+                                                            reRender="modalEditOutputPanel, modalEditOutputPanel2, showHeaderPanel, showHeaderPanel2, detailsDialogForm, detailsDialog, detailsButtons, displayMessageError"
                                                             styleClass="slds-button slds-button--brand slds-m-top--medium">
                                             <apex:param name="userIdToSelect" value="{!oneUser.Id}"
                                                         assignTo="{!selectedUserId}"/>
@@ -325,7 +322,6 @@
 
         <div id="changeEmailDialog" style="display: none; height: 640px;">
             <div class="demo-only">
-                <apex:pageMessages id="modalRequiredMessages"></apex:pageMessages>
                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
                          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
@@ -355,9 +351,9 @@
                                 </apex:commandButton>
                                 <apex:commandButton value="{!$Label.Hosp_Change_email}"
                                                     status="statusSlds"
-                                                    reRender="UserResultsList, modalEditOutputPanel, changeEmailDialog, resultPanelList,inputEmail2, infoPanel, displayMessage"
+                                                    reRender="UserResultsList, modalEditOutputPanel, changeEmailDialog, resultPanelList, infoPanel"
                                                     action="{!changeEmail}"
-                                                    onComplete="hideModal({!isAnyInsertProblem});"
+                                                    onComplete="hideChangeModal({!isAnyInsertProblem});"
                                                     styleClass="slds-button slds-button--brand slds-m-top--medium"/>
                             </footer>
                         </apex:form>
@@ -367,44 +363,48 @@
             </div>
         </div>
 
-        <div id="changeEmailResetPasswordDialog" class="demo-only" style="display: none; height: 640px;">
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                <div class="slds-modal__container">
-                    <header class="slds-modal__header">
-                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
-                        {! $Label.Hosp_Change_e_mail_and_reset_password } {! selectedUser.FirstName } {! selectedUser.Name }</h2>
-                    </header>
-                    <apex:form>
-                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                            <label class="slds-form-element__label">{! $Label.Hosp_New_e_mail }</label>
 
-                            <apex:inputField value="{! selectedUser.Email }"
-                                             required="true"
-                                             html-placeholder="{! $Label.Hosp_New_e_mail }"
-                                             styleClass="slds-input slds-m-bottom_x-small"/>
-                        </div>
-
-                        <footer class="slds-modal__footer">
-
-                            <apex:commandButton styleClass="slds-button slds-button_neutral"
-                                                onClick="hideToast('changeEmailResetPasswordDialog')"
-                                                value="{! $Label.Cancel }"
-                                                reRender="UserResultsList,resultPanelList, infoPanel"
-                                                status="statusSlds">
-                            </apex:commandButton>
-
-                            <apex:commandButton value="{! $Label.Hosp_Change_e_mail_and_reset_password }"
-                                                status="statusSlds"
-                                                reRender="UserResultsList,resultPanelList, infoPanel, displayMessage2"
-                                                action="{! changeEmailResetPassword }"
-                                                onComplete="checkIsNotBlank('changeEmailResetPasswordDialog')"
-                                                styleClass="slds-button slds-button_brand"/>
-                        </footer>
-                    </apex:form>
-                </div>
-            </section>
-            <div class="slds-backdrop slds-backdrop_open"></div>
+        <div id="changeEmailResetPasswordDialog" style="display: none; height: 640px;">
+            <div class="demo-only">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <apex:outputPanel id="showHeaderPanel2">
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                                {! $Label.Hosp_Change_e_mail_and_reset_password } {! selectedUser.Name }
+                                </h2>
+                            </apex:outputPanel>
+                        </header>
+                        <apex:form>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <apex:outputPanel id="modalEditOutputPanel2">
+                                    <label class="slds-form-element__label">{!$ObjectType.User.fields.Email.label}</label>
+                                    <apex:inputField value="{!selectedUser.Email}"
+                                                     required="true"
+                                                     html-placeholder="{!$ObjectType.User.fields.Email.label}"
+                                                     styleClass="slds-input slds-m-bottom_x-small"/>
+                                </apex:outputPanel>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <apex:commandButton styleClass="slds-button slds-button--brand slds-m-top--medium"
+                                                    onClick="hideToast('changeEmailResetPasswordDialog')"
+                                                    value="{!$Label.Cancel}"
+                                                    reRender="UserResultsList,resultPanelList, infoPanel"
+                                                    status="statusSlds">
+                                </apex:commandButton>
+                                <apex:commandButton value="{!$Label.Hosp_Change_email}"
+                                                    status="statusSlds"
+                                                    reRender="UserResultsList, modalEditOutputPanel2, changeEmailDialog, resultPanelList, infoPanel"
+                                                    action="{!changeEmailResetPassword}"
+                                                    onComplete="hideChangeResetModal({!isAnyInsertProblem});"
+                                                    styleClass="slds-button slds-button--brand slds-m-top--medium"/>
+                            </footer>
+                        </apex:form>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
         </div>
 
 
@@ -460,13 +460,19 @@
         }
 
 
-        function hideModal(isAnyProblem) {
+        function hideChangeModal(isAnyProblem) {
             if(!isAnyProblem){
                document.getElementById("changeEmailDialog").style.display = "none";
             }
             return false;
-       }
+        }
 
+        function hideChangeResetModal(isAnyProblem) {
+            if(!isAnyProblem){
+               document.getElementById("changeEmailResetPasswordDialog").style.display = "none";
+            }
+            return false;
+        }
 
     </script>
     <c:Hosp_StatusComponentLsds/>
