@@ -14,6 +14,7 @@ public with sharing class Hosp_OrgInfoJobsController {
                 Status,
                 JobType,
                 CreatedDate,
+                ExtendedStatus,
                 MethodName,
                 ApexClass.Name
             FROM AsyncApexJob

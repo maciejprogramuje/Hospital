@@ -23,12 +23,27 @@
                 </th>
                 <th class="slds-text-title_caps" scope="col">
                     <div class="slds-truncate"
+                         title="{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}">{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$Label.Hosp_Apex_Class}">{!$Label.Hosp_Apex_Class}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
+                         title="{!$ObjectType.AsyncApexJob.Fields.MethodName.Label}">{!$ObjectType.AsyncApexJob.Fields.MethodName.Label}
+                    </div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate"
                          title="{!$ObjectType.AsyncApexJob.Fields.Status.Label}">{!$ObjectType.AsyncApexJob.Fields.Status.Label}
                     </div>
                 </th>
                 <th class="slds-text-title_caps" scope="col">
                     <div class="slds-truncate"
-                         title="{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}">{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}
+                         title="{!$ObjectType.AsyncApexJob.Fields.ExtendedStatus.Label}">{!$ObjectType.AsyncApexJob.Fields.ExtendedStatus.Label}
                     </div>
                 </th>
             </tr>
@@ -46,14 +61,29 @@
                              title="{!$ObjectType.AsyncApexJob.Fields.JobType.Label}">{!job.JobType}
                         </div>
                     </td>
+                    <td data-label="{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}">{!job.JobItemsProcessed}
+                        </div>
+                    </td>
+                    <td data-label="{!$Label.Hosp_Apex_Class}">
+                        <div class="slds-truncate"
+                             title="{!$Label.Hosp_Apex_Class}">{!job.ApexClass.Name}
+                        </div>
+                    </td>
+                    <td data-label="{!$ObjectType.AsyncApexJob.Fields.MethodName.Label}">
+                        <div class="slds-truncate"
+                             title="{!$ObjectType.AsyncApexJob.Fields.MethodName.Label}">{!job.MethodName}
+                        </div>
+                    </td>
                     <td data-label="{!$ObjectType.AsyncApexJob.Fields.Status.Label}">
                         <div class="slds-truncate"
                              title="{!$ObjectType.AsyncApexJob.Fields.Status.Label}">{!job.Status}
                         </div>
                     </td>
-                    <td data-label="{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}">
+                    <td data-label="{!$ObjectType.AsyncApexJob.Fields.ExtendedStatus.Label}">
                         <div class="slds-truncate"
-                             title="{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}">{!job.JobItemsProcessed}
+                             title="{!$ObjectType.AsyncApexJob.Fields.ExtendedStatus.Label}">{!job.ExtendedStatus}
                         </div>
                     </td>
                 </tr>

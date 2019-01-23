@@ -5,9 +5,8 @@ public class Hosp_OrgInfo {
     public List<LoginHistory> loginHistory { get; set; }
     public String activateDeactivate { get; set; }
     public Boolean isAnyInsertProblem { get; set; }
-
-    public String emailField { get; set; }
-
+    public Boolean userToDisabled { get; set; }
+    public Boolean userAutomatedProcess { get; set; }
 
 
     public List<User> usersInOrg { get; set; }
@@ -41,6 +40,7 @@ public class Hosp_OrgInfo {
         loginHistory = new List<LoginHistory>();
         selectedUser = new User();
         isAnyInsertProblem = true;
+        userToDisabled = false;
     }
 
     public void getUser() {
@@ -65,13 +65,24 @@ public class Hosp_OrgInfo {
 
     public void generateUserAndHistory() {
         isAnyInsertProblem = true;
-        emailField = '';
+        userToDisabled = false;
+        userAutomatedProcess = false;
 
         for (User user : usersInOrg) {
             if (user.Id.equals(selectedUserId)) {
                 selectedUser = user;
                 break;
             }
+        }
+
+        for(User oneUser : usersToDisabled()){
+            if(oneUser.Id.equals(selectedUserId)){
+                userToDisabled = true;
+            }
+        }
+
+        if(selectedUser.Name.equalsIgnoreCase('Automated Process')){
+            userAutomatedProcess = true;
         }
 
         if (selectedUser.IsActive) {
@@ -140,6 +151,29 @@ public class Hosp_OrgInfo {
             isAnyInsertProblem = true;
             System.debug(e.getMessage());
         }
+        usersInOrg = getAllUsersFromOrg();
+    }
+
+    public List<User> usersToDisabled(){
+        List<User> userList = new List<User>();
+        for(User oneUser : usersInOrg){
+            if(oneUser.Name.contains('Automated Process')){
+                userList.add(oneUser);
+            }
+            if(oneUser.Name.contains('Integration User')){
+                userList.add(oneUser);
+            }
+            if(oneUser.Name.contains('Security User')){
+                userList.add(oneUser);
+            }
+            if(oneUser.Id.equals(currentUser.Id)){
+                userList.add(oneUser);
+            }
+        }
+        return userList;
+    }
+
+    public void clearFields(){
         usersInOrg = getAllUsersFromOrg();
     }
 

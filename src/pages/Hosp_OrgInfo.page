@@ -17,6 +17,8 @@
                 margin: 10px 45% !important;
                 }
 
+
+
         </style>
 
         <apex:slds/>
@@ -119,15 +121,15 @@
                         <td data-label="User Name">
                             <div class="slds-truncate">
                                 <apex:form>
-                                        <apex:commandButton value="{!$Label.Hosp_Details_Actions}"
-                                                            action="{! generateUserAndHistory }"
-                                                            status="statusSlds"
-                                                            onComplete="showToastAndHideOthers('detailsDialog');"
-                                                            reRender="modalEditOutputPanel, modalEditOutputPanel2, showHeaderPanel, showHeaderPanel2, detailsDialogForm, detailsDialog, detailsButtons, displayMessageError"
-                                                            styleClass="slds-button slds-button--brand slds-m-top--medium">
-                                            <apex:param name="userIdToSelect" value="{!oneUser.Id}"
-                                                        assignTo="{!selectedUserId}"/>
-                                        </apex:commandButton>
+                                    <apex:commandButton value="{!$Label.Hosp_Details_Actions}"
+                                                        action="{! generateUserAndHistory }"
+                                                        status="statusSlds"
+                                                        onComplete="showToastAndHideOthers('detailsDialog');"
+                                                        reRender="modalEditOutputPanel, modalEditOutputPanel2, showHeaderPanel, showHeaderPanel2, detailsDialogForm, detailsDialog, detailsButtons, displayMessageError, headerDetailsDialog"
+                                                        styleClass="slds-button slds-button--brand slds-m-top--medium">
+                                        <apex:param name="userIdToSelect" value="{!oneUser.Id}"
+                                                    assignTo="{!selectedUserId}"/>
+                                    </apex:commandButton>
                                 </apex:form>
                             </div>
                         </td>
@@ -162,8 +164,10 @@
                          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
                         <header class="slds-modal__header">
-                            <h2 id="modal-heading-01"
-                                class="slds-text-heading_medium slds-hyphenate">{! $Label.Hosp_User_s_details }</h2>
+                            <apex:outputPanel id="headerDetailsDialog">
+                                <h2 id="modal-heading-01"
+                                    class="slds-text-heading_medium slds-hyphenate">{! $Label.Hosp_User_s_details } {! selectedUser.Name }</h2>
+                            </apex:outputPanel>
                         </header>
                         <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                             <div style="height:380px;">
@@ -239,7 +243,7 @@
                             <apex:outputPanel id="detailsButtons">
                                 <apex:form>
                                     <apex:commandButton action="{! activeUser }"
-                                                        rendered="{! selectedUserId != currentUser.Id }"
+                                                        rendered="{! !userToDisabled }"
                                                         status="statusSlds"
                                                         reRender="UserResultsList, orgInfoPage, resultPanelList, infoPanel, detailsDialogForm, detailsButtons, detailsDialogForm"
                                                         styleClass="slds-button slds-button--brand slds-m-top--medium"
@@ -249,6 +253,7 @@
 
                                     <apex:commandButton value="{! $Label.Hosp_Reset_password }"
                                                         rendered="{! selectedUser.IsActive }"
+                                                        disabled="{! userAutomatedProcess }"
                                                         status="statusSlds"
                                                         onComplete="showToastAndHideOthers('confirmationDialog');"
                                                         reRender="confirmationDialog"
@@ -258,6 +263,7 @@
 
                                     <apex:commandButton value="{! $Label.Hosp_Change_email }"
                                                         status="statusSlds"
+                                                        disabled="{! userAutomatedProcess }"
                                                         reRender="UserResultsList, orgInfoPage, resultPanelList, infoPanel, detailsDialogForm, detailsButtons, detailsDialogForm"
                                                         onComplete="showToastAndHideOthers('changeEmailDialog');"
                                                         styleClass="slds-button slds-button--brand slds-m-top--medium"
@@ -266,6 +272,7 @@
 
                                     <apex:commandButton value="{! $Label.Hosp_Change_email_password }"
                                                         rendered="{! selectedUser.IsActive }"
+                                                        disabled="{! userAutomatedProcess }"
                                                         status="statusSlds"
                                                         reRender="UserResultsList, orgInfoPage, resultPanelList, infoPanel, detailsDialogForm, detailsButtons, detailsDialogForm"
                                                         styleClass="slds-button slds-button--brand slds-m-top--medium"
@@ -294,7 +301,7 @@
                 <div class="slds-modal__container">
                     <header class="slds-modal__header">
                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
-                            Reset_password</h2>
+                                {! $Label.Hosp_Reset_password }</h2>
                     </header>
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                         <p>{! $Label.Hosp_Do_You_really_want_to_reset_this_user_password }</p>
@@ -346,6 +353,7 @@
                                 <apex:commandButton styleClass="slds-button slds-button--brand slds-m-top--medium"
                                                     onClick="hideToast('changeEmailDialog')"
                                                     value="{!$Label.Cancel}"
+                                                    action="{! clearFields }"
                                                     reRender="UserResultsList,resultPanelList, infoPanel"
                                                     status="statusSlds">
                                 </apex:commandButton>
@@ -361,7 +369,7 @@
                 </section>
                 <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
-        </div>
+        </div>`
 
 
         <div id="changeEmailResetPasswordDialog" style="display: none; height: 640px;">
@@ -390,6 +398,7 @@
                                 <apex:commandButton styleClass="slds-button slds-button--brand slds-m-top--medium"
                                                     onClick="hideToast('changeEmailResetPasswordDialog')"
                                                     value="{!$Label.Cancel}"
+                                                    action="{! clearFields }"
                                                     reRender="UserResultsList,resultPanelList, infoPanel"
                                                     status="statusSlds">
                                 </apex:commandButton>
@@ -413,35 +422,41 @@
                 <h1 class="slds-text-heading--medium">Develop</h1>
             </div>
         </div>
-        <ul class="slds-list--dotted">
-            <li title="{! $Label.Hosp_Manage_your_Apex_classes }">
-                <apex:form>
-                    <apex:commandLink action="{!goToApexPage}"
-                                      style="color: #514F4D;"
-                                      target="_blank">
-                        <span>{! $Label.Hosp_Manage_your_Apex_classes }</span>
-                    </apex:commandLink>
-                </apex:form>
-            </li>
-            <li title="{! $Label.Hosp_Manage_your_Pages }">
-                <apex:form>
-                    <apex:commandLink action="{!goToVisualforcePage}"
-                                      style="color: #514F4D;"
-                                      target="_blank">
-                        <span>{! $Label.Hosp_Manage_your_Pages }</span>
-                    </apex:commandLink>
-                </apex:form>
-            </li>
-            <li title="{! $Label.Hosp_Manage_your_Apex_Jobs }">
-                <apex:form>
-                    <apex:commandLink action="{!goToJobsPage}"
-                                      style="color: #514F4D;"
-                                      target="_blank">
-                        <span>{! $Label.Hosp_Manage_your_Apex_Jobs }</span>
-                    </apex:commandLink>
-                </apex:form>
-            </li>
-        </ul>
+
+
+        <article class="slds-card">
+            <div class="slds-card__body slds-card__body_inner">
+                <ul class="slds-list--dotted slds-m-top--medium">
+                    <li title="{!$Label.Hosp_Manage_your_Apex_classes}">
+                        <apex:form>
+                            <apex:commandLink action="{!goToApexPage}"
+                                              target="_blank"
+                                              style="color: #514F4D;">
+                                <span>{!$Label.Hosp_Manage_your_Apex_classes}</span>
+                            </apex:commandLink>
+                        </apex:form>
+                    </li>
+                    <li title="{!$Label.Hosp_Manage_your_Pages}">
+                        <apex:form>
+                            <apex:commandLink action="{!goToVisualforcePage}"
+                                              target="_blank"
+                                              style="color: #514F4D;">
+                                <span>{!$Label.Hosp_Manage_your_Pages}</span>
+                            </apex:commandLink>
+                        </apex:form>
+                    </li>
+                    <li title="{!$Label.Hosp_Manage_your_Apex_Jobs}">
+                        <apex:form>
+                            <apex:commandLink action="{!goToJobsPage}"
+                                              target="_blank"
+                                              style="color: #514F4D;">
+                                <span>{!$Label.Hosp_Manage_your_Apex_Jobs}</span>
+                            </apex:commandLink>
+                        </apex:form>
+                    </li>
+                </ul>
+            </div>
+        </article>
     </div>
 
     <script type="text/javascript">
@@ -473,6 +488,8 @@
             }
             return false;
         }
+
+
 
     </script>
     <c:Hosp_StatusComponentLsds/>
