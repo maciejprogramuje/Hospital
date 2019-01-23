@@ -402,7 +402,7 @@
                                                     reRender="UserResultsList,resultPanelList, infoPanel"
                                                     status="statusSlds">
                                 </apex:commandButton>
-                                <apex:commandButton value="{!$Label.Hosp_Change_email}"
+                                <apex:commandButton value="{!$Label.Hosp_Change_e_mail_and_reset_password}"
                                                     status="statusSlds"
                                                     reRender="UserResultsList, modalEditOutputPanel2, changeEmailDialog, resultPanelList, infoPanel"
                                                     action="{!changeEmailResetPassword}"
