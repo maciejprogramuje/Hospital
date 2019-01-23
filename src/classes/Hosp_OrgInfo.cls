@@ -29,7 +29,7 @@ public class Hosp_OrgInfo {
     }
 
     public Hosp_OrgInfo() {
-        getUser();
+        getCurrentUser();
         usersInOrg = getAllUsersFromOrg();
 
         numberOfActiveUser = getAmountActiveUser();
@@ -43,7 +43,7 @@ public class Hosp_OrgInfo {
         userToDisabled = false;
     }
 
-    public void getUser() {
+    public void getCurrentUser() {
         String userId = UserInfo.getUserId();
         List<User> currentUsers = [SELECT Id,Name, Address, IsActive, Email FROM User WHERE Id = :userId];
         currentUser = currentUsers.get(0);

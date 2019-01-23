@@ -19,6 +19,11 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     public String contractIdToDismiss { get; set; }
     public Boolean isImportSuccess { get; set; }
 
+    public String employersPerDay { get; set; }
+    public String employersPerDayLabels { get; set; }
+    public String employersPerCountry { get; set; }
+    public String employersPerCountryLabels { get; set; }
+
     public static Boolean getIsLicenseNoEnabled() {
         return Hosp_Utils.isFunctionalityEnabled('DoctorLicenseNoEnabled');
     }
@@ -48,6 +53,9 @@ public with sharing class Hosp_DoctorViewControllerExtension {
         createNewContract();
         hospitals = new List<Hospital__c>();
         hospitalsWrappers = new List<HospitalWrapper>();
+
+        getDoctorsPerWeek();
+        getDoctorsPerCountry();
     }
 
     public void dismiss() {
@@ -202,6 +210,61 @@ public with sharing class Hosp_DoctorViewControllerExtension {
     private void createNewContract() {
         contract = new Contract__c();
     }
+
+    public void getDoctorsPerWeek() {
+        List<Contract__c> contractsList = [SELECT Id, StartDate__c, EndDate__c FROM Contract__c WHERE Doctor__c = :doctorCurrent.Id];
+        Map<Date, Integer> elementsToDisplay = new Map<Date, Integer>();
+        List<String> stringList = new List<String>();
+        Datetime dateTemp2 = Datetime.now();
+        Date dateTemp = date.newinstance(dateTemp2.year(), dateTemp2.month(), dateTemp2.day());
+        for (Integer i = 0; i < 6; i++) {
+            elementsToDisplay.put(dateTemp.addDays(i), 0);
+        }
+        for (Contract__c contract : contractsList) {
+            for (Date mapElement : elementsToDisplay.keySet()) {
+                Date startDate = date.newinstance(contract.StartDate__c.year(), contract.StartDate__c.month(), contract.StartDate__c.day());
+                Date endDate = date.newinstance(contract.EndDate__c.year(), contract.EndDate__c.month(), contract.EndDate__c.day());
+                if (startDate <= mapElement && endDate >= mapElement) {
+                    System.debug('counter contracts >> ' + elementsToDisplay.get(mapElement));
+                    elementsToDisplay.put(mapElement, elementsToDisplay.get(mapElement) + 1);
+                }
+            }
+        }
+        employersPerDay = '';
+        employersPerDayLabels = '';
+        for (Date oneElement : elementsToDisplay.keySet()) {
+            employersPerDay = employersPerDay + elementsToDisplay.get(oneElement) + ',';
+            employersPerDayLabels = employersPerDayLabels + '\'' + oneElement.format() + '\',';
+        }
+        employersPerDay.substring(0, employersPerDay.length() - 1);
+        employersPerDayLabels = employersPerDayLabels.substring(0, employersPerDayLabels.length() - 1);
+    }
+
+    public void getDoctorsPerCountry() {
+        List<Contract__c> contractsList = [SELECT Id, Hospital__r.Country__c FROM Contract__c WHERE Doctor__c = :doctorCurrent.Id];
+        Integer poland = 0;
+        Integer holand = 0;
+        Integer usa = 0;
+        Integer australia = 0;
+        for (Contract__c oneContract : contractsList) {
+            if (oneContract.Hospital__r.Country__c.equalsIgnoreCase('pl')) {
+                poland++;
+            } else if (oneContract.Hospital__r.Country__c.equalsIgnoreCase('nl')) {
+                holand++;
+            } else if (oneContract.Hospital__r.Country__c.equalsIgnoreCase('usa')) {
+                usa++;
+            } else if (oneContract.Hospital__r.Country__c.equalsIgnoreCase('au')) {
+                australia++;
+            }
+        }
+        employersPerCountry = poland + ', ' + holand + ', ' + usa + ', ' + australia;
+        employersPerCountryLabels = '\"PL\", \"NL\", \"USA\", \"AU\"';
+
+        System.debug('employersPerCountry='+employersPerCountry);
+        System.debug('employersPerCountryLabels='+employersPerCountryLabels);
+
+    }
+
 
     public Class HospitalWrapper {
         public String hospitalId { get; set; }

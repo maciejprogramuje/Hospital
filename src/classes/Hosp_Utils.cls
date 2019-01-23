@@ -193,10 +193,6 @@ public class Hosp_Utils {
         return userItem.get(0);
     }
 
-
-
-
-
     public static String getInsertHospitalScheduleTime() {
         return getCsValue('InsertHospitalScheduleTime');
     }
@@ -225,12 +221,7 @@ public class Hosp_Utils {
         return Boolean.valueOf(getCsValue(csName));
     }
 
-
-
-
     public static Boolean isTriggerEnabled(String csName) {
-
-        //todo - Hosp_TriggerExceptions__c ???
         Hosp_TriggerExceptions__c csItem = Hosp_TriggerExceptions__c.getInstance(UserInfo.getUserId());
         Object customSettingObject = csItem.get(csName);
         if (customSettingObject == null) {
@@ -239,9 +230,6 @@ public class Hosp_Utils {
         Boolean customSettingValue = (Boolean) customSettingObject;
         return customSettingValue;
     }
-
-
-
 
     public static void sendEmailToSystemAdmin(List<String> errorList) {
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
