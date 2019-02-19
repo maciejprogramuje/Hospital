@@ -47,10 +47,53 @@
                                    title="{! $Label.Results }"
                                    columns="1">
 
-                <apex:pageBlockTable value="{! currentDoctors }"
+                <tr>
+                    <th>{! $Label.Actions }</th>
+                    <th>{! $ObjectType.Doctor__c.fields.FirstLastName__c.label }</th>
+                    <th>{! $ObjectType.Doctor__c.fields.Email__c.label }</th>
+                    <th>{! $ObjectType.Doctor__c.fields.Country__c.label }</th>
+                </tr>
+
+                <apex:repeat value="{! currentDoctors }" var="doc">
+                    <tr>
+                       <td>
+                            <apex:commandLink action="{! URLFOR($Action.Doctor__c.Edit, doc.id) }"
+                                              target="_blank"
+                                              style="text-decoration:none">
+
+                                <apex:commandButton value="{! $Label.Edit }"/>
+                            </apex:commandLink>
+
+                            <apex:commandLink action="/{! doc.id }"
+                                              target="_blank"
+                                              style="text-decoration:none">
+
+                                <apex:commandButton value="{! $Label.View_Action }"/>
+                            </apex:commandLink>
+                        </td>
+
+                        <td>
+                            {! doc.FirstLastName__c }
+                        </td>
+
+                        <td>
+                            {! doc.Email__c }
+                        </td>
+
+                        <td>
+                            {! doc.Country__c }
+                        </td>
+                    </tr>
+                </apex:repeat>
+
+
+
+
+                <!--<apex:pageBlockTable value="{! currentDoctors }"
                                      var="doc"
                                      columns="4"
                                      columnsWidth="10%,40%,40%,10%">
+
 
                     <apex:column headerValue="{! $Label.Actions }">
 
@@ -69,6 +112,7 @@
                         </apex:commandLink>
                     </apex:column>
 
+
                     <apex:column value="{! doc.FirstLastName__c }">
 
                         <apex:facet name="header">
@@ -79,6 +123,7 @@
                             </apex:commandLink>
                         </apex:facet>
                     </apex:column>
+
 
                     <apex:column value="{! doc.Email__c}">
 
@@ -102,7 +147,10 @@
                         </apex:facet>
                     </apex:column>
 
-                </apex:pageBlockTable>
+                </apex:pageBlockTable>-->
+
+
+
 
                 <apex:panelGrid id="navigation_pg"
                                 columns="4"

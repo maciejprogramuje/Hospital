@@ -3,7 +3,8 @@ public with sharing class Hosp_DoctorSearchController {
     public String currentDoctorId { get; set; }
     public List<Doctor__c> doctorsToExport { get; set; }
     public String doctorsInJson { get; set; }
-    private Integer paginationSize = 5;
+    //private Integer paginationSize = 5;
+    private Integer paginationSize = 500;
 
     public static final String sortUp = '▲';
     public static final String sortDown = '▼';
