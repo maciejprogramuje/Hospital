@@ -1,7 +1,8 @@
 public with sharing class Hosp_DoctorsPublicSiteControllerExt {
     public List<Doctor__c> randomDoctors { get; set; }
     Integer numberOfRandomDoctors;
-
+    public Boolean showDoctors { get; set; }
+    public Boolean showContact { get; set; }
     
     public Hosp_DoctorsPublicSiteControllerExt(ApexPages.StandardController controller) {
         numberOfRandomDoctors = 10;
@@ -21,5 +22,15 @@ public with sharing class Hosp_DoctorsPublicSiteControllerExt {
             OFFSET :rand];
 
         return doctors;
+    }
+
+    public void changeTab(){
+        showDoctors = true;
+        showContact = false;
+    }
+
+    public void hideDoctors(){
+        showDoctors = false;
+        showContact = true;
     }
 }
